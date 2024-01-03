@@ -9,7 +9,7 @@ import Config
 
 config :sentinel,
   ecto_repos: [Sentinel.Repo],
-  generators: [timestamp_type: :utc_datetime]
+  generators: [timestamp_type: :utc_datetime_usec]
 
 # Configures the endpoint
 config :sentinel, SentinelWeb.Endpoint,

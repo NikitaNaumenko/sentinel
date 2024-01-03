@@ -32,6 +32,7 @@ defmodule Sentinel.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:bcrypt_elixir, "~> 3.0"},
       {:phoenix, "~> 1.7.10"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.10"},
@@ -50,7 +51,10 @@ defmodule Sentinel.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:ecto_enum_migration, "~> 0.3.4"},
+      {:styler, "~> 0.11", only: [:dev, :test], runtime: false},
+      {:tailwind_formatter, "~> 0.4.0", only: [:dev, :test], runtime: false}
     ]
   end
 

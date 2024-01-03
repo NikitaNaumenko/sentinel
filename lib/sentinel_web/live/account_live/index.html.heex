@@ -1,0 +1,40 @@
+<.header>
+  Listing Accounts
+  <:actions>
+    <.link patch={~p"/accounts/new"}>
+      <.button>New Account</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="accounts"
+  rows={@streams.accounts}
+  row_click={fn {_id, account} -> JS.navigate(~p"/accounts/#{account}") end}
+>
+  <:action :let={{_id, account}}>
+    <div class="sr-only">
+      <.link navigate={~p"/accounts/#{account}"}>Show</.link>
+    </div>
+    <.link patch={~p"/accounts/#{account}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, account}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: account.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="account-modal" show on_cancel={JS.patch(~p"/accounts")}>
+  <.live_component
+    module={SentinelWeb.AccountLive.FormComponent}
+    id={@account.id || :new}
+    title={@page_title}
+    action={@live_action}
+    account={@account}
+    patch={~p"/accounts"}
+  />
+</.modal>
