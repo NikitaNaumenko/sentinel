@@ -66,6 +66,14 @@ defmodule SentinelWeb do
     end
   end
 
+  def component do
+    quote do
+      use Phoenix.Component
+
+      unquote(html_helpers())
+    end
+  end
+
   def html do
     quote do
       use Phoenix.Component
@@ -89,6 +97,7 @@ defmodule SentinelWeb do
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
+      alias SentinelWeb.Components.Sidebar
 
       # Routes generation with the ~p sigil
       unquote(verified_routes())

@@ -51,7 +51,8 @@ defmodule SentinelWeb.Router do
     pipe_through [:browser, :redirect_if_user_is_authenticated]
 
     live_session :redirect_if_user_is_authenticated,
-      on_mount: [{SentinelWeb.UserAuth, :redirect_if_user_is_authenticated}] do
+      on_mount: [{SentinelWeb.UserAuth, :redirect_if_user_is_authenticated}],
+      layout: {SentinelWeb.Layouts, :empty} do
       live "/users/register", UserRegistrationLive, :new
       live "/users/log_in", UserLoginLive, :new
       live "/users/reset_password", UserForgotPasswordLive, :new
@@ -65,7 +66,9 @@ defmodule SentinelWeb.Router do
     pipe_through [:browser, :require_authenticated_user]
 
     live_session :require_authenticated_user,
-      on_mount: [{SentinelWeb.UserAuth, :ensure_authenticated}] do
+      on_mount: [{SentinelWeb.UserAuth, :ensure_authenticated}],
+      layout: {SentinelWeb.Layouts, :app} do
+      live "/monitors", MonitorLive.Index, :index
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end

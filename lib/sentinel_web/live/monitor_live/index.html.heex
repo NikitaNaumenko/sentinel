@@ -1,0 +1,53 @@
+<%!-- <.header> --%>
+<%!--   Listing Monitors --%>
+<%!--   <:actions> --%>
+<%!--     <.link patch={~p"/monitors/new"}> --%>
+<%!--       <.button>New Monitor</.button> --%>
+<%!--     </.link> --%>
+<%!--   </:actions> --%>
+<%!-- </.header> --%>
+
+<div id="monitors">
+  <.live_component
+    :for={{id, monitor} <- @streams.monitors}
+    module={MonitorComponent}
+    id={id}
+    monitor={monitor}
+  />
+</div>
+<%!-- <.table --%>
+<%!--   id="monitors" --%>
+<%!--   rows={@streams.monitors} --%>
+<%!--   row_click={fn {_id, monitor} -> JS.navigate(~p"/monitors/#{monitor}") end} --%>
+<%!-- > --%>
+<%!--   <:action :let={{_id, monitor}}> --%>
+<%!--     <div class="sr-only"> --%>
+<%!--       <.link navigate={~p"/monitors/#{monitor}"}>Show</.link> --%>
+<%!--     </div> --%>
+<%!--     <.link patch={~p"/monitors/#{monitor}/edit"}>Edit</.link> --%>
+<%!--   </:action> --%>
+<%!--   <:action :let={{id, monitor}}> --%>
+<%!--     <.link --%>
+<%!--       phx-click={JS.push("delete", value: %{id: monitor.id}) |> hide("##{id}")} --%>
+<%!--       data-confirm="Are you sure?" --%>
+<%!--     > --%>
+<%!--       Delete --%>
+<%!--     </.link> --%>
+<%!--   </:action> --%>
+<%!-- </.table> --%>
+<%!----%>
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="monitor-modal"
+  show
+  on_cancel={JS.patch(~p"/monitors")}
+>
+  <.live_component
+    module={SentinelWeb.MonitorLive.FormComponent}
+    id={@monitor.id || :new}
+    title={@page_title}
+    action={@live_action}
+    monitor={@monitor}
+    patch={~p"/monitors"}
+  />
+</.modal>
