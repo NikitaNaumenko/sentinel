@@ -8,12 +8,17 @@
   </:actions>
 </.header>
 
-<.list>
-</.list>
-
+<%!-- <.list> --%>
+<%!-- </.list> --%>
+<%!----%>
 <.back navigate={~p"/monitors"}>Back to monitors</.back>
 
-<.modal :if={@live_action == :edit} id="monitor-modal" show on_cancel={JS.patch(~p"/monitors/#{@monitor}")}>
+<.modal
+  :if={@live_action == :edit}
+  id="monitor-modal"
+  show
+  on_cancel={JS.patch(~p"/monitors/#{@monitor}")}
+>
   <.live_component
     module={SentinelWeb.MonitorLive.FormComponent}
     id={@monitor.id}

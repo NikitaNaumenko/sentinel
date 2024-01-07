@@ -90,10 +90,14 @@ defmodule SentinelWeb do
   defp html_helpers do
     quote do
       # HTML escaping functionality
+      use PhoenixHTMLHelpers
       import Phoenix.HTML
+
       # Core UI components and translation
       import SentinelWeb.CoreComponents
       import SentinelWeb.Gettext
+      import SentinelWeb.StatusCodes
+      import SentinelWeb.EnumHelpers
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS

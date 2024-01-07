@@ -7,7 +7,20 @@
 <%!--   </:actions> --%>
 <%!-- </.header> --%>
 
-<div id="monitors">
+<div class="flex justify-between gap-10 p-4">
+  <div class="md:max-w-xl">
+    <div class="flex-none">
+      <.link navigate={~p"/monitors/new"}>
+        <.button>
+          <.icon name="hero-plus" class="h-5 w-5" />
+          <%= dgettext("agents", "Add agent") %>
+        </.button>
+      </.link>
+    </div>
+  </div>
+</div>
+
+<div id="monitors" class="w-full flex flex-col">
   <.live_component
     :for={{id, monitor} <- @streams.monitors}
     module={MonitorComponent}

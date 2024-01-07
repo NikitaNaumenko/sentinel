@@ -10,6 +10,18 @@ defmodule SentinelWeb.MonitorLive.Index do
     {:ok, stream(socket, :monitors, Checks.list_monitors())}
   end
 
+  # def header(assigns) do
+  #   ~H"""
+  #   <header class="flex items-center justify-between gap-6 px-10 py-2">
+  #     <div>
+  #       <h1 class="text-lg font-semibold leading-8 text-gray-800">
+  #         <%= @page_title %>
+  #       </h1>
+  #     </div>
+  #   </header>
+  #   """
+  # end
+
   @impl true
   def handle_params(params, _url, socket) do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}

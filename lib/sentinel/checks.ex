@@ -7,6 +7,7 @@ defmodule Sentinel.Checks do
   alias Sentinel.Repo
 
   alias Sentinel.Checks.Monitor
+  alias Sentinel.Checks.MonitorWorker
 
   @doc """
   Returns the list of monitors.
@@ -53,6 +54,14 @@ defmodule Sentinel.Checks do
     %Monitor{}
     |> Monitor.changeset(attrs)
     |> Repo.insert()
+    |> case do
+      {:ok, monitor} ->
+        {:ok, _pid} = MonitorWorker.start_link(monitor)
+        {:ok, monitor}
+
+      {:error, changeset} ->
+        {:error, changeset}
+    end
   end
 
   @doc """

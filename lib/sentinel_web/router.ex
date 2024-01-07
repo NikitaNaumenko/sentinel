@@ -69,6 +69,8 @@ defmodule SentinelWeb.Router do
       on_mount: [{SentinelWeb.UserAuth, :ensure_authenticated}],
       layout: {SentinelWeb.Layouts, :app} do
       live "/monitors", MonitorLive.Index, :index
+      live "/monitors/new", MonitorLive.New, :new
+      live "/monitors/:id", MonitorLive.Show, :show
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end

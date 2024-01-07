@@ -14,6 +14,9 @@ defmodule Sentinel.Application do
       {Phoenix.PubSub, name: Sentinel.PubSub},
       # Start the Finch HTTP client for sending emails
       {Finch, name: Sentinel.Finch},
+      {Registry, keys: :unique, name: Sentinel.Monitors.Registry},
+      Sentinel.Checks.MonitorSupervisor,
+
       # Start a worker by calling: Sentinel.Worker.start_link(arg)
       # {Sentinel.Worker, arg},
       # Start to serve requests, typically the last entry
