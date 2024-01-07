@@ -9,7 +9,7 @@
     <.link
       patch={~p"/monitors/#{@monitor}?#{%{tab: "overview"}}"}
       class={[
-        "inline-block w-full p-4 border-r border-gray-200 dark:border-gray-700 rounded-s-lg focus:ring-4 focus:ring-primary-300 active focus:outline-none",
+        "inline-block w-full p-4 border-r border-gray-200 dark:border-gray-700 rounded-s-lg active focus:outline-none",
         active_tab("overview", @current_tab)
       ]}
       aria-current="page"
@@ -21,7 +21,7 @@
     <.link
       patch={~p"/monitors/#{@monitor}?#{%{tab: "settings"}}"}
       class={[
-        "inline-block w-full p-4 border-r border-gray-200 dark:border-gray-700  focus:ring-4 focus:ring-primary-300 focus:outline-none",
+        "inline-block w-full p-4 border-r border-gray-200 dark:border-gray-700",
         active_tab("settings", @current_tab)
       ]}
     >
@@ -32,7 +32,7 @@
     <.link
       patch={~p"/monitors/#{@monitor}?#{%{tab: "notifications"}}"}
       class={[
-        "inline-block w-full p-4 border-r border-gray-200 dark:border-gray-700  focus:ring-4 focus:ring-primary-300 focus:outline-none",
+        "inline-block w-full p-4 border-r border-gray-200 dark:border-gray-700",
         active_tab("notifications", @current_tab)
       ]}
     >
@@ -43,7 +43,7 @@
     <.link
       patch={~p"/monitors/#{@monitor}?#{%{tab: "danger"}}"}
       class={[
-        "inline-block w-full p-4 border-s-0 border-gray-200 dark:border-gray-700 rounded-e-lg  focus:ring-4 focus:outline-none focus:ring-primary-300",
+        "inline-block w-full p-4 border-s-0 border-gray-200 dark:border-gray-700 rounded-e-lg",
         active_tab("danger", @current_tab)
       ]}
     >
