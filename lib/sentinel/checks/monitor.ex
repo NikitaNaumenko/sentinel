@@ -72,6 +72,7 @@ defmodule Sentinel.Checks.Monitor do
     field :http_method, Ecto.Enum, values: [:get, :post, :put, :patch, :head, :options, :delete]
     field :request_timeout, :integer
     field :expected_status_code, :integer
+    field :last_check, :string, virtual: true, default: "success"
     belongs_to :account, Sentinel.Accounts.Account
 
     timestamps(type: :utc_datetime_usec)
