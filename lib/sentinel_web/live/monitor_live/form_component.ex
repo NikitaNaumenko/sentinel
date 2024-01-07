@@ -19,7 +19,6 @@ defmodule SentinelWeb.MonitorLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-
         <:actions>
           <.button phx-disable-with="Saving...">Save Monitor</.button>
         </:actions>

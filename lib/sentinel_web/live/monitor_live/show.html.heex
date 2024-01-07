@@ -1,30 +1,99 @@
 <.header>
-  Monitor <%= @monitor.id %>
+  <.back navigate={~p"/monitors"}>Back to monitors</.back>
+  <%= @monitor.name %>
   <:subtitle>This is a monitor record from your database.</:subtitle>
-  <:actions>
-    <.link patch={~p"/monitors/#{@monitor}/show/edit"} phx-click={JS.push_focus()}>
-      <.button>Edit monitor</.button>
-    </.link>
-  </:actions>
 </.header>
 
-<%!-- <.list> --%>
-<%!-- </.list> --%>
-<%!----%>
-<.back navigate={~p"/monitors"}>Back to monitors</.back>
-
-<.modal
-  :if={@live_action == :edit}
-  id="monitor-modal"
-  show
-  on_cancel={JS.patch(~p"/monitors/#{@monitor}")}
->
-  <.live_component
-    module={SentinelWeb.MonitorLive.FormComponent}
-    id={@monitor.id}
-    title={@page_title}
-    action={@live_action}
-    monitor={@monitor}
-    patch={~p"/monitors/#{@monitor}"}
-  />
-</.modal>
+<ul class="hidden text-sm font-medium text-center text-gray-500 rounded-lg shadow sm:flex dark:divide-gray-700 dark:text-gray-400">
+  <li class="w-full">
+    <.link
+      patch={~p"/monitors/#{@monitor}?#{%{tab: "overview"}}"}
+      class={[
+        "inline-block w-full p-4 border-r border-gray-200 dark:border-gray-700 rounded-s-lg focus:ring-4 focus:ring-primary-300 active focus:outline-none",
+        active_tab("overview", @current_tab)
+      ]}
+      aria-current="page"
+    >
+      <%= dgettext("monitors", "Overview") %>
+    </.link>
+  </li>
+  <li class="w-full">
+    <.link
+      patch={~p"/monitors/#{@monitor}?#{%{tab: "settings"}}"}
+      class={[
+        "inline-block w-full p-4 border-r border-gray-200 dark:border-gray-700  focus:ring-4 focus:ring-primary-300 focus:outline-none",
+        active_tab("settings", @current_tab)
+      ]}
+    >
+      <%= dgettext("monitors", "Settings") %>
+    </.link>
+  </li>
+  <li class="w-full">
+    <.link
+      patch={~p"/monitors/#{@monitor}?#{%{tab: "notifications"}}"}
+      class={[
+        "inline-block w-full p-4 border-r border-gray-200 dark:border-gray-700  focus:ring-4 focus:ring-primary-300 focus:outline-none",
+        active_tab("notifications", @current_tab)
+      ]}
+    >
+      <%= dgettext("monitors", "Notifications") %>
+    </.link>
+  </li>
+  <li class="w-full">
+    <.link
+      patch={~p"/monitors/#{@monitor}?#{%{tab: "danger"}}"}
+      class={[
+        "inline-block w-full p-4 border-s-0 border-gray-200 dark:border-gray-700 rounded-e-lg  focus:ring-4 focus:outline-none focus:ring-primary-300",
+        active_tab("danger", @current_tab)
+      ]}
+    >
+      <%= dgettext("monitors", "Danger Zone") %>
+    </.link>
+  </li>
+</ul>
+<div id="default-tab-content">
+  <div
+    class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
+    hidden={hidden_tab_content?("overview", @current_tab)}
+    id="overview"
+    role="tabpanel"
+    aria-labelledby="overview-tab"
+  >
+    <p class="text-sm text-gray-500 dark:text-gray-400">
+      This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Profile tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.
+    </p>
+  </div>
+  <div
+    hidden={hidden_tab_content?("settings", @current_tab)}
+    class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
+    id="settings"
+    role="tabpanel"
+    aria-labelledby="settings-tab"
+  >
+    <p class="text-sm text-gray-500 dark:text-gray-400">
+      This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Dashboard tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.
+    </p>
+  </div>
+  <div
+    hidden={hidden_tab_content?("notifications", @current_tab)}
+    class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
+    id="notifications"
+    role="tabpanel"
+    aria-labelledby="notifications-tab"
+  >
+    <p class="text-sm text-gray-500 dark:text-gray-400">
+      This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Settings tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.
+    </p>
+  </div>
+  <div
+    hidden={hidden_tab_content?("danger", @current_tab)}
+    class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
+    id="danger"
+    role="tabpanel"
+    aria-labelledby="danger-tab"
+  >
+    <p class="text-sm text-gray-500 dark:text-gray-400">
+      This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Contacts tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.
+    </p>
+  </div>
+</div>

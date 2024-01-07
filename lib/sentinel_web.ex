@@ -98,6 +98,7 @@ defmodule SentinelWeb do
       import SentinelWeb.Gettext
       import SentinelWeb.StatusCodes
       import SentinelWeb.EnumHelpers
+      import SentinelWeb.HTMLHelpers
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS

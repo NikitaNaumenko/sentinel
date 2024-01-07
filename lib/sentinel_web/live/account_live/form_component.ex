@@ -19,7 +19,6 @@ defmodule SentinelWeb.AccountLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-
         <:actions>
           <.button phx-disable-with="Saving...">Save Account</.button>
         </:actions>
