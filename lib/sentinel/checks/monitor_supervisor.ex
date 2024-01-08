@@ -1,7 +1,9 @@
 defmodule Sentinel.Checks.MonitorSupervisor do
+  @moduledoc false
   use DynamicSupervisor
 
   alias Sentinel.Checks.MonitorWorker
+  alias Sentinel.Checks.Workers.StartApplicationWorker
 
   @impl DynamicSupervisor
   def init(_args) do
@@ -25,7 +27,11 @@ defmodule Sentinel.Checks.MonitorSupervisor do
   end
 
   def start_link(init_arg) do
-    DynamicSupervisor.start_link(__MODULE__, init_arg, name: __MODULE__)
+    # Prepare monitors while application is starting
+    #
+    return = DynamicSupervisor.start_link(__MODULE__, init_arg, name: __MODULE__)
+    Oban.insert(StartApplicationWorker.new(%{}))
+    return
   end
 
   defp worker_name(monitor) do

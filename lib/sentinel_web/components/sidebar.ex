@@ -19,13 +19,15 @@ defmodule SentinelWeb.Components.Sidebar do
       class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
       aria-label="Sidenav"
     >
-      <.link href="#" class="flex items-center pt-5 pb-2 px-5">
-        <img src="https://flowbite.com/docs/images/logo.svg" class="h-6 me-3 sm:h-7" alt="Logo" />
-        <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-          <%= @current_user.account.name %>
-        </span>
-      </.link>
       <div class="overflow-y-auto py-5 px-3 h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+        <.link href="#" class="flex items-center mb-5 px-2">
+          <img src="https://flowbite.com/docs/images/logo.svg" class="h-6 me-3 sm:h-7" alt="Logo" />
+          <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+            <%!-- TODO: Truncate --%>
+            <%= @current_user.account.name %>
+          </span>
+        </.link>
+
         <ul class="space-y-2">
           <li>
             <.sidebar_link path={~p"/monitors"}>

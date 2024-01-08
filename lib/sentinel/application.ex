@@ -10,6 +10,7 @@ defmodule Sentinel.Application do
     children = [
       SentinelWeb.Telemetry,
       Sentinel.Repo,
+      {Oban, Application.fetch_env!(:sentinel, Oban)},
       {DNSCluster, query: Application.get_env(:sentinel, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Sentinel.PubSub},
       # Start the Finch HTTP client for sending emails
