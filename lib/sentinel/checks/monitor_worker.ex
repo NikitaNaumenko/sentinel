@@ -29,7 +29,7 @@ defmodule Sentinel.Checks.MonitorWorker do
 
     case result do
       {:ok, %Finch.Response{status: ^status}} ->
-        Checks.broadcast(%Monitor{monitor | last_check: "failure"})
+        Checks.broadcast("monitors-#{monitor.account_id}", %Monitor{monitor | last_check: "failure"})
         IO.inspect(:ok)
 
       _ ->

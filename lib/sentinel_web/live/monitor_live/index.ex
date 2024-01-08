@@ -6,22 +6,16 @@ defmodule SentinelWeb.MonitorLive.Index do
   alias Sentinel.Checks.Monitor
   alias SentinelWeb.MonitorLive.MonitorComponent
 
-  @impl true
+  @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
+    Checks.subscribe("monitors-#{socket.assigns.current_user.account_id}")
     {:ok, stream(socket, :monitors, Checks.list_monitors())}
   end
 
-  # def header(assigns) do
-  #   ~H"""
-  #   <header class="flex items-center justify-between gap-6 px-10 py-2">
-  #     <div>
-  #       <h1 class="text-lg font-semibold leading-8 text-gray-800">
-  #         <%= @page_title %>
-  #       </h1>
-  #     </div>
-  #   </header>
-  #   """
-  # end
+  @impl Phoenix.LiveView
+  def terminate(_reason, socket) do
+    Checks.unsubscribe("monitors-#{socket.assigns.current_user.account_id}")
+  end
 
   @impl true
   def handle_params(params, _url, socket) do
@@ -51,9 +45,8 @@ defmodule SentinelWeb.MonitorLive.Index do
     {:noreply, stream_insert(socket, :monitors, monitor)}
   end
 
-  def handle_info(msg, socket) do
-    IO.inspect(msg)
-    {:noreply, socket}
+  def handle_info({:msg, monitor}, socket) do
+    {:noreply, stream_insert(socket, :monitors, monitor)}
   end
 
   @impl true

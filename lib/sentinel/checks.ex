@@ -9,6 +9,8 @@ defmodule Sentinel.Checks do
   alias Sentinel.Checks.MonitorWorker
   alias Sentinel.Repo
 
+  require Logger
+
   @doc """
   Returns the list of monitors.
 
@@ -111,20 +113,23 @@ defmodule Sentinel.Checks do
     Monitor.changeset(monitor, attrs)
   end
 
-  def subscribe(monitor) do
-    Phoenix.PubSub.subscribe(Sentinel.PubSub, topic(monitor))
+  # TODO: Build normal topic build function
+  def subscribe(topic) do
+    Phoenix.PubSub.subscribe(Sentinel.PubSub, topic)
+    Logger.info("Subscribed to #{topic}")
   end
 
-  def unsubscribe(monitor) do
-    Phoenix.PubSub.unsubscribe(Sentinel.PubSub, topic(monitor))
+  def unsubscribe(topic) do
+    Phoenix.PubSub.unsubscribe(Sentinel.PubSub, topic)
+    Logger.info("Unsubscribed from #{topic}")
   end
 
-  def broadcast(monitor) do
-    Phoenix.PubSub.broadcast(Sentinel.PubSub, topic(monitor), {:msg, monitor})
+  def broadcast(topic, monitor) do
+    Phoenix.PubSub.broadcast(Sentinel.PubSub, topic, {:msg, monitor})
   end
 
   # @spec topic(Product.t()) :: String.t()
-  defp topic(monitor) do
-    "monitor-#{monitor.account_id}-#{monitor.id}"
-  end
+  # defp topic(monitor) do
+  #   "monitor-#{monitor.account_id}-#{monitor.id}"
+  # end
 end

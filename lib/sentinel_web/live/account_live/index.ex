@@ -38,11 +38,6 @@ defmodule SentinelWeb.AccountLive.Index do
     {:noreply, stream_insert(socket, :accounts, account)}
   end
 
-  def handle_info(msg, socket) do
-    IO.inspect(msg)
-    {:noreply, socket}
-  end
-
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
     account = Accounts.get_account!(id)

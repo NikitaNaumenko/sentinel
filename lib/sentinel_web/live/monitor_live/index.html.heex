@@ -10,11 +10,6 @@
   </div>
 </div>
 
-<div id="monitors" class="w-full flex flex-col">
-  <.live_component
-    :for={{id, monitor} <- @streams.monitors}
-    module={MonitorComponent}
-    id={id}
-    monitor={monitor}
-  />
+<div id="monitors" phx-update="stream" class="flex w-full flex-col">
+  <MonitorComponent.render :for={{id, monitor} <- @streams.monitors} id={id} monitor={monitor} />
 </div>

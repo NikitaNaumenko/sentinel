@@ -1,6 +1,6 @@
 defmodule SentinelWeb.MonitorLive.MonitorComponent do
   @moduledoc false
-  use SentinelWeb, :live_component
+  use SentinelWeb, :component
 
   alias Sentinel.Checks
   alias Sentinel.Checks.Monitor
@@ -33,17 +33,6 @@ defmodule SentinelWeb.MonitorLive.MonitorComponent do
       </span>
     </span>
     """
-  end
-
-  @impl true
-  def update(assigns, socket) do
-    Checks.subscribe(assigns.monitor)
-    {:ok, assign(socket, assigns)}
-  end
-
-  def handle_info(msg, socket) do
-    IO.inspect(msg)
-    {:noreply, socket}
   end
 
   defp failure?(%Monitor{last_check: "failure"}), do: true

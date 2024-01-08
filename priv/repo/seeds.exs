@@ -10,7 +10,8 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 #
-alias Sentinel.{Accounts, Checks}
+alias Sentinel.Accounts
+alias Sentinel.Checks
 
 Sentinel.Repo.transaction(fn ->
   account = Sentinel.Repo.insert!(%Accounts.Account{name: "Account 1"})
@@ -25,7 +26,7 @@ Sentinel.Repo.transaction(fn ->
   Sentinel.Repo.insert!(%Checks.Monitor{
     name: "Monitor 1",
     url: "http://example.com",
-    interval: 60,
+    interval: 10,
     http_method: :get,
     request_timeout: 10,
     expected_status_code: 200,
@@ -35,7 +36,7 @@ Sentinel.Repo.transaction(fn ->
   Sentinel.Repo.insert!(%Checks.Monitor{
     name: "Monitor 2",
     url: "http://example.com",
-    interval: 60,
+    interval: 15,
     http_method: :get,
     request_timeout: 10,
     expected_status_code: 200,
@@ -45,7 +46,7 @@ Sentinel.Repo.transaction(fn ->
   Sentinel.Repo.insert!(%Checks.Monitor{
     name: "Monitor 3",
     url: "http://example.com",
-    interval: 60,
+    interval: 20,
     http_method: :get,
     request_timeout: 10,
     expected_status_code: 200,
