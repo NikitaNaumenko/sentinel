@@ -1,6 +1,10 @@
 defmodule Sentinel.Checks.Monitor do
+  @moduledoc false
   use Ecto.Schema
+
   import Ecto.Changeset
+
+  alias Sentinel.Checks.Check
 
   @request_timeouts [1, 3, 5, 10, 15, 30, 60]
   @intervals [15, 30, 60, 120]
@@ -100,6 +104,19 @@ defmodule Sentinel.Checks.Monitor do
     ])
   end
 
-  def intervals(), do: @intervals
-  def request_timeouts(), do: @request_timeouts
+  def intervals, do: @intervals
+  def request_timeouts, do: @request_timeouts
+
+  def create_check!(monitor, %Finch.Response{status: status} = finch_response) do
+    raw_response = Map.from_struct(finch_response)
+
+    %{
+      raw_response: raw_response,
+      result: Check.define_result(monitor.expected_status_code, status),
+      reason: nil
+    }
+    |> Check.changeset()
+    |> put_assoc(:monitor, monitor)
+    |> Sentinel.Repo.insert!()
+  end
 end

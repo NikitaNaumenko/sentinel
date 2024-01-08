@@ -19,7 +19,6 @@ defmodule Sentinel.Checks.MonitorWorker do
   def handle_continue(:setup_monitor, %{monitor: monitor} = state) do
     interval = monitor.interval * 1_000
     :timer.send_interval(interval, :run_check)
-    # Checks.subscribe(monitor)
     {:noreply, state}
   end
 
@@ -27,15 +26,16 @@ defmodule Sentinel.Checks.MonitorWorker do
   def handle_info(:run_check, %{monitor: %Monitor{expected_status_code: status} = monitor} = state) do
     result = monitor.http_method |> Finch.build(monitor.url) |> Finch.request(Sentinel.Finch)
 
-    case result do
-      {:ok, %Finch.Response{status: ^status}} ->
-        Checks.broadcast("monitors-#{monitor.account_id}", %Monitor{monitor | last_check: "failure"})
-        IO.inspect(:ok)
-
-      _ ->
-        IO.inspect(:error)
-    end
-
+    # case result do
+    #   {:ok, %Finch.Response{status: ^status} = response} ->
+    #     # IO.inspect(response)
+    #     # check = Monitor.create_check!(monitor, response)
+    #     # Checks.broadcast("monitors-#{monitor.account_id}", %Monitor{monitor | last_check: check.result})
+    #
+    #   _ ->
+    #     IO.inspect(:error)
+    # end
+    #
     {:noreply, state}
   end
 end
