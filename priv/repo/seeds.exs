@@ -29,7 +29,7 @@ Sentinel.Repo.transaction(fn ->
     interval: 10,
     http_method: :get,
     request_timeout: 10,
-    expected_status_code: 200,
+    expected_status_code: 203,
     account_id: account.id
   })
 
@@ -39,7 +39,7 @@ Sentinel.Repo.transaction(fn ->
     interval: 15,
     http_method: :get,
     request_timeout: 10,
-    expected_status_code: 200,
+    expected_status_code: 220,
     account_id: account.id
   })
 

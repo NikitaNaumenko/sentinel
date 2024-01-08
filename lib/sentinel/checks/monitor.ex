@@ -108,10 +108,8 @@ defmodule Sentinel.Checks.Monitor do
   def request_timeouts, do: @request_timeouts
 
   def create_check!(monitor, %Finch.Response{status: status} = finch_response) do
-    raw_response = Map.from_struct(finch_response)
-
     %{
-      raw_response: raw_response,
+      raw_response: finch_response,
       result: Check.define_result(monitor.expected_status_code, status),
       reason: nil
     }

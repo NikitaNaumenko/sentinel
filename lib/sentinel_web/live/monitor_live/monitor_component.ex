@@ -35,8 +35,8 @@ defmodule SentinelWeb.MonitorLive.MonitorComponent do
     """
   end
 
-  defp failure?(%Monitor{last_check: "failure"}), do: true
+  defp failure?(%Monitor{last_check: :failure}), do: true
   defp failure?(_), do: false
-  defp success?(%Monitor{last_check: "success"}), do: true
+  defp success?(%Monitor{last_check: :success}), do: true
   defp success?(_), do: false
 end

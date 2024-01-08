@@ -26,16 +26,15 @@ defmodule Sentinel.Checks.MonitorWorker do
   def handle_info(:run_check, %{monitor: %Monitor{expected_status_code: status} = monitor} = state) do
     result = monitor.http_method |> Finch.build(monitor.url) |> Finch.request(Sentinel.Finch)
 
-    # case result do
-    #   {:ok, %Finch.Response{status: ^status} = response} ->
-    #     # IO.inspect(response)
-    #     # check = Monitor.create_check!(monitor, response)
-    #     # Checks.broadcast("monitors-#{monitor.account_id}", %Monitor{monitor | last_check: check.result})
-    #
-    #   _ ->
-    #     IO.inspect(:error)
-    # end
-    #
+    case result do
+      {:ok, response} ->
+        check = Monitor.create_check!(monitor, response)
+        Checks.broadcast("monitors-#{monitor.account_id}", %Monitor{monitor | last_check: check.result})
+
+      _ ->
+        IO.inspect(:error)
+    end
+
     {:noreply, state}
   end
 end
