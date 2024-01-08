@@ -4,10 +4,10 @@ defmodule Sentinel.Checks do
   """
 
   import Ecto.Query, warn: false
-  alias Sentinel.Repo
 
   alias Sentinel.Checks.Monitor
   alias Sentinel.Checks.MonitorWorker
+  alias Sentinel.Repo
 
   @doc """
   Returns the list of monitors.
@@ -109,5 +109,22 @@ defmodule Sentinel.Checks do
   """
   def change_monitor(%Monitor{} = monitor, attrs \\ %{}) do
     Monitor.changeset(monitor, attrs)
+  end
+
+  def subscribe(monitor) do
+    Phoenix.PubSub.subscribe(Sentinel.PubSub, topic(monitor))
+  end
+
+  def unsubscribe(monitor) do
+    Phoenix.PubSub.unsubscribe(Sentinel.PubSub, topic(monitor))
+  end
+
+  def broadcast(monitor) do
+    Phoenix.PubSub.broadcast(Sentinel.PubSub, topic(monitor), {:msg, monitor})
+  end
+
+  # @spec topic(Product.t()) :: String.t()
+  defp topic(monitor) do
+    "monitor-#{monitor.account_id}-#{monitor.id}"
   end
 end

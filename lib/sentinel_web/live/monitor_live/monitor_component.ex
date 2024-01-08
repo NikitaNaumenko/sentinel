@@ -1,6 +1,8 @@
 defmodule SentinelWeb.MonitorLive.MonitorComponent do
+  @moduledoc false
   use SentinelWeb, :live_component
 
+  alias Sentinel.Checks
   alias Sentinel.Checks.Monitor
 
   def render(assigns) do
@@ -26,19 +28,22 @@ defmodule SentinelWeb.MonitorLive.MonitorComponent do
 
   defp indicator(assigns) do
     ~H"""
-    <span class={[
-      "z-10 inline-flex items-center justify-center w-6 h-6 rounded-full ring-0 animate-pulse shrink-0",
-      failure?(@monitor) && "dark:bg-danger-900 bg-danger-200",
-      success?(@monitor) && "dark:bg-success-900 bg-success-200"
-    ]}>
-      <span class={[
-        "flex w-3 h-3 rounded-full",
-        failure?(@monitor) && "bg-danger-500",
-        success?(@monitor) && "bg-success-500"
-      ]}>
+    <span class={["z-10 inline-flex h-6 w-6 shrink-0 animate-pulse items-center justify-center rounded-full ring-0", failure?(@monitor) && "bg-danger-200 dark:bg-danger-900", success?(@monitor) && "bg-success-200 dark:bg-success-900"]}>
+      <span class={["flex h-3 w-3 rounded-full", failure?(@monitor) && "bg-danger-500", success?(@monitor) && "bg-success-500"]}>
       </span>
     </span>
     """
+  end
+
+  @impl true
+  def update(assigns, socket) do
+    Checks.subscribe(assigns.monitor)
+    {:ok, assign(socket, assigns)}
+  end
+
+  def handle_info(msg, socket) do
+    IO.inspect(msg)
+    {:noreply, socket}
   end
 
   defp failure?(%Monitor{last_check: "failure"}), do: true

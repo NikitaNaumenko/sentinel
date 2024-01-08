@@ -1,4 +1,5 @@
 defmodule SentinelWeb.AccountLive.Index do
+  @moduledoc false
   use SentinelWeb, :live_view
 
   alias Sentinel.Accounts
@@ -35,6 +36,11 @@ defmodule SentinelWeb.AccountLive.Index do
   @impl true
   def handle_info({SentinelWeb.AccountLive.FormComponent, {:saved, account}}, socket) do
     {:noreply, stream_insert(socket, :accounts, account)}
+  end
+
+  def handle_info(msg, socket) do
+    IO.inspect(msg)
+    {:noreply, socket}
   end
 
   @impl true

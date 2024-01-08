@@ -1,8 +1,10 @@
 defmodule Sentinel.Checks.MonitorWorker do
+  @moduledoc false
   use GenServer
 
-  alias Sentinel.Checks.MonitorSupervisor
+  alias Sentinel.Checks
   alias Sentinel.Checks.Monitor
+  alias Sentinel.Checks.MonitorSupervisor
 
   def start_link(monitor) do
     MonitorSupervisor.start_child(monitor)
@@ -17,18 +19,17 @@ defmodule Sentinel.Checks.MonitorWorker do
   def handle_continue(:setup_monitor, %{monitor: monitor} = state) do
     interval = monitor.interval * 1_000
     :timer.send_interval(interval, :run_check)
+    # Checks.subscribe(monitor)
     {:noreply, state}
   end
 
   @impl GenServer
-  def handle_info(
-        :run_check,
-        %{monitor: %Monitor{expected_status_code: status} = monitor} = state
-      ) do
-    result = Finch.build(monitor.http_method, monitor.url) |> Finch.request(Sentinel.Finch)
+  def handle_info(:run_check, %{monitor: %Monitor{expected_status_code: status} = monitor} = state) do
+    result = monitor.http_method |> Finch.build(monitor.url) |> Finch.request(Sentinel.Finch)
 
     case result do
       {:ok, %Finch.Response{status: ^status}} ->
+        Checks.broadcast(%Monitor{monitor | last_check: "failure"})
         IO.inspect(:ok)
 
       _ ->

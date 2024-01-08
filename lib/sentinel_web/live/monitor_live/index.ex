@@ -1,4 +1,5 @@
 defmodule SentinelWeb.MonitorLive.Index do
+  @moduledoc false
   use SentinelWeb, :live_view
 
   alias Sentinel.Checks
@@ -48,6 +49,11 @@ defmodule SentinelWeb.MonitorLive.Index do
   @impl true
   def handle_info({SentinelWeb.MonitorLive.FormComponent, {:saved, monitor}}, socket) do
     {:noreply, stream_insert(socket, :monitors, monitor)}
+  end
+
+  def handle_info(msg, socket) do
+    IO.inspect(msg)
+    {:noreply, socket}
   end
 
   @impl true
