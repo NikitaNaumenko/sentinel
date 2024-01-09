@@ -10,6 +10,7 @@ defmodule Sentinel.Checks.Check do
     field :result, Ecto.Enum, values: [:undefined, :success, :failure]
     field :reason, :string
     field :raw_response, :map, default: %{}
+    field :duration, :integer
 
     belongs_to :monitor, Monitor
     timestamps(type: :utc_datetime_usec)
@@ -18,8 +19,8 @@ defmodule Sentinel.Checks.Check do
   @doc false
   def changeset(attrs) do
     %__MODULE__{}
-    |> cast(attrs, [:result, :reason, :raw_response])
-    |> validate_required([:result, :raw_response])
+    |> cast(attrs, [:result, :reason, :raw_response, :duration])
+    |> validate_required([:result, :raw_response, :duration])
   end
 
   def define_result(status, status), do: :success

@@ -28,15 +28,16 @@ defmodule SentinelWeb.MonitorLive.MonitorComponent do
 
   defp indicator(assigns) do
     ~H"""
-    <span class={["z-10 inline-flex h-6 w-6 shrink-0 animate-pulse items-center justify-center rounded-full ring-0", failure?(@monitor) && "bg-danger-200 dark:bg-danger-900", success?(@monitor) && "bg-success-200 dark:bg-success-900"]}>
-      <span class={["flex h-3 w-3 rounded-full", failure?(@monitor) && "bg-danger-500", success?(@monitor) && "bg-success-500"]}>
-      </span>
+    <span class={["z-10 inline-flex h-6 w-6 shrink-0 animate-pulse items-center justify-center rounded-full ring-0", outer_color_state(@monitor)]}>
+      <span class={["flex h-3 w-3 rounded-full", inner_color_state(@monitor)]}></span>
     </span>
     """
   end
 
-  defp failure?(%Monitor{last_check: :failure}), do: true
-  defp failure?(_), do: false
-  defp success?(%Monitor{last_check: :success}), do: true
-  defp success?(_), do: false
+  defp outer_color_state(%Monitor{last_check: :failure}), do: "bg-danger-200 dark:bg-danger-900"
+  defp outer_color_state(%Monitor{last_check: :success}), do: "bg-success-200 dark:bg-success-900"
+  defp outer_color_state(_), do: "bg-warning-200 dark:bg-warning-900"
+  defp inner_color_state(%Monitor{last_check: :failure}), do: "bg-danger-500"
+  defp inner_color_state(%Monitor{last_check: :success}), do: "bg-success-500"
+  defp inner_color_state(_), do: "bg-warning-500"
 end

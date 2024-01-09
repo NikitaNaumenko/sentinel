@@ -1,4 +1,5 @@
 defmodule SentinelWeb.Components.Sidebar do
+  @moduledoc false
   use SentinelWeb, :html
 
   def sidebar(assigns) do
@@ -8,7 +9,7 @@ defmodule SentinelWeb.Components.Sidebar do
       data-drawer-toggle="default-sidebar"
       aria-controls="default-sidebar"
       type="button"
-      class="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+      class="mt-2 ml-3 inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 sm:hidden"
     >
       <span class="sr-only">Open sidebar</span>
       <.icon name="hero-bars-3-bottom-left" class="w-6 h-6" />
@@ -16,13 +17,13 @@ defmodule SentinelWeb.Components.Sidebar do
 
     <aside
       id="default-sidebar"
-      class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+      class="fixed top-0 left-0 z-40 h-screen w-64 -translate-x-full transition-transform sm:translate-x-0"
       aria-label="Sidenav"
     >
-      <div class="overflow-y-auto py-5 px-3 h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+      <div class="h-full overflow-y-auto border-r border-gray-200 bg-white px-3 py-5 dark:border-gray-700 dark:bg-gray-800">
         <.link href="#" class="flex items-center mb-5 px-2">
-          <img src="https://flowbite.com/docs/images/logo.svg" class="h-6 me-3 sm:h-7" alt="Logo" />
-          <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+          <img src={~p"/images/logo.svg"} class="me-3 h-6 sm:h-7" alt="Logo" />
+          <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
             <%!-- TODO: Truncate --%>
             <%= @current_user.account.name %>
           </span>
@@ -39,11 +40,11 @@ defmodule SentinelWeb.Components.Sidebar do
             </.sidebar_link>
             <a
               href="#"
-              class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              class="group flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
             >
               <svg
                 aria-hidden="true"
-                class="w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                class="h-6 w-6 text-gray-400 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -55,15 +56,15 @@ defmodule SentinelWeb.Components.Sidebar do
             </a>
           </li>
         </ul>
-        <ul class="pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700">
+        <ul class="mt-5 space-y-2 border-t border-gray-200 pt-5 dark:border-gray-700">
           <li>
             <a
               href="#"
-              class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
+              class="group flex items-center rounded-lg p-2 text-base font-normal text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
             >
               <svg
                 aria-hidden="true"
-                class="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                class="h-6 w-6 flex-shrink-0 text-gray-400 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -82,11 +83,11 @@ defmodule SentinelWeb.Components.Sidebar do
           <li>
             <a
               href="#"
-              class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
+              class="group flex items-center rounded-lg p-2 text-base font-normal text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
             >
               <svg
                 aria-hidden="true"
-                class="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                class="h-6 w-6 flex-shrink-0 text-gray-400 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -100,11 +101,11 @@ defmodule SentinelWeb.Components.Sidebar do
           <li>
             <a
               href="#"
-              class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
+              class="group flex items-center rounded-lg p-2 text-base font-normal text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
             >
               <svg
                 aria-hidden="true"
-                class="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                class="h-6 w-6 flex-shrink-0 text-gray-400 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -121,7 +122,7 @@ defmodule SentinelWeb.Components.Sidebar do
           </li>
         </ul>
       </div>
-      <div class="hidden absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full lg:flex bg-white dark:bg-gray-800 z-20 border-r border-gray-200 dark:border-gray-700">
+      <div class="absolute bottom-0 left-0 z-20 hidden w-full justify-center space-x-4 border-r border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800 lg:flex">
         <.link
           data-tooltip-target="tooltip-logout"
           href={~p"/users/log_out"}
@@ -133,7 +134,7 @@ defmodule SentinelWeb.Components.Sidebar do
         <div
           id="tooltip-logout"
           role="tooltip"
-          class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip"
+          class="tooltip invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300"
         >
           <%= dgettext("sidebar", "Log out") %>
           <div class="tooltip-arrow" data-popper-arrow></div>
@@ -142,11 +143,11 @@ defmodule SentinelWeb.Components.Sidebar do
         <a
           href="#"
           data-tooltip-target="tooltip-settings"
-          class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer dark:text-gray-400 dark:hover:text-white hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-600"
+          class="inline-flex cursor-pointer justify-center rounded p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
         >
           <svg
             aria-hidden="true"
-            class="w-6 h-6"
+            class="h-6 w-6"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -162,7 +163,7 @@ defmodule SentinelWeb.Components.Sidebar do
         <div
           id="tooltip-settings"
           role="tooltip"
-          class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip"
+          class="tooltip invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300"
         >
           Settings page
           <div class="tooltip-arrow" data-popper-arrow></div>
@@ -170,11 +171,11 @@ defmodule SentinelWeb.Components.Sidebar do
         <button
           type="button"
           data-dropdown-toggle="language-dropdown"
-          class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer dark:hover:text-white dark:text-gray-400 hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-600"
+          class="inline-flex cursor-pointer justify-center rounded p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
         >
           <svg
             aria-hidden="true"
-            class="h-5 w-5 rounded-full mt-0.5"
+            class="mt-0.5 h-5 w-5 rounded-full"
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
             viewBox="0 0 3900 3900"
@@ -200,29 +201,26 @@ defmodule SentinelWeb.Components.Sidebar do
                 </g>
                 <use xlink:href="#c" x="494" />
               </g>
-              <use xlink:href="#d" x="988" /><use xlink:href="#c" x="1976" /><use
-                xlink:href="#e"
-                x="2470"
-              />
+              <use xlink:href="#d" x="988" /><use xlink:href="#c" x="1976" /><use xlink:href="#e" x="2470" />
             </g>
           </svg>
         </button>
         <!-- Dropdown -->
         <div
-          class="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
+          class="z-50 my-4 hidden list-none divide-y divide-gray-100 rounded bg-white text-base shadow dark:bg-gray-700"
           id="language-dropdown"
         >
           <ul class="py-1" role="none">
             <li>
               <a
                 href="#"
-                class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                 role="menuitem"
               >
                 <div class="inline-flex items-center">
                   <svg
                     aria-hidden="true"
-                    class="h-3.5 w-3.5 rounded-full mr-2"
+                    class="mr-2 h-3.5 w-3.5 rounded-full"
                     xmlns="http://www.w3.org/2000/svg"
                     id="flag-icon-css-us"
                     viewBox="0 0 512 512"
@@ -255,13 +253,13 @@ defmodule SentinelWeb.Components.Sidebar do
             <li>
               <a
                 href="#"
-                class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-600"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                 role="menuitem"
               >
                 <div class="inline-flex items-center">
                   <svg
                     aria-hidden="true"
-                    class="h-3.5 w-3.5 rounded-full mr-2"
+                    class="mr-2 h-3.5 w-3.5 rounded-full"
                     xmlns="http://www.w3.org/2000/svg"
                     id="flag-icon-css-de"
                     viewBox="0 0 512 512"
@@ -277,13 +275,13 @@ defmodule SentinelWeb.Components.Sidebar do
             <li>
               <a
                 href="#"
-                class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-600"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                 role="menuitem"
               >
                 <div class="inline-flex items-center">
                   <svg
                     aria-hidden="true"
-                    class="h-3.5 w-3.5 rounded-full mr-2"
+                    class="mr-2 h-3.5 w-3.5 rounded-full"
                     xmlns="http://www.w3.org/2000/svg"
                     id="flag-icon-css-it"
                     viewBox="0 0 512 512"
@@ -301,13 +299,13 @@ defmodule SentinelWeb.Components.Sidebar do
             <li>
               <a
                 href="#"
-                class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                 role="menuitem"
               >
                 <div class="inline-flex items-center">
                   <svg
                     aria-hidden="true"
-                    class="h-3.5 w-3.5 rounded-full mr-2"
+                    class="mr-2 h-3.5 w-3.5 rounded-full"
                     xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink"
                     id="flag-icon-css-cn"
@@ -317,30 +315,10 @@ defmodule SentinelWeb.Components.Sidebar do
                       <path id="a" fill="#ffde00" d="M1-.3L-.7.8 0-1 .6.8-1-.3z" />
                     </defs>
                     <path fill="#de2910" d="M0 0h512v512H0z" />
-                    <use
-                      width="30"
-                      height="20"
-                      transform="matrix(76.8 0 0 76.8 128 128)"
-                      xlink:href="#a"
-                    />
-                    <use
-                      width="30"
-                      height="20"
-                      transform="rotate(-121 142.6 -47) scale(25.5827)"
-                      xlink:href="#a"
-                    />
-                    <use
-                      width="30"
-                      height="20"
-                      transform="rotate(-98.1 198 -82) scale(25.6)"
-                      xlink:href="#a"
-                    />
-                    <use
-                      width="30"
-                      height="20"
-                      transform="rotate(-74 272.4 -114) scale(25.6137)"
-                      xlink:href="#a"
-                    />
+                    <use width="30" height="20" transform="matrix(76.8 0 0 76.8 128 128)" xlink:href="#a" />
+                    <use width="30" height="20" transform="rotate(-121 142.6 -47) scale(25.5827)" xlink:href="#a" />
+                    <use width="30" height="20" transform="rotate(-98.1 198 -82) scale(25.6)" xlink:href="#a" />
+                    <use width="30" height="20" transform="rotate(-74 272.4 -114) scale(25.6137)" xlink:href="#a" />
                     <use
                       width="30"
                       height="20"

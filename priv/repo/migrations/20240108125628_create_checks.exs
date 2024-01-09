@@ -10,6 +10,7 @@ defmodule Sentinel.Repo.Migrations.CreateChecks do
       add :reason, :string
       add :raw_response, :map, default: %{}
       add :monitor_id, references(:monitors, on_delete: :delete_all), null: false
+      add :duration, :bigint
 
       timestamps(type: :utc_datetime_usec)
     end

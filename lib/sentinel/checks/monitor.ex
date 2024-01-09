@@ -107,12 +107,13 @@ defmodule Sentinel.Checks.Monitor do
   def intervals, do: @intervals
   def request_timeouts, do: @request_timeouts
 
-  def create_check!(monitor, %Finch.Response{status: status} = finch_response) do
+  def create_check!(monitor, %Finch.Response{status: status} = finch_response, duration) do
     check =
       %{
         raw_response: finch_response,
         result: Check.define_result(monitor.expected_status_code, status),
-        reason: nil
+        reason: nil,
+        duration: duration
       }
       |> Check.changeset()
       |> put_assoc(:monitor, monitor)
