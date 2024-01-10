@@ -69,6 +69,21 @@ defmodule SentinelWeb.MonitorLive.Show do
     end
   end
 
+  def handle_event("delete", %{"id" => id}, socket) do
+    case id |> Checks.get_monitor!() |> Checks.delete_monitor() do
+      {:ok, _monitor} ->
+        socket =
+          socket
+          |> put_flash(:info, dgettext("monitors", "Monitor deleted successfully"))
+          |> push_redirect(to: ~p"/monitors")
+
+        {:noreply, socket}
+
+      {:error, _changeset} ->
+        {:noreply, put_flash(socket, :error, dgettext("monitors", "Monitor cannot be deleted"))}
+    end
+  end
+
   defp assign_form(socket, changeset) do
     assign(socket, :form, to_form(changeset))
   end

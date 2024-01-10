@@ -118,8 +118,29 @@
     role="tabpanel"
     aria-labelledby="danger-tab"
   >
-    <p class="text-sm text-gray-500 dark:text-gray-400">
-      This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Contacts tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.
-    </p>
+    <div class="flex justify-between">
+      <div class="max-w-sm">
+        <div><%= dgettext("monitors", "Delete monitor") %></div>
+        <span class="text-sm text-gray-500">
+          <%= dgettext(
+            "monitors",
+            "Delete the %{monitor} endpoint monitor and all its data. Careful, this action cannot be undone.",
+            monitor: @monitor.name
+          ) %>
+        </span>
+      </div>
+      <div>
+        <.link
+          class={[
+            "bg-danger-700 rounded-lg px-3 py-2 hover:bg-danger-500 phx-submit-loading:opacity-75",
+            "text-sm font-semibold leading-6 text-white active:text-white/80"
+          ]}
+          phx-click={JS.push("delete", value: %{id: @monitor.id})}
+          data-confirm={dgettext("confirms", "Are you sure?")}
+        >
+          <%= dgettext("buttons", "Delete") %>
+        </.link>
+      </div>
+    </div>
   </div>
 </div>
