@@ -1,4 +1,5 @@
 defmodule SentinelWeb.PageLive.FormComponent do
+  @moduledoc false
   use SentinelWeb, :live_component
 
   alias Sentinel.StatusPages
@@ -12,14 +13,7 @@ defmodule SentinelWeb.PageLive.FormComponent do
         <:subtitle>Use this form to manage page records in your database.</:subtitle>
       </.header>
 
-      <.simple_form
-        for={@form}
-        id="page-form"
-        phx-target={@myself}
-        phx-change="validate"
-        phx-submit="save"
-      >
-
+      <.simple_form for={@form} id="page-form" phx-target={@myself} phx-change="validate" phx-submit="save">
         <:actions>
           <.button phx-disable-with="Saving...">Save Page</.button>
         </:actions>

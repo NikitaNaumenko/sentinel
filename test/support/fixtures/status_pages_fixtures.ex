@@ -10,9 +10,7 @@ defmodule Sentinel.StatusPagesFixtures do
   def page_fixture(attrs \\ %{}) do
     {:ok, page} =
       attrs
-      |> Enum.into(%{
-
-      })
+      |> Map.new()
       |> Sentinel.StatusPages.create_page()
 
     page

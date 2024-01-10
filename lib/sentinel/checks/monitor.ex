@@ -4,6 +4,7 @@ defmodule Sentinel.Checks.Monitor do
 
   import Ecto.Changeset
 
+  alias Sentinel.Checks.Certificate
   alias Sentinel.Checks.Check
 
   @request_timeouts [1, 3, 5, 10, 15, 30, 60]
@@ -78,6 +79,7 @@ defmodule Sentinel.Checks.Monitor do
     field :expected_status_code, :integer
     field :last_check, :string, virtual: true, default: "success"
     belongs_to :account, Sentinel.Accounts.Account
+    has_many :certificates, Certificate
 
     timestamps(type: :utc_datetime_usec)
   end
@@ -94,6 +96,7 @@ defmodule Sentinel.Checks.Monitor do
       :request_timeout,
       :expected_status_code
     ])
+    |> cast_assoc(:certificates)
     |> validate_required([
       :name,
       :url,

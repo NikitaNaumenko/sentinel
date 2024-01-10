@@ -1,10 +1,10 @@
 defmodule Sentinel.StatusPages.Section do
+  @moduledoc false
   use Ecto.Schema
+
   import Ecto.Changeset
 
   schema "page_sections" do
-
-
     timestamps(type: :utc_datetime_usec)
   end
 

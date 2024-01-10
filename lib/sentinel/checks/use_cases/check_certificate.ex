@@ -15,10 +15,10 @@ defmodule Sentinel.Checks.UseCases.CheckCertificate do
       [subject_common_name] = X509.RDNSequence.get_attr(subject_rdn, :commonName)
 
       %{
-        not_before: X509.DateTime.to_datetime(not_before),
-        not_after: X509.DateTime.to_datetime(not_after),
-        issuer: issuer_common_name,
-        subject: subject_common_name
+        "not_before" => X509.DateTime.to_datetime(not_before),
+        "not_after" => X509.DateTime.to_datetime(not_after),
+        "issuer" => issuer_common_name,
+        "subject" => subject_common_name
       }
     end
   end

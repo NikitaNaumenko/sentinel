@@ -4,8 +4,8 @@ defmodule Sentinel.StatusPages do
   """
 
   import Ecto.Query, warn: false
-  alias Sentinel.Repo
 
+  alias Sentinel.Repo
   alias Sentinel.StatusPages.Page
 
   @doc """

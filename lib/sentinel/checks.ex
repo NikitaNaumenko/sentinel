@@ -54,8 +54,10 @@ defmodule Sentinel.Checks do
 
   """
   def create_monitor(attrs \\ %{}) do
+    certificate = CheckCertificate.call(attrs["url"])
+
     %Monitor{}
-    |> Monitor.changeset(attrs)
+    |> Monitor.changeset(Map.put(attrs, "certificates", [certificate]))
     |> Repo.insert()
     |> case do
       {:ok, monitor} ->
@@ -63,6 +65,7 @@ defmodule Sentinel.Checks do
         {:ok, monitor}
 
       {:error, changeset} ->
+        IO.inspect(changeset)
         {:error, changeset}
     end
   end

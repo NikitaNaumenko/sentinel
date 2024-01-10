@@ -1,4 +1,5 @@
 defmodule SentinelWeb.PageLive.Show do
+  @moduledoc false
   use SentinelWeb, :live_view
 
   alias Sentinel.StatusPages

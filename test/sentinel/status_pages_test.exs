@@ -4,9 +4,9 @@ defmodule Sentinel.StatusPagesTest do
   alias Sentinel.StatusPages
 
   describe "pages" do
-    alias Sentinel.StatusPages.Page
-
     import Sentinel.StatusPagesFixtures
+
+    alias Sentinel.StatusPages.Page
 
     @invalid_attrs %{}
 
