@@ -7,6 +7,7 @@ defmodule Sentinel.Checks do
 
   alias Sentinel.Checks.Monitor
   alias Sentinel.Checks.MonitorWorker
+  alias Sentinel.Checks.UseCases.CheckCertificate
   alias Sentinel.Repo
 
   require Logger
@@ -127,6 +128,8 @@ defmodule Sentinel.Checks do
   def broadcast(topic, monitor) do
     Phoenix.PubSub.broadcast(Sentinel.PubSub, topic, {:msg, monitor})
   end
+
+  def check_certificate(url), do: CheckCertificate.call(url)
 
   # @spec topic(Product.t()) :: String.t()
   # defp topic(monitor) do

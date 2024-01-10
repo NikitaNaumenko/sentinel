@@ -13,8 +13,8 @@ config :sentinel,
 
 # Configures the endpoint
 config :sentinel, SentinelWeb.Endpoint,
+  adapter: Bandit.PhoenixAdapter,
   url: [host: "localhost"],
-  adapter: Phoenix.Endpoint.Cowboy2Adapter,
   render_errors: [
     formats: [html: SentinelWeb.ErrorHTML, json: SentinelWeb.ErrorJSON],
     layout: false

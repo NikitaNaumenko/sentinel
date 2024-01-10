@@ -52,11 +52,13 @@ defmodule Sentinel.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.4"},
       {:dns_cluster, "~> 0.1.1"},
-      {:plug_cowboy, "~> 2.5"},
+      {:bandit, "~> 1.0"},
       {:ecto_enum_migration, "~> 0.3.4"},
       {:oban, "~> 2.16"},
+      {:x509, "~> 0.8"},
       {:styler, "~> 0.11", only: [:dev, :test], runtime: false},
-      {:tailwind_formatter, "~> 0.4.0", only: [:dev, :test], runtime: false}
+      {:tailwind_formatter, "~> 0.4.0", only: [:dev, :test], runtime: false},
+      {:exvcr, "~> 0.11", only: :test}
     ]
   end
 
