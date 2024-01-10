@@ -38,6 +38,13 @@ defmodule SentinelWeb.Components.Sidebar do
               />
               <span class="ml-3"><%= dgettext("sidebar", "Monitors") %></span>
             </.sidebar_link>
+            <.sidebar_link path={~p"/status_pages"}>
+              <.icon
+                name="hero-bolt"
+                class="w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+              />
+              <span class="ml-3"><%= dgettext("sidebar", "Status pages") %></span>
+            </.sidebar_link>
             <a
               href="#"
               class="group flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"

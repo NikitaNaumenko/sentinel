@@ -71,6 +71,9 @@ defmodule SentinelWeb.Router do
       live "/monitors", MonitorLive.Index, :index
       live "/monitors/new", MonitorLive.New, :new
       live "/monitors/:id", MonitorLive.Show, :show
+      live "/status_pages", PageLive.Index, :index
+      live "/status_pages/:id", PageLive.Show, :index
+      live "/status_pages/new", PageLive.New, :new
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end

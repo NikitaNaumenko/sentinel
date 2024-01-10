@@ -12,6 +12,7 @@
 #
 alias Sentinel.Accounts
 alias Sentinel.Checks
+alias Sentinel.StatusPages
 
 Sentinel.Repo.transaction(fn ->
   account = Sentinel.Repo.insert!(%Accounts.Account{name: "Account 1"})
@@ -50,6 +51,22 @@ Sentinel.Repo.transaction(fn ->
     http_method: :get,
     request_timeout: 10,
     expected_status_code: 200,
+    account_id: account.id
+  })
+
+  Sentinel.Repo.insert!(%StatusPages.Page{
+    name: "Status page",
+    slug: "status-page",
+    state: :published,
+    public: true,
+    account_id: account.id
+  })
+
+  Sentinel.Repo.insert!(%StatusPages.Page{
+    name: "Other Status page",
+    slug: "other-status-page",
+    state: :draft,
+    public: false,
     account_id: account.id
   })
 end)
