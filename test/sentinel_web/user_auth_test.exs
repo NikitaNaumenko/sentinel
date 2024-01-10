@@ -1,10 +1,11 @@
 defmodule SentinelWeb.UserAuthTest do
   use SentinelWeb.ConnCase, async: true
 
+  import Sentinel.AccountsFixtures
+
   alias Phoenix.LiveView
   alias Sentinel.Accounts
   alias SentinelWeb.UserAuth
-  import Sentinel.AccountsFixtures
 
   @remember_me_cookie "_sentinel_web_user_remember_me"
 
@@ -139,7 +140,7 @@ defmodule SentinelWeb.UserAuthTest do
     end
 
     test "assigns nil to current_user assign if there isn't a user_token", %{conn: conn} do
-      session = conn |> get_session()
+      session = get_session(conn)
 
       {:cont, updated_socket} =
         UserAuth.on_mount(:mount_current_user, %{}, session, %LiveView.Socket{})
@@ -173,7 +174,7 @@ defmodule SentinelWeb.UserAuthTest do
     end
 
     test "redirects to login page if there isn't a user_token", %{conn: conn} do
-      session = conn |> get_session()
+      session = get_session(conn)
 
       socket = %LiveView.Socket{
         endpoint: SentinelWeb.Endpoint,
@@ -200,7 +201,7 @@ defmodule SentinelWeb.UserAuthTest do
     end
 
     test "doesn't redirect if there is no authenticated user", %{conn: conn} do
-      session = conn |> get_session()
+      session = get_session(conn)
 
       assert {:cont, _updated_socket} =
                UserAuth.on_mount(

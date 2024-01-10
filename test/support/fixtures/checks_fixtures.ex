@@ -10,7 +10,7 @@ defmodule Sentinel.ChecksFixtures do
   def monitor_fixture(attrs \\ %{}) do
     {:ok, monitor} =
       attrs
-      |> Enum.into(%{})
+      |> Map.new()
       |> Sentinel.Checks.create_monitor()
 
     monitor

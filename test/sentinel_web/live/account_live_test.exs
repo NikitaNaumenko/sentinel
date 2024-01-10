@@ -4,12 +4,12 @@ defmodule SentinelWeb.AccountLiveTest do
   import Phoenix.LiveViewTest
   import Sentinel.AccountsFixtures
 
-  @create_attrs %{name: System.unique_integer() |> to_string()}
-  @update_attrs %{name: System.unique_integer() |> to_string()}
+  @create_attrs %{name: to_string(System.unique_integer())}
+  @update_attrs %{name: to_string(System.unique_integer())}
   @invalid_attrs %{}
 
   defp create_account(_) do
-    account = account_fixture(%{name: System.unique_integer() |> to_string()})
+    account = account_fixture(%{name: to_string(System.unique_integer())})
     %{account: account}
   end
 

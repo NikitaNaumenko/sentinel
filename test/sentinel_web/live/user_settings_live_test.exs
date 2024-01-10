@@ -1,9 +1,10 @@
 defmodule SentinelWeb.UserSettingsLiveTest do
   use SentinelWeb.ConnCase
 
-  alias Sentinel.Accounts
   import Phoenix.LiveViewTest
   import Sentinel.AccountsFixtures
+
+  alias Sentinel.Accounts
 
   describe "Settings page" do
     test "renders settings page", %{conn: conn} do

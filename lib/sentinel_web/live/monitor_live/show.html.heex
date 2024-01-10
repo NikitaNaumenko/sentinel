@@ -5,7 +5,7 @@
   <:subtitle>This is a monitor record from your database.</:subtitle>
 </.header>
 
-<ul class="hidden text-sm font-medium text-center text-gray-500 rounded-lg shadow sm:flex dark:divide-gray-700 dark:text-gray-400">
+<ul class="hidden rounded-lg text-center text-sm font-medium text-gray-500 shadow dark:divide-gray-700 dark:text-gray-400 sm:flex">
   <li class="w-full">
     <.link
       patch={~p"/monitors/#{@monitor}?#{%{tab: "overview"}}"}
@@ -54,30 +54,55 @@
 </ul>
 <div id="default-tab-content">
   <div
-    class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
+    class="rounded-lg bg-gray-50 p-4 dark:bg-gray-800"
     hidden={hidden_tab_content?("overview", @current_tab)}
     id="overview"
     role="tabpanel"
     aria-labelledby="overview-tab"
   >
-    <p class="text-sm text-gray-500 dark:text-gray-400">
-      This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Profile tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.
-    </p>
   </div>
   <div
     hidden={hidden_tab_content?("settings", @current_tab)}
-    class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
+    class="rounded-lg bg-gray-50 p-4 dark:bg-gray-800"
     id="settings"
     role="tabpanel"
     aria-labelledby="settings-tab"
   >
-    <p class="text-sm text-gray-500 dark:text-gray-400">
-      This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Dashboard tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.
-    </p>
+    <.simple_form for={@form} id="monitor-form" phx-validate="validate" phx-submit="save">
+      <.input field={@form[:name]} label={dgettext("monitors", "Name")} />
+      <.input field={@form[:url]} label={dgettext("monitors", "URL")} />
+      <.input
+        field={@form[:http_method]}
+        label={dgettext("monitors", "HTTP Method")}
+        type="select"
+        options={@http_methods}
+      />
+      <.input
+        field={@form[:expected_status_code]}
+        label={dgettext("monitors", "Expected status code")}
+        type="select"
+        options={@status_codes}
+      />
+      <.input
+        field={@form[:interval]}
+        label={dgettext("monitors", "Interval")}
+        type="select"
+        options={@intervals}
+      />
+      <.input
+        field={@form[:request_timeout]}
+        label={dgettext("monitors", "Request timeout")}
+        type="select"
+        options={@request_timeouts}
+      />
+      <:actions>
+        <.button phx-disable-with="Saving..."><%= dgettext("forms", "Save") %></.button>
+      </:actions>
+    </.simple_form>
   </div>
   <div
     hidden={hidden_tab_content?("notifications", @current_tab)}
-    class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
+    class="rounded-lg bg-gray-50 p-4 dark:bg-gray-800"
     id="notifications"
     role="tabpanel"
     aria-labelledby="notifications-tab"
@@ -88,7 +113,7 @@
   </div>
   <div
     hidden={hidden_tab_content?("danger", @current_tab)}
-    class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
+    class="rounded-lg bg-gray-50 p-4 dark:bg-gray-800"
     id="danger"
     role="tabpanel"
     aria-labelledby="danger-tab"

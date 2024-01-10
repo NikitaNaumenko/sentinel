@@ -4,9 +4,9 @@ defmodule Sentinel.ChecksTest do
   alias Sentinel.Checks
 
   describe "monitors" do
-    alias Sentinel.Checks.Monitor
-
     import Sentinel.ChecksFixtures
+
+    alias Sentinel.Checks.Monitor
 
     @invalid_attrs %{}
 

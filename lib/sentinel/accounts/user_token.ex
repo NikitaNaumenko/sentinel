@@ -1,6 +1,9 @@
 defmodule Sentinel.Accounts.UserToken do
+  @moduledoc false
   use Ecto.Schema
+
   import Ecto.Query
+
   alias Sentinel.Accounts.UserToken
 
   @hash_algorithm :sha256

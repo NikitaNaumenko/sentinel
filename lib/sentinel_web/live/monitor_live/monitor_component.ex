@@ -26,7 +26,7 @@ defmodule SentinelWeb.MonitorLive.MonitorComponent do
     """
   end
 
-  defp indicator(assigns) do
+  def indicator(assigns) do
     ~H"""
     <span class={["z-10 inline-flex h-6 w-6 shrink-0 animate-pulse items-center justify-center rounded-full ring-0", outer_color_state(@monitor)]}>
       <span class={["flex h-3 w-3 rounded-full", inner_color_state(@monitor)]}></span>

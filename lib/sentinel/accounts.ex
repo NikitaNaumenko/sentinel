@@ -4,9 +4,12 @@ defmodule Sentinel.Accounts do
   """
 
   import Ecto.Query, warn: false
-  alias Sentinel.Repo
 
   alias Sentinel.Accounts.Account
+  alias Sentinel.Accounts.User
+  alias Sentinel.Accounts.UserNotifier
+  alias Sentinel.Accounts.UserToken
+  alias Sentinel.Repo
 
   @doc """
   Returns the list of accounts.
@@ -102,8 +105,6 @@ defmodule Sentinel.Accounts do
     Account.changeset(account, attrs)
   end
 
-  alias Sentinel.Accounts.{User, UserToken, UserNotifier}
-
   ## Database getters
 
   @doc """
@@ -134,8 +135,7 @@ defmodule Sentinel.Accounts do
       nil
 
   """
-  def get_user_by_email_and_password(email, password)
-      when is_binary(email) and is_binary(password) do
+  def get_user_by_email_and_password(email, password) when is_binary(email) and is_binary(password) do
     user = Repo.get_by(User, email: email)
     if User.valid_password?(user, password), do: user
   end
@@ -328,7 +328,8 @@ defmodule Sentinel.Accounts do
   def get_user_by_session_token(token) do
     {:ok, query} = UserToken.verify_session_token_query(token)
 
-    Repo.one(query)
+    query
+    |> Repo.one()
     |> Repo.preload(:account)
   end
 

@@ -1,4 +1,5 @@
 defmodule SentinelWeb.UserConfirmationInstructionsLive do
+  @moduledoc false
   use SentinelWeb, :live_view
 
   alias Sentinel.Accounts
@@ -20,9 +21,8 @@ defmodule SentinelWeb.UserConfirmationInstructionsLive do
         </:actions>
       </.simple_form>
 
-      <p class="text-center mt-4">
-        <.link href={~p"/users/register"}>Register</.link>
-        | <.link href={~p"/users/log_in"}>Log in</.link>
+      <p class="mt-4 text-center">
+        <.link href={~p"/users/register"}>Register</.link> | <.link href={~p"/users/log_in"}>Log in</.link>
       </p>
     </div>
     """

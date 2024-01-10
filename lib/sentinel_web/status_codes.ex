@@ -64,15 +64,12 @@ defmodule SentinelWeb.StatusCodes do
     511 => "511 - Network Authentication Required"
   }
 
-  @atom_to_status_code Enum.map(@http_status_codes, fn {code, message} ->
-                         {message
-                          |> String.downcase()
-                          |> String.replace(~r/[\s-]/, "_")
-                          |> String.to_atom(), code}
+  @atom_to_status_code Map.new(@http_status_codes, fn {code, message} ->
+                         {message |> String.downcase() |> String.replace(~r/[\s-]/, "_") |> String.to_atom(),
+                          code}
                        end)
-                       |> Enum.into(%{})
 
-  def status_codes(), do: @http_status_codes
+  def status_codes, do: @http_status_codes
   def status_code(code) when is_integer(code), do: code
   def status_code(atom) when is_atom(atom), do: Map.fetch!(@atom_to_status_code, atom)
 end

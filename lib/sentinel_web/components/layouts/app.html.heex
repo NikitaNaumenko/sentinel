@@ -1,8 +1,8 @@
-<Sidebar.sidebar current_user={@current_user}/>
+<Sidebar.sidebar current_user={@current_user} />
 
 <main class="p-4 sm:ml-64">
   <.flash_group flash={@flash} />
-  <div class="md:max-w-2xl ml-auto mr-auto">
+  <div class="mr-auto ml-auto md:max-w-2xl">
     <%= if function_exported?(@socket.view, :header, 1) do %>
       <%= @socket.view.header(assigns) %>
     <% end %>

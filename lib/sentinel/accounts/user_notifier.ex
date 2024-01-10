@@ -1,4 +1,5 @@
 defmodule Sentinel.Accounts.UserNotifier do
+  @moduledoc false
   import Swoosh.Email
 
   alias Sentinel.Mailer

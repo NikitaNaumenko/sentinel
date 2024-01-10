@@ -1,8 +1,9 @@
 defmodule SentinelWeb.UserAuth do
+  @moduledoc false
   use SentinelWeb, :verified_routes
 
-  import Plug.Conn
   import Phoenix.Controller
+  import Plug.Conn
 
   alias Sentinel.Accounts
 

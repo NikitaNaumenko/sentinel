@@ -10,7 +10,7 @@ defmodule Sentinel.AccountsFixtures do
   def account_fixture(attrs \\ %{}) do
     {:ok, account} =
       attrs
-      |> Enum.into(%{})
+      |> Map.new()
       |> Sentinel.Accounts.create_account()
 
     account
@@ -21,7 +21,7 @@ defmodule Sentinel.AccountsFixtures do
 
   def valid_user_attributes(attrs \\ %{}) do
     Enum.into(attrs, %{
-      account: %{name: System.unique_integer() |> to_string()},
+      account: %{name: to_string(System.unique_integer())},
       email: unique_user_email(),
       password: valid_user_password()
     })

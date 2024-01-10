@@ -1,5 +1,8 @@
 defmodule SentinelWeb.MonitorLive.Show do
+  @moduledoc false
   use SentinelWeb, :live_view
+
+  import SentinelWeb.MonitorLive.MonitorComponent, only: [indicator: 1]
 
   alias Sentinel.Checks
   alias Sentinel.Checks.Monitor
@@ -13,32 +16,60 @@ defmodule SentinelWeb.MonitorLive.Show do
   def handle_params(%{"id" => id} = params, _, socket) do
     monitor = Checks.get_monitor!(id)
 
+    changeset = Monitor.changeset(monitor, %{})
+
+    http_methods =
+      Monitor
+      |> Ecto.Enum.values(:http_method)
+      |> Enum.map(&to_string/1)
+      |> Enum.map(fn code -> {String.upcase(code), code} end)
+
+    status_codes = status_codes()
+    intervals = Monitor.intervals()
+    request_timeouts = Monitor.request_timeouts()
+
     {:noreply,
      socket
+     |> assign(:http_methods, http_methods)
+     |> assign(
+       :status_codes,
+       status_codes
+       |> Enum.map(fn {key, value} -> {value, key} end)
+       |> Enum.sort_by(fn {_, value} -> value end)
+     )
+     |> assign(:intervals, intervals)
+     |> assign(:request_timeouts, request_timeouts)
      |> assign(:page_title, monitor.name)
      |> assign(:monitor, monitor)
-     |> assign(:current_tab, params["tab"] || "overview")}
+     |> assign(:current_tab, params["tab"] || "overview")
+     |> assign_form(changeset)}
   end
 
-  defp indicator(assigns) do
-    ~H"""
-    <span class={[
-      "z-10 inline-flex items-center justify-center w-6 h-6 rounded-full ring-0 animate-pulse shrink-0",
-      failure?(@monitor) && "dark:bg-danger-900 bg-danger-200",
-      success?(@monitor) && "dark:bg-success-900 bg-success-200"
-    ]}>
-      <span class={[
-        "flex w-3 h-3 rounded-full",
-        failure?(@monitor) && "bg-danger-500",
-        success?(@monitor) && "bg-success-500"
-      ]}>
-      </span>
-    </span>
-    """
+  @impl Phoenix.LiveView
+  def handle_event("validate", %{"monitor" => monitor_attrs}, socket) do
+    changeset =
+      socket.assigns.monitor
+      |> Monitor.changeset(monitor_attrs)
+      |> Map.put(:action, :validate)
+
+    {:ok, assign_form(socket, changeset)}
   end
 
-  defp failure?(%Monitor{last_check: "failure"}), do: true
-  defp failure?(_), do: false
-  defp success?(%Monitor{last_check: "success"}), do: true
-  defp success?(_), do: false
+  @impl Phoenix.LiveView
+  def handle_event("save", %{"monitor" => monitor_attrs}, socket) do
+    case Checks.update_monitor(socket.assigns.monitor, monitor_attrs) do
+      {:ok, _monitor} ->
+        socket =
+          put_flash(socket, :info, dgettext("monitors", "Monitor updated successfully"))
+
+        {:noreply, socket}
+
+      {:error, changeset} ->
+        {:noreply, assign_form(socket, changeset)}
+    end
+  end
+
+  defp assign_form(socket, changeset) do
+    assign(socket, :form, to_form(changeset))
+  end
 end

@@ -1,4 +1,5 @@
 defmodule SentinelWeb.AccountLive.FormComponent do
+  @moduledoc false
   use SentinelWeb, :live_component
 
   alias Sentinel.Accounts
@@ -12,13 +13,7 @@ defmodule SentinelWeb.AccountLive.FormComponent do
         <:subtitle>Use this form to manage account records in your database.</:subtitle>
       </.header>
 
-      <.simple_form
-        for={@form}
-        id="account-form"
-        phx-target={@myself}
-        phx-change="validate"
-        phx-submit="save"
-      >
+      <.simple_form for={@form} id="account-form" phx-target={@myself} phx-change="validate" phx-submit="save">
         <:actions>
           <.button phx-disable-with="Saving...">Save Account</.button>
         </:actions>

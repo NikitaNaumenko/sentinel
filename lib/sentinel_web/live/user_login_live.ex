@@ -1,4 +1,5 @@
 defmodule SentinelWeb.UserLoginLive do
+  @moduledoc false
   use SentinelWeb, :live_view
 
   def render(assigns) do

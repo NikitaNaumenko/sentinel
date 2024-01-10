@@ -24,9 +24,9 @@ defmodule SentinelWeb do
       use Phoenix.Router, helpers: false
 
       # Import common connection and controller functions to use in pipelines
-      import Plug.Conn
       import Phoenix.Controller
       import Phoenix.LiveView.Router
+      import Plug.Conn
     end
   end
 
@@ -91,14 +91,15 @@ defmodule SentinelWeb do
     quote do
       # HTML escaping functionality
       use PhoenixHTMLHelpers
+
       import Phoenix.HTML
 
       # Core UI components and translation
       import SentinelWeb.CoreComponents
-      import SentinelWeb.Gettext
-      import SentinelWeb.StatusCodes
       import SentinelWeb.EnumHelpers
+      import SentinelWeb.Gettext
       import SentinelWeb.HTMLHelpers
+      import SentinelWeb.StatusCodes
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS

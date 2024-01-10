@@ -20,14 +20,15 @@ defmodule SentinelWeb.ConnCase do
   using do
     quote do
       # The default endpoint for testing
-      @endpoint SentinelWeb.Endpoint
-
       use SentinelWeb, :verified_routes
+
+      import Phoenix.ConnTest
 
       # Import conveniences for testing with connections
       import Plug.Conn
-      import Phoenix.ConnTest
       import SentinelWeb.ConnCase
+
+      @endpoint SentinelWeb.Endpoint
     end
   end
 

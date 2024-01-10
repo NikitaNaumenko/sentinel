@@ -1,12 +1,16 @@
 defmodule Sentinel.AccountsTest do
   use Sentinel.DataCase
 
+  import Sentinel.AccountsFixtures
+
   alias Sentinel.Accounts
+  alias Sentinel.Accounts.User
+  alias Sentinel.Accounts.UserToken
 
   describe "accounts" do
-    alias Sentinel.Accounts.Account
-
     import Sentinel.AccountsFixtures
+
+    alias Sentinel.Accounts.Account
 
     @invalid_attrs %{}
 
@@ -54,9 +58,6 @@ defmodule Sentinel.AccountsTest do
       assert %Ecto.Changeset{} = Accounts.change_account(account)
     end
   end
-
-  import Sentinel.AccountsFixtures
-  alias Sentinel.Accounts.{User, UserToken}
 
   describe "get_user_by_email/1" do
     test "does not return the user if the email does not exist" do

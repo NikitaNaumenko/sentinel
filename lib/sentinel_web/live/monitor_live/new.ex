@@ -1,4 +1,5 @@
 defmodule SentinelWeb.MonitorLive.New do
+  @moduledoc false
   use SentinelWeb, :live_view
 
   alias Sentinel.Checks
@@ -9,7 +10,8 @@ defmodule SentinelWeb.MonitorLive.New do
     changeset = Monitor.changeset(%Monitor{}, %{})
 
     http_methods =
-      Ecto.Enum.values(Monitor, :http_method)
+      Monitor
+      |> Ecto.Enum.values(:http_method)
       |> Enum.map(&to_string/1)
       |> Enum.map(fn code -> {String.upcase(code), code} end)
 
@@ -22,7 +24,8 @@ defmodule SentinelWeb.MonitorLive.New do
       |> assign(:http_methods, http_methods)
       |> assign(
         :status_codes,
-        Enum.map(status_codes, fn {key, value} -> {value, key} end)
+        status_codes
+        |> Enum.map(fn {key, value} -> {value, key} end)
         |> Enum.sort_by(fn {_, value} -> value end)
       )
       |> assign(:intervals, intervals)
@@ -53,7 +56,8 @@ defmodule SentinelWeb.MonitorLive.New do
   @impl Phoenix.LiveView
   def handle_event("validate", %{"monitor" => monitor_attrs}, socket) do
     changeset =
-      Monitor.changeset(%Monitor{}, monitor_attrs)
+      %Monitor{}
+      |> Monitor.changeset(monitor_attrs)
       |> Map.put(:action, :validate)
 
     {:ok, assign_form(socket, changeset)}
@@ -61,9 +65,7 @@ defmodule SentinelWeb.MonitorLive.New do
 
   @impl Phoenix.LiveView
   def handle_event("save", %{"monitor" => monitor_attrs}, socket) do
-    case Checks.create_monitor(
-           Map.put(monitor_attrs, "account_id", socket.assigns.current_user.account_id)
-         ) do
+    case Checks.create_monitor(Map.put(monitor_attrs, "account_id", socket.assigns.current_user.account_id)) do
       {:ok, monitor} ->
         socket =
           socket

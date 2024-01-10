@@ -1,4 +1,5 @@
 defmodule SentinelWeb.HTMLHelpers do
+  @moduledoc false
   def hidden_tab_content?(tab, tab), do: false
   def hidden_tab_content?(_tab, _current_tab), do: true
 
