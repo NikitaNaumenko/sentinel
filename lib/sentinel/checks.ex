@@ -5,6 +5,7 @@ defmodule Sentinel.Checks do
 
   import Ecto.Query, warn: false
 
+  alias Sentinel.Checks.Certificate
   alias Sentinel.Checks.Monitor
   alias Sentinel.Checks.MonitorWorker
   alias Sentinel.Checks.UseCases.CheckCertificate
@@ -133,6 +134,10 @@ defmodule Sentinel.Checks do
   end
 
   def check_certificate(url), do: CheckCertificate.call(url)
+
+  def last_certificate(%Monitor{id: monitor_id}) do
+    Repo.one(from(c in Certificate, where: c.monitor_id == ^monitor_id, order_by: [desc: :id], limit: 1))
+  end
 
   # @spec topic(Product.t()) :: String.t()
   # defp topic(monitor) do

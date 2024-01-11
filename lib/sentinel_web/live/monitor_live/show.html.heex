@@ -54,39 +54,76 @@
 </ul>
 <div id="default-tab-content">
   <div
-    class="rounded-lg bg-gray-50 p-4 dark:bg-gray-800"
+    class="rounded-lg p-4 "
     hidden={hidden_tab_content?("overview", @current_tab)}
     id="overview"
     role="tabpanel"
     aria-labelledby="overview-tab"
   >
-    <div class="max-w-sm rounded-lg border border-gray-200 bg-white p-6 shadow dark:border-gray-700 dark:bg-gray-800">
-      <a href="#">
-        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
-          SSL days remaining <.icon name="hero-lock-closed-solid" class="w-6 h-6 text-success-700" />
-        </h5>
-      </a>
-      <p class="text-success-700 mb-3 text-2xl font-normal dark:text-success-600">
-        30
-      </p>
-      <a href="#" class="inline-flex items-center text-blue-600 hover:underline">
-        See our guideline
-        <svg
-          class="ms-2.5 h-3 w-3 rtl:rotate-[270deg]"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 18 18"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"
-          />
-        </svg>
-      </a>
+    <div class="grid grid-cols-6 gap-4">
+      <div class="grid-cols-subgrid border-danger-700 col-span-4 grid grid grid-flow-row grid-rows-3 gap-4 border">
+        <div class="p-10">06</div>
+        <div class=" p-10">06</div>
+        <div class=" p-10">06</div>
+      </div>
+
+      <div class="grid-cols-subgrid border-danger-500 col-span-2 grid grid-rows-3 gap-4 border">
+        <div class="">
+          <div
+            href="#"
+            class="block rounded-lg border border-gray-200 bg-white p-6 shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+          >
+            <%= if @certificate do %>
+              <h5 class="text-l font-bold tracking-tight text-gray-900 dark:text-white">
+                <%= dgettext("monitors", "SSL days remaining") %>
+                <.icon name="hero-lock-closed-solid" class="w-6 h-6 text-success-500 mb-2" />
+              </h5>
+              <div class="py-2">
+                <span class="text-success-600 text-2xl font-semibold dark:text-white">
+                  30
+                </span>
+              </div>
+              <div>
+                <div class="py-1">
+                  <div class="text-l font-semibold text-gray-900 dark:text-white">
+                    <%= dgettext("certificates", "Subject") %>
+                  </div>
+                  <div class="text-gray-500 dark:text-gray-400"><%= @certificate.subject %></div>
+                </div>
+                <div class="py-1">
+                  <div class="text-l font-semibold text-gray-900 dark:text-white">
+                    <%= dgettext("certificates", "Issuer") %>
+                  </div>
+                  <div class="text-gray-500 dark:text-gray-400"><%= @certificate.issuer %></div>
+                </div>
+                <div class="py-1">
+                  <div class="text-l font-semibold text-gray-900 dark:text-white">
+                    <%= dgettext("certificates", "Valid from") %>
+                  </div>
+                  <div class="text-gray-500 dark:text-gray-400">
+                    <%= Cldr.DateTime.to_string!(@certificate.not_before) %>
+                  </div>
+                </div>
+                <div class="py-1">
+                  <div class="text-l font-semibold text-gray-900 dark:text-white">
+                    <%= dgettext("certificates", "Valid to") %>
+                  </div>
+                  <div class="text-gray-500 dark:text-gray-400">
+                    <%= Cldr.DateTime.to_string!(@certificate.not_after) %>
+                  </div>
+                </div>
+              </div>
+            <% else %>
+              <h5 class="text-l font-bold tracking-tight text-gray-900 dark:text-white">
+                <%= dgettext("monitors", "No Certificate") %>
+                <.icon name="hero-exclamation-triangle" class="w-6 h-6 text-danger-500 mb-2" />
+              </h5>
+            <% end %>
+          </div>
+        </div>
+        <div class=" p-10">06</div>
+        <div class=" p-10">06</div>
+      </div>
     </div>
   </div>
   <div

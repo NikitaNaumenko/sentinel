@@ -31,6 +31,10 @@ config :sentinel, SentinelWeb.Endpoint,
 # at the `config/runtime.exs`.
 config :sentinel, Sentinel.Mailer, adapter: Swoosh.Adapters.Local
 
+ config :ex_cldr,
+   default_locale: "en",
+   default_backend: Sentinel.Cldr
+
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.17.11",

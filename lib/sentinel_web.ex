@@ -103,6 +103,7 @@ defmodule SentinelWeb do
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
+      alias Sentinel.Cldr
       alias SentinelWeb.Components.Sidebar
 
       # Routes generation with the ~p sigil

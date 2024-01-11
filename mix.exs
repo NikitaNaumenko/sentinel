@@ -56,6 +56,10 @@ defmodule Sentinel.MixProject do
       {:ecto_enum_migration, "~> 0.3.4"},
       {:oban, "~> 2.16"},
       {:x509, "~> 0.8"},
+      {:ex_cldr, "~> 2.0"},
+      {:ex_cldr_dates_times, "~> 2.0"},
+      {:ex_cldr_numbers, "~> 2.0"},
+      {:ex_cldr_calendars, "~> 1.23"},
       {:styler, "~> 0.11", only: [:dev, :test], runtime: false},
       {:tailwind_formatter, "~> 0.4.0", only: [:dev, :test], runtime: false},
       {:exvcr, "~> 0.11", only: :test}

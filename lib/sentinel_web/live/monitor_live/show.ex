@@ -27,6 +27,7 @@ defmodule SentinelWeb.MonitorLive.Show do
     status_codes = status_codes()
     intervals = Monitor.intervals()
     request_timeouts = Monitor.request_timeouts()
+    certificate = Checks.last_certificate(monitor)
 
     {:noreply,
      socket
@@ -41,6 +42,7 @@ defmodule SentinelWeb.MonitorLive.Show do
      |> assign(:request_timeouts, request_timeouts)
      |> assign(:page_title, monitor.name)
      |> assign(:monitor, monitor)
+     |> assign(:certificate, certificate)
      |> assign(:current_tab, params["tab"] || "overview")
      |> assign_form(changeset)}
   end
