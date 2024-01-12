@@ -6,6 +6,7 @@ defmodule Sentinel.Checks do
   import Ecto.Query, warn: false
 
   alias Sentinel.Checks.Certificate
+  alias Sentinel.Checks.Check
   alias Sentinel.Checks.Monitor
   alias Sentinel.Checks.MonitorWorker
   alias Sentinel.Checks.UseCases.CheckCertificate
@@ -116,6 +117,24 @@ defmodule Sentinel.Checks do
   """
   def change_monitor(%Monitor{} = monitor, attrs \\ %{}) do
     Monitor.changeset(monitor, attrs)
+  end
+
+  def calculate_uptime(%Monitor{id: monitor_id}) do
+    from(c in Check,
+      where: [monitor_id: ^monitor_id],
+      group_by: :result,
+      select: {c.result, fragment("count(*) * 100.0 / sum(count(*)) over()")}
+    )
+    |> Repo.all()
+    |> Keyword.get(:success, 0)
+  end
+
+  def avg_response_time(%Monitor{id: monitor_id}) do
+    Repo.aggregate(from(c in Check, where: [monitor_id: ^monitor_id]), :avg, :duration)
+  end
+
+  def count_incidents(%Monitor{id: monitor_id}) do
+    Repo.aggregate(from(c in Check, where: [monitor_id: ^monitor_id, result: :failure]), :count, :id)
   end
 
   # TODO: Build normal topic build function
