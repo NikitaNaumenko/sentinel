@@ -137,6 +137,26 @@ defmodule Sentinel.Checks do
     Repo.aggregate(from(c in Check, where: [monitor_id: ^monitor_id, result: :failure]), :count, :id)
   end
 
+  def calculate_uptime_sequence(%Monitor{id: monitor_id}) do
+    last_failed =
+      from(c in Check,
+        where: [result: :failure, monitor_id: ^monitor_id],
+        order_by: [desc: :id],
+        limit: 1,
+        select: c.id
+      )
+
+    Repo.one(
+      from(c in Check,
+        where: [result: :success, monitor_id: ^monitor_id],
+        where: c.id > subquery(last_failed),
+        order_by: [asc: :id],
+        limit: 1,
+        select: fragment("LOCALTIMESTAMP - inserted_at")
+      )
+    )
+  end
+
   # TODO: Build normal topic build function
   def subscribe(topic) do
     Phoenix.PubSub.subscribe(Sentinel.PubSub, topic)
