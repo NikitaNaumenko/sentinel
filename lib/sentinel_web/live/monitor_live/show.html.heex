@@ -83,8 +83,12 @@
             </div>
           </div>
         </div>
-        <div class=" p-10">06</div>
-        <div class=" p-10">06</div>
+        <div id="uptime-monitor" phx-hook="UptimeMonitorChart">
+          <canvas id="uptime-monitor-chart"></canvas>
+        </div>
+        <div id="response-time-monitor" phx-hook="ResponseTimeMonitorChart">
+          <canvas id="response-time-monitor-chart"></canvas>
+        </div>
       </div>
       <div class="grid-cols-subgrid border-danger-500 col-span-2 grid min-w-max grid-rows-3 gap-4 border">
         <div class="">
