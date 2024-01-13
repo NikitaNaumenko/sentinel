@@ -127,10 +127,14 @@ defmodule Sentinel.Checks do
     )
     |> Repo.all()
     |> Keyword.get(:success, 0)
+    |> Decimal.round(2)
   end
 
   def avg_response_time(%Monitor{id: monitor_id}) do
-    Repo.aggregate(from(c in Check, where: [monitor_id: ^monitor_id]), :avg, :duration)
+    from(c in Check, where: [monitor_id: ^monitor_id])
+    |> Repo.aggregate(:avg, :duration)
+    |> Decimal.round()
+    |> Decimal.to_integer()
   end
 
   def count_incidents(%Monitor{id: monitor_id}) do
@@ -146,15 +150,16 @@ defmodule Sentinel.Checks do
         select: c.id
       )
 
-    Repo.one(
-      from(c in Check,
-        where: [result: :success, monitor_id: ^monitor_id],
-        where: c.id > subquery(last_failed),
-        order_by: [asc: :id],
-        limit: 1,
-        select: fragment("LOCALTIMESTAMP - inserted_at")
-      )
+    from(c in Check,
+      where: [result: :success, monitor_id: ^monitor_id],
+      where: c.id > subquery(last_failed),
+      order_by: [asc: :id],
+      limit: 1,
+      select: fragment("EXTRACT(epoch FROM LOCALTIMESTAMP - inserted_at)")
     )
+    |> Repo.one()
+    |> Decimal.round()
+    |> Decimal.to_integer()
   end
 
   # TODO: Build normal topic build function

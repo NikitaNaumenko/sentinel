@@ -43,6 +43,10 @@ defmodule SentinelWeb.MonitorLive.Show do
      |> assign(:page_title, monitor.name)
      |> assign(:monitor, monitor)
      |> assign(:certificate, certificate)
+     |> assign(:uptime, Checks.calculate_uptime(monitor))
+     |> assign(:avg_response_time, Checks.avg_response_time(monitor))
+     |> assign(:incidents, Checks.count_incidents(monitor))
+     |> assign(:uptime_period, Checks.calculate_uptime_sequence(monitor))
      |> assign(:current_tab, params["tab"] || "overview")
      |> assign_form(changeset)}
   end

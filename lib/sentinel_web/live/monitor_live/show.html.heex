@@ -66,20 +66,20 @@
         <div>
           <div class="grid grid-cols-4">
             <div class="rounded-l-lg border border-gray-400 p-2">
-              <div>Uptime</div>
-              <div>100%</div>
+              <div><%= dgettext("monitors", "Uptime") %></div>
+              <div><%= @uptime %>%</div>
             </div>
             <div class="border-y border-r border-gray-400 p-2">
               <div>Up for</div>
-              <div>7 days</div>
+              <div><%= @uptime_period %></div>
             </div>
             <div class="border-y border-r border-gray-400 p-2">
               <div>Avg response time</div>
-              <div>2 sec</div>
+              <div><%= @avg_response_time %></div>
             </div>
             <div class="rounded-r-lg border-y border-r border-gray-400 p-2">
               <div>Incidents</div>
-              <div>0</div>
+              <div><%= @incidents %></div>
             </div>
           </div>
         </div>
