@@ -133,8 +133,15 @@ defmodule Sentinel.Checks do
   def avg_response_time(%Monitor{id: monitor_id}) do
     from(c in Check, where: [monitor_id: ^monitor_id])
     |> Repo.aggregate(:avg, :duration)
-    |> Decimal.round()
-    |> Decimal.to_integer()
+    |> case do
+      nil ->
+        0
+
+      avg ->
+        avg
+        |> Decimal.round()
+        |> Decimal.to_integer()
+    end
   end
 
   def count_incidents(%Monitor{id: monitor_id}) do
@@ -158,6 +165,15 @@ defmodule Sentinel.Checks do
       select: fragment("EXTRACT(epoch FROM LOCALTIMESTAMP - inserted_at)")
     )
     |> Repo.one()
+    |> case do
+      nil ->
+        0
+
+      avg ->
+        avg
+        |> Decimal.round()
+        |> Decimal.to_integer()
+    end
     |> Decimal.round()
     |> Decimal.to_integer()
   end
@@ -205,6 +221,16 @@ defmodule Sentinel.Checks do
         where: [monitor_id: ^monitor_id],
         where: c.inserted_at > ^yesterday,
         select: %{duration: c.duration, inserted_at: c.inserted_at}
+      )
+    )
+  end
+
+  def last_five_checks(%Monitor{id: monitor_id}) do
+    Repo.all(
+      from(c in Check,
+        where: [monitor_id: ^monitor_id],
+        order_by: [desc: :id],
+        limit: 5
       )
     )
   end

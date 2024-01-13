@@ -165,33 +165,19 @@
           <h5 class="text-l font-bold tracking-tight text-gray-900 dark:text-white">
             <%= dgettext("monitors", "Last five checks") %>
           </h5>
-          <div class="py-2">
-            <span class="me-2 bg-success-100 text-success-800 rounded px-2.5 py-0.5 text-xs font-medium dark:bg-success-900 dark:text-success-300">
-              200
+          <div :for={check <- @last_five_checks} class="py-2">
+            <span class={["me-2 rounded px-2.5 py-0.5 text-xs font-medium", check.result == :success && "bg-success-100 text-success-800 dark:bg-success-900 dark:text-success-300", check.result == :failure && "bg-danger-100 text-danger-800 dark:bg-danger-900 dark:text-danger-300"]}>
+              <%= check.status_code %>
             </span>
             <span>
-              2 minutes ago
-            </span>
-          </div>
-          <div class="py-2">
-            <span class="me-2 bg-success-100 text-success-800 rounded px-2.5 py-0.5 text-xs font-medium dark:bg-success-900 dark:text-success-300">
-              200
-            </span>
-            <span>
-              10 minutes ago
-            </span>
-          </div>
-          <div class="py-2">
-            <span class="me-2 bg-danger-100 text-danger-800 rounded px-2.5 py-0.5 text-xs font-medium dark:bg-danger-900 dark:text-danger-300">
-              500
-            </span>
-            <span>
-              10 minutes ago
+              <%= Sentinel.Cldr.DateTime.Relative.to_string!(check.inserted_at, format: :narrow) %>
             </span>
           </div>
         </div>
 
-        <div class=" p-10">06</div>
+        <div class="mt-5 block rounded-lg border border-gray-200 bg-white p-6 shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+          <%!-- TODO: --%> Here will be HTTP transcription of checks
+        </div>
       </div>
     </div>
   </div>

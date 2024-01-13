@@ -11,6 +11,7 @@ defmodule Sentinel.Checks.Check do
     field :reason, :string
     field :raw_response, :map, default: %{}
     field :duration, :integer
+    field :status_code, :integer
 
     belongs_to :monitor, Monitor
     timestamps(type: :utc_datetime_usec)
@@ -19,8 +20,8 @@ defmodule Sentinel.Checks.Check do
   @doc false
   def changeset(attrs) do
     %__MODULE__{}
-    |> cast(attrs, [:result, :reason, :raw_response, :duration])
-    |> validate_required([:result, :raw_response, :duration])
+    |> cast(attrs, [:result, :reason, :raw_response, :duration, :status_code])
+    |> validate_required([:result, :raw_response, :duration, :status_code])
   end
 
   def define_result(status, status), do: :success
