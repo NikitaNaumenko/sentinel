@@ -4,6 +4,7 @@ defmodule Sentinel.Repo.Migrations.CreateMonitors do
 
   def change do
     create_type(:http_methods, [:get, :post, :put, :patch, :head, :options, :delete])
+    create_type(:monitor_states, [:active, :disabled])
 
     create table(:monitors) do
       add :name, :string
@@ -13,6 +14,7 @@ defmodule Sentinel.Repo.Migrations.CreateMonitors do
       add :request_timeout, :integer
       add :expected_status_code, :integer
       add :account_id, references(:accounts, on_delete: :delete_all), null: false
+      add :state, :monitors_states
       timestamps(type: :utc_datetime_usec)
     end
 
