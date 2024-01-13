@@ -14,14 +14,17 @@ export default {
   mounted() {
     console.log(this.el);
 
+    const data = JSON.parse(this.el.dataset.values);
+    console.log(data);
+
     new Chart(document.getElementById("response-time-monitor-chart"), {
       type: "bar",
       data: {
-        labels: data.map((row) => row.year),
+        labels: data.map((row) => row.inserted_at),
         datasets: [
           {
-            label: "Acquisitions by year",
-            data: data.map((row) => row.count),
+            label: "Response time",
+            data: data.map((row) => row.duration),
           },
         ],
       },

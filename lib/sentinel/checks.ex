@@ -183,6 +183,32 @@ defmodule Sentinel.Checks do
     Repo.one(from(c in Certificate, where: c.monitor_id == ^monitor_id, order_by: [desc: :id], limit: 1))
   end
 
+  def list_checks_for_uptime_stats(%Monitor{id: monitor_id}) do
+    # TODO: set 1
+    yesterday = DateTime.add(DateTime.utc_now(), -10, :day)
+
+    Repo.all(
+      from(c in Check,
+        where: [monitor_id: ^monitor_id],
+        where: c.inserted_at > ^yesterday,
+        select: %{result: c.result, inserted_at: c.inserted_at}
+      )
+    )
+  end
+
+  def list_checks_for_response_times(%Monitor{id: monitor_id}) do
+    # TODO: set 1
+    yesterday = DateTime.add(DateTime.utc_now(), -10, :day)
+
+    Repo.all(
+      from(c in Check,
+        where: [monitor_id: ^monitor_id],
+        where: c.inserted_at > ^yesterday,
+        select: %{duration: c.duration, inserted_at: c.inserted_at}
+      )
+    )
+  end
+
   # @spec topic(Product.t()) :: String.t()
   # defp topic(monitor) do
   #   "monitor-#{monitor.account_id}-#{monitor.id}"

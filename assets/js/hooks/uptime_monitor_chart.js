@@ -14,14 +14,27 @@ const UptimeMonitorChart = {
   mounted() {
     console.log(this.el);
 
+    const data = JSON.parse(this.el.dataset.values);
+    console.log(data);
     new Chart(document.getElementById("uptime-monitor-chart"), {
-      type: "bar",
+      type: "line",
+
+      options: {
+        plugins: {
+          decimation: {
+            enabled: false,
+            algorithm: "min-max",
+            sample: "lltb",
+          },
+        },
+      },
       data: {
-        labels: data.map((row) => row.year),
+        labels: data.map((row) => row.inserted_at),
+
         datasets: [
           {
-            label: "Acquisitions by year",
-            data: data.map((row) => row.count),
+            label: "Uptime",
+            data: data.map((row) => (row.result === "success" ? 1 : 0)),
           },
         ],
       },
