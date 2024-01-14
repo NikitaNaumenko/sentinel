@@ -14,7 +14,7 @@ defmodule Sentinel.Repo.Migrations.CreateMonitors do
       add :request_timeout, :integer
       add :expected_status_code, :integer
       add :account_id, references(:accounts, on_delete: :delete_all), null: false
-      add :state, :monitors_states
+      add :state, :monitor_states
       timestamps(type: :utc_datetime_usec)
     end
 

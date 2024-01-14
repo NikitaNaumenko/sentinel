@@ -78,6 +78,7 @@ defmodule Sentinel.Checks.Monitor do
     field :request_timeout, :integer
     field :expected_status_code, :integer
     field :last_check, :string, virtual: true, default: "success"
+    field :state, Ecto.Enum, values: [:active, :disabled], default: :active
     belongs_to :account, Sentinel.Accounts.Account
     has_many :certificates, Certificate
 
@@ -116,7 +117,8 @@ defmodule Sentinel.Checks.Monitor do
         raw_response: finch_response,
         result: Check.define_result(monitor.expected_status_code, status),
         reason: nil,
-        duration: duration
+        duration: duration,
+        status_code: status
       }
       |> Check.changeset()
       |> put_assoc(:monitor, monitor)
