@@ -10,19 +10,19 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
       <div class="w-full">
         <div>
           <div class="mb-4 grid grid-cols-4">
-            <div class="block rounded-l-lg border border-gray-200 bg-white p-3  dark:border-gray-700 dark:bg-gray-800 ">
+            <div class="block rounded-l-lg border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800 ">
               <div><%= dgettext("monitors", "Uptime") %></div>
               <div><%= @uptime %>%</div>
             </div>
-            <div class="block border-y border-gray-200 bg-white p-3 border-r dark:border-gray-700 dark:bg-gray-800">
+            <div class="block border-y border-r border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
               <div>Up for</div>
               <div><%= @uptime_period %></div>
             </div>
-            <div class="block border-y border-gray-200 bg-white p-3  border-r dark:border-gray-700 dark:bg-gray-800">
+            <div class="block border-y border-r border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
               <div>Avg response time</div>
               <div><%= @avg_response_time %></div>
             </div>
-            <div class="block rounded-r-lg border-y border-r border-gray-200 bg-white p-3  dark:border-gray-700 dark:bg-gray-800">
+            <div class="block rounded-r-lg border-y border-r border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
               <div>Incidents</div>
               <div><%= @incidents %></div>
             </div>

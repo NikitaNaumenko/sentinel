@@ -52,8 +52,7 @@ defmodule SentinelWeb.Components.Sidebar do
               />
               <span class="ml-3"><%= dgettext("sidebar", "Integrations") %></span>
             </.sidebar_link>
-
-         </li>
+          </li>
         </ul>
       </div>
       <div class="absolute bottom-0 left-0 z-20 hidden w-full justify-center space-x-4 border-r border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800 lg:flex">

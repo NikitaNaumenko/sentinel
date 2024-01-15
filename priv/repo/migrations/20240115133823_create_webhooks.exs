@@ -4,7 +4,7 @@ defmodule Sentinel.Repo.Migrations.CreateWebhooks do
   def change do
     create table(:webhooks) do
       add :endpoint, :string
-      add :payload, :map
+      add :account_id, references(:accounts), null: false
 
       timestamps(type: :utc_datetime_usec)
     end
