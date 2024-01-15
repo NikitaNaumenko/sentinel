@@ -226,7 +226,7 @@ defmodule SentinelWeb.CoreComponents do
     ~H"""
     <button
       type={@type}
-      class={["rounded-lg bg-cyan-900 px-3 py-2 hover:bg-primary-700 phx-submit-loading:opacity-75", "text-sm font-semibold leading-6 text-white active:text-white/80", @class]}
+      class={["rounded-lg bg-brand px-3 py-2 hover:bg-brand-emphasis phx-submit-loading:opacity-75", "text-sm font-semibold leading-6 text-white active:text-white/80", @class]}
       {@rest}
     >
       <%= render_slot(@inner_block) %>

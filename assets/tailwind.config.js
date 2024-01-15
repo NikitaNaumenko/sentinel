@@ -15,6 +15,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        brand: {
+          light: "#112716",
+          DEFAULT: "#112716",
+          dark: "#f5f7f5",
+          emphasis: "#30653a",
+        },
         primary: {
           50: "#f4f6fb",
           100: "#e9ecf5",

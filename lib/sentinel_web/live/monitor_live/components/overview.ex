@@ -7,29 +7,29 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
     ~H"""
     <div class="py-5">Last 7 days</div>
     <div class="flex w-full justify-between gap-4">
-      <div class="max-w-7xl">
+      <div class="w-full">
         <div>
           <div class="mb-4 grid grid-cols-4">
-            <div class="block rounded-l-lg border border-gray-200 bg-white p-3 shadow dark:border-gray-700 dark:bg-gray-800 ">
+            <div class="block rounded-l-lg border border-gray-200 bg-white p-3  dark:border-gray-700 dark:bg-gray-800 ">
               <div><%= dgettext("monitors", "Uptime") %></div>
               <div><%= @uptime %>%</div>
             </div>
-            <div class="block border-y border-gray-200 bg-white p-3 shadow dark:border-gray-700 dark:bg-gray-800">
+            <div class="block border-y border-gray-200 bg-white p-3 border-r dark:border-gray-700 dark:bg-gray-800">
               <div>Up for</div>
               <div><%= @uptime_period %></div>
             </div>
-            <div class="block border-y border-gray-200 bg-white p-3 shadow dark:border-gray-700 dark:bg-gray-800">
+            <div class="block border-y border-gray-200 bg-white p-3  border-r dark:border-gray-700 dark:bg-gray-800">
               <div>Avg response time</div>
               <div><%= @avg_response_time %></div>
             </div>
-            <div class="block rounded-r-lg border-y border-r border-gray-200 bg-white p-3 shadow dark:border-gray-700 dark:bg-gray-800">
+            <div class="block rounded-r-lg border-y border-r border-gray-200 bg-white p-3  dark:border-gray-700 dark:bg-gray-800">
               <div>Incidents</div>
               <div><%= @incidents %></div>
             </div>
           </div>
         </div>
         <div
-          class="mb-4 block rounded-lg border border-gray-200 bg-white p-3 shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+          class="mb-4 block rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800"
           id="uptime-monitor"
           data-values={Jason.encode!(@uptime_stats)}
           phx-hook="UptimeMonitorChart"
@@ -37,7 +37,7 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
           <canvas id="uptime-monitor-chart"></canvas>
         </div>
         <div
-          class="mb-4 block rounded-lg border border-gray-200 bg-white p-3 shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+          class="mb-4 block rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800"
           data-values={Jason.encode!(@response_times)}
           id="response-time-monitor"
           phx-hook="ResponseTimeMonitorChart"
@@ -45,7 +45,7 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
           <canvas id="response-time-monitor-chart"></canvas>
         </div>
         <%!-- TODO: Incidents will be here --%>
-        <div class="mb-4 block rounded-lg border border-gray-200 bg-white shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+        <div class="mb-4 block rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
           <div class="flex flex-wrap border-b border-gray-200 bg-gray-50 p-4 text-center text-sm font-medium text-gray-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400">
             Incidents
           </div>
@@ -55,9 +55,9 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
         </div>
       </div>
 
-      <div class="w-80">
+      <div class="min-w-[326px]">
         <div class="">
-          <div class="block rounded-lg border border-gray-200 bg-white p-6 shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+          <div class="block rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
             <%= if @certificate do %>
               <h5 class="text-l font-bold tracking-tight text-gray-900 dark:text-white">
                 <%= dgettext("monitors", "SSL days remaining") %>
@@ -106,7 +106,7 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
             <% end %>
           </div>
         </div>
-        <div class="mt-5 block rounded-lg border border-gray-200 bg-white p-6 shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+        <div class="mt-5 block rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
           <h5 class="text-l font-bold tracking-tight text-gray-900 dark:text-white">
             <%= dgettext("monitors", "Last five checks") %>
           </h5>
@@ -120,7 +120,7 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
           </div>
         </div>
 
-        <div class="mt-5 block rounded-lg border border-gray-200 bg-white p-6 shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+        <div class="mt-5 block rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
           <%!-- TODO: --%> Here will be HTTP transcription of checks
         </div>
       </div>
