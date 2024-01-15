@@ -2,6 +2,8 @@ defmodule SentinelWeb.MonitorLive.Show do
   @moduledoc false
   use SentinelWeb, :live_view
 
+  import SentinelWeb.MonitorLive.Components.Notifications, only: [notifications: 1]
+  import SentinelWeb.MonitorLive.Components.Overview, only: [overview: 1]
   import SentinelWeb.MonitorLive.MonitorComponent, only: [indicator: 1]
 
   alias Sentinel.Checks
@@ -90,6 +92,23 @@ defmodule SentinelWeb.MonitorLive.Show do
 
       {:error, _changeset} ->
         {:noreply, put_flash(socket, :error, dgettext("monitors", "Monitor cannot be deleted"))}
+    end
+  end
+
+  def handle_event("toggle-monitor", %{"id" => id}, socket) do
+    monitor = Checks.get_monitor!(id)
+
+    case Checks.toggle_monitor(monitor) do
+      {:ok, monitor} ->
+        socket =
+          socket
+          |> assign(:monitor, monitor)
+          |> put_flash(:info, dgettext("monitors", "Monitor toggled successfully"))
+
+        {:noreply, socket}
+
+      {:error, _error} ->
+        {:noreply, put_flash(socket, :error, dgettext("monitors", "Monitor cannot be toggled"))}
     end
   end
 

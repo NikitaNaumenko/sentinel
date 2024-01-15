@@ -119,6 +119,15 @@ defmodule Sentinel.Checks do
     Monitor.changeset(monitor, attrs)
   end
 
+  def toggle_monitor(monitor) do
+    monitor
+    |> Ecto.Changeset.change(%{state: toggle_monitor_state(monitor)})
+    |> Repo.update()
+  end
+
+  defp toggle_monitor_state(%Monitor{state: :active}), do: :disabled
+  defp toggle_monitor_state(%Monitor{state: :disabled}), do: :active
+
   def calculate_uptime(%Monitor{id: monitor_id}) do
     from(c in Check,
       where: [monitor_id: ^monitor_id],
