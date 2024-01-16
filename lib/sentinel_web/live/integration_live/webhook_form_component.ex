@@ -9,17 +9,31 @@ defmodule SentinelWeb.IntegrationLive.WebhookFormComponent do
   def render(assigns) do
     ~H"""
     <div>
-      <.header>
-        <%= @title %>
-        <:subtitle>Use this form to manage account records in your database.</:subtitle>
-      </.header>
+      <div class="border-b p-5">
+        <img src={~p"/images/webhook_icon.svg"} class="me-3 inline h-6 sm:h-7" alt="Webhook icon" />
+        <%= dgettext("integrations", "Webhook") %>
+      </div>
+      <.form :let={f} for={@form} id="webhook-form" phx-target={@myself} phx-change="validate" phx-submit="save">
+        <div class="flex items-center justify-between border-b p-4">
+          <div class="text-md mb-2 block max-w-xs">
+            <%= dgettext("integrations", "Endpoint") %>
+            <div class="text-sm text-gray-400">
+              <%= dgettext(
+                "integrations",
+                "Use webhooks to notify external systems when something happens in hyperping.io. Read how to setup"
+              ) %>
+            </div>
+          </div>
+          <div class="min-w-[320px]">
+            <.input field={@form[:endpoint]} phx-debounce="200" />
+          </div>
+        </div>
 
-      <.simple_form for={@form} id="webhook-form" phx-target={@myself} phx-change="validate" phx-submit="save">
-        <.input field={@form[:endpoint]} label={dgettext("integrations", "Endpoint")} type="text" />
-        <:actions>
+        <div class="flex justify-end p-4">
+          <%!-- <.button class="mr-3">Cancel</.button> --%>
           <.button phx-disable-with="Saving...">Save</.button>
-        </:actions>
-      </.simple_form>
+        </div>
+      </.form>
     </div>
     """
   end
@@ -37,18 +51,18 @@ defmodule SentinelWeb.IntegrationLive.WebhookFormComponent do
   @impl true
   def handle_event("validate", %{"webhook" => webhook_params}, socket) do
     changeset =
-      socket.assigns.account
-      |> Webhook.changeset(webhook_params)
+      socket.assigns.webhook
+      |> Webhook.changeset(Map.put(webhook_params, "account_id", socket.assigns.account_id))
       |> Map.put(:action, :validate)
 
     {:noreply, assign_form(socket, changeset)}
   end
 
   def handle_event("save", %{"webhook" => webhook_params}, socket) do
-    save_account(socket, socket.assigns.action, webhook_params)
+    save_webhook(socket, socket.assigns.action, webhook_params)
   end
 
-  defp save_account(socket, :edit, webhook_params) do
+  defp save_webhook(socket, :edit, webhook_params) do
     case Integrations.update_webhook(socket.assigns.webhook, webhook_params) do
       {:ok, webhook} ->
         notify_parent({:saved, webhook})
@@ -63,8 +77,8 @@ defmodule SentinelWeb.IntegrationLive.WebhookFormComponent do
     end
   end
 
-  defp save_account(socket, :new, webhook_params) do
-    case Integrations.create_webhook(webhook_params) do
+  defp save_webhook(socket, :new_webhook, webhook_params) do
+    case Integrations.create_webhook(Map.put(webhook_params, "account_id", socket.assigns.account_id)) do
       {:ok, webhook} ->
         notify_parent({:saved, webhook})
 

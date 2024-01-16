@@ -34,8 +34,8 @@ defmodule SentinelWeb.IntegrationLive.Index do
   end
 
   @impl true
-  def handle_info({SentinelWeb.AccountLive.FormComponent, {:saved, account}}, socket) do
-    {:noreply, stream_insert(socket, :accounts, account)}
+  def handle_info({SentinelWeb.IntegrationLive.WebhookFormComponent, {:saved, _webhook}}, socket) do
+    {:noreply, socket}
   end
 
   # @impl true
