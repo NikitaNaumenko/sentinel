@@ -571,6 +571,12 @@ defmodule SentinelWeb.CoreComponents do
   attr :name, :string, required: true
   attr :class, :string, default: nil
 
+  def icon(%{name: "icon-" <> _} = assigns) do
+    ~H"""
+    <span class={[@name, @class]} />
+    """
+  end
+
   def icon(%{name: "hero-" <> _} = assigns) do
     ~H"""
     <span class={[@name, @class]} />

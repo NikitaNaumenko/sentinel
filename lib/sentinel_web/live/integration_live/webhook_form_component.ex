@@ -10,10 +10,18 @@ defmodule SentinelWeb.IntegrationLive.WebhookFormComponent do
     ~H"""
     <div>
       <div class="border-b p-5">
-        <img src={~p"/images/webhook_icon.svg"} class="me-3 inline h-6 sm:h-7" alt="Webhook icon" />
+        <span class="icon-webhook"></span>
         <%= dgettext("integrations", "Webhook") %>
       </div>
-      <.form :let={f} for={@form} id="webhook-form" phx-target={@myself} phx-change="validate" phx-submit="save">
+      <.form
+        :let={f}
+        for={@form}
+        id="webhook-form"
+        phx-target={@myself}
+        phx-update="igonre"
+        phx-change="validate"
+        phx-submit="save"
+      >
         <div class="flex items-center justify-between border-b p-4">
           <div class="text-md mb-2 block max-w-xs">
             <%= dgettext("integrations", "Endpoint") %>

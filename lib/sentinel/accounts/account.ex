@@ -4,9 +4,13 @@ defmodule Sentinel.Accounts.Account do
 
   import Ecto.Changeset
 
+  alias Sentinel.Integrations.Webhook
+
   schema "accounts" do
     field :name, :string
     timestamps(type: :utc_datetime)
+
+    has_one :webhook, Webhook
   end
 
   @doc false

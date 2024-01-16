@@ -22,7 +22,6 @@ defmodule SentinelWeb.Components.Sidebar do
     >
       <div class="h-full overflow-y-auto border-r border-gray-200 bg-white px-3 py-5 dark:border-gray-700 dark:bg-gray-800">
         <.link href="#" class="flex items-center mb-5 px-2">
-          <div class="icon-home"></div>
           <img src={~p"/images/logo.svg"} class="me-3 h-6 sm:h-7" alt="Logo" />
           <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
             <%!-- TODO: Truncate --%>
@@ -34,23 +33,24 @@ defmodule SentinelWeb.Components.Sidebar do
           <li>
             <.sidebar_link path={~p"/monitors"}>
               <.icon
-                name="hero-server-stack"
+                name="icon-activity-square"
                 class="w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
               />
               <span class="ml-3"><%= dgettext("sidebar", "Monitors") %></span>
             </.sidebar_link>
             <.sidebar_link path={~p"/status_pages"}>
               <.icon
-                name="hero-bolt"
+                name="icon-radio-tower"
                 class="w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
               />
               <span class="ml-3"><%= dgettext("sidebar", "Status pages") %></span>
             </.sidebar_link>
             <.sidebar_link path={~p"/integrations"}>
               <.icon
-                name="hero-squares-plus"
-                class="w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-              />
+                name="icon-blocks"
+                class="h-6 w-6 text-gray-400 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+              >
+              </.icon>
               <span class="ml-3"><%= dgettext("sidebar", "Integrations") %></span>
             </.sidebar_link>
           </li>
