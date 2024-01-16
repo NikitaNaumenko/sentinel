@@ -22,6 +22,7 @@ defmodule SentinelWeb.Components.Sidebar do
     >
       <div class="h-full overflow-y-auto border-r border-gray-200 bg-white px-3 py-5 dark:border-gray-700 dark:bg-gray-800">
         <.link href="#" class="flex items-center mb-5 px-2">
+          <div class="icon-home"></div>
           <img src={~p"/images/logo.svg"} class="me-3 h-6 sm:h-7" alt="Logo" />
           <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
             <%!-- TODO: Truncate --%>

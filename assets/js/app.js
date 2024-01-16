@@ -24,9 +24,11 @@ import topbar from "../vendor/topbar";
 import "flowbite/dist/flowbite.phoenix.js";
 import Hooks from "./hooks";
 
+import { createIcons, Menu, ArrowRight, Globe } from "lucide";
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");
+
 let liveSocket = new LiveSocket("/live", Socket, {
   params: { _csrf_token: csrfToken },
   hooks: Hooks,
@@ -36,7 +38,15 @@ let liveSocket = new LiveSocket("/live", Socket, {
 topbar.config({ barColors: { 0: "#29d" }, shadowColor: "rgba(0, 0, 0, .3)" });
 window.addEventListener("phx:page-loading-start", (_info) => topbar.show(300));
 window.addEventListener("phx:page-loading-stop", (_info) => topbar.hide());
-
+window.addEventListener("phx:page-loading-stop", (_) => {
+  createIcons({
+    icons: {
+      Menu,
+      ArrowRight,
+      Globe,
+    },
+  });
+});
 // connect if there are any LiveViews on the page
 liveSocket.connect();
 
