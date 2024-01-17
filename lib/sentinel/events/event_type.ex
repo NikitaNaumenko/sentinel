@@ -1,4 +1,4 @@
-defmodule Ubr.Events.EventType do
+defmodule Sentinel.Events.EventType do
   @moduledoc """
   Custom type for events, it casts event type name to struct.
   """

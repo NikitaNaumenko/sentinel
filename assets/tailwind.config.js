@@ -15,63 +15,34 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: {
-          light: "#112716",
-          DEFAULT: "#112716",
-          dark: "#f5f7f5",
-          emphasis: "#30653a",
-        },
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
         primary: {
-          50: "#f4f6fb",
-          100: "#e9ecf5",
-          200: "#ced8e9",
-          300: "#a3b7d6",
-          400: "#7190bf",
-          500: "#4f71a8",
-          600: "#385383",
-          700: "#324872",
-          800: "#2c3e60",
-          900: "#293651",
-          950: "#1b2336",
+          DEFAULT: "var(--primary)",
+          foreground: "var(--primary-foreground)",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
         },
         danger: {
-          50: "#fff1f0",
-          100: "#ffdfdd",
-          200: "#ffc5c1",
-          300: "#ff9b95",
-          400: "#ff6359",
-          500: "#ff3225",
-          600: "#fd190b",
-          700: "#d50c00",
-          800: "#b00e04",
-          900: "#91130b",
-          950: "#500500",
+          DEFAULT: "hsl(var(--danger) / <alpha-value>)",
+          foreground: "hsl(var(--danger-foreground) / <alpha-value>)",
         },
         success: {
-          50: "#f0fdf6",
-          100: "#dbfdec",
-          200: "#b9f9d8",
-          300: "#83f2bb",
-          400: "#45e395",
-          500: "#1bbc6d",
-          600: "#12a75e",
-          700: "#12834c",
-          800: "#14673f",
-          900: "#125536",
-          950: "#042f1c",
+          DEFAULT: "hsl(var(--success) / <alpha-value>)",
+          foreground: "hsl(var(--success-foreground) / <alpha-value>)",
         },
-        warning: {
-          50: "#fbfee8",
-          100: "#f6ffc2",
-          200: "#f1ff88",
-          300: "#f1ff43",
-          400: "#f9ff10",
-          500: "#efea03",
-          600: "#dec800",
-          700: "#a48704",
-          800: "#87690c",
-          900: "#735510",
-          950: "#432e05",
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
         },
       },
     },
@@ -113,77 +84,77 @@ module.exports = {
     // Embeds Heroicons (https://heroicons.com) into your app.css bundle
     // See your `CoreComponents.icon/1` for more information.
     //
-    plugin(
-      function ({ matchComponents, theme }) {
-        let iconsDir = path.join(__dirname, "./node_modules/lucide-static/");
-        let values = {};
-        let icons = [["", "/icons"]];
-        icons.forEach(([suffix, dir]) => {
-          fs.readdirSync(path.join(iconsDir, dir)).forEach((file) => {
-            let name = path.basename(file, ".svg") + suffix;
-            values[name] = { name, fullPath: path.join(iconsDir, dir, file) };
-          });
-        });
-        matchComponents(
-          {
-            icon: ({ name, fullPath }) => {
-              let content = fs
-                .readFileSync(fullPath)
-                .toString()
-                .replace(/\r?\n|\r/g, "");
-              return {
-                [`--icon-${name}`]: `url('data:image/svg+xml;utf8,${content}')`,
-                "-webkit-mask": `var(--icon-${name})`,
-                mask: `var(--icon-${name})`,
-                "mask-repeat": "no-repeat",
-                "background-color": "currentColor",
-                "vertical-align": "middle",
-                display: "inline-block",
-                width: theme("spacing.6"),
-                height: theme("spacing.6"),
-              };
-            },
-          },
-          { values },
-        );
-      },
-      // plugin(function ({ matchComponents, theme }) {
-      //   let iconsDir = path.join(__dirname, "./vendor/heroicons/optimized");
-      //   let values = {};
-      //   let icons = [
-      //     ["", "/24/outline"],
-      //     ["-solid", "/24/solid"],
-      //     ["-mini", "/20/solid"],
-      //   ];
-      //   icons.forEach(([suffix, dir]) => {
-      //     fs.readdirSync(path.join(iconsDir, dir)).forEach((file) => {
-      //       let name = path.basename(file, ".svg") + suffix;
-      //       values[name] = { name, fullPath: path.join(iconsDir, dir, file) };
-      //     });
-      //   });
-      //   matchComponents(
-      //     {
-      //       hero: ({ name, fullPath }) => {
-      //         let content = fs
-      //           .readFileSync(fullPath)
-      //           .toString()
-      //           .replace(/\r?\n|\r/g, "");
-      //         return {
-      //           [`--hero-${name}`]: `url('data:image/svg+xml;utf8,${content}')`,
-      //           "-webkit-mask": `var(--hero-${name})`,
-      //           mask: `var(--hero-${name})`,
-      //           "mask-repeat": "no-repeat",
-      //           "background-color": "currentColor",
-      //           "vertical-align": "middle",
-      //           display: "inline-block",
-      //           width: theme("spacing.5"),
-      //           height: theme("spacing.5"),
-      //         };
-      //       },
-      //     },
-      //     { values },
-      //   );
-      // }
-    ),
+    // plugin(
+    //   function ({ matchComponents, theme }) {
+    //     let iconsDir = path.join(__dirname, "./node_modules/lucide-static/");
+    //     let values = {};
+    //     let icons = [["", "/icons"]];
+    //     icons.forEach(([suffix, dir]) => {
+    //       fs.readdirSync(path.join(iconsDir, dir)).forEach((file) => {
+    //         let name = path.basename(file, ".svg") + suffix;
+    //         values[name] = { name, fullPath: path.join(iconsDir, dir, file) };
+    //       });
+    //     });
+    //     matchComponents(
+    //       {
+    //         icon: ({ name, fullPath }) => {
+    //           let content = fs
+    //             .readFileSync(fullPath)
+    //             .toString()
+    //             .replace(/\r?\n|\r/g, "");
+    //           return {
+    //             [`--icon-${name}`]: `url('data:image/svg+xml;utf8,${content}')`,
+    //             "-webkit-mask": `var(--icon-${name})`,
+    //             mask: `var(--icon-${name})`,
+    //             "mask-repeat": "no-repeat",
+    //             "background-color": "currentColor",
+    //             "vertical-align": "middle",
+    //             display: "inline-block",
+    //             width: theme("spacing.6"),
+    //             height: theme("spacing.6"),
+    //           };
+    //         },
+    //       },
+    //       { values },
+    //     );
+    //   },
+    //   // plugin(function ({ matchComponents, theme }) {
+    //   //   let iconsDir = path.join(__dirname, "./vendor/heroicons/optimized");
+    //   //   let values = {};
+    //   //   let icons = [
+    //   //     ["", "/24/outline"],
+    //   //     ["-solid", "/24/solid"],
+    //   //     ["-mini", "/20/solid"],
+    //   //   ];
+    //   //   icons.forEach(([suffix, dir]) => {
+    //   //     fs.readdirSync(path.join(iconsDir, dir)).forEach((file) => {
+    //   //       let name = path.basename(file, ".svg") + suffix;
+    //   //       values[name] = { name, fullPath: path.join(iconsDir, dir, file) };
+    //   //     });
+    //   //   });
+    //   //   matchComponents(
+    //   //     {
+    //   //       hero: ({ name, fullPath }) => {
+    //   //         let content = fs
+    //   //           .readFileSync(fullPath)
+    //   //           .toString()
+    //   //           .replace(/\r?\n|\r/g, "");
+    //   //         return {
+    //   //           [`--hero-${name}`]: `url('data:image/svg+xml;utf8,${content}')`,
+    //   //           "-webkit-mask": `var(--hero-${name})`,
+    //   //           mask: `var(--hero-${name})`,
+    //   //           "mask-repeat": "no-repeat",
+    //   //           "background-color": "currentColor",
+    //   //           "vertical-align": "middle",
+    //   //           display: "inline-block",
+    //   //           width: theme("spacing.5"),
+    //   //           height: theme("spacing.5"),
+    //   //         };
+    //   //       },
+    //   //     },
+    //   //     { values },
+    //   //   );
+    //   // }
+    // ),
   ],
 };

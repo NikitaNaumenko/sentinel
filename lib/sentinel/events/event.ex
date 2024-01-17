@@ -5,6 +5,7 @@ defmodule Sentinel.Events.Event do
   import Ecto.Changeset
 
   alias Sentinel.Accounts.Account
+  alias Sentinel.Events.EventType
 
   @type t :: %__MODULE__{
           id: integer(),
@@ -26,6 +27,5 @@ defmodule Sentinel.Events.Event do
     webhook
     |> cast(attrs, [:endpoint, :account_id])
     |> validate_required([:endpoint, :account_id])
-    |> validate_url(:endpoint)
   end
 end

@@ -91,11 +91,13 @@ defmodule SentinelWeb do
     quote do
       # HTML escaping functionality
       use PhoenixHTMLHelpers
+      use SentinelWeb.Carbon
 
       import Phoenix.HTML
 
       # Core UI components and translation
       import SentinelWeb.CoreComponents
+
       import SentinelWeb.EnumHelpers
       import SentinelWeb.Gettext
       import SentinelWeb.HTMLHelpers
