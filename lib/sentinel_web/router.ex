@@ -78,6 +78,7 @@ defmodule SentinelWeb.Router do
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
       live "/integrations", IntegrationLive.Index, :index
       live "/integrations/webhooks/new", IntegrationLive.Index, :new_webhook
+      live "/integrations/webhooks/:id/edit", IntegrationLive.Index, :edit_webhook
     end
   end
 

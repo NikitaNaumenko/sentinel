@@ -5,7 +5,7 @@ defmodule SentinelWeb.IntegrationLive.WebhookFormComponent do
   alias Sentinel.Integrations
   alias Sentinel.Integrations.Webhook
 
-  @impl true
+  @impl Phoenix.LiveComponent
   def render(assigns) do
     ~H"""
     <div>
@@ -14,7 +14,6 @@ defmodule SentinelWeb.IntegrationLive.WebhookFormComponent do
         <%= dgettext("integrations", "Webhook") %>
       </div>
       <.form
-        :let={f}
         for={@form}
         id="webhook-form"
         phx-target={@myself}
@@ -46,7 +45,7 @@ defmodule SentinelWeb.IntegrationLive.WebhookFormComponent do
     """
   end
 
-  @impl true
+  @impl Phoenix.LiveComponent
   def update(%{webhook: webhook} = assigns, socket) do
     changeset = Webhook.changeset(webhook)
 
@@ -56,7 +55,7 @@ defmodule SentinelWeb.IntegrationLive.WebhookFormComponent do
      |> assign_form(changeset)}
   end
 
-  @impl true
+  @impl Phoenix.LiveComponent
   def handle_event("validate", %{"webhook" => webhook_params}, socket) do
     changeset =
       socket.assigns.webhook
@@ -70,7 +69,7 @@ defmodule SentinelWeb.IntegrationLive.WebhookFormComponent do
     save_webhook(socket, socket.assigns.action, webhook_params)
   end
 
-  defp save_webhook(socket, :edit, webhook_params) do
+  defp save_webhook(socket, :edit_webhook, webhook_params) do
     case Integrations.update_webhook(socket.assigns.webhook, webhook_params) do
       {:ok, webhook} ->
         notify_parent({:saved, webhook})

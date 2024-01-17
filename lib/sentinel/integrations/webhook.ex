@@ -6,6 +6,14 @@ defmodule Sentinel.Integrations.Webhook do
 
   alias Sentinel.Accounts.Account
 
+  @type t :: %__MODULE__{
+          id: integer(),
+          endpoint: String.t(),
+          account_id: integer(),
+          inserted_at: DateTime.t(),
+          updated_at: DateTime.t()
+        }
+
   schema "webhooks" do
     field :endpoint, :string
     belongs_to :account, Account
