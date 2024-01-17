@@ -1,4 +1,4 @@
-defmodule Sentinel.Checks.Workers.NotificationSender do
+defmodule Sentinel.Events.Workers.NotifyEventAcceptorJob do
   @moduledoc """
   Send notifications to users when something happened with monitor.
   """

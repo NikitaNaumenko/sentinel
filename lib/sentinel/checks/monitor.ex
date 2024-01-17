@@ -110,30 +110,4 @@ defmodule Sentinel.Checks.Monitor do
 
   def intervals, do: @intervals
   def request_timeouts, do: @request_timeouts
-
-  def create_check!(monitor, %Finch.Response{status: status} = finch_response, duration) do
-    check =
-      %{
-        raw_response: finch_response,
-        result: Check.define_result(monitor.expected_status_code, status),
-        reason: nil,
-        duration: duration,
-        status_code: status
-      }
-      |> Check.changeset()
-      |> put_assoc(:monitor, monitor)
-      |> Sentinel.Repo.insert!()
-
-    case check.result do
-      :success ->
-        check
-
-      :failure ->
-        %{id: monitor.id}
-        |> Sentinel.Checks.Workers.NotificationSender.new()
-        |> Oban.insert()
-
-        check
-    end
-  end
 end

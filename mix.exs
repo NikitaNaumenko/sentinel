@@ -60,6 +60,7 @@ defmodule Sentinel.MixProject do
       {:ex_cldr_dates_times, "~> 2.0"},
       {:ex_cldr_numbers, "~> 2.0"},
       {:ex_cldr_calendars, "~> 1.23"},
+      {:recase, "~> 0.5"},
       {:styler, "~> 0.11", only: [:dev, :test], runtime: false},
       {:tailwind_formatter, "~> 0.4.0", only: [:dev, :test], runtime: false},
       {:exvcr, "~> 0.11", only: :test}
