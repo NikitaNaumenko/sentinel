@@ -25,8 +25,7 @@ config :sentinel, SentinelWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "6IE2HkFEnB3cwtzg5g/HcC875R99yWAaYLyJWlFDcKqnFucbSGc5b2dIFWOojKKR",
   watchers: [
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
+    npm: ["run", "watch", cd: Path.expand("../assets", __DIR__)]
   ]
 
 # ## SSL Support
