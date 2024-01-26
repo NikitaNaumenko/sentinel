@@ -1,27 +1,11 @@
-// If you want to use Phoenix channels, run `mix help phx.gen.channel`
-// to get started and then uncomment the line below.
-// import "./user_socket.js"
+import "../css/app.css";
+import "lucide-static/font/lucide.css";
 
-// You can include dependencies in two ways.
-//
-// The simplest option is to put them in assets/vendor and
-// import them using relative paths:
-//
-//     import "../vendor/some-package.js"
-//
-// Alternatively, you can `npm install some-package --prefix assets` and import
-// them using a path starting with the package name:
-//
-//     import "some-package"
-//
-
-// Include phoenix_html to handle method=PUT/DELETE in forms and buttons.
 import "phoenix_html";
 // Establish Phoenix Socket and LiveView configuration.
 import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
-import topbar from "../vendor/topbar";
-import "flowbite/dist/flowbite.phoenix.js";
+// import topbar from "../vendor/topbar";
 import Hooks from "./hooks";
 
 let csrfToken = document
@@ -34,20 +18,9 @@ let liveSocket = new LiveSocket("/live", Socket, {
 });
 
 // Show progress bar on live navigation and form submits
-topbar.config({ barColors: { 0: "#29d" }, shadowColor: "rgba(0, 0, 0, .3)" });
+// topbar.config({ barColors: { 0: "#29d" }, shadowColor: "rgba(0, 0, 0, .3)" });
 window.addEventListener("phx:page-loading-start", (_info) => topbar.show(300));
 window.addEventListener("phx:page-loading-stop", (_info) => topbar.hide());
-// window.addEventListener("phx:page-loading-stop", (_) => {
-//   createIcons({
-//     icons: {
-//       Blocks,
-//       Webhook,
-//       Menu,
-//       ArrowRight,
-//       Globe,
-//     },
-//   });
-// });
 // connect if there are any LiveViews on the page
 liveSocket.connect();
 

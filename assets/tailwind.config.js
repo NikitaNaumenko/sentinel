@@ -10,9 +10,21 @@ module.exports = {
     "./js/**/*.js",
     "../lib/sentinel_web.ex",
     "../lib/sentinel_web/**/*.*ex",
-    "./node_modules/flowbite/**/*.js",
   ],
   theme: {
+    borderRadius: {
+      xl: `calc(var(--radius) + 4px)`,
+      lg: `var(--radius)`,
+      md: `calc(var(--radius) - 2px)`,
+      sm: "calc(var(--radius) - 4px)",
+    },
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
       colors: {
         border: "hsl(var(--border) / <alpha-value>)",
@@ -48,7 +60,6 @@ module.exports = {
     },
   },
   plugins: [
-    require("flowbite/plugin"),
     plugin(({ addVariant }) =>
       addVariant("phx-no-feedback", [
         ".phx-no-feedback&",
