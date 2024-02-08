@@ -1,7 +1,7 @@
 recipe-name:
   echo 'This is a recipe!'
 
-server:
+server
   iex -S mix phx.server
 
 start-services:

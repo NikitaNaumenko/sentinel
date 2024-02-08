@@ -1,18 +1,92 @@
 # Sentinel
 
-To start your Phoenix server:
+Open-source alternative of hyperping
 
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+## Requirements
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+- docker-compose ~> 3
+- elixir ~> 1.16
+- erlang ~> 26.2
+- PostgreSQL ~> 14
+- make/just(modern alternative of make)
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+## Installation
 
-## Learn more
+Clone repo
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+```sh
+git clone git@github.com:NikitaNaumenko/sentinel.git
+cd sentinel
+```
+
+Start services
+
+```sh
+make start-services
+# or
+just start-services
+```
+
+Setup app
+
+```sh
+make setup
+# or
+just setup
+```
+
+Start app
+
+```sh
+make server
+# or
+just server
+```
+
+Stop services
+
+```sh
+make stop-services
+# or
+just stop-services
+```
+
+Reset db
+
+```sh
+make db-reset
+# or
+just db-reset
+```
+
+Run console
+
+```sh
+make console
+# or
+just console
+```
+
+Run test
+
+```sh
+make test
+# or
+just test
+```
+
+Run lint
+
+```sh
+make lint
+# or
+just lint
+```
+
+Run format
+
+```sh
+make format
+# or
+just format
+```
