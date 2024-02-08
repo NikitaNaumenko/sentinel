@@ -7,15 +7,7 @@ defmodule Sentinel.Events.EventType do
   def type, do: :string
 
   @event_types ~w[
-    admin_signed_in
-    admin_failed_sign_in
-    admin_first_signed_in
-    user_signed_in
-    user_failed_sign_in
-    user_first_signed_in
-    otp_verified
-    otp_verification_failed
-    otp_sent
+    "monitor_down"
   ]
 
   def cast(type) when type in @event_types do

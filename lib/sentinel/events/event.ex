@@ -9,15 +9,17 @@ defmodule Sentinel.Events.Event do
 
   @type t :: %__MODULE__{
           id: integer(),
-          # endpoint: String.t(),
-          # account_id: integer(),
           inserted_at: DateTime.t(),
           updated_at: DateTime.t()
         }
 
   schema "events" do
-    field :endpoint, :string
     field :type, EventType
+    field :payload, :map
+    field :resource_id, :integer
+    field :resource_type, :string
+    field :creator_id, :integer
+    field :creator_type, :string
 
     timestamps(type: :utc_datetime_usec)
   end

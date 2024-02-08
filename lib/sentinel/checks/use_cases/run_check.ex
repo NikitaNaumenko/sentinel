@@ -30,7 +30,12 @@ defmodule Sentinel.Checks.UseCases.RunCheck do
       }
       |> Check.changeset()
       |> Sentinel.Repo.insert!()
+      |> to_payload()
       |> Events.create_event!()
     end)
+  end
+
+  defp to_payload(%Check{result: :failed}) do
+    %{event_type: :monitor_down}
   end
 end
