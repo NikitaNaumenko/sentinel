@@ -1,3 +1,5 @@
+![sentinel logo](./logo.webp)
+
 # Sentinel
 
 Open-source alternative of hyperping
