@@ -6,6 +6,7 @@ defmodule Sentinel.Checks.Monitor do
 
   alias Sentinel.Checks.Certificate
   alias Sentinel.Checks.Check
+  alias Sentinel.Checks.NotificationRule
 
   @request_timeouts [1, 3, 5, 10, 15, 30, 60]
   @intervals [15, 30, 60, 120]
@@ -81,6 +82,7 @@ defmodule Sentinel.Checks.Monitor do
     field :state, Ecto.Enum, values: [:active, :disabled], default: :active
     belongs_to :account, Sentinel.Accounts.Account
     has_many :certificates, Certificate
+    has_one :notification_rule, NotificationRule
 
     timestamps(type: :utc_datetime_usec)
   end
@@ -98,6 +100,7 @@ defmodule Sentinel.Checks.Monitor do
       :expected_status_code
     ])
     |> cast_assoc(:certificates)
+    |> cast_assoc(:notification_rule)
     |> validate_required([
       :name,
       :url,

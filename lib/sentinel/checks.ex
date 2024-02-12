@@ -244,6 +244,10 @@ defmodule Sentinel.Checks do
     )
   end
 
+  def get_check(id) do
+    Repo.get(Check, id)
+  end
+
   # @spec topic(Product.t()) :: String.t()
   # defp topic(monitor) do
   #   "monitor-#{monitor.account_id}-#{monitor.id}"

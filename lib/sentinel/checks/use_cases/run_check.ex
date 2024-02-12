@@ -35,7 +35,7 @@ defmodule Sentinel.Checks.UseCases.RunCheck do
     end)
   end
 
-  defp to_payload(%Check{result: :failed}) do
-    %{event_type: :monitor_down}
+  defp to_payload(%Check{result: :failed} = check) do
+    %{event_type: :monitor_down, resource_type: to_string(Check), resource_id: check.id}
   end
 end

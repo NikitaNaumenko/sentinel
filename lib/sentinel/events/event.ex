@@ -4,8 +4,8 @@ defmodule Sentinel.Events.Event do
 
   import Ecto.Changeset
 
-  alias Sentinel.Accounts.Account
   alias Sentinel.Events.EventType
+  alias Sentinel.Repo
 
   @type t :: %__MODULE__{
           id: integer(),
@@ -15,7 +15,7 @@ defmodule Sentinel.Events.Event do
 
   schema "events" do
     field :type, EventType
-    field :payload, :map
+    field :payload, :map, default: %{}
     field :resource_id, :integer
     field :resource_type, :string
     field :creator_id, :integer
@@ -24,10 +24,16 @@ defmodule Sentinel.Events.Event do
     timestamps(type: :utc_datetime_usec)
   end
 
+  def create!(params) do
+    %__MODULE__{}
+    |> changeset(params)
+    |> Repo.insert!()
+  end
+
   @doc false
-  def changeset(webhook, attrs \\ %{}) do
-    webhook
-    |> cast(attrs, [:endpoint, :account_id])
-    |> validate_required([:endpoint, :account_id])
+  def changeset(event, attrs \\ %{}) do
+    event
+    |> cast(attrs, [:type, :payload, :resource_id, :resource_type, :creator_id, :creator_type])
+    |> validate_required([:type])
   end
 end
