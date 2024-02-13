@@ -1,0 +1,43 @@
+## This file is a PO Template file.
+##
+## "msgid"s here are often extracted from source code.
+## Add new messages manually only if they're dynamic
+## messages that can't be statically extracted.
+##
+## Run "mix gettext.extract" to bring this file up to
+## date. Leave "msgstr"s empty as changing them here has no
+## effect: edit them in PO (.po) files instead.
+#
+msgid ""
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/webhook_form_component.ex:26
+#, elixir-autogen, elixir-format
+msgid "Endpoint"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/index.ex:29
+#, elixir-autogen, elixir-format
+msgid "Integrations"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/index.html.heex:8
+#, elixir-autogen, elixir-format
+msgid "Receive alert notifications via Webhooks."
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/webhook_form_component.ex:28
+#, elixir-autogen, elixir-format
+msgid "Use webhooks to notify external systems when something happens in hyperping.io. Read how to setup"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/index.html.heex:5
+#: lib/sentinel_web/live/integration_live/webhook_form_component.ex:14
+#, elixir-autogen, elixir-format
+msgid "Webhook"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/webhook_form_component.ex:79
+#, elixir-autogen, elixir-format
+msgid "Webhook updated successfully"
+msgstr ""

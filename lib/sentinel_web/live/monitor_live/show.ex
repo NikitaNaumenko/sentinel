@@ -8,6 +8,7 @@ defmodule SentinelWeb.MonitorLive.Show do
 
   alias Sentinel.Checks
   alias Sentinel.Checks.Monitor
+  alias Sentinel.Repo
 
   @impl true
   def mount(_params, _session, socket) do
@@ -16,7 +17,7 @@ defmodule SentinelWeb.MonitorLive.Show do
 
   @impl true
   def handle_params(%{"id" => id} = params, _, socket) do
-    monitor = Checks.get_monitor!(id)
+    monitor = id |> Checks.get_monitor!() |> Repo.preload(:notification_rule)
 
     changeset = Monitor.changeset(monitor, %{})
 

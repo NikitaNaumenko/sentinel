@@ -1,0 +1,150 @@
+## "msgid"s in this file come from POT (.pot) files.
+###
+### Do not add, change, or remove "msgid"s manually here as
+### they're tied to the ones in the corresponding POT file
+### (with the same domain).
+###
+### Use "mix gettext.extract --merge" or "mix gettext.merge"
+### to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100 != 11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10||n%100>=20) ? 1 : 2);\n"
+
+#: lib/sentinel_web/live/monitor_live/components/notifications.ex:12
+#: lib/sentinel_web/live/monitor_live/components/notifications.ex:38
+#, elixir-autogen, elixir-format
+msgid "Activate monitoring"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/show.html.heex:51
+#, elixir-autogen, elixir-format
+msgid "Danger Zone"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/show.html.heex:132
+#, elixir-autogen, elixir-format
+msgid "Delete monitor"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/show.html.heex:134
+#, elixir-autogen, elixir-format
+msgid "Delete the %{monitor} endpoint monitor and all its data. Careful, this action cannot be undone."
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/new.html.heex:12
+#: lib/sentinel_web/live/monitor_live/show.html.heex:93
+#, elixir-autogen, elixir-format
+msgid "Expected status code"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/new.html.heex:6
+#: lib/sentinel_web/live/monitor_live/show.html.heex:87
+#, elixir-autogen, elixir-format
+msgid "HTTP Method"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/new.html.heex:18
+#: lib/sentinel_web/live/monitor_live/show.html.heex:99
+#, elixir-autogen, elixir-format
+msgid "Interval"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/overview.ex:111
+#, elixir-autogen, elixir-format
+msgid "Last five checks"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/show.ex:94
+#, elixir-autogen, elixir-format
+msgid "Monitor cannot be deleted"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/show.ex:111
+#, elixir-autogen, elixir-format
+msgid "Monitor cannot be toggled"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/new.ex:72
+#, elixir-autogen, elixir-format
+msgid "Monitor created successfully"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/show.ex:88
+#, elixir-autogen, elixir-format
+msgid "Monitor deleted successfully"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/show.ex:106
+#, elixir-autogen, elixir-format
+msgid "Monitor toggled successfully"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/show.ex:74
+#, elixir-autogen, elixir-format
+msgid "Monitor updated successfully"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/new.html.heex:2
+#: lib/sentinel_web/live/monitor_live/show.html.heex:83
+#, elixir-autogen, elixir-format
+msgid "Name"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/new.ex:33
+#: lib/sentinel_web/live/monitor_live/new.ex:34
+#, elixir-autogen, elixir-format
+msgid "New Monitor"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/index.html.heex:6
+#, elixir-autogen, elixir-format
+msgid "New monitor"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/overview.ex:103
+#, elixir-autogen, elixir-format
+msgid "No Certificate"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/notifications.ex:20
+#, elixir-autogen, elixir-format
+msgid "Notification Rules"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/show.html.heex:40
+#, elixir-autogen, elixir-format
+msgid "Notifications"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/show.html.heex:18
+#, elixir-autogen, elixir-format
+msgid "Overview"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/new.html.heex:24
+#: lib/sentinel_web/live/monitor_live/show.html.heex:105
+#, elixir-autogen, elixir-format
+msgid "Request timeout"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/overview.ex:63
+#, elixir-autogen, elixir-format
+msgid "SSL days remaining"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/show.html.heex:29
+#, elixir-autogen, elixir-format
+msgid "Settings"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/new.html.heex:3
+#: lib/sentinel_web/live/monitor_live/show.html.heex:84
+#, elixir-autogen, elixir-format
+msgid "URL"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/overview.ex:14
+#, elixir-autogen, elixir-format
+msgid "Uptime"
+msgstr ""

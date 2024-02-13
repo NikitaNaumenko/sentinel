@@ -5,7 +5,7 @@ defmodule Sentinel.Repo.Migrations.CreateMonitorNotificationRules do
     create table(:monitor_notification_rules) do
       add :timeout, :integer
       add :resend_interval, :integer
-      add :monitor_id, references(:monitor_id), null: false
+      add :monitor_id, references(:monitors), null: false
       add :via_webhook, :boolean, default: false
       add :via_email, :boolean, default: false
       add :via_slack, :boolean, default: false

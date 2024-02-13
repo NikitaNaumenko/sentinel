@@ -6,7 +6,7 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
 
   def notifications(assigns) do
     ~H"""
-    <div class="flex flex-col items-center justify-between rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800 md:flex-row">
+    <div class="mb-5 flex flex-col items-center justify-between rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800 md:flex-row">
       <div class="flex flex-col justify-between p-4 leading-normal">
         <h5 class="text-l mb-2 font-bold tracking-tight text-gray-900 dark:text-white">
           <%= dgettext("monitors", "Activate monitoring") %>
@@ -15,6 +15,7 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
           When unchecked, Sentinel will stop pinging this monitor.
         </p>
       </div>
+
       <div class="p-4">
         <label
           class="relative inline-flex cursor-pointer items-center"
@@ -25,6 +26,22 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
           </div>
         </label>
       </div>
+    </div>
+
+    <div class="text-primary/50 text-sm">
+      <%= dgettext("monitors", "Notification Rules") %>
+    </div>
+
+    <div class="flex flex-col items-center justify-between rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800 md:flex-row">
+      <div class="flex flex-col justify-between p-4 leading-normal">
+        <h5 class="text-l mb-2 font-bold tracking-tight text-gray-900 dark:text-white">
+          <%= dgettext("monitors", "Team level notifications") %>
+        </h5>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+          You will receive notifications for the enabled channels that are configured. To send emails & SMS to specific teammates, please configure an escalation policy.
+        </p>
+      </div>
+      <div class="p-4"></div>
     </div>
     """
   end

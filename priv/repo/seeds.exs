@@ -24,35 +24,40 @@ Sentinel.Repo.transaction(fn ->
       account_id: account.id
     })
 
-  Sentinel.Repo.insert!(%Checks.Monitor{
-    name: "Monitor 1",
-    url: "http://example.com",
-    interval: 10,
-    http_method: :get,
-    request_timeout: 10,
-    expected_status_code: 203,
-    account_id: account.id
+  monitor =
+    Sentinel.Repo.insert!(%Checks.Monitor{
+      name: "Monitor 1",
+      url: "http://example.com",
+      interval: 10,
+      http_method: :get,
+      request_timeout: 10,
+      expected_status_code: 203,
+      account_id: account.id
+    })
+
+  Sentinel.Repo.insert!(%Checks.NotificationRule{
+    monitor_id: monitor.id
   })
 
-  Sentinel.Repo.insert!(%Checks.Monitor{
-    name: "Monitor 2",
-    url: "http://example.com",
-    interval: 15,
-    http_method: :get,
-    request_timeout: 10,
-    expected_status_code: 220,
-    account_id: account.id
-  })
-
-  Sentinel.Repo.insert!(%Checks.Monitor{
-    name: "Monitor 3",
-    url: "http://example.com",
-    interval: 20,
-    http_method: :get,
-    request_timeout: 10,
-    expected_status_code: 200,
-    account_id: account.id
-  })
+  # Sentinel.Repo.insert!(%Checks.Monitor{
+  #   name: "Monitor 2",
+  #   url: "http://example.com",
+  #   interval: 15,
+  #   http_method: :get,
+  #   request_timeout: 10,
+  #   expected_status_code: 220,
+  #   account_id: account.id
+  # })
+  #
+  # Sentinel.Repo.insert!(%Checks.Monitor{
+  #   name: "Monitor 3",
+  #   url: "http://example.com",
+  #   interval: 20,
+  #   http_method: :get,
+  #   request_timeout: 10,
+  #   expected_status_code: 200,
+  #   account_id: account.id
+  # })
 
   Sentinel.Repo.insert!(%StatusPages.Page{
     name: "Status page",
@@ -62,11 +67,11 @@ Sentinel.Repo.transaction(fn ->
     account_id: account.id
   })
 
-  Sentinel.Repo.insert!(%StatusPages.Page{
-    name: "Other Status page",
-    slug: "other-status-page",
-    state: :draft,
-    public: false,
-    account_id: account.id
-  })
+  # Sentinel.Repo.insert!(%StatusPages.Page{
+  #   name: "Other Status page",
+  #   slug: "other-status-page",
+  #   state: :draft,
+  #   public: false,
+  #   account_id: account.id
+  # })
 end)
