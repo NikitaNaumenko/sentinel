@@ -276,7 +276,7 @@ defmodule SentinelWeb.CoreComponents do
 
     ~H"""
     <div phx-feedback-for={@name}>
-      <label class="flex items-center gap-4 text-sm leading-6 text-zinc-600">
+      <.label class={["flex items-center gap-2 text-sm leading-6", @errors != [] && "text-danger"]}>
         <input type="hidden" name={@name} value="false" />
         <input
           type="checkbox"
@@ -284,15 +284,42 @@ defmodule SentinelWeb.CoreComponents do
           name={@name}
           value="true"
           checked={@checked}
-          class="rounded border-zinc-300 text-zinc-900 focus:ring-0"
+          class="border-primary text-primary rounded focus:ring-0"
           {@rest}
         />
         <%= @label %>
-      </label>
+      </.label>
       <.error :for={msg <- @errors}><%= msg %></.error>
     </div>
     """
   end
+
+  # class="border-primary text-primary rounded focus:ring-0"
+  # def input(%{type: "checkbox"} = assigns) do
+  #   assigns =
+  #     assign_new(assigns, :checked, fn ->
+  #       Phoenix.HTML.Form.normalize_value("checkbox", assigns[:value])
+  #     end)
+  #
+  #   ~H"""
+  #   <div phx-feedback-for={@name}>
+  #     <label class="flex items-center gap-4 text-sm leading-6 text-zinc-600">
+  #       <input type="hidden" name={@name} value="false" />
+  #       <input
+  #         type="checkbox"
+  #         id={@id}
+  #         name={@name}
+  #         value="true"
+  #         checked={@checked}
+  #         class="rounded border-zinc-300 text-zinc-900 focus:ring-0"
+  #         {@rest}
+  #       />
+  #       <%= @label %>
+  #     </label>
+  #     <.error :for={msg <- @errors}><%= msg %></.error>
+  #   </div>
+  #   """
+  # end
 
   def input(%{type: "select"} = assigns) do
     ~H"""

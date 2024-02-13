@@ -32,16 +32,23 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
       <%= dgettext("monitors", "Notification Rules") %>
     </div>
 
-    <div class="flex flex-col items-center justify-between rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800 md:flex-row">
+    <div class="border-primary/50 flex flex-col items-center justify-between rounded-lg border bg-white">
       <div class="flex flex-col justify-between p-4 leading-normal">
         <h5 class="text-l mb-2 font-bold tracking-tight text-gray-900 dark:text-white">
           <%= dgettext("monitors", "Team level notifications") %>
         </h5>
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+        <p class="text-primary mb-3 font-normal">
           You will receive notifications for the enabled channels that are configured. To send emails & SMS to specific teammates, please configure an escalation policy.
         </p>
       </div>
-      <div class="p-4"></div>
+      <div class="flex gap-1">
+        <div class="mr-5">
+          <.input type="checkbox" id="email" label={dgettext("monitors", "Email to everyone")} name="email" />
+        </div>
+        <div class="mr-5">
+          <.input type="checkbox" id="webhook" label={dgettext("monitors", "Webhook")} name="email" />
+        </div>
+      </div>
     </div>
     """
   end

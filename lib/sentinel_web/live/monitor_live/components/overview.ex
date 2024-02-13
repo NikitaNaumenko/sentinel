@@ -32,7 +32,6 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
           class="mb-4 block rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800"
           id="uptime-monitor"
           data-values={Jason.encode!(@uptime_stats)}
-          phx-hook="UptimeMonitorChart"
         >
           <canvas id="uptime-monitor-chart"></canvas>
         </div>
@@ -40,7 +39,6 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
           class="mb-4 block rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800"
           data-values={Jason.encode!(@response_times)}
           id="response-time-monitor"
-          phx-hook="ResponseTimeMonitorChart"
         >
           <canvas id="response-time-monitor-chart"></canvas>
         </div>
