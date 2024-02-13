@@ -1,4 +1,6 @@
 import "../css/app.css";
+import "flowbite/dist/flowbite.phoenix.js";
+
 import "lucide-static/font/lucide.css";
 
 import "phoenix_html";

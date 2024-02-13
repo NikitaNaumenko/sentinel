@@ -8,16 +8,17 @@ const path = require("path");
 module.exports = {
   content: [
     "./js/**/*.js",
+    "./node_modules/flowbite/**/*.js",
     "../lib/sentinel_web.ex",
     "../lib/sentinel_web/**/*.*ex",
   ],
   theme: {
-    borderRadius: {
-      xl: `calc(var(--radius) + 4px)`,
-      lg: `var(--radius)`,
-      md: `calc(var(--radius) - 2px)`,
-      sm: "calc(var(--radius) - 4px)",
-    },
+    // borderRadius: {
+    //   xl: `calc(var(--radius) + 4px)`,
+    //   lg: `var(--radius)`,
+    //   md: `calc(var(--radius) - 2px)`,
+    //   sm: "calc(var(--radius) - 4px)",
+    // },
     container: {
       center: true,
       padding: "2rem",
@@ -61,6 +62,7 @@ module.exports = {
   },
   plugins: [
     require("@tailwindcss/forms"),
+    require("flowbite/plugin"),
     plugin(({ addVariant }) =>
       addVariant("phx-no-feedback", [
         ".phx-no-feedback&",

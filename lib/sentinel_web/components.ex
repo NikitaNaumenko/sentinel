@@ -4,6 +4,7 @@ defmodule SentinelWeb.Components do
     quote do
       import SentinelWeb.Components.Button
       import SentinelWeb.Components.Icon
+      import SentinelWeb.Components.Switch
     end
   end
 end
