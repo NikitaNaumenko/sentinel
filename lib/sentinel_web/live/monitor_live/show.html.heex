@@ -118,7 +118,13 @@
     role="tabpanel"
     aria-labelledby="notifications-tab"
   >
-    <.notifications monitor={@monitor} />
+    <%!-- <.notifications monitor={@monitor} notification_rule={@monitor.notification_rule} /> --%>
+    <.live_component
+      module={SentinelWeb.MonitorLive.Components.Notifications}
+      id="notifications"
+      monitor={@monitor}
+      notification_rule={@monitor.notification_rule}
+    />
   </div>
   <div
     hidden={hidden_tab_content?("danger", @current_tab)}

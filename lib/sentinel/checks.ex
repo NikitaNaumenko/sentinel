@@ -9,6 +9,7 @@ defmodule Sentinel.Checks do
   alias Sentinel.Checks.Check
   alias Sentinel.Checks.Monitor
   alias Sentinel.Checks.MonitorWorker
+  alias Sentinel.Checks.NotificationRule
   alias Sentinel.Checks.UseCases.CheckCertificate
   alias Sentinel.Repo
 
@@ -246,6 +247,13 @@ defmodule Sentinel.Checks do
 
   def get_check(id) do
     Repo.get(Check, id)
+  end
+
+  def toggle_via(id, attr, value) do
+    NotificationRule
+    |> Repo.get(id)
+    |> Ecto.Changeset.change(%{String.to_existing_atom(attr) => !value})
+    |> Repo.update()
   end
 
   # @spec topic(Product.t()) :: String.t()

@@ -113,6 +113,10 @@ defmodule SentinelWeb.MonitorLive.Show do
     end
   end
 
+  def handle_event("toggle-via-email", %{"id" => id}, socket) do
+    notification_rule = Checks.toggle_via_email(id)
+  end
+
   defp assign_form(socket, changeset) do
     assign(socket, :form, to_form(changeset))
   end
