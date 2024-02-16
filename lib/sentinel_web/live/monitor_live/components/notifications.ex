@@ -4,6 +4,7 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
 
   alias Sentinel.Checks
   alias Sentinel.Checks.Monitor
+  alias Sentinel.Checks.NotificationRule
 
   @impl Phoenix.LiveComponent
   def render(assigns) do
@@ -85,6 +86,36 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
             </label>
           </div>
         </div>
+        <div class="mt-5 flex w-full items-center justify-between space-x-4">
+          <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <span>
+              <%= dgettext("monitors", "Activate monitoring") %>
+            </span>
+            <span class="text-muted-foreground text-sm font-normal leading-snug">
+              When unchecked, Sentinel will stop pinging this monitor.
+            </span>
+          </label>
+          <div>
+            <.simple_form for={@form}>
+              <.input type="select" options={@resend_interval_options} field={@form[:resend_interval]} />
+            </.simple_form>
+          </div>
+        </div>
+        <div class="mt-5 flex w-full items-center justify-between space-x-4">
+          <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <span>
+              <%= dgettext("monitors", "Activate monitoring") %>
+            </span>
+            <span class="text-muted-foreground text-sm font-normal leading-snug">
+              When unchecked, Sentinel will stop pinging this monitor.
+            </span>
+          </label>
+          <div>
+            <.simple_form for={@form}>
+              <.input type="select" options={@timeout_options} field={@form[:timeout]} />
+            </.simple_form>
+          </div>
+        </div>
       </div>
     </div>
     """
@@ -92,7 +123,17 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
 
   @impl Phoenix.LiveComponent
   def update(assigns, socket) do
-    {:ok, assign(socket, assigns)}
+    form = assigns.notification_rule |> NotificationRule.changeset(%{}) |> to_form()
+
+    timeout_options = translated_select_enums(NotificationRule, :timeout)
+    interval_options = translated_select_enums(NotificationRule, :resend_interval)
+
+    socket =
+      socket
+      |> assign(form: form, timeout_options: timeout_options, resend_interval_options: interval_options)
+      |> assign(assigns)
+
+    {:ok, socket}
   end
 
   @impl Phoenix.LiveComponent
