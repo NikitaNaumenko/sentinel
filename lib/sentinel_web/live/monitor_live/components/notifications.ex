@@ -96,9 +96,9 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
             </span>
           </label>
           <div>
-            <.simple_form for={@form}>
+            <.form for={@form}>
               <.input type="select" options={@resend_interval_options} field={@form[:resend_interval]} />
-            </.simple_form>
+            </.form>
           </div>
         </div>
         <div class="mt-5 flex w-full items-center justify-between space-x-4">
@@ -111,9 +111,30 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
             </span>
           </label>
           <div>
-            <.simple_form for={@form}>
+            <.form for={@form}>
               <.input type="select" options={@timeout_options} field={@form[:timeout]} />
-            </.simple_form>
+            </.form>
+          </div>
+        </div>
+      </div>
+      <div class="text-muted-foreground mt-10 text-sm">
+        <%= dgettext("monitors", "SSL monitoring") %>
+      </div>
+
+      <div class="bg-card text-card-foreground flex flex-col rounded-lg border p-4 shadow-sm">
+        <div class="flex w-full items-center justify-between space-x-4">
+          <label class="flex flex-col font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <span>
+              <%= dgettext("monitors", "SSL Expiry alerts") %>
+            </span>
+            <span class="text-muted-foreground text-sm font-normal leading-snug">
+              When to send SSL (HTTPS) alerts before expiry.
+            </span>
+          </label>
+          <div>
+            <.form for={@form}>
+              <.input type="select" options={@resend_interval_options} field={@form[:resend_interval]} />
+            </.form>
           </div>
         </div>
       </div>
