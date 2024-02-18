@@ -7,48 +7,88 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
     ~H"""
     <div class="py-5">Last 7 days</div>
     <div class="flex w-full justify-between gap-4">
-      <div class="w-full">
-        <div>
-          <div class="mb-4 grid grid-cols-4">
-            <div class="block rounded-l-lg border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800 ">
-              <div><%= dgettext("monitors", "Uptime") %></div>
-              <div><%= @uptime %>%</div>
+      <div class="ring-offset-background mt-2 space-y-4 focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2">
+        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <div class="bg-card text-card-foreground rounded-xl border shadow">
+            <div class="flex flex-row items-center justify-between space-y-0 p-6 pb-2">
+              <h3 class="text-sm font-medium tracking-tight"><%= dgettext("monitors", "Uptime") %></h3>
             </div>
-            <div class="block border-y border-r border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
-              <div>Up for</div>
-              <div><%= @uptime_period %></div>
+            <div class="p-6 pt-0">
+              <div class="text-2xl font-bold"><%= @uptime %>%</div>
+              <p class="text-muted-foreground text-xs">+20.1% from last month</p>
             </div>
-            <div class="block border-y border-r border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
-              <div>Avg response time</div>
-              <div><%= @avg_response_time %></div>
+          </div>
+          <div class="bg-card text-card-foreground rounded-xl border shadow">
+            <div class="flex flex-row items-center justify-between space-y-0 p-6 pb-2">
+              <h3 class="text-sm font-medium tracking-tight">Up for</h3>
             </div>
-            <div class="block rounded-r-lg border-y border-r border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
-              <div>Incidents</div>
-              <div><%= @incidents %></div>
+            <div class="p-6 pt-0">
+              <div class="text-2xl font-bold"><%= @uptime_period %></div>
+              <p class="text-muted-foreground text-xs">+180.1% from last month</p>
+            </div>
+          </div>
+          <div class="bg-card text-card-foreground rounded-xl border shadow">
+            <div class="flex flex-row items-center justify-between space-y-0 p-6 pb-2">
+              <h3 class="text-sm font-medium tracking-tight">Avg response time</h3>
+            </div>
+            <div class="p-6 pt-0">
+              <div class="text-2xl font-bold"><%= @avg_response_time %></div>
+              <p class="text-muted-foreground text-xs">+19% from last month</p>
+            </div>
+          </div>
+          <div class="bg-card text-card-foreground rounded-xl border shadow">
+            <div class="flex flex-row items-center justify-between space-y-0 p-6 pb-2">
+              <h3 class="text-sm font-medium tracking-tight">Incidents</h3>
+            </div>
+            <div class="p-6 pt-0">
+              <div class="text-2xl font-bold"><%= @incidents %></div>
+              <p class="text-muted-foreground text-xs">+201 since last hour</p>
             </div>
           </div>
         </div>
         <div
-          class="mb-4 block rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800"
           id="uptime-monitor"
           data-values={Jason.encode!(@uptime_stats)}
+          class="bg-card text-card-foreground col-span-4 rounded-xl border shadow"
         >
-          <canvas id="uptime-monitor-chart"></canvas>
+          <div class="flex flex-col space-y-1.5 p-6">
+            <h3 class="font-semibold leading-none tracking-tight">Uptime</h3>
+          </div>
+          <div class="p-6 pt-0 pl-2">
+            <canvas id="uptime-monitor-chart"></canvas>
+          </div>
         </div>
         <div
-          class="mb-4 block rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800"
+          class="bg-card text-card-foreground col-span-4 rounded-xl border shadow"
           data-values={Jason.encode!(@response_times)}
           id="response-time-monitor"
         >
-          <canvas id="response-time-monitor-chart"></canvas>
+          <div class="flex flex-col space-y-1.5 p-6">
+            <h3 class="font-semibold leading-none tracking-tight">Response time</h3>
+          </div>
+          <div class="p-6 pt-0 pl-2">
+            <canvas id="response-time-monitor-chart"></canvas>
+          </div>
         </div>
         <%!-- TODO: Incidents will be here --%>
-        <div class="mb-4 block rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
-          <div class="flex flex-wrap border-b border-gray-200 bg-gray-50 p-4 text-center text-sm font-medium text-gray-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400">
-            Incidents
+        <div class="bg-card text-card-foreground col-span-3 rounded-xl border shadow">
+          <div class="flex flex-col space-y-1.5 p-6">
+            <h3 class="font-semibold leading-none tracking-tight">Incidents</h3>
+            <p class="text-muted-foreground text-sm">You made 265 incidents this month.</p>
           </div>
-          <div class=" bg-white p-4 dark:bg-gray-800 md:p-8">
-            No incidents
+          <div class="p-6 pt-0">
+            <div class="space-y-8">
+              <div class="flex items-center">
+                <span class="relative flex h-9 w-9 shrink-0 overflow-hidden rounded-full">
+                  <img class="aspect-square h-full w-full" alt="Avatar" src="/avatars/01.png" />
+                </span>
+                <div class="ml-4 space-y-1">
+                  <p class="text-sm font-medium leading-none">Olivia Martin</p>
+                  <p class="text-muted-foreground text-sm">olivia.martin@email.com</p>
+                </div>
+                <div class="ml-auto font-medium">+$1,999.00</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

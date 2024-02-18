@@ -5,53 +5,63 @@
   <:subtitle><%= @monitor.url %></:subtitle>
 </.header>
 
-<ul class="hidden rounded-lg text-center text-sm font-medium text-gray-500 shadow dark:divide-gray-700 dark:text-gray-400 sm:flex">
-  <li class="w-full">
-    <.link
-      patch={~p"/monitors/#{@monitor}?#{%{tab: "overview"}}"}
-      class={[
-        "inline-block w-full p-4 border-r border-gray-200 dark:border-gray-700 rounded-s-lg active focus:outline-none",
-        active_tab("overview", @current_tab)
-      ]}
-      aria-current="page"
-    >
-      <%= dgettext("monitors", "Overview") %>
-    </.link>
-  </li>
-  <li class="w-full">
-    <.link
-      patch={~p"/monitors/#{@monitor}?#{%{tab: "settings"}}"}
-      class={[
-        "inline-block w-full p-4 border-r border-gray-200 dark:border-gray-700",
-        active_tab("settings", @current_tab)
-      ]}
-    >
-      <%= dgettext("monitors", "Settings") %>
-    </.link>
-  </li>
-  <li class="w-full">
-    <.link
-      patch={~p"/monitors/#{@monitor}?#{%{tab: "notifications"}}"}
-      class={[
-        "inline-block w-full p-4 border-r border-gray-200 dark:border-gray-700",
-        active_tab("notifications", @current_tab)
-      ]}
-    >
-      <%= dgettext("monitors", "Notifications") %>
-    </.link>
-  </li>
-  <li class="w-full">
-    <.link
-      patch={~p"/monitors/#{@monitor}?#{%{tab: "danger"}}"}
-      class={[
-        "inline-block w-full p-4 border-s-0 border-gray-200 dark:border-gray-700 rounded-e-lg",
-        active_tab("danger", @current_tab)
-      ]}
-    >
-      <%= dgettext("monitors", "Danger Zone") %>
-    </.link>
-  </li>
-</ul>
+<.tabs current_tab={@current_tab}>
+  <:tab id="overview" patch={~p"/monitors/#{@monitor}?#{%{tab: "overview"}}"}>
+    <%= dgettext("monitors", "Overview") %>
+  </:tab>
+  <:tab id="settings" patch={~p"/monitors/#{@monitor}?#{%{tab: "settings"}}"}>
+    <%= dgettext("monitors", "Settings") %>
+  </:tab>
+  <:tab id="notifications" patch={~p"/monitors/#{@monitor}?#{%{tab: "notifications"}}"}>
+    <%= dgettext("monitors", "Notifications") %>
+  </:tab>
+  <:tab id="danger-zone" patch={~p"/monitors/#{@monitor}?#{%{tab: "danger"}}"}>
+    <%= dgettext("monitors", "Danger Zone") %>
+  </:tab>
+</.tabs>
+<%!-- <ul class="hidden rounded-lg text-center text-sm font-medium text-gray-500 shadow dark:divide-gray-700 dark:text-gray-400 sm:flex"> --%>
+<%!--   <li class="w-full"> --%>
+<%!--     <.link --%>
+<%!--       patch={~p"/monitors/#{@monitor}?#{%{tab: "overview"}}"} --%>
+<%!--       class={[ --%>
+<%!--         "inline-block w-full p-4 border-r border-gray-200 dark:border-gray-700 rounded-s-lg active focus:outline-none" --%>
+<%!--       ]} --%>
+<%!--       aria-current="page" --%>
+<%!--     > --%>
+<%!--       <%= dgettext("monitors", "Overview") %> --%>
+<%!--     </.link> --%>
+<%!--   </li> --%>
+<%!--   <li class="w-full"> --%>
+<%!--     <.link --%>
+<%!--       patch={~p"/monitors/#{@monitor}?#{%{tab: "settings"}}"} --%>
+<%!--       class={[ --%>
+<%!--         "inline-block w-full p-4 border-r border-gray-200 dark:border-gray-700" --%>
+<%!--       ]} --%>
+<%!--     > --%>
+<%!--       <%= dgettext("monitors", "Settings") %> --%>
+<%!--     </.link> --%>
+<%!--   </li> --%>
+<%!--   <li class="w-full"> --%>
+<%!--     <.link --%>
+<%!--       patch={~p"/monitors/#{@monitor}?#{%{tab: "notifications"}}"} --%>
+<%!--       class={[ --%>
+<%!--         "inline-block w-full p-4 border-r border-gray-200 dark:border-gray-700" --%>
+<%!--       ]} --%>
+<%!--     > --%>
+<%!--       <%= dgettext("monitors", "Notifications") %> --%>
+<%!--     </.link> --%>
+<%!--   </li> --%>
+<%!--   <li class="w-full"> --%>
+<%!--     <.link --%>
+<%!--       patch={~p"/monitors/#{@monitor}?#{%{tab: "danger"}}"} --%>
+<%!--       class={[ --%>
+<%!--         "inline-block w-full p-4 border-s-0 border-gray-200 dark:border-gray-700 rounded-e-lg" --%>
+<%!--       ]} --%>
+<%!--     > --%>
+<%!--       <%= dgettext("monitors", "Danger Zone") %> --%>
+<%!--     </.link> --%>
+<%!--   </li> --%>
+<%!-- </ul> --%>
 <div id="default-tab-content">
   <div
     class="rounded-lg p-4 "

@@ -7,12 +7,12 @@ defmodule SentinelWeb.MonitorLive.MonitorComponent do
 
   def render(assigns) do
     ~H"""
-    <div id={@id} class="flex justify-center">
+    <div id={@id}>
       <.link
         navigate={~p"/monitors/#{@monitor}"}
-        class="flex flex-col flex-1 items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 mb-5"
+        class="flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent"
       >
-        <div class="flex flex-col justify-between p-4 leading-normal">
+        <div class="flex flex-col justify-between leading-normal">
           <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             <.indicator monitor={@monitor} />
             <%= @monitor.name %>
