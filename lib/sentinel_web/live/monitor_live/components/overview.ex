@@ -5,7 +5,6 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
 
   def overview(assigns) do
     ~H"""
-    <div class="py-5">Last 7 days</div>
     <div class="flex w-full justify-between gap-4">
       <div class="ring-offset-background mt-2 space-y-4 focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2">
         <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
