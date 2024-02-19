@@ -1,10 +1,10 @@
 defmodule Sentinel.Events.Acceptors.Slack do
+  @moduledoc false
   use Ecto.Schema
+
   import Ecto.Changeset
 
   schema "event_acceptor_slack" do
-
-
     timestamps(type: :utc_datetime_usec)
   end
 

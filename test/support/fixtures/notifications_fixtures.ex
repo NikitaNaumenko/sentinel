@@ -10,9 +10,7 @@ defmodule Sentinel.NotificationsFixtures do
   def notification_fixture(attrs \\ %{}) do
     {:ok, notification} =
       attrs
-      |> Enum.into(%{
-
-      })
+      |> Map.new()
       |> Sentinel.Notifications.create_notification()
 
     notification

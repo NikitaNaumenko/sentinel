@@ -4,9 +4,9 @@ defmodule Sentinel.NotificationsTest do
   alias Sentinel.Notifications
 
   describe "notifications" do
-    alias Sentinel.Notifications.Notification
-
     import Sentinel.NotificationsFixtures
+
+    alias Sentinel.Notifications.Notification
 
     @invalid_attrs %{}
 
@@ -34,7 +34,8 @@ defmodule Sentinel.NotificationsTest do
       notification = notification_fixture()
       update_attrs = %{}
 
-      assert {:ok, %Notification{} = notification} = Notifications.update_notification(notification, update_attrs)
+      assert {:ok, %Notification{} = notification} =
+               Notifications.update_notification(notification, update_attrs)
     end
 
     test "update_notification/2 with invalid data returns error changeset" do

@@ -15,60 +15,10 @@
   <:tab id="notifications" patch={~p"/monitors/#{@monitor}?#{%{tab: "notifications"}}"}>
     <%= dgettext("monitors", "Notifications") %>
   </:tab>
-  <:tab id="danger-zone" patch={~p"/monitors/#{@monitor}?#{%{tab: "danger"}}"}>
+  <:tab id="danger" patch={~p"/monitors/#{@monitor}?#{%{tab: "danger"}}"}>
     <%= dgettext("monitors", "Danger Zone") %>
   </:tab>
-</.tabs>
-<%!-- <ul class="hidden rounded-lg text-center text-sm font-medium text-gray-500 shadow dark:divide-gray-700 dark:text-gray-400 sm:flex"> --%>
-<%!--   <li class="w-full"> --%>
-<%!--     <.link --%>
-<%!--       patch={~p"/monitors/#{@monitor}?#{%{tab: "overview"}}"} --%>
-<%!--       class={[ --%>
-<%!--         "inline-block w-full p-4 border-r border-gray-200 dark:border-gray-700 rounded-s-lg active focus:outline-none" --%>
-<%!--       ]} --%>
-<%!--       aria-current="page" --%>
-<%!--     > --%>
-<%!--       <%= dgettext("monitors", "Overview") %> --%>
-<%!--     </.link> --%>
-<%!--   </li> --%>
-<%!--   <li class="w-full"> --%>
-<%!--     <.link --%>
-<%!--       patch={~p"/monitors/#{@monitor}?#{%{tab: "settings"}}"} --%>
-<%!--       class={[ --%>
-<%!--         "inline-block w-full p-4 border-r border-gray-200 dark:border-gray-700" --%>
-<%!--       ]} --%>
-<%!--     > --%>
-<%!--       <%= dgettext("monitors", "Settings") %> --%>
-<%!--     </.link> --%>
-<%!--   </li> --%>
-<%!--   <li class="w-full"> --%>
-<%!--     <.link --%>
-<%!--       patch={~p"/monitors/#{@monitor}?#{%{tab: "notifications"}}"} --%>
-<%!--       class={[ --%>
-<%!--         "inline-block w-full p-4 border-r border-gray-200 dark:border-gray-700" --%>
-<%!--       ]} --%>
-<%!--     > --%>
-<%!--       <%= dgettext("monitors", "Notifications") %> --%>
-<%!--     </.link> --%>
-<%!--   </li> --%>
-<%!--   <li class="w-full"> --%>
-<%!--     <.link --%>
-<%!--       patch={~p"/monitors/#{@monitor}?#{%{tab: "danger"}}"} --%>
-<%!--       class={[ --%>
-<%!--         "inline-block w-full p-4 border-s-0 border-gray-200 dark:border-gray-700 rounded-e-lg" --%>
-<%!--       ]} --%>
-<%!--     > --%>
-<%!--       <%= dgettext("monitors", "Danger Zone") %> --%>
-<%!--     </.link> --%>
-<%!--   </li> --%>
-<%!-- </ul> --%>
-<div id="default-tab-content">
-  <div
-    hidden={hidden_tab_content?("overview", @current_tab)}
-    id="overview"
-    role="tabpanel"
-    aria-labelledby="overview-tab"
-  >
+  <:tab_content id="overview">
     <.overview
       monitor={@monitor}
       uptime={@uptime}
@@ -80,13 +30,8 @@
       certificate={@certificate}
       last_five_checks={@last_five_checks}
     />
-  </div>
-  <div
-    hidden={hidden_tab_content?("settings", @current_tab)}
-    id="settings"
-    role="tabpanel"
-    aria-labelledby="settings-tab"
-  >
+  </:tab_content>
+  <:tab_content id="settings">
     <.simple_form for={@form} id="monitor-form" phx-validate="validate" phx-submit="save">
       <.input field={@form[:name]} label={dgettext("monitors", "Name")} />
       <.input field={@form[:url]} label={dgettext("monitors", "URL")} />
@@ -118,52 +63,40 @@
         <.button phx-disable-with="Saving..."><%= dgettext("forms", "Save") %></.button>
       </:actions>
     </.simple_form>
-  </div>
-  <div
-    hidden={hidden_tab_content?("notifications", @current_tab)}
-    class="rounded-lg p-4"
-    id="notifications"
-    role="tabpanel"
-    aria-labelledby="notifications-tab"
-  >
-    <%!-- <.notifications monitor={@monitor} notification_rule={@monitor.notification_rule} /> --%>
+  </:tab_content>
+  <:tab_content id="notifications">
     <.live_component
       module={SentinelWeb.MonitorLive.Components.Notifications}
       id="notifications"
       monitor={@monitor}
       notification_rule={@monitor.notification_rule}
     />
-  </div>
-  <div
-    hidden={hidden_tab_content?("danger", @current_tab)}
-    class="rounded-lg p-4"
-    id="danger"
-    role="tabpanel"
-    aria-labelledby="danger-tab"
-  >
-    <div class="flex justify-between">
-      <div class="max-w-sm">
-        <div><%= dgettext("monitors", "Delete monitor") %></div>
-        <span class="text-sm text-gray-500">
-          <%= dgettext(
-            "monitors",
-            "Delete the %{monitor} endpoint monitor and all its data. Careful, this action cannot be undone.",
-            monitor: @monitor.name
-          ) %>
-        </span>
-      </div>
-      <div>
-        <.link
-          class={[
-            "bg-danger-700 rounded-lg px-3 py-2 hover:bg-danger-500 phx-submit-loading:opacity-75",
-            "text-sm font-semibold leading-6 text-white active:text-white/80"
-          ]}
-          phx-click={JS.push("delete", value: %{id: @monitor.id})}
-          data-confirm={dgettext("confirms", "Are you sure?")}
-        >
-          <%= dgettext("buttons", "Delete") %>
-        </.link>
+  </:tab_content>
+  <:tab_content id="danger">
+    <div class="bg-card text-card-foreground mb-5 flex flex-col rounded-lg border p-6 shadow-sm md:flex-row">
+      <div class="flex w-full items-center justify-between space-x-4">
+        <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+          <span>
+            <%= dgettext("monitors", "Delete monitor") %>
+          </span>
+          <span class="text-muted-foreground text-sm font-normal leading-snug">
+            <%= dgettext(
+              "monitors",
+              "Delete the %{monitor} endpoint monitor and all its data. Careful, this action cannot be undone.",
+              monitor: @monitor.name
+            ) %>
+          </span>
+        </label>
+        <div>
+          <.button_link
+            variant="danger"
+            phx-click={JS.push("delete", value: %{id: @monitor.id})}
+            data-confirm={dgettext("confirms", "Are you sure?")}
+          >
+            <%= dgettext("buttons", "Delete") %>
+          </.button_link>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+  </:tab_content>
+</.tabs>

@@ -97,7 +97,7 @@ defmodule SentinelWeb.MonitorLive.Show do
   end
 
   def handle_event("toggle-monitor", %{"id" => id}, socket) do
-    monitor = Checks.get_monitor!(id)
+    monitor = id |> Checks.get_monitor!() |> Repo.preload(:notification_rule)
 
     case Checks.toggle_monitor(monitor) do
       {:ok, monitor} ->

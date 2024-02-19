@@ -4,9 +4,9 @@ defmodule Sentinel.Notifications do
   """
 
   import Ecto.Query, warn: false
-  alias Sentinel.Repo
 
   alias Sentinel.Notifications.Notification
+  alias Sentinel.Repo
 
   @doc """
   Returns the list of notifications.

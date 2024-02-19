@@ -34,13 +34,13 @@ defmodule SentinelWeb.MonitorLive.MonitorComponent do
     """
   end
 
-  defp outer_color_state(%Monitor{state: :disabled}), do: "bg-gray-200 dark:bg-gray-900"
-  defp outer_color_state(%Monitor{last_check: :failure}), do: "bg-danger-200 dark:bg-danger-900"
-  defp outer_color_state(%Monitor{last_check: :success}), do: "bg-success-200 dark:bg-success-900"
-  defp outer_color_state(_), do: "bg-warning-200 dark:bg-warning-900"
+  defp outer_color_state(%Monitor{state: :disabled}), do: "bg-secondary/50"
+  defp outer_color_state(%Monitor{last_check: :failure}), do: "bg-danger/50"
+  defp outer_color_state(%Monitor{last_check: :success}), do: "bg-success/50"
+  defp outer_color_state(_), do: "bg-warning/50"
 
-  defp inner_color_state(%Monitor{state: :disabled}), do: "bg-gray-500"
-  defp inner_color_state(%Monitor{last_check: :failure}), do: "bg-danger-500"
-  defp inner_color_state(%Monitor{last_check: :success}), do: "bg-success-500"
-  defp inner_color_state(_), do: "bg-warning-500"
+  defp inner_color_state(%Monitor{state: :disabled}), do: "bg-secondary"
+  defp inner_color_state(%Monitor{last_check: :failure}), do: "bg-danger"
+  defp inner_color_state(%Monitor{last_check: :success}), do: "bg-success"
+  defp inner_color_state(_), do: "bg-warning"
 end

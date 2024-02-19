@@ -6,9 +6,12 @@ defmodule SentinelWeb.Components.Tabs do
   attr :current_tab, :string
 
   slot :tab do
-    slot :inner_block
     attr :id, :string, required: true
-    attr :patch, :global
+    attr :patch, :string
+  end
+
+  slot :tab_content do
+    attr :id, :string, required: true
   end
 
   def tabs(assigns) do
@@ -41,6 +44,15 @@ defmodule SentinelWeb.Components.Tabs do
         <%= render_slot(tab) %>
       </.link>
     </div>
+    <div
+      :for={tab_content <- @tab_content}
+      id={tab_content[:id]}
+      class="pt-4"
+      hidden={hidden_tab_content?(tab_content[:id], @current_tab)}
+      aria-labelledby={"#{tab_content[:id]}-tab"}
+    >
+      <%= render_slot(tab_content) %>
+    </div>
     """
   end
 
@@ -51,4 +63,7 @@ defmodule SentinelWeb.Components.Tabs do
   def active_tab(_tab_name, _current_tab) do
     ""
   end
+
+  def hidden_tab_content?(tab, tab), do: false
+  def hidden_tab_content?(_tab, _current_tab), do: true
 end

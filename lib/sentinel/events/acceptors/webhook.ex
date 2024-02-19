@@ -1,10 +1,10 @@
 defmodule Sentinel.Events.Acceptors.Webhook do
+  @moduledoc false
   use Ecto.Schema
+
   import Ecto.Changeset
 
   schema "event_acceptor_webhook" do
-
-
     timestamps(type: :utc_datetime_usec)
   end
 
