@@ -81,9 +81,9 @@ defmodule SentinelWeb.Components.Breadcrumbs do
     """
   end
 
-  defp separator(%{name: name} = assigns) do
+  defp separator(%{name: _name} = assigns) do
     ~H"""
-    <.icon name={name} class="px-3" />
+    <.icon name={@name} class="px-3" />
     """
   end
 end

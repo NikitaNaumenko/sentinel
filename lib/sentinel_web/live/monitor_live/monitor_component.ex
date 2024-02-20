@@ -2,7 +2,6 @@ defmodule SentinelWeb.MonitorLive.MonitorComponent do
   @moduledoc false
   use SentinelWeb, :component
 
-  alias Sentinel.Checks
   alias Sentinel.Checks.Monitor
 
   def render(assigns) do

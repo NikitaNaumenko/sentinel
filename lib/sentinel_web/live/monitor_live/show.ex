@@ -2,7 +2,6 @@ defmodule SentinelWeb.MonitorLive.Show do
   @moduledoc false
   use SentinelWeb, :live_view
 
-  import SentinelWeb.MonitorLive.Components.Notifications, only: [notifications: 1]
   import SentinelWeb.MonitorLive.Components.Overview, only: [overview: 1]
   import SentinelWeb.MonitorLive.MonitorComponent, only: [indicator: 1]
 
@@ -111,10 +110,6 @@ defmodule SentinelWeb.MonitorLive.Show do
       {:error, _error} ->
         {:noreply, put_flash(socket, :error, dgettext("monitors", "Monitor cannot be toggled"))}
     end
-  end
-
-  def handle_event("toggle-via-email", %{"id" => id}, socket) do
-    notification_rule = Checks.toggle_via_email(id)
   end
 
   defp assign_form(socket, changeset) do

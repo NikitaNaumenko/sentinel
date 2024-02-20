@@ -3,6 +3,6 @@ defmodule Sentinel.Checks.UseCases.SendNotification do
   alias Sentinel.Checks.Monitor
 
   @spec call(Monitor.t()) :: :ok | :error
-  def call(monitor) do
+  def call(_monitor) do
   end
 end

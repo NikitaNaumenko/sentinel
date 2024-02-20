@@ -2,7 +2,6 @@ defmodule SentinelWeb.Components.Input do
   @moduledoc false
   use Phoenix.Component
 
-  import SentinelWeb.Components.Icon
   import SentinelWeb.Components.Label
 
   @doc """

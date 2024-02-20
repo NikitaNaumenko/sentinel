@@ -5,7 +5,6 @@ defmodule Sentinel.Checks.Workers.StartApplicationWorker do
   use Oban.Worker, queue: :monitors
 
   alias Sentinel.Checks
-  alias Sentinel.Checks.Monitor
   alias Sentinel.Checks.Workers.StartMonitor
 
   @impl Oban.Worker

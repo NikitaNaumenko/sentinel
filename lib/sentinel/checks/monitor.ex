@@ -5,7 +5,6 @@ defmodule Sentinel.Checks.Monitor do
   import Ecto.Changeset
 
   alias Sentinel.Checks.Certificate
-  alias Sentinel.Checks.Check
   alias Sentinel.Checks.NotificationRule
 
   @request_timeouts [1, 3, 5, 10, 15, 30, 60]
@@ -109,6 +108,7 @@ defmodule Sentinel.Checks.Monitor do
       :request_timeout,
       :expected_status_code
     ])
+    |> validate_inclusion(:expected_status_code, @available_http_status)
   end
 
   def intervals, do: @intervals

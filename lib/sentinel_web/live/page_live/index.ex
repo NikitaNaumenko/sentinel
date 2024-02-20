@@ -3,7 +3,7 @@ defmodule SentinelWeb.PageLive.Index do
   use SentinelWeb, :live_view
 
   alias Sentinel.StatusPages
-  alias Sentinel.StatusPages.Page
+  # alias Sentinel.StatusPages.Page
 
   @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
@@ -11,7 +11,7 @@ defmodule SentinelWeb.PageLive.Index do
   end
 
   @impl Phoenix.LiveView
-  def handle_params(params, _url, socket) do
+  def handle_params(_params, _url, socket) do
     {:noreply, socket |> assign(:page_title, "Listing Pages") |> assign(:page, nil)}
   end
 

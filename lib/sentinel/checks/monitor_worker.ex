@@ -3,6 +3,7 @@ defmodule Sentinel.Checks.MonitorWorker do
   use GenServer
 
   alias Sentinel.Checks.MonitorSupervisor
+  alias Sentinel.Checks.UseCases.RunCheck
 
   def start_link(monitor) do
     MonitorSupervisor.start_child(monitor)
