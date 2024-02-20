@@ -1,15 +1,22 @@
 defmodule Sentinel.Events do
   @moduledoc false
   alias Sentinel.Events.Event
+  alias Sentinel.Events.Workers.CollectEventAcceptors
   alias Sentinel.Repo
 
-  def create_event!(_payload) do
-    # %Event{id: id} =
-    #   Event.create!(payload)
-    #
-    # %{id: id}
-    # |> CollectEvent.new()
-    # |> Oban.insert!()
+  def create_event!(type, resource, payload \\ %{}) do
+    %Event{id: id} =
+      Event.create!(%{
+        type: type,
+        resource_id: resource.id,
+        resource_type: to_string(resource.__schema__),
+        payload: payload
+        # creator_id: get_in(resource, Access.key(:creator_id, nil))
+      })
+
+    %{id: id}
+    |> CollectEventAcceptors.new()
+    |> Oban.insert!()
   end
 
   def get_event(id) do

@@ -26,4 +26,13 @@ defmodule Sentinel.Checks.Check do
 
   def define_result(status, status), do: :success
   def define_result(_expected_status, _actual_status), do: :failure
+
+  # TODO: Возможно тут произошла ерунда и событие должно быть связано с монитором
+  def to_payload(%__MODULE__{result: :failed} = check) do
+    %{
+      event_type: :monitor_down,
+      resource_type: to_string(Sentinel.Checks.Monitor),
+      resource_id: check.monitor_id
+    }
+  end
 end

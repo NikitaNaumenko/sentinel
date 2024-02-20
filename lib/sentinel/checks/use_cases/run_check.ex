@@ -20,26 +20,25 @@ defmodule Sentinel.Checks.UseCases.RunCheck do
 
   def create_check!(monitor, %Finch.Response{status: status} = finch_response, duration) do
     Sentinel.Repo.transaction(fn ->
-      %{
-        raw_response: finch_response,
-        result: Check.define_result(monitor.expected_status_code, status),
-        reason: nil,
-        duration: duration,
-        status_code: status,
-        monitor_id: monitor.id
-      }
-      |> Check.changeset()
-      |> Sentinel.Repo.insert!()
-      |> to_payload()
-      |> Events.create_event!()
-    end)
-  end
+      check =
+        %{
+          raw_response: finch_response,
+          result: Check.define_result(monitor.expected_status_code, status),
+          reason: nil,
+          duration: duration,
+          status_code: status,
+          monitor_id: monitor.id
+        }
+        |> Check.changeset()
+        |> Sentinel.Repo.insert!()
+        |> case do
+          %Check{result: :failed, inserted_at: inserted_at} ->
+            Events.create_event!(:monitor_down, monitor, %{downed_at: inserted_at})
 
-  defp to_payload(%Check{result: :failed} = check) do
-    %{
-      event_type: :monitor_down,
-      resource_type: to_string(Sentinel.Checks.Monitor),
-      resource_id: check.monitor_id
-    }
+          # TODO: тут будет логика когда монитор поднялся
+          _ ->
+            :ok
+        end
+    end)
   end
 end
