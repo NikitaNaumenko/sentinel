@@ -20,10 +20,8 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
   end
 
   defp process_event(%MonitorDown{}, event) do
-    dbg("JOPAHUI")
-    %{account: account} = Checks.get_monitor!(event.resource_id)
+    %{account: account} = monitor = Checks.get_monitor!(event.resource_id)
 
-    dbg(account)
     account = Sentinel.Repo.preload(account, :users)
     # TODO: Escalation policy
 
