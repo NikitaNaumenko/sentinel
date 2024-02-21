@@ -1,5 +1,6 @@
 defmodule Sentinel.Events do
   @moduledoc false
+  alias Sentinel.Events.Acceptor
   alias Sentinel.Events.Event
   alias Sentinel.Events.Workers.CollectEventAcceptors
   alias Sentinel.Repo
@@ -9,7 +10,7 @@ defmodule Sentinel.Events do
       Event.create!(%{
         type: type,
         resource_id: resource.id,
-        resource_type: to_string(resource.__schema__),
+        resource_type: to_string(resource.__struct__),
         payload: payload
         # creator_id: get_in(resource, Access.key(:creator_id, nil))
       })
@@ -23,6 +24,7 @@ defmodule Sentinel.Events do
     Repo.get(Event, id)
   end
 
-  def get_acceptor(_id) do
+  def get_acceptor(id) do
+    Repo.get(Acceptor, id)
   end
 end

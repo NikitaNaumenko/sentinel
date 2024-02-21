@@ -20,15 +20,16 @@ defmodule Sentinel.Checks.Check do
   @doc false
   def changeset(attrs) do
     %__MODULE__{}
-    |> cast(attrs, [:result, :reason, :raw_response, :duration, :status_code])
-    |> validate_required([:result, :raw_response, :duration, :status_code])
+    |> cast(attrs, [:result, :reason, :raw_response, :duration, :status_code, :monitor_id])
+    |> validate_required([:result, :raw_response, :duration, :status_code, :monitor_id])
+    |> assoc_constraint(:monitor)
   end
 
   def define_result(status, status), do: :success
   def define_result(_expected_status, _actual_status), do: :failure
 
   # TODO: Возможно тут произошла ерунда и событие должно быть связано с монитором
-  def to_payload(%__MODULE__{result: :failed} = check) do
+  def to_payload(%__MODULE__{result: :failure} = check) do
     %{
       event_type: :monitor_down,
       resource_type: to_string(Sentinel.Checks.Monitor),

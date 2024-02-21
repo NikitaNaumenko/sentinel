@@ -2,7 +2,7 @@ defmodule Sentinel.Checks.Notifications.Email do
   @moduledoc false
   import Swoosh.Email
 
-  def alert(monitor, users) do
+  def monitor_down(monitor, users) do
     new()
     |> to(Enum.map(users, fn user -> {user.email, user.email} end))
     |> from({"Sentinel", "noreply@sentinel.com"})

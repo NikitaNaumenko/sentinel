@@ -3,8 +3,7 @@ defmodule Sentinel.Repo.Migrations.CreateEventAcceptors do
 
   def change do
     create table(:event_acceptors) do
-      add :recipient_id, :string
-      add :recipient_type, :string
+      add :recipient_id, references(:users, on_delete: :delete_all)
       add :event_id, references(:events, on_delete: :delete_all)
       add :state, :string
 

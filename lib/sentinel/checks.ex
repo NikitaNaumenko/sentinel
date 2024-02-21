@@ -42,7 +42,7 @@ defmodule Sentinel.Checks do
       ** (Ecto.NoResultsError)
 
   """
-  def get_monitor!(id), do: Repo.get!(Monitor, id)
+  def get_monitor!(id), do: Monitor |> Repo.get!(id) |> Repo.preload(:account)
 
   @doc """
   Creates a monitor.

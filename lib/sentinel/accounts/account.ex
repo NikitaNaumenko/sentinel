@@ -10,6 +10,7 @@ defmodule Sentinel.Accounts.Account do
     field :name, :string
     timestamps(type: :utc_datetime)
 
+    has_many :users, Sentinel.Accounts.User
     has_one :webhook, Webhook
   end
 
