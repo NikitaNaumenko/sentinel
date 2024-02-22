@@ -6,12 +6,9 @@ defmodule Sentinel.Events.Workers.SendEmail do
   alias Sentinel.Events.UseCases.NotifyAcceptor
 
   @impl Oban.Worker
-  def perform(%Oban.Job{args: %{"recipient_id" => recipient_id, "acceptor_id" => acceptor_id}}) do
-    #   email = Email.create(%{recipient_id: recipient_id, acceptor_id: acceptor.id, state: "pending"})
-    #   # Email.process!(email)
-    #   Sentinel.Checks.Notifications.Email.new(%{recip})
-    #   Sample.Mailer.deliver(email)
-    #   # Email.sent(email)
-    # # TODO: изменения стейта емейла
+  def perform(%Oban.Job{args: %{email_type: email_type} = args}) do
+    Sentinel.Checks.Notifications.Email
+    |> apply(email_type, [args])
+    |> Sentinel.Mailer.deliver()
   end
 end

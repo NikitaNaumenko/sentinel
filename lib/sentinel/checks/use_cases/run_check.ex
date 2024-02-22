@@ -32,8 +32,7 @@ defmodule Sentinel.Checks.UseCases.RunCheck do
       |> Sentinel.Repo.insert!()
       |> case do
         %Check{result: :failure, inserted_at: inserted_at} ->
-          dbg("Monitor down")
-          Events.create_event!(:monitor_down, monitor, %{downed_at: inserted_at})
+          Events.create_event(:monitor_down, monitor, %{downed_at: inserted_at})
 
         # TODO: тут будет логика когда монитор поднялся
         _ ->

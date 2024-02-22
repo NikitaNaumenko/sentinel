@@ -7,7 +7,7 @@ defmodule Sentinel.Events do
 
   def create_event(type, resource, payload \\ %{}) do
     Sentinel.Repo.transaction(fn ->
-      event = create_event(type, resource, payload)
+      event = create_event!(type, resource, payload)
 
       %{id: event.id}
       |> CollectEventAcceptors.new()
