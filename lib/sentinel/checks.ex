@@ -57,18 +57,15 @@ defmodule Sentinel.Checks do
 
   """
   def create_monitor(attrs \\ %{}) do
-    certificate = CheckCertificate.call(attrs["url"])
-
     %Monitor{}
-    |> Monitor.changeset(Map.put(attrs, "certificates", [certificate]))
+    |> Monitor.changeset(attrs)
     |> Repo.insert()
-   end
-
+  end
 
   def check_certificate(url), do: CheckCertificate.call(url)
 
   def start_monitor(monitor) do
-     MonitorWorker.start_link(monitor)
+    MonitorWorker.start_link(monitor)
   end
 
   @doc """
@@ -200,8 +197,6 @@ defmodule Sentinel.Checks do
   def broadcast(topic, monitor) do
     Phoenix.PubSub.broadcast(Sentinel.PubSub, topic, {:msg, monitor})
   end
-
-  def check_certificate(url), do: CheckCertificate.call(url)
 
   def last_certificate(%Monitor{id: monitor_id}) do
     Repo.one(from(c in Certificate, where: c.monitor_id == ^monitor_id, order_by: [desc: :id], limit: 1))

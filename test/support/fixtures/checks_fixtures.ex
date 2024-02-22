@@ -9,8 +9,16 @@ defmodule Sentinel.ChecksFixtures do
   """
   def monitor_fixture(attrs \\ %{}) do
     {:ok, monitor} =
-      attrs
-      |> Map.new()
+      %{
+        name: "Monitor #{System.unique_integer()}",
+        url: "http://example.com",
+        interval: 60,
+        http_method: :get,
+        expected_status_code: 200,
+        request_timeout: 10,
+        notification_rule: %{via_email: true, via_webhook: true}
+      }
+      |> Map.merge(attrs)
       |> Sentinel.Checks.create_monitor()
 
     monitor

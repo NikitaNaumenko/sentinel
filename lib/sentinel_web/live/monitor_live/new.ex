@@ -76,13 +76,12 @@ defmodule SentinelWeb.MonitorLive.New do
     # TODO: подумать как запаковать это красиво
     with {:ok, monitor} <- Checks.create_monitor(attrs),
          {:ok, _pid} <- Checks.start_monitor(monitor) do
-      {:ok, monitor} ->
-        socket =
-          socket
-          |> put_flash(:info, dgettext("monitors", "Monitor created successfully"))
-          |> push_navigate(to: ~p"/monitors/#{monitor}")
+      socket =
+        socket
+        |> put_flash(:info, dgettext("monitors", "Monitor created successfully"))
+        |> push_navigate(to: ~p"/monitors/#{monitor}")
 
-        {:noreply, socket}
+      {:noreply, socket}
     else
       {:error, changeset} ->
         {:noreply, assign_form(socket, changeset)}

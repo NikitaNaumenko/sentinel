@@ -25,16 +25,13 @@ defmodule Sentinel.Checks.NotificationRule do
 
   @doc false
   def changeset(notification_rule, attrs) do
-    notification_rule
-    |> cast(attrs, [
+    cast(notification_rule, attrs, [
       :timeout,
       :resend_interval,
-      :monitor_id,
       :via_webhook,
       :via_slack,
       :via_email,
       :via_telegram
     ])
-    |> validate_required([:monitor_id])
   end
 end
