@@ -62,15 +62,13 @@ defmodule Sentinel.Checks do
     %Monitor{}
     |> Monitor.changeset(Map.put(attrs, "certificates", [certificate]))
     |> Repo.insert()
-    |> case do
-      {:ok, monitor} ->
-        {:ok, _pid} = MonitorWorker.start_link(monitor)
-        {:ok, monitor}
+  end
 
-      {:error, changeset} ->
-        IO.inspect(changeset)
-        {:error, changeset}
-    end
+  def check_certificate(url), do: CheckCertificate.call(url)
+
+  def start_monitor(monitor) do
+    {:ok, _pid} = MonitorWorker.start_link(monitor)
+    {:ok, monitor}
   end
 
   @doc """

@@ -65,7 +65,17 @@ defmodule SentinelWeb.MonitorLive.New do
 
   @impl Phoenix.LiveView
   def handle_event("save", %{"monitor" => monitor_attrs}, socket) do
-    case Checks.create_monitor(Map.put(monitor_attrs, "account_id", socket.assigns.current_user.account_id)) do
+    certificate = Checks.check_certificate(monitor_attrs["url"])
+
+    attrs =
+      Map.merge(monitor_attrs, %{
+        "account_id" => socket.assigns.current_user.account_id,
+        "certificates" => [certificate]
+      })
+
+    # TODO: подумать как запаковать это красиво
+    with {:ok, monitor} <- Checks.create_monitor(attrs),
+         {:ok, _pid} <- Checks.start_monitor(monitor) do
       {:ok, monitor} ->
         socket =
           socket
@@ -73,7 +83,7 @@ defmodule SentinelWeb.MonitorLive.New do
           |> push_navigate(to: ~p"/monitors/#{monitor}")
 
         {:noreply, socket}
-
+    else
       {:error, changeset} ->
         {:noreply, assign_form(socket, changeset)}
     end

@@ -5,19 +5,28 @@ defmodule Sentinel.Events do
   alias Sentinel.Events.Workers.CollectEventAcceptors
   alias Sentinel.Repo
 
-  def create_event!(type, resource, payload \\ %{}) do
-    %Event{id: id} =
-      Event.create!(%{
-        type: type,
-        resource_id: resource.id,
-        resource_type: to_string(resource.__struct__),
-        payload: payload
-        # creator_id: get_in(resource, Access.key(:creator_id, nil))
-      })
+  def create_event(type, resource, payload \\ %{}) do
+    Sentinel.Repo.transaction(fn ->
+      event = create_event(type, resource, payload)
 
-    %{id: id}
-    |> CollectEventAcceptors.new()
-    |> Oban.insert!()
+      %{id: event.id}
+      |> CollectEventAcceptors.new()
+      |> Oban.insert!()
+
+      event
+    end)
+  end
+
+  @spec create_event(atom(), map(), map()) :: Event.t()
+  def create_event!(type, resource, payload \\ %{}) do
+    %Event{}
+    |> Event.changeset(%{
+      type: type,
+      resource_id: resource.id,
+      resource_type: to_string(resource.__struct__),
+      payload: payload
+    })
+    |> Repo.insert!()
   end
 
   def get_event(id) do

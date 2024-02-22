@@ -24,12 +24,6 @@ defmodule Sentinel.Events.Event do
     timestamps(type: :utc_datetime_usec)
   end
 
-  def create!(params) do
-    %__MODULE__{}
-    |> changeset(params)
-    |> Repo.insert!()
-  end
-
   @doc false
   def changeset(event, attrs \\ %{}) do
     event

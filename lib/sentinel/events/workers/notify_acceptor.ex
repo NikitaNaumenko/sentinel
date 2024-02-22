@@ -9,7 +9,6 @@ defmodule Sentinel.Events.Workers.NotifyAcceptor do
   def perform(%Oban.Job{args: %{"id" => id}}) do
     acceptor = Events.get_acceptor(id)
 
-    dbg(acceptor)
     NotifyAcceptor.call(acceptor)
   end
 end

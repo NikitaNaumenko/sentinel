@@ -8,7 +8,6 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
 
   def call(acceptor) do
     acceptor = Repo.preload(acceptor, :event)
-    dbg(acceptor)
     process_acceptor(acceptor, acceptor.event)
   end
 
