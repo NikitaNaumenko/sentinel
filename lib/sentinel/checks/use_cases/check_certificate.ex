@@ -5,7 +5,9 @@ defmodule Sentinel.Checks.UseCases.CheckCertificate do
 
   @spec call(String.t()) :: any()
   def call(url) do
-    with {:ok, conn} <- Mint.HTTP.connect(:https, url, 443),
+    %URI{host: host} = URI.parse(url)
+
+    with {:ok, conn} <- Mint.HTTP.connect(:https, host, 443),
          {:ok, der} <- :ssl.peercert(conn.socket),
          {:ok, cert} <- X509.Certificate.from_der(der),
          {:Validity, not_before, not_after} <- X509.Certificate.validity(cert) do

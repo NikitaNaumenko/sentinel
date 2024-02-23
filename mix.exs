@@ -66,6 +66,7 @@ defmodule Sentinel.MixProject do
       {:ex_cldr_calendars, "~> 1.23"},
       {:recase, "~> 0.5"},
       {:cva, "~> 0.2"},
+      {:ecto_commons, "~> 0.3.4"},
       {:styler, "~> 0.11", only: [:dev, :test], runtime: false},
       {:tailwind_formatter, "~> 0.4.0", only: [:dev, :test], runtime: false},
       {:exvcr, "~> 0.11", only: :test},

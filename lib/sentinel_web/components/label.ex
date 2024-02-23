@@ -16,7 +16,7 @@ defmodule SentinelWeb.Components.Label do
     ~H"""
     <label
       for={@for}
-      class={["text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70", @class]}
+      class={["text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 phx-no-feedback:text-primary", @class]}
     >
       <%= render_slot(@inner_block) %>
     </label>

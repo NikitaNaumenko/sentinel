@@ -3,6 +3,7 @@ defmodule Sentinel.Checks.Monitor do
   use Ecto.Schema
 
   import Ecto.Changeset
+  import EctoCommons.URLValidator
 
   alias Sentinel.Checks.Certificate
   alias Sentinel.Checks.NotificationRule
@@ -100,6 +101,7 @@ defmodule Sentinel.Checks.Monitor do
     ])
     |> cast_assoc(:certificates)
     |> cast_assoc(:notification_rule)
+    |> validate_url(:url)
     |> validate_required([
       :name,
       :url,

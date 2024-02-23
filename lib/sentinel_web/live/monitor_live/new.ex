@@ -60,12 +60,12 @@ defmodule SentinelWeb.MonitorLive.New do
       |> Monitor.changeset(monitor_attrs)
       |> Map.put(:action, :validate)
 
-    {:ok, assign_form(socket, changeset)}
+    {:noreply, assign_form(socket, changeset)}
   end
 
-  @impl Phoenix.LiveView
   def handle_event("save", %{"monitor" => monitor_attrs}, socket) do
     certificate = Checks.check_certificate(monitor_attrs["url"])
+    dbg(certificate)
 
     attrs =
       Map.merge(monitor_attrs, %{
@@ -84,6 +84,7 @@ defmodule SentinelWeb.MonitorLive.New do
       {:noreply, socket}
     else
       {:error, changeset} ->
+        dbg(changeset)
         {:noreply, assign_form(socket, changeset)}
     end
   end

@@ -58,7 +58,7 @@ defmodule Sentinel.Checks do
   """
   def create_monitor(attrs \\ %{}) do
     %Monitor{}
-    |> Monitor.changeset(attrs)
+    |> Monitor.changeset(Map.put(attrs, "notification_rule", %{}))
     |> Repo.insert()
   end
 

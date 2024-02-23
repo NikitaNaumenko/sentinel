@@ -10,6 +10,6 @@
   </div>
 </div>
 
-<div id="monitors" phx-update="stream" class="flex w-full flex-col">
+<div id="monitors" phx-update="stream" class="flex w-full flex-col gap-4">
   <MonitorComponent.render :for={{id, monitor} <- @streams.monitors} id={id} monitor={monitor} />
 </div>
