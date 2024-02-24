@@ -9,6 +9,7 @@ defmodule SentinelWeb.Components do
       import SentinelWeb.Components.Label
       import SentinelWeb.Components.Switch
       import SentinelWeb.Components.Tabs
+      import SentinelWeb.Components.Toast
     end
   end
 end

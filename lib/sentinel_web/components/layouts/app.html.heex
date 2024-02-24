@@ -1,7 +1,46 @@
 <Sidebar.sidebar current_user={@current_user} />
 
 <main class="p-4 sm:ml-64">
-  <.flash_group flash={@flash} />
+  <div class="z-[100] fixed top-0 flex max-h-screen w-full flex-col-reverse p-4 sm:top-auto sm:right-0 sm:bottom-0 sm:flex-col md:max-w-[420px]">
+    <.toast
+      :for={{kind, content} <- @flash}
+      :if={kind in ["info", "success", "error", "warning"]}
+      kind={kind}
+      id={"#{kind}-flash"}
+    >
+      <%= content %>
+    </.toast>
+
+    <%!-- <.flash kind={:info} title="Success!" flash={@flash} /> --%>
+    <%!-- <.flash kind={:error} title="Success!" flash={@flash} /> --%>
+    <%!-- <.flash kind={:warning} title="Success!" flash={@flash} /> --%>
+    <%!-- <.flash kind={:success} title="Success!" flash={@flash} /> --%>
+    <%!--
+    <%!-- <.flash kind={:error} title="Error!" flash={@flash} /> --%>
+    <%!-- <.flash --%>
+    <%!--   id="client-error" --%>
+    <%!--   kind={:error} --%>
+    <%!--   title="We can't find the internet" --%>
+    <%!--   phx-disconnected={show(".phx-client-error #client-error")} --%>
+    <%!--   phx-connected={hide("#client-error")} --%>
+    <%!--   hidden --%>
+    <%!-- > --%>
+    <%!--   Attempting to reconnect <.icon name="hero-arrow-path" class="ml-1 h-3 w-3 animate-spin" /> --%>
+    <%!-- </.flash> --%>
+    <%!----%>
+    <%!-- <.flash --%>
+    <%!--   id="server-error" --%>
+    <%!--   kind={:error} --%>
+    <%!--   title="Something went wrong!" --%>
+    <%!--   phx-disconnected={show(".phx-server-error #server-error")} --%>
+    <%!--   phx-connected={hide("#server-error")} --%>
+    <%!--   hidden --%>
+    <%!-- > --%>
+    <%!--   Hang in there while we get back on track --%>
+    <%!--   <.icon name="hero-arrow-path" class="ml-1 h-3 w-3 animate-spin" /> --%>
+    <%!-- </.flash> --%>
+  </div>
+
   <div class="mr-auto ml-auto md:max-w-7xl">
     <%= if function_exported?(@socket.view, :header, 1) do %>
       <%= @socket.view.header(assigns) %>
