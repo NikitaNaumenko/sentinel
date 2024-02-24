@@ -112,6 +112,14 @@ defmodule SentinelWeb.MonitorLive.Show do
     end
   end
 
+  def handle_event("validate-webhook-url", params, socket) do
+    {:noreply, put_flash(socket, :info, dgettext("notification_rule", "Webhook url updated!"))}
+  end
+
+  def handle_event("update-webhook-url", params, socket) do
+    {:noreply, put_flash(socket, :info, dgettext("notification_rule", "Webhook url updated!"))}
+  end
+
   defp assign_form(socket, changeset) do
     assign(socket, :form, to_form(changeset))
   end

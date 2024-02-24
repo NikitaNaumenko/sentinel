@@ -19,6 +19,8 @@ defmodule Sentinel.Checks.NotificationRule do
     field :via_slack, :boolean, default: false
     field :via_email, :boolean, default: false
     field :via_telegram, :boolean, default: false
+    field :webhook_url, :string
+
     belongs_to :monitor, Monitor
     timestamps(type: :utc_datetime_usec)
   end
@@ -31,7 +33,8 @@ defmodule Sentinel.Checks.NotificationRule do
       :via_webhook,
       :via_slack,
       :via_email,
-      :via_telegram
+      :via_telegram,
+      :webhook_url
     ])
   end
 end

@@ -78,13 +78,12 @@ defmodule SentinelWeb.MonitorLive.New do
          {:ok, _pid} <- Checks.start_monitor(monitor) do
       socket =
         socket
-        |> put_flash(:info, dgettext("monitors", "Monitor created successfully"))
+        |> put_flash(:success, dgettext("monitors", "Monitor created successfully"))
         |> push_navigate(to: ~p"/monitors/#{monitor}")
 
       {:noreply, socket}
     else
       {:error, changeset} ->
-        dbg(changeset)
         {:noreply, assign_form(socket, changeset)}
     end
   end

@@ -86,6 +86,14 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
             </label>
           </div>
         </div>
+        <div :if={@notification_rule.via_webhook} class="mt-5">
+          <.simple_form for={@form} phx-submit="update-webhook-url" phx-change="validate-webhook-url">
+            <.input field={@form[:webhook_url]} label={dgettext("notification_rule", "Webhook url")} />
+            <:actions>
+              <.button phx-disable-with="Saving..."><%= dgettext("forms", "Save") %></.button>
+            </:actions>
+          </.simple_form>
+        </div>
         <div class="mt-5 flex w-full items-center justify-between space-x-4">
           <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
             <span>
@@ -166,6 +174,14 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
       {:error, _changeset} ->
         {:noreply, put_flash(socket, :error, dgettext("errors", "Something went wrong"))}
     end
+  end
+
+  def handle_event("validate-webhook-url", params, socket) do
+    {:noreply, put_flash(socket, :info, dgettext("notification_rule", "Webhook url updated!"))}
+  end
+
+  def handle_event("update-webhook-url", params, socket) do
+    {:noreply, put_flash(socket, :info, dgettext("notification_rule", "Webhook url updated!"))}
   end
 
   defp active?(%Monitor{state: :active}), do: true
