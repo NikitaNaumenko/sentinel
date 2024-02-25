@@ -176,14 +176,29 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
     end
   end
 
-  def handle_event("validate-webhook-url", params, socket) do
-    {:noreply, put_flash(socket, :info, dgettext("notification_rule", "Webhook url updated!"))}
+  def handle_event("validate-webhook-url", %{"notification_rule" => params}, socket) do
+    changeset =
+      socket.assigns.notification_rule
+      |> NotificationRule.changeset(params)
+      |> Map.put(:action, :validate)
+
+    {:noreply, assign(socket, :form, to_form(changeset))}
   end
 
-  def handle_event("update-webhook-url", params, socket) do
+  def handle_event("update-webhook-url", %{"notification_rule" => params}, socket) do
+    case Checks.update_notification_rule(socket.assigns.notification_rule, params) do
+      {:ok, notification_rule} ->
+        notify_parent({:updated, notification_rule})
+
+      {:error, changeset} ->
+        {:noreply, assign(socket, :form, to_form(changeset))}
+    end
+
     {:noreply, put_flash(socket, :info, dgettext("notification_rule", "Webhook url updated!"))}
   end
 
   defp active?(%Monitor{state: :active}), do: true
   defp active?(_), do: false
+
+  defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
 end

@@ -11,6 +11,7 @@ defmodule Sentinel.Checks do
   alias Sentinel.Checks.MonitorWorker
   alias Sentinel.Checks.NotificationRule
   alias Sentinel.Checks.UseCases.CheckCertificate
+  alias Sentinel.Checks.UseCases.CreateMonitor
   alias Sentinel.Repo
 
   require Logger
@@ -44,28 +45,14 @@ defmodule Sentinel.Checks do
   """
   def get_monitor!(id), do: Monitor |> Repo.get!(id) |> Repo.preload(:account)
 
-  @doc """
-  Creates a monitor.
-
-  ## Examples
-
-      iex> create_monitor(%{field: value})
-      {:ok, %Monitor{}}
-
-      iex> create_monitor(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_monitor(attrs \\ %{}) do
-    %Monitor{}
-    |> Monitor.changeset(Map.put(attrs, "notification_rule", %{}))
-    |> Repo.insert()
-  end
-
   def check_certificate(url), do: CheckCertificate.call(url)
 
   def start_monitor(monitor) do
     MonitorWorker.start_link(monitor)
+  end
+
+  def create_monitor(attrs) do
+    CreateMonitor.run(attrs)
   end
 
   @doc """
@@ -150,7 +137,11 @@ defmodule Sentinel.Checks do
   end
 
   def count_incidents(%Monitor{id: monitor_id}) do
-    Repo.aggregate(from(c in Check, where: [monitor_id: ^monitor_id, result: :failure]), :count, :id)
+    Repo.aggregate(
+      from(c in Check, where: [monitor_id: ^monitor_id, result: :failure]),
+      :count,
+      :id
+    )
   end
 
   def calculate_uptime_sequence(%Monitor{id: monitor_id}) do
@@ -199,7 +190,9 @@ defmodule Sentinel.Checks do
   end
 
   def last_certificate(%Monitor{id: monitor_id}) do
-    Repo.one(from(c in Certificate, where: c.monitor_id == ^monitor_id, order_by: [desc: :id], limit: 1))
+    Repo.one(
+      from(c in Certificate, where: c.monitor_id == ^monitor_id, order_by: [desc: :id], limit: 1)
+    )
   end
 
   def list_checks_for_uptime_stats(%Monitor{id: monitor_id}) do

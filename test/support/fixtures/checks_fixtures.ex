@@ -19,7 +19,8 @@ defmodule Sentinel.ChecksFixtures do
         notification_rule: %{via_email: true, via_webhook: true}
       }
       |> Map.merge(attrs)
-      |> Sentinel.Checks.create_monitor()
+      |> struct(Sentinel.Checks.Monitor)
+      |> Sentinel.Repo.insert()
 
     monitor
   end

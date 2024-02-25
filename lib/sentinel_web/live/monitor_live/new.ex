@@ -64,25 +64,20 @@ defmodule SentinelWeb.MonitorLive.New do
   end
 
   def handle_event("save", %{"monitor" => monitor_attrs}, socket) do
-    certificate = Checks.check_certificate(monitor_attrs["url"])
-    dbg(certificate)
+    case Checks.create_monitor(
+           Map.put(monitor_attrs, "account_id", socket.assigns.current_user.account_id)
+         ) do
+      {:ok, monitor} ->
+        socket =
+          socket
+          |> put_flash(:success, dgettext("monitors", "Monitor created successfully"))
+          |> push_navigate(to: ~p"/monitors/#{monitor}")
 
-    attrs =
-      Map.merge(monitor_attrs, %{
-        "account_id" => socket.assigns.current_user.account_id,
-        "certificates" => [certificate]
-      })
+        {:noreply, socket}
 
-    # TODO: подумать как запаковать это красиво
-    with {:ok, monitor} <- Checks.create_monitor(attrs),
-         {:ok, _pid} <- Checks.start_monitor(monitor) do
-      socket =
-        socket
-        |> put_flash(:success, dgettext("monitors", "Monitor created successfully"))
-        |> push_navigate(to: ~p"/monitors/#{monitor}")
+      {:error, {:already_started, _pid}} ->
+        {:noreply, put_flash(socket, :error, dgettext("monitors", "Something went wrong"))}
 
-      {:noreply, socket}
-    else
       {:error, changeset} ->
         {:noreply, assign_form(socket, changeset)}
     end
