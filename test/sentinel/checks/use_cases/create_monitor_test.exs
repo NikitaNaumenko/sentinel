@@ -4,6 +4,7 @@ defmodule Sentinel.Checks.UseCases.CreateMonitorTest do
   import Sentinel.AccountsFixtures
 
   alias Sentinel.Checks.Monitor
+  alias Sentinel.Checks.MonitorWorker
   alias Sentinel.Checks.UseCases.CreateMonitor
 
   setup do
@@ -15,7 +16,6 @@ defmodule Sentinel.Checks.UseCases.CreateMonitorTest do
     monitor_attrs = %{
       "name" => "Test",
       "url" => "https://example.com",
-      "monitor_type" => "uptime",
       "account_id" => account_id,
       "interval" => 60,
       "http_method" => :get,
@@ -23,22 +23,16 @@ defmodule Sentinel.Checks.UseCases.CreateMonitorTest do
       "request_timeout" => 10
     }
 
-    assert {:ok, %Monitor{}} = CreateMonitor.call(monitor_attrs)
+    assert {:ok, %Monitor{} = monitor} = CreateMonitor.call(monitor_attrs)
+    assert {:error, {:already_started, _}} = MonitorWorker.start_link(monitor)
   end
 
-  # test "call/2 returns an error when the monitor creation fails" do
-  #   # Arrange
-  #   account_id = 1
-  #
-  #   monitor_attrs = %{
-  #     "url" => "https://example.com",
-  #     "monitor_type" => "uptime"
-  #   }
-  #
-  #   # Act
-  #   result = CreateMonitor.call(account_id, monitor_attrs)
-  #
-  #   # Assert
-  #   assert {:error, _changeset} = result
-  # end
+  test "call/2 returns an error when the monitor creation fails", %{account_id: account_id} do
+    monitor_attrs = %{
+      "account_id" => account_id,
+      "url" => "https://example.com"
+    }
+
+    {:error, %Ecto.Changeset{}} = CreateMonitor.call(monitor_attrs)
+  end
 end
