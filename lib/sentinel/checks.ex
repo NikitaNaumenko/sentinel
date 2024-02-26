@@ -190,9 +190,7 @@ defmodule Sentinel.Checks do
   end
 
   def last_certificate(%Monitor{id: monitor_id}) do
-    Repo.one(
-      from(c in Certificate, where: c.monitor_id == ^monitor_id, order_by: [desc: :id], limit: 1)
-    )
+    Repo.one(from(c in Certificate, where: c.monitor_id == ^monitor_id, order_by: [desc: :id], limit: 1))
   end
 
   def list_checks_for_uptime_stats(%Monitor{id: monitor_id}) do
@@ -239,6 +237,12 @@ defmodule Sentinel.Checks do
     NotificationRule
     |> Repo.get(id)
     |> Ecto.Changeset.change(%{String.to_existing_atom(attr) => !value})
+    |> Repo.update()
+  end
+
+  def update_notification_rule(%NotificationRule{} = notification_rule, attrs) do
+    notification_rule
+    |> NotificationRule.changeset(attrs)
     |> Repo.update()
   end
 

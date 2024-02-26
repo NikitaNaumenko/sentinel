@@ -10,7 +10,7 @@ defmodule Sentinel.Repo.Migrations.CreateMonitorNotificationRules do
       add :via_email, :boolean, default: false
       add :via_slack, :boolean, default: false
       add :via_telegram, :boolean, default: false
-      add :webhook_url, :string
+      add :webhook_id, references(:webhooks)
 
       timestamps(type: :utc_datetime_usec)
     end

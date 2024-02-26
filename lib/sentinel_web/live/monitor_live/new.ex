@@ -64,9 +64,7 @@ defmodule SentinelWeb.MonitorLive.New do
   end
 
   def handle_event("save", %{"monitor" => monitor_attrs}, socket) do
-    case Checks.create_monitor(
-           Map.put(monitor_attrs, "account_id", socket.assigns.current_user.account_id)
-         ) do
+    case Checks.create_monitor(Map.put(monitor_attrs, "account_id", socket.assigns.current_user.account_id)) do
       {:ok, monitor} ->
         socket =
           socket

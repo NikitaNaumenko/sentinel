@@ -5,6 +5,7 @@ defmodule Sentinel.Checks.NotificationRule do
   import Ecto.Changeset
 
   alias Sentinel.Checks.Monitor
+  alias Sentinel.Integrations.Webhook
 
   schema "monitor_notification_rules" do
     field :timeout, Ecto.Enum,
@@ -19,22 +20,23 @@ defmodule Sentinel.Checks.NotificationRule do
     field :via_slack, :boolean, default: false
     field :via_email, :boolean, default: false
     field :via_telegram, :boolean, default: false
-    field :webhook_url, :string
 
     belongs_to :monitor, Monitor
+    belongs_to :webhook, Webhook
     timestamps(type: :utc_datetime_usec)
   end
 
   @doc false
   def changeset(notification_rule, attrs) do
-    cast(notification_rule, attrs, [
+    notification_rule
+    |> cast(attrs, [
       :timeout,
       :resend_interval,
       :via_webhook,
       :via_slack,
       :via_email,
-      :via_telegram,
-      :webhook_url
+      :via_telegram
     ])
+    |> cast_assoc(:webhook, with: &Webhook.changeset/2)
   end
 end

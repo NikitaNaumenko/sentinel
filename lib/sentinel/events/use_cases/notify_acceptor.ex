@@ -20,14 +20,12 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
     |> Enum.filter(fn {_name, value} -> value end)
     |> Enum.map(fn
       {:via_email, _value} ->
-        dbg(
-          SendEmail.call(%{
-            acceptor: acceptor,
-            recipient: acceptor.recipient,
-            event_type: :monitor_down,
-            resource: monitor
-          })
-        )
+        SendEmail.call(%{
+          acceptor: acceptor,
+          recipient: acceptor.recipient,
+          event_type: :monitor_down,
+          resource: monitor
+        })
 
       {:via_webhook, _} ->
         :webhook_sent
