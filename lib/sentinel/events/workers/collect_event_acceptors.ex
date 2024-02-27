@@ -26,8 +26,12 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
     # TODO: Escalation policy
 
     for user <- account.users do
+      dbg(to_string(user.__struct__))
+
       acceptor =
         Acceptor.create(%{
+          recipient: %{id: user.id, type: to_string(user.__struct__)},
+          recipient_type: to_string(user.__struct__),
           recipient_id: user.id,
           event_id: event.id
         })
