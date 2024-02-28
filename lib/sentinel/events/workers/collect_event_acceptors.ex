@@ -31,8 +31,8 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
       acceptor =
         Acceptor.create(%{
           recipient: %{id: user.id, type: to_string(user.__struct__)},
-          recipient_type: to_string(user.__struct__),
-          recipient_id: user.id,
+          # recipient_type: to_string(user.__struct__),
+          # recipient_id: user.id,
           event_id: event.id
         })
 

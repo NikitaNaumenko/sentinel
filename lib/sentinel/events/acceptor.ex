@@ -8,11 +8,12 @@ defmodule Sentinel.Events.Acceptor do
 
   schema "event_acceptors" do
     # TODO: always user
+    field :recipient, Sentinel.Events.Recipient
     belongs_to :event, Sentinel.Events.Event
     field :state, :string
-    field :recipient_id, :integer
-    field :recipient_type, :string
-    field :recipient, Sentinel.Events.Recipient
+    # field :recipient_id, :integer
+    # field :recipient_type, :string
+
     timestamps(type: :utc_datetime_usec)
   end
 
@@ -25,7 +26,7 @@ defmodule Sentinel.Events.Acceptor do
   @doc false
   def changeset(acceptor, attrs) do
     acceptor
-    |> cast(attrs, [:recipient_id, :recipient_type, :event_id, :state, :recipient])
+    |> cast(attrs, [:event_id, :state, :recipient])
     |> validate_required([])
   end
 end

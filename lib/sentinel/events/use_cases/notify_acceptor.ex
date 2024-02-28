@@ -4,10 +4,11 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
   alias Sentinel.Events.Event
   alias Sentinel.Events.EventTypes.MonitorDown
   alias Sentinel.Events.UseCases.SendEmail
+  alias Sentinel.Events.UseCases.SendWebhook
   alias Sentinel.Repo
 
   def call(acceptor) do
-    acceptor = Repo.preload(acceptor, [:event, :recipient])
+    acceptor = Repo.preload(acceptor, [:event])
     process_acceptor(acceptor, acceptor.event)
   end
 
@@ -15,11 +16,12 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
     monitor = event.resource_id |> Checks.get_monitor!() |> Repo.preload([:notification_rule])
 
     monitor.notification_rule
+    |> dbg()
     |> Map.from_struct()
     |> Map.take([:via_email, :via_slack, :via_webhook, :via_telegram])
     |> Enum.filter(fn {_name, value} -> value end)
     |> Enum.map(fn
-      {:via_email, _value} ->
+      {:via_email, true} ->
         SendEmail.call(%{
           acceptor: acceptor,
           recipient: acceptor.recipient,
@@ -27,8 +29,13 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
           resource: monitor
         })
 
-      {:via_webhook, _} ->
-        :webhook_sent
+      {:via_webhook, true} ->
+        SendWebhook.call(%{
+          acceptor: acceptor,
+          recipient: acceptor.recipient,
+          event_type: :monitor_down,
+          resource: monitor
+        })
     end)
   end
 end

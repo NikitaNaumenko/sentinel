@@ -12,6 +12,7 @@ defmodule Sentinel.Events.UseCases.SendEmail do
 
     # TODO Накрутить крутую стейтмашину
     # email
+    :ok
   end
 
   defp build_args(:monitor_down, resource, recipient) do

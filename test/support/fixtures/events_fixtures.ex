@@ -15,8 +15,8 @@ defmodule Sentinel.EventsFixtures do
   end
 
   def acceptor_fixture(attrs \\ %{}) do
-    Acceptor
-    |> struct(attrs)
+    %Acceptor{}
+    |> Acceptor.changeset(attrs)
     |> Sentinel.Repo.insert!()
   end
 end
