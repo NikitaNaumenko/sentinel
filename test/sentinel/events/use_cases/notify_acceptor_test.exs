@@ -19,9 +19,13 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptorTest do
   describe "call/1" do
     test "notify email acceptor for monitor down event", %{event: event, user: user} do
       acceptor =
-        acceptor_fixture(%{recipient: %{id: user.id, type: to_string(user.__struct__)}, event_id: event.id})
+        acceptor_fixture(%{
+          recipient: %{id: user.id, type: to_string(user.__struct__)},
+          event_id: event.id,
+          recipient_type: "email"
+        })
 
-      assert [:ok] = NotifyAcceptor.call(acceptor)
+      assert :ok = NotifyAcceptor.call(acceptor.id)
     end
 
     test "notify webhook acceptor for monitor down event", %{event: event, user: user} do
@@ -30,10 +34,11 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptorTest do
       acceptor =
         acceptor_fixture(%{
           recipient: %{id: webhook.id, type: to_string(webhook.__struct__)},
-          event_id: event.id
+          event_id: event.id,
+          recipient_type: "webhook"
         })
 
-      assert [:ok] = NotifyAcceptor.call(acceptor)
+      assert :sent = NotifyAcceptor.call(acceptor.id)
     end
   end
 end

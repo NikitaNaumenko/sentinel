@@ -25,20 +25,34 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
     account = Sentinel.Repo.preload(account, :users)
     # TODO: Escalation policy
 
-    for user <- account.users do
-      dbg(to_string(user.__struct__))
+    monitor.notification_rule
+    |> Map.from_struct()
+    |> Map.take([:via_email, :via_slack, :via_webhook, :via_telegram])
+    |> Enum.filter(fn {_name, value} -> value end)
+    |> Enum.map(fn
+      {:via_email, true} ->
+        Enum.map(account.users, fn user ->
+          %{
+            recipient: %{id: user.id, type: to_string(user.__struct__)},
+            event_id: event.id,
+            recipient_type: "email"
+          }
+          |> Acceptor.create()
+          |> Map.get(:id)
+        end)
 
-      acceptor =
-        Acceptor.create(%{
-          recipient: %{id: user.id, type: to_string(user.__struct__)},
-          # recipient_type: to_string(user.__struct__),
-          # recipient_id: user.id,
-          event_id: event.id
-        })
-
-      %{id: acceptor.id}
-      |> NotifyAcceptor.new()
-      |> Oban.insert()
-    end
+      {:via_webhook, true} ->
+        %{
+          recipient: %{
+            id: monitor.notification_rule.webhook.id,
+            type: to_string(monitor.notification_rule.webhook.__struct__)
+          },
+          event_id: event.id,
+          recipient_type: "webhook"
+        }
+        |> Acceptor.create()
+        |> Map.get(:id)
+    end)
+    |> Enum.map(&(&1 |> NotifyAcceptor.new() |> Oban.insert()))
   end
 end

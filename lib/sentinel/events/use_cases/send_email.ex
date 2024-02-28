@@ -5,6 +5,7 @@ defmodule Sentinel.Events.UseCases.SendEmail do
   def call(%{acceptor: acceptor, recipient: recipient, resource: resource, event_type: event_type}) do
     # email = create_email(%{recipient_id: recipient.id, acceptor_id: acceptor.id, state: "pending"})
 
+    dbg(recipient)
     # TODO Сделать отслеживание email
     Sentinel.Events.Notifications.Email
     |> apply(event_type, [build_args(event_type, resource, recipient)])
