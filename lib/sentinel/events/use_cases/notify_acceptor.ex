@@ -44,7 +44,10 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
     process_acceptor(acceptor, acceptor.event)
   end
 
-  defp process_acceptor(%Acceptor{recipient_type: "email"} = acceptor, %Event{type: %MonitorDown{}} = event) do
+  defp process_acceptor(
+         %Acceptor{recipient_type: "email"} = acceptor,
+         %Event{type: %MonitorDown{}} = event
+       ) do
     monitor = event.resource_id |> Checks.get_monitor!() |> Repo.preload([:notification_rule])
 
     SendEmail.call(%{
@@ -55,7 +58,10 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
     })
   end
 
-  defp process_acceptor(%Acceptor{recipient_type: "webhook"} = acceptor, %Event{type: %MonitorDown{}} = event) do
+  defp process_acceptor(
+         %Acceptor{recipient_type: "webhook"} = acceptor,
+         %Event{type: %MonitorDown{}} = event
+       ) do
     monitor = event.resource_id |> Checks.get_monitor!() |> Repo.preload([:notification_rule])
 
     SendWebhook.call(%{

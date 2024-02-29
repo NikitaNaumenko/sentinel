@@ -5,7 +5,6 @@ defmodule Sentinel.Integrations.Webhook do
   import Ecto.Changeset
 
   alias Sentinel.Accounts.Account
-  alias Sentinel.Integrations.Webhook.Payload
 
   @type t :: %__MODULE__{
           id: integer(),
@@ -18,7 +17,6 @@ defmodule Sentinel.Integrations.Webhook do
   schema "webhooks" do
     field :endpoint, :string
     belongs_to :account, Account
-    has_many :payloads, Payload
 
     timestamps(type: :utc_datetime_usec)
   end
