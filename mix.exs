@@ -10,7 +10,7 @@ defmodule Sentinel.MixProject do
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
-      compilers: [:yecc] ++ Mix.compilers(),
+      compilers: [:yecc, :finitomata] ++ Mix.compilers(),
       dialyzer: [
         plt_add_apps: [:mix],
         plt_file: {:no_warn, "priv/plts/dialyzer.plt"},
@@ -67,6 +67,7 @@ defmodule Sentinel.MixProject do
       {:recase, "~> 0.5"},
       {:cva, "~> 0.2"},
       {:ecto_commons, "~> 0.3.4"},
+      {:finitomata, "~> 0.1"},
       {:styler, "~> 0.11", only: [:dev, :test], runtime: false},
       {:tailwind_formatter, "~> 0.4.0", only: [:dev, :test], runtime: false},
       {:exvcr, "~> 0.11", only: :test},
