@@ -4,32 +4,35 @@ defmodule Sentinel.Events.UseCases.SendWebhook do
   alias Sentinel.Events.Acceptors.WebhookFsm
   alias Sentinel.Repo
 
-  def call(%{acceptor: acceptor, recipient: recipient, resource: resource, event_type: event_type}) do
+  def call(%{acceptor: acceptor, recipient: webhook, resource: resource, event_type: event_type}) do
     acceptor = Repo.preload(acceptor, [:event])
 
-    with {:ok, webhook} <-
-           create_webhook_acceptor(acceptor, recipient, %{
+    with {:ok, _pid} <-
+           create_webhook_acceptor(acceptor, webhook, %{
              event_type: event_type.type,
              resource_id: resource.id,
              resource_name: to_resource_name(resource),
              payload: acceptor.event.payload
            }),
-         :ok <- transition(webhook.id, :send, %{}),
-         :ok <- do_request(recipient, webhook.payload),
-         :ok <- transition(webhook.id, :finish, %{}) do
-      dbg(Repo.reload(webhook))
-      :sent
+         :ok <- transition(acceptor.id, :send, %{}),
+         {:ok, response} <- do_request(webhook, acceptor.event.payload),
+         :ok <- transition(acceptor.id, :finish, %{response: Jason.encode!(response)}) do
+      {:ok, :sent}
+    else
+      error ->
+        # TODO: Добавить красивую обработку ошибок
+        Logger.error(error)
     end
   end
 
   defp create_webhook_acceptor(acceptor, webhook, payload) do
-    webhook =
-      %Webhook{}
-      |> Webhook.changeset(%{acceptor_id: acceptor.id, webhook_id: webhook.id, payload: payload})
-      |> Repo.insert!()
+    attrs = %{
+      acceptor_id: acceptor.id,
+      webhook_id: webhook.id,
+      payload: payload
+    }
 
-    Finitomata.start_fsm(WebhookFsm, webhook.id, webhook)
-    {:ok, webhook}
+    Finitomata.start_fsm(WebhookFsm, acceptor.id, struct!(Webhook, attrs))
   end
 
   defp to_resource_name(resource) do
@@ -41,8 +44,8 @@ defmodule Sentinel.Events.UseCases.SendWebhook do
     |> String.downcase()
   end
 
-  defp do_request(_, _) do
-    :ok
+  defp do_request(webhook, payload) do
+    :post |> Finch.build(webhook.endpoint, [], Jason.encode!(payload)) |> Finch.request(Sentinel.Finch)
   end
 
   defp transition(id, event, payload \\ %{}) do

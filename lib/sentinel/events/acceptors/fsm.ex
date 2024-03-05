@@ -1,7 +1,7 @@
 fsm = """
   created --> |send| sending
-  sending --> |finish| sent
   created --> |fail| failed
+  sending --> |finish| sent
 """
 
 defmodule Sentinel.Events.Acceptors.WebhookFsm do
@@ -10,9 +10,8 @@ defmodule Sentinel.Events.Acceptors.WebhookFsm do
 
   @impl Finitomata
   def on_transition(:created, :send, _event_payload, state_payload), do: {:ok, :sending, state_payload}
-  def on_transition(:created, :finish, _event_payload, state_payload), do: {:ok, :sent, state_payload}
-
-  def on_transition(:created, :fail, _event_payload, state_payload), do: {:ok, :sent, state_payload}
+  def on_transition(:sending, :finish, _event_payload, state_payload), do: {:ok, :sent, state_payload}
+  def on_transition(:created, :fail, _event_payload, state_payload), do: {:ok, :failed, state_payload}
 end
 
 defimpl Finitomata.Persistency.Persistable, for: Sentinel.Events.Acceptors.Webhook do
@@ -20,39 +19,50 @@ defimpl Finitomata.Persistency.Persistable, for: Sentinel.Events.Acceptors.Webho
   Implementation of `Finitomata.Persistency.Persistable` for `Webhook`.
   """
 
+  alias Sentinel.Events.Acceptors.Webhook
+  alias Sentinel.Repo
+
   require Logger
 
-  alias Sentinel.Events.Acceptors.Webhook
+  def load(%Webhook{} = webhook) do
+    webhook =
+      Repo.insert!(webhook)
 
-  def load(%Webhook{id: id} = webhook) do
-    dbg("load")
-    {:loaded, webhook}
+    {:created, webhook}
   end
 
-  def store(
-        webhook,
-        %{from: from, to: to, event: event, event_payload: event_payload, object: webhook}
-      ) do
-    dbg("STORE")
-    # webhook
-    # |> Ecto.Changeset.change(%{state: to})
-    # |> Sentinel.Repo.update()
- end
+  def store(webhook, %{
+        from: from,
+        to: to,
+        event: event,
+        event_payload: %{response: response},
+        object: webhook
+      }) do
+    response = Jason.decode!(response)
 
-  def store(webhook, payload) do
-    dbg("STORES")
-    end
+    webhook
+    |> Ecto.Changeset.change(%{state: to, result: response})
+    |> Sentinel.Repo.update()
+  end
 
-  def store_error(webhook, reason, %{} = info) do
-    metadata = Logger.metadata()
+  def store(webhook, %{from: from, to: to, event: event, event_payload: event_payload, object: webhook}) do
+    webhook
+    |> Ecto.Changeset.change(%{state: to})
+    |> Sentinel.Repo.update()
+  end
 
-    # info
-    # |> Map.put(:id, id)
-    # |> Map.put(:data, post)
-    # |> Map.to_list()
-    # |> Logger.metadata()
-
-    Logger.warn("[DB ERROR]: " <> reason)
-    Logger.metadata(metadata)
+  def store_error(webhook, reason, info) do
+    # TODO: Обработка ошибок
+    # metadata = Logger.metadata()
+    #
+    # # info
+    # # |> Map.put(:id, id)
+    # # |> Map.put(:data, post)
+    # # |> Map.to_list()
+    # # |> Logger.metadata()
+    #
+    # Logger.warning("[DB ERROR]: " <> "JOPA")
+    # Logger.metadata(metadata)
+    {:error, "treas"}
   end
 end

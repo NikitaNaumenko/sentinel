@@ -17,7 +17,7 @@ defmodule Sentinel.Application do
       {Finch, name: Sentinel.Finch},
       {Registry, keys: :unique, name: Sentinel.Monitors.Registry},
       Sentinel.Checks.MonitorSupervisor,
-      Finitomata,
+      Finitomata.Supervisor,
 
       # Start a worker by calling: Sentinel.Worker.start_link(arg)
       # {Sentinel.Worker, arg},

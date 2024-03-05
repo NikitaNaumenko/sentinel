@@ -13,6 +13,7 @@ defmodule Sentinel.Events.Acceptors.Webhook do
   schema "event_acceptor_webhook" do
     field :payload, :map, default: %{}
     field :state, Ecto.Enum, values: @states, default: :*
+    field :result, :map, default: %{}
     belongs_to :webhook, Webhook
     belongs_to :acceptor, Acceptor
     timestamps(type: :utc_datetime_usec)
@@ -21,7 +22,7 @@ defmodule Sentinel.Events.Acceptors.Webhook do
   @doc false
   def changeset(webhook, attrs) do
     webhook
-    |> cast(attrs, [:payload, :webhook_id, :acceptor_id])
+    |> cast(attrs, [:payload, :webhook_id, :acceptor_id, :result])
     |> validate_required([:payload, :webhook_id, :acceptor_id])
   end
 end

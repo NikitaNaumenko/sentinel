@@ -1,5 +1,6 @@
 defmodule Sentinel.Events.UseCases.SendWebhookTest do
-  use Sentinel.DataCase, async: true
+  use Sentinel.DataCase
+  use ExVCR.Mock, adapter: ExVCR.Adapter.Finch
 
   import Sentinel.AccountsFixtures
   import Sentinel.ChecksFixtures
@@ -26,12 +27,17 @@ defmodule Sentinel.Events.UseCases.SendWebhookTest do
 
   describe "call/1" do
     test "send webhook", %{event: event, resource: resource, acceptor: acceptor, webhook: webhook} do
-      SendWebhook.call(%{
-        acceptor: acceptor,
-        recipient: webhook,
-        resource: resource,
-        event_type: event.type
-      })
+      use_cassette "send_webhook" do
+        {:ok, :sent} =
+          SendWebhook.call(%{
+            acceptor: acceptor,
+            recipient: webhook,
+            resource: resource,
+            event_type: event.type
+          })
+
+        Process.sleep(100)
+      end
     end
   end
 end
