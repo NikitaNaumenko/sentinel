@@ -43,7 +43,7 @@ defmodule Sentinel.Checks do
       ** (Ecto.NoResultsError)
 
   """
-  def get_monitor!(id), do: Monitor |> Repo.get!(id) |> Repo.preload(:account)
+  def get_monitor!(id), do: Monitor |> Repo.get!(id) |> Repo.preload([:account, :notification_rule])
 
   def check_certificate(url), do: CheckCertificate.call(url)
 

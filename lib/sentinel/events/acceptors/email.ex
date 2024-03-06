@@ -13,7 +13,7 @@ defmodule Sentinel.Events.Acceptors.Email do
   @states EmailFsm.states()
 
   schema "event_acceptor_emails" do
-    field :deliviery_status, Ecto.Enum, values: @delivery_status
+    field :delivery_status, Ecto.Enum, values: @delivery_status
     field :state, Ecto.Enum, values: @states, default: :*
 
     belongs_to :acceptor, Acceptor

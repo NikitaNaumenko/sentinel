@@ -9,7 +9,7 @@ defmodule Sentinel.Events.UseCases.SendWebhook do
 
     with {:ok, _pid} <-
            create_webhook_acceptor(acceptor, webhook, %{
-             event_type: event_type.type,
+             event_type: event_type,
              resource_id: resource.id,
              resource_name: to_resource_name(resource),
              payload: acceptor.event.payload

@@ -25,34 +25,46 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
     account = Sentinel.Repo.preload(account, :users)
     # TODO: Escalation policy
 
-    monitor.notification_rule
-    |> Map.from_struct()
-    |> Map.take([:via_email, :via_slack, :via_webhook, :via_telegram])
-    |> Enum.filter(fn {_name, value} -> value end)
-    |> Enum.map(fn
-      {:via_email, true} ->
-        Enum.map(account.users, fn user ->
+    acceptors =
+      monitor.notification_rule
+      |> Map.from_struct()
+      |> Map.take([:via_email, :via_slack, :via_webhook, :via_telegram])
+      |> Enum.filter(fn {_name, value} -> value end)
+      |> Enum.map(fn
+        {:via_email, true} ->
+          Enum.map(account.users, fn user ->
+            %{
+              recipient: %{id: user.id, type: to_string(user.__struct__)},
+              event_id: event.id,
+              recipient_type: "email"
+            }
+            |> Acceptor.create()
+            |> Map.get(:id)
+          end)
+
+        {:via_webhook, true} ->
+          rule = Sentinel.Repo.preload(monitor.notification_rule, :webhook)
+
           %{
-            recipient: %{id: user.id, type: to_string(user.__struct__)},
+            recipient: %{
+              id: rule.webhook.id,
+              type: to_string(rule.webhook.__struct__)
+            },
             event_id: event.id,
-            recipient_type: "email"
+            recipient_type: "webhook"
           }
           |> Acceptor.create()
           |> Map.get(:id)
-        end)
+      end)
 
-      {:via_webhook, true} ->
-        %{
-          recipient: %{
-            id: monitor.notification_rule.webhook.id,
-            type: to_string(monitor.notification_rule.webhook.__struct__)
-          },
-          event_id: event.id,
-          recipient_type: "webhook"
-        }
-        |> Acceptor.create()
-        |> Map.get(:id)
+    Enum.map(acceptors, fn
+      ids when is_list(ids) ->
+        %{ids: ids} |> NotifyAcceptor.new() |> Oban.insert()
+
+      id ->
+        %{id: id} |> NotifyAcceptor.new() |> Oban.insert()
     end)
-    |> Enum.map(&(&1 |> NotifyAcceptor.new() |> Oban.insert()))
+
+    :ok
   end
 end

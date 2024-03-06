@@ -32,14 +32,12 @@ defmodule Sentinel.Events.UseCases.SendEmail do
   end
 
   defp send_email(user, resource, event_type) do
-    type = String.to_existing_atom(event_type.type)
-
     Sentinel.Events.Notifications.Email
-    |> apply(type, [build_args(event_type, resource, user)])
+    |> apply(event_type, [build_args(event_type, resource, user)])
     |> Sentinel.Mailer.deliver()
   end
 
-  defp build_args(%MonitorDown{}, resource, user) do
+  defp build_args(:monitor_down, resource, user) do
     %{monitor: resource, user: user}
   end
 

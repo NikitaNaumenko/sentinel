@@ -179,6 +179,7 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
   def handle_event("toggle-via", %{"id" => id, "attr" => attr, "value" => value}, socket) do
     case Checks.toggle_via(id, attr, value) do
       {:ok, notification_rule} ->
+        notification_rule = Sentinel.Repo.preload(notification_rule, :webhook)
         {:noreply, assign(socket, :notification_rule, notification_rule)}
 
       {:error, _changeset} ->
