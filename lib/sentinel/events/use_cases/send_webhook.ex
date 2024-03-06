@@ -1,7 +1,7 @@
 defmodule Sentinel.Events.UseCases.SendWebhook do
   @moduledoc false
   alias Sentinel.Events.Acceptors.Webhook
-  alias Sentinel.Events.Acceptors.WebhookFsm
+  alias Sentinel.Events.Fsm.WebhookFsm
   alias Sentinel.Repo
 
   def call(%{acceptor: acceptor, recipient: webhook, resource: resource, event_type: event_type}) do
@@ -19,8 +19,8 @@ defmodule Sentinel.Events.UseCases.SendWebhook do
          :ok <- transition(acceptor.id, :finish, %{response: Jason.encode!(response)}) do
       {:ok, :sent}
     else
-      error ->
-        # TODO: Добавить красивую обработку ошибок
+      {:error, error} ->
+        transition(acceptor.id, :fail, %{response: to_string(error)})
         Logger.error(error)
     end
   end
@@ -48,7 +48,7 @@ defmodule Sentinel.Events.UseCases.SendWebhook do
     :post |> Finch.build(webhook.endpoint, [], Jason.encode!(payload)) |> Finch.request(Sentinel.Finch)
   end
 
-  defp transition(id, event, payload \\ %{}) do
+  defp transition(id, event, payload) do
     Finitomata.transition(id, {event, payload})
   end
 end

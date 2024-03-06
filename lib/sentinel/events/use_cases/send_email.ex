@@ -1,28 +1,49 @@
 defmodule Sentinel.Events.UseCases.SendEmail do
   @moduledoc false
-  # alias Sentinel.Events.Acceptors.Email
+  alias Sentinel.Events.Acceptors.Email
+  alias Sentinel.Events.EventTypes.MonitorDown
+  alias Sentinel.Events.Fsm.EmailFsm
+  alias Sentinel.Repo
 
-  def call(%{acceptor: acceptor, recipient: recipient, resource: resource, event_type: event_type}) do
-    # email = create_email(%{recipient_id: recipient.id, acceptor_id: acceptor.id, state: "pending"})
+  require Logger
 
-    dbg(recipient)
-    # TODO Сделать отслеживание email
+  def call(%{acceptor: acceptor, recipient: user, resource: resource, event_type: event_type}) do
+    acceptor = Repo.preload(acceptor, [:event])
+
+    with {:ok, _pid} <- create_email_acceptor(acceptor, user),
+         :ok <- transition(acceptor.id, :send, %{}),
+         {:ok, response} <- send_email(user, resource, event_type),
+         :ok <- transition(acceptor.id, :finish, %{}) do
+      Logger.info(response)
+      {:ok, :sent}
+    else
+      {:error, error} ->
+        transition(acceptor.id, :fail, %{response: to_string(error)})
+    end
+  end
+
+  def create_email_acceptor(acceptor, user) do
+    attrs = %{
+      acceptor_id: acceptor.id,
+      user_id: user.id
+    }
+
+    Finitomata.start_fsm(EmailFsm, acceptor.id, struct!(Email, attrs))
+  end
+
+  defp send_email(user, resource, event_type) do
+    type = String.to_existing_atom(event_type.type)
+
     Sentinel.Events.Notifications.Email
-    |> apply(event_type, [build_args(event_type, resource, recipient)])
+    |> apply(type, [build_args(event_type, resource, user)])
     |> Sentinel.Mailer.deliver()
-
-    # TODO Накрутить крутую стейтмашину
-    # email
-    :ok
   end
 
-  defp build_args(:monitor_down, resource, recipient) do
-    %{monitor: resource, recipient: recipient}
+  defp build_args(%MonitorDown{}, resource, user) do
+    %{monitor: resource, user: user}
   end
 
-  # defp create_email(attrs) do
-  #   %Email{}
-  #   |> Email.changeset(attrs)
-  #   |> Sentinel.Repo.insert!()
-  # end
+  defp transition(id, event, payload) do
+    Finitomata.transition(id, {event, payload})
+  end
 end

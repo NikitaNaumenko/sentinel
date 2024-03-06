@@ -2,9 +2,9 @@ defmodule Sentinel.Events.Notifications.Email do
   @moduledoc false
   import Swoosh.Email
 
-  def monitor_down(%{monitor: monitor, recipient: recipient}) do
+  def monitor_down(%{monitor: monitor, user: user}) do
     new()
-    |> to({recipient.email, recipient.email})
+    |> to({user.email, user.email})
     |> from({"Sentinel", "noreply@sentinel.com"})
     |> subject("⚠️ #{monitor.name} is Down!")
     |> text_body(alert_body(monitor))

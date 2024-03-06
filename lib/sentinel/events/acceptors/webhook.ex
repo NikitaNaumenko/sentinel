@@ -5,7 +5,7 @@ defmodule Sentinel.Events.Acceptors.Webhook do
   import Ecto.Changeset
 
   alias Sentinel.Events.Acceptor
-  alias Sentinel.Events.Acceptors.WebhookFsm
+  alias Sentinel.Events.Fsm.WebhookFsm
   alias Sentinel.Integrations.Webhook
 
   @states WebhookFsm.states()

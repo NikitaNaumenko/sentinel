@@ -6,15 +6,18 @@ defmodule Sentinel.Events.Acceptors.Email do
 
   alias Sentinel.Accounts.User
   alias Sentinel.Events.Acceptor
+  alias Sentinel.Events.Fsm.EmailFsm
 
   @delivery_status ~w[sent hard-bounce soft-bounce spam unsub custom invalid-sender invalid test-mode-limit rule rejected bounce]a
-  @states ~w[created processing pending sent failed muted]a
+
+  @states EmailFsm.states()
+
   schema "event_acceptor_emails" do
     field :deliviery_status, Ecto.Enum, values: @delivery_status
-    field :state, Ecto.Enum, values: @states
+    field :state, Ecto.Enum, values: @states, default: :*
 
     belongs_to :acceptor, Acceptor
-    belongs_to :recipient, User
+    belongs_to :user, User
     timestamps(type: :utc_datetime_usec)
   end
 
