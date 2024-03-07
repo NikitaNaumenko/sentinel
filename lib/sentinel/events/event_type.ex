@@ -9,7 +9,7 @@ defmodule Sentinel.Events.EventType do
   @event_types ~w(monitor_down)a
 
   def cast(type) when type in @event_types do
-    type_struct = dispatch_to_struct(type)
+    type_struct = dispatch_to_struct(to_string(type))
 
     {:ok, type_struct}
   end
