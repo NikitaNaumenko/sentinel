@@ -8,7 +8,7 @@ defmodule Sentinel.Checks.UseCases.CreateMonitorTest do
   alias Sentinel.Checks.UseCases.CreateMonitor
 
   setup do
-    account = account_fixture(name: "account")
+    account = account_fixture(%{name: "account"})
     [account_id: account.id]
   end
 

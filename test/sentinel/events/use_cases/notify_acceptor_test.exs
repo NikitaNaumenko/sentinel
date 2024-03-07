@@ -1,10 +1,12 @@
 defmodule Sentinel.Events.UseCases.NotifyAcceptorTest do
-  use Sentinel.DataCase, async: true
+  use Sentinel.DataCase
+  use ExVCR.Mock, adapter: ExVCR.Adapter.Finch
 
   import Sentinel.AccountsFixtures
   import Sentinel.ChecksFixtures
   import Sentinel.EventsFixtures
   import Sentinel.IntegrationsFixtures
+  import Swoosh.TestAssertions
 
   alias Sentinel.Events.UseCases.NotifyAcceptor
 
@@ -13,11 +15,11 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptorTest do
     monitor = monitor_fixture(%{account_id: user.account_id})
     event = event_fixture(%{type: :monitor_down, resource: monitor})
 
-    [event: event, user: user]
+    [event: event, user: user, monitor: monitor]
   end
 
   describe "call/1" do
-    test "notify email acceptor for monitor down event", %{event: event, user: user} do
+    test "notify email acceptor for monitor down event", %{event: event, user: user, monitor: monitor} do
       acceptor =
         acceptor_fixture(%{
           recipient: %{id: user.id, type: to_string(user.__struct__)},
@@ -25,20 +27,27 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptorTest do
           recipient_type: "email"
         })
 
-      assert :ok = NotifyAcceptor.call(acceptor.id)
+      assert {:ok, :sent} = NotifyAcceptor.call(acceptor.id)
+
+      Process.sleep(100)
+      email = Sentinel.Events.Notifications.Email.monitor_down(%{monitor: monitor, user: user})
+      assert_email_sent(email)
     end
 
     test "notify webhook acceptor for monitor down event", %{event: event, user: user} do
-      webhook = webhook_fixture(%{account_id: user.account_id})
+      use_cassette "send_webhook" do
+        webhook = webhook_fixture(%{account_id: user.account_id})
 
-      acceptor =
-        acceptor_fixture(%{
-          recipient: %{id: webhook.id, type: to_string(webhook.__struct__)},
-          event_id: event.id,
-          recipient_type: "webhook"
-        })
+        acceptor =
+          acceptor_fixture(%{
+            recipient: %{id: webhook.id, type: to_string(webhook.__struct__)},
+            event_id: event.id,
+            recipient_type: "webhook"
+          })
 
-      assert :sent = NotifyAcceptor.call(acceptor.id)
+        assert {:ok, :sent} = NotifyAcceptor.call(acceptor.id)
+        Process.sleep(100)
+      end
     end
   end
 end

@@ -9,8 +9,8 @@ defmodule Sentinel.AccountsFixtures do
   """
   def account_fixture(attrs \\ %{}) do
     {:ok, account} =
-      attrs
-      |> Map.new()
+      %{name: to_string(System.unique_integer())}
+      |> Map.merge(attrs)
       |> Sentinel.Accounts.create_account()
 
     account

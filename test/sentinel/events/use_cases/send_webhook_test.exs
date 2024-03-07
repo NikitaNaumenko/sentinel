@@ -33,7 +33,7 @@ defmodule Sentinel.Events.UseCases.SendWebhookTest do
             acceptor: acceptor,
             recipient: webhook,
             resource: resource,
-            event_type: event.type
+            event_type: String.to_existing_atom(event.type.type)
           })
 
         Process.sleep(100)

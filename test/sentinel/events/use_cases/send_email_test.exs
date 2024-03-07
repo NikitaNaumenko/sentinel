@@ -4,7 +4,6 @@ defmodule Sentinel.Events.UseCases.SendEmailTest do
   import Sentinel.AccountsFixtures
   import Sentinel.ChecksFixtures
   import Sentinel.EventsFixtures
-  import Sentinel.IntegrationsFixtures
   import Swoosh.TestAssertions
 
   alias Sentinel.Events.UseCases.SendEmail
@@ -31,7 +30,7 @@ defmodule Sentinel.Events.UseCases.SendEmailTest do
           acceptor: acceptor,
           recipient: user,
           resource: resource,
-          event_type: event.type
+          event_type: String.to_existing_atom(event.type.type)
         })
 
       Process.sleep(100)

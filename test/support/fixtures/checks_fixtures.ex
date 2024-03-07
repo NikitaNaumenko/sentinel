@@ -4,6 +4,9 @@ defmodule Sentinel.ChecksFixtures do
   entities via the `Sentinel.Checks` context.
   """
 
+  alias Sentinel.Checks.Monitor
+  alias Sentinel.Repo
+
   @doc """
   Generate a monitor.
   """
@@ -23,9 +26,9 @@ defmodule Sentinel.ChecksFixtures do
       )
 
     {:ok, monitor} =
-      %Sentinel.Checks.Monitor{}
-      |> Sentinel.Checks.Monitor.changeset(attrs)
-      |> Sentinel.Repo.insert()
+      %Monitor{}
+      |> Monitor.changeset(attrs)
+      |> Repo.insert()
 
     monitor
   end
