@@ -31,25 +31,23 @@ defmodule Sentinel.Integrations.Webhook do
 
   def validate_url(changeset, field, opts \\ []) do
     validate_change(changeset, field, fn _, value ->
-      case_result =
-        case URI.parse(value) do
-          %URI{scheme: nil} ->
-            "is missing a scheme (e.g. https)"
+      case URI.parse(value) do
+        %URI{scheme: nil} ->
+          [{field, Keyword.get(opts, :message, "is missing a scheme (e.g. https)")}]
 
-          %URI{host: nil} ->
-            "is missing a host"
+        %URI{host: nil} ->
+          [{field, Keyword.get(opts, :message, "is missing a host")}]
 
-          %URI{host: host} ->
-            case :inet.gethostbyname(Kernel.to_charlist(host)) do
-              {:ok, _} -> nil
-              {:error, _} -> "invalid host"
-            end
-        end
-
-      case case_result do
-        error when is_binary(error) -> [{field, Keyword.get(opts, :message, error)}]
-        _ -> []
+        %URI{host: host} ->
+          get_host_by_name(field, host, opts)
       end
     end)
+  end
+
+  defp get_host_by_name(field, host, opts) do
+    case :inet.gethostbyname(Kernel.to_charlist(host)) do
+      {:ok, _} -> []
+      {:error, _} -> [{field, Keyword.get(opts, :message, "invalid host")}]
+    end
   end
 end

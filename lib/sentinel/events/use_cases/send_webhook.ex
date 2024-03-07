@@ -3,6 +3,7 @@ defmodule Sentinel.Events.UseCases.SendWebhook do
   alias Sentinel.Events.Acceptors.Webhook
   alias Sentinel.Events.Fsm.WebhookFsm
   alias Sentinel.Repo
+
   require Logger
 
   def call(%{acceptor: acceptor, recipient: webhook, resource: resource, event_type: event_type}) do

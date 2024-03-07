@@ -23,43 +23,40 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
     %{account: account} = monitor = Checks.get_monitor!(event.resource_id)
 
     account = Sentinel.Repo.preload(account, :users)
-    # TODO: Escalation policy
 
-    acceptors =
-      monitor.notification_rule
-      |> Map.from_struct()
-      |> Map.take([:via_email, :via_slack, :via_webhook, :via_telegram])
-      |> Enum.filter(fn {_name, value} -> value end)
-      |> Enum.map(fn
-        {:via_email, true} ->
-          Enum.map(account.users, fn user ->
-            %{
-              recipient: %{id: user.id, type: to_string(user.__struct__)},
-              event_id: event.id,
-              recipient_type: "email"
-            }
-            |> Acceptor.create()
-            |> Map.get(:id)
-          end)
-
-        {:via_webhook, true} ->
-          rule = Sentinel.Repo.preload(monitor.notification_rule, :webhook)
-
+    monitor.notification_rule
+    |> Map.from_struct()
+    |> Map.take([:via_email, :via_slack, :via_webhook, :via_telegram])
+    |> Enum.filter(fn {_name, value} -> value end)
+    |> Enum.map(fn
+      {:via_email, true} ->
+        Enum.map(account.users, fn user ->
           %{
-            recipient: %{
-              id: rule.webhook.id,
-              type: to_string(rule.webhook.__struct__)
-            },
+            recipient: %{id: user.id, type: to_string(user.__struct__)},
             event_id: event.id,
-            recipient_type: "webhook"
+            recipient_type: "email"
           }
           |> Acceptor.create()
           |> Map.get(:id)
-      end)
+        end)
 
-    Enum.map(acceptors, fn
+      {:via_webhook, true} ->
+        rule = Sentinel.Repo.preload(monitor.notification_rule, :webhook)
+
+        %{
+          recipient: %{
+            id: rule.webhook.id,
+            type: to_string(rule.webhook.__struct__)
+          },
+          event_id: event.id,
+          recipient_type: "webhook"
+        }
+        |> Acceptor.create()
+        |> Map.get(:id)
+    end)
+    |> Enum.each(fn
       ids when is_list(ids) ->
-        Enum.map(ids, &(%{id: &1} |> NotifyAcceptor.new() |> Oban.insert()))
+        Enum.each(ids, &(%{id: &1} |> NotifyAcceptor.new() |> Oban.insert()))
 
       id ->
         %{id: id} |> NotifyAcceptor.new() |> Oban.insert()

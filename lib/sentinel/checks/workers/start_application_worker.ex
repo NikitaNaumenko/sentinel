@@ -15,5 +15,7 @@ defmodule Sentinel.Checks.Workers.StartApplicationWorker do
       |> StartMonitor.new()
       |> Oban.insert()
     end
+
+    :ok
   end
 end

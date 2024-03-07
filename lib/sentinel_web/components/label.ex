@@ -1,8 +1,26 @@
 defmodule SentinelWeb.Components.Label do
   @moduledoc """
+  A Phoenix component for rendering labels within the Sentinel application.
 
+  This component is designed to enhance form accessibility and usability by providing
+  a consistent styling and behavior for labels across the application. It leverages the Phoenix
+  Component library to enable easy embedding within LiveView templates or other Phoenix components.
+
+   ## Usage
+
+  The component must be used with a provided `:inner_block` slot that contains the label's content.
+  Custom classes can be added via the `:class` attribute, and the `for` attribute should be linked
+  to the corresponding form input's `id` attribute for accessibility purposes.
+
+  ### Example
+
+      <%= label for: "user_email", class: "my-custom-class" do %>
+        Email Address
+      <% end %>
+
+  This renders a label for an input field with an `id` of `user_email`, and applies
+  custom styling alongside the default styles.
   """
-
   use Phoenix.Component
 
   @doc """

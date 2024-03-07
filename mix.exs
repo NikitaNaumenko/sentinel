@@ -13,8 +13,7 @@ defmodule Sentinel.MixProject do
       compilers: [:yecc, :finitomata] ++ Mix.compilers(),
       dialyzer: [
         plt_add_apps: [:mix],
-        plt_file: {:no_warn, "priv/plts/dialyzer.plt"},
-        ignore_warnings: ".dialyzer_ignore.exs"
+        plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
       ]
     ]
   end
@@ -69,6 +68,7 @@ defmodule Sentinel.MixProject do
       {:ecto_commons, "~> 0.3.4"},
       {:finitomata, "~> 0.1"},
       {:styler, "~> 0.11", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:tailwind_formatter, "~> 0.4.0", only: [:dev, :test], runtime: false},
       {:exvcr, "~> 0.11", only: :test},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false}

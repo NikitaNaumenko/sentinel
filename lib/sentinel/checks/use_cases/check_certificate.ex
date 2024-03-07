@@ -8,7 +8,8 @@ defmodule Sentinel.Checks.UseCases.CheckCertificate do
     %URI{host: host} = URI.parse(url)
 
     with {:ok, conn} <- Mint.HTTP.connect(:https, host, 443),
-         {:ok, der} <- :ssl.peercert(conn.socket),
+         socket = Mint.HTTP.get_socket(conn),
+         {:ok, der} <- :ssl.peercert(socket),
          {:ok, cert} <- X509.Certificate.from_der(der),
          {:Validity, not_before, not_after} <- X509.Certificate.validity(cert) do
       issuer_rdn = X509.Certificate.issuer(cert)
