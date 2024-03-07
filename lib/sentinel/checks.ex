@@ -52,7 +52,7 @@ defmodule Sentinel.Checks do
   end
 
   def create_monitor(attrs) do
-    CreateMonitor.run(attrs)
+    CreateMonitor.call(attrs)
   end
 
   @doc """

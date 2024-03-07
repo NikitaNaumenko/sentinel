@@ -5,7 +5,6 @@ defmodule Sentinel.Events.Event do
   import Ecto.Changeset
 
   alias Sentinel.Events.EventType
-  alias Sentinel.Repo
 
   @type t :: %__MODULE__{
           id: integer(),

@@ -32,13 +32,13 @@ defimpl Finitomata.Persistency.Persistable, for: Sentinel.Events.Acceptors.Email
     {:created, email}
   end
 
-  def store(email, %{from: from, to: to, event: event, event_payload: event_payload, object: email}) do
+  def store(email, %{from: _from, to: to, event: _event, event_payload: _event_payload, object: email}) do
     email
     |> Ecto.Changeset.change(%{state: to})
     |> Sentinel.Repo.update()
   end
 
-  def store_error(webhook, reason, info) do
+  def store_error(_webhook, _reason, _info) do
     # TODO: Обработка ошибок
     :ok
   end

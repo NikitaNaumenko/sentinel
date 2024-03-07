@@ -59,7 +59,7 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
 
     Enum.map(acceptors, fn
       ids when is_list(ids) ->
-        %{ids: ids} |> NotifyAcceptor.new() |> Oban.insert()
+        Enum.map(ids, &(%{id: &1} |> NotifyAcceptor.new() |> Oban.insert()))
 
       id ->
         %{id: id} |> NotifyAcceptor.new() |> Oban.insert()

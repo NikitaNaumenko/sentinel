@@ -17,12 +17,11 @@ alias Sentinel.StatusPages
 Sentinel.Repo.transaction(fn ->
   account = Sentinel.Repo.insert!(%Accounts.Account{name: "Account 1"})
 
-  user =
-    Sentinel.Repo.insert!(%Accounts.User{
-      email: "full@mail.com",
-      hashed_password: Bcrypt.hash_pwd_salt("password"),
-      account_id: account.id
-    })
+  Sentinel.Repo.insert!(%Accounts.User{
+    email: "full@mail.com",
+    hashed_password: Bcrypt.hash_pwd_salt("password"),
+    account_id: account.id
+  })
 
   monitor =
     Sentinel.Repo.insert!(%Checks.Monitor{

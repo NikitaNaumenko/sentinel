@@ -34,9 +34,9 @@ defimpl Finitomata.Persistency.Persistable, for: Sentinel.Events.Acceptors.Webho
   end
 
   def store(webhook, %{
-        from: from,
+        from: _from,
         to: to,
-        event: event,
+        event: _event,
         event_payload: %{response: response},
         object: webhook
       }) do
@@ -47,13 +47,13 @@ defimpl Finitomata.Persistency.Persistable, for: Sentinel.Events.Acceptors.Webho
     |> Sentinel.Repo.update()
   end
 
-  def store(webhook, %{from: from, to: to, event: event, event_payload: event_payload, object: webhook}) do
+  def store(webhook, %{from: _from, to: to, event: _event, event_payload: _event_payload, object: webhook}) do
     webhook
     |> Ecto.Changeset.change(%{state: to})
     |> Sentinel.Repo.update()
   end
 
-  def store_error(webhook, reason, info) do
+  def store_error(_webhook, _reason, _info) do
     # TODO: Обработка ошибок
     :ok
   end

@@ -1,7 +1,6 @@
 defmodule Sentinel.Events.UseCases.SendEmail do
   @moduledoc false
   alias Sentinel.Events.Acceptors.Email
-  alias Sentinel.Events.EventTypes.MonitorDown
   alias Sentinel.Events.Fsm.EmailFsm
   alias Sentinel.Repo
 

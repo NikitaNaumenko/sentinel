@@ -17,7 +17,6 @@ defmodule SentinelWeb.CoreComponents do
   use Phoenix.Component
 
   import SentinelWeb.Components.Icon
-  import SentinelWeb.Components.Label
   import SentinelWeb.Gettext
 
   alias Phoenix.LiveView.JS
