@@ -180,12 +180,12 @@ defmodule SentinelWeb.CoreComponents do
 
   def header(assigns) do
     ~H"""
-    <header class={[@actions != [] && "flex items-center justify-between gap-6", @class]}>
-      <div>
-        <h1 class="text-lg font-semibold leading-8 text-zinc-800">
+    <header class={[@actions != [] && "flex items-center justify-between", @class]}>
+      <div class="space-y-1">
+        <h1 class="text-2xl font-semibold tracking-tight">
           <%= render_slot(@inner_block) %>
         </h1>
-        <p :if={@subtitle != []} class="mt-2 text-sm leading-6 text-zinc-600">
+        <p :if={@subtitle != []} class="text-sm text-muted-foreground">
           <%= render_slot(@subtitle) %>
         </p>
       </div>
