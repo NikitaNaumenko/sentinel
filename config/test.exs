@@ -36,3 +36,7 @@ config :logger, level: :warning
 config :phoenix, :plug_init_mode, :runtime
 
 config :sentinel, Oban, testing: :inline
+
+config :exvcr,
+  vcr_cassette_library_dir: "test/support/fixtures/vcr",
+
