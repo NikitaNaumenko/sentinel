@@ -185,7 +185,7 @@ defmodule SentinelWeb.CoreComponents do
         <h1 class="text-2xl font-semibold tracking-tight">
           <%= render_slot(@inner_block) %>
         </h1>
-        <p :if={@subtitle != []} class="text-sm text-muted-foreground">
+        <p :if={@subtitle != []} class="text-muted-foreground text-sm">
           <%= render_slot(@subtitle) %>
         </p>
       </div>

@@ -52,9 +52,9 @@ defmodule SentinelWeb.Router do
 
     live_session :redirect_if_user_is_authenticated,
       on_mount: [{SentinelWeb.UserAuth, :redirect_if_user_is_authenticated}],
-      layout: {SentinelWeb.Layouts, :empty} do
-      live "/users/register", UserRegistrationLive, :new
-      live "/users/log_in", UserLoginLive, :new
+      layout: {SentinelWeb.Layouts, :auth} do
+      live "/registration", UserRegistrationLive, :new
+      live "/log_in", UserLoginLive, :new
       live "/users/reset_password", UserForgotPasswordLive, :new
       live "/users/reset_password/:token", UserResetPasswordLive, :edit
     end

@@ -39,4 +39,3 @@ config :sentinel, Oban, testing: :inline
 
 config :exvcr,
   vcr_cassette_library_dir: "test/support/fixtures/vcr"
-
