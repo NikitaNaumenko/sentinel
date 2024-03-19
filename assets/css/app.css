@@ -27,4 +27,25 @@
   --input: 240 5.9% 90%;
   --ring: 240 5% 64.9%;
   --radius: 0.5rem;
+
+  [type="text"]:focus,
+  [type="email"]:focus,
+  [type="url"]:focus,
+  [type="password"]:focus,
+  [type="number"]:focus,
+  [type="date"]:focus,
+  [type="datetime-local"]:focus,
+  [type="month"]:focus,
+  [type="search"]:focus,
+  [type="tel"]:focus,
+  [type="checkbox"]:focus,
+  [type="radio"]:focus,
+  [type="time"]:focus,
+  [type="week"]:focus,
+  [multiple]:focus,
+  textarea:focus,
+  select:focus {
+    --tw-ring-color: var(--ring);
+    border-color: var(--ring);
+  }
 }

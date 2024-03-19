@@ -33,6 +33,7 @@ defmodule SentinelWeb.Components.Button do
   require Logger
 
   attr :rest, :global
+  attr :class, :any, default: ""
   slot :inner_block
 
   @doc """
@@ -78,7 +79,7 @@ defmodule SentinelWeb.Components.Button do
   def button(assigns) do
     ~H"""
     <button
-      class={["ring-offset-background inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50", @cva_class]}
+      class={["ring-offset-background inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50", @cva_class, @class]}
       {@rest}
     >
       <%= render_slot(@inner_block) %>

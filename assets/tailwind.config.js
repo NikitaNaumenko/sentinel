@@ -65,7 +65,10 @@ module.exports = {
     },
   },
   plugins: [
-    require("@tailwindcss/forms"),
+    require("@tailwindcss/forms")({
+      // strategy: "base", // only generate global styles
+      strategy: "class", // only generate classes
+    }),
     require("flowbite/plugin"),
     plugin(({ addVariant }) =>
       addVariant("phx-no-feedback", [
