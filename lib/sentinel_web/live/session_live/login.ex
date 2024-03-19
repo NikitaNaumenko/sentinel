@@ -1,4 +1,4 @@
-defmodule SentinelWeb.UserLoginLive do
+defmodule SentinelWeb.SessionLive.Login do
   @moduledoc false
   use SentinelWeb, :live_view
 
@@ -21,7 +21,7 @@ defmodule SentinelWeb.UserLoginLive do
 
           <:actions>
             <.input field={@form[:remember_me]} type="checkbox" label="Keep me logged in" />
-            <.link href={~p"/users/reset_password"} class="text-sm font-semibold">
+            <.link href={~p"/reset_password"} class="text-sm font-semibold">
               Forgot your password?
             </.link>
           </:actions>

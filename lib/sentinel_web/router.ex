@@ -53,10 +53,10 @@ defmodule SentinelWeb.Router do
     live_session :redirect_if_user_is_authenticated,
       on_mount: [{SentinelWeb.UserAuth, :redirect_if_user_is_authenticated}],
       layout: {SentinelWeb.Layouts, :auth} do
-      live "/registration", UserRegistrationLive, :new
-      live "/log_in", UserLoginLive, :new
-      live "/users/reset_password", UserForgotPasswordLive, :new
-      live "/users/reset_password/:token", UserResetPasswordLive, :edit
+      live "/registration", SessionLive.Registration, :new
+      live "/log_in", SessionLive.Login, :new
+      live "/reset_password", SessionLive.ForgotPassword, :new
+      live "/reset_password/:token", SessionLive.ResetPassword, :edit
     end
 
     post "/users/log_in", UserSessionController, :create
@@ -74,8 +74,8 @@ defmodule SentinelWeb.Router do
       live "/status_pages", PageLive.Index, :index
       live "/status_pages/:id", PageLive.Show, :index
       live "/status_pages/new", PageLive.New, :new
-      live "/users/settings", UserSettingsLive, :edit
-      live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+      # live "/users/settings", UserSettingsLive, :edit
+      # live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
       live "/integrations", IntegrationLive.Index, :index
       live "/integrations/webhooks/new", IntegrationLive.Index, :new_webhook
       live "/integrations/webhooks/:id/edit", IntegrationLive.Index, :edit_webhook
@@ -89,8 +89,8 @@ defmodule SentinelWeb.Router do
 
     live_session :current_user,
       on_mount: [{SentinelWeb.UserAuth, :mount_current_user}] do
-      live "/users/confirm/:token", UserConfirmationLive, :edit
-      live "/users/confirm", UserConfirmationInstructionsLive, :new
+      live "/confirm/:token", SessionLive.Confirmation, :edit
+      live "/confirm", SessionLive.ConfirmationInstructions, :new
     end
   end
 end

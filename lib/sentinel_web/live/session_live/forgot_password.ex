@@ -1,4 +1,4 @@
-defmodule SentinelWeb.UserForgotPasswordLive do
+defmodule SentinelWeb.SessionLive.ForgotPassword do
   @moduledoc false
   use SentinelWeb, :live_view
 

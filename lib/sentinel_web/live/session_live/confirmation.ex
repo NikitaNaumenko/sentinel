@@ -1,4 +1,4 @@
-defmodule SentinelWeb.UserConfirmationLive do
+defmodule SentinelWeb.SessionLive.Confirmation do
   @moduledoc false
   use SentinelWeb, :live_view
 

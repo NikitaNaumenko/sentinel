@@ -1,4 +1,4 @@
-defmodule SentinelWeb.UserResetPasswordLive do
+defmodule SentinelWeb.SessionLive.ResetPassword do
   @moduledoc false
   use SentinelWeb, :live_view
 
