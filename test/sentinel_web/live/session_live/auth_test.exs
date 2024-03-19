@@ -1,4 +1,4 @@
-defmodule SentinelWeb.UserAuthTest do
+defmodule SentinelWeb.SessionLive.UserAuthTest do
   use SentinelWeb.ConnCase, async: true
 
   import Sentinel.AccountsFixtures

@@ -1,4 +1,4 @@
-defmodule SentinelWeb.UserResetPasswordLiveTest do
+defmodule SentinelWeb.SessionLive.ResetPasswordTest do
   use SentinelWeb.ConnCase
 
   import Phoenix.LiveViewTest

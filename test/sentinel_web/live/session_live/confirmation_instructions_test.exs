@@ -1,4 +1,4 @@
-defmodule SentinelWeb.UserConfirmationInstructionsLiveTest do
+defmodule SentinelWeb.SessionLive.ConfirmationInstructionsTest do
   use SentinelWeb.ConnCase
 
   import Phoenix.LiveViewTest
