@@ -16,7 +16,9 @@ defmodule SentinelWeb.SessionLive.Registration do
 
     <div class="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
       <div class="flex flex-col space-y-2">
-        <h1 class="text-center text-2xl font-semibold tracking-tight">Create an account</h1>
+        <h1 class="text-center text-2xl font-semibold tracking-tight">
+          <%= dgettext("session", "Create an account") %>
+        </h1>
         <p class="text-muted-foreground text-center text-sm">Enter your data below to create your account</p>
         <.simple_form
           for={@form}
