@@ -8,13 +8,12 @@ defmodule SentinelWeb.SessionLive.Login do
       navigate={~p"/registration"}
       class="absolute top-4 right-4 inline-flex h-9 items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 md:top-8 md:right-8"
     >
-      <%= dgettext("sessions", "Register") %>
+      <%= dgettext("sessions", "Sign up") %>
     </.link>
 
     <div class="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
       <div class="flex flex-col space-y-2">
-        <h1 class="text-center text-2xl font-semibold tracking-tight">Create an account</h1>
-        <p class="text-muted-foreground text-center text-sm">Enter your email below to create your account</p>
+        <h1 class="text-center text-2xl font-semibold tracking-tight"><%= dgettext("session", "Log in") %></h1>
         <.simple_form for={@form} id="login_form" action={~p"/users/log_in"} phx-update="ignore">
           <.input field={@form[:email]} type="email" label="Email" required />
           <.input field={@form[:password]} type="password" label="Password" required />
@@ -27,7 +26,7 @@ defmodule SentinelWeb.SessionLive.Login do
           </:actions>
           <:actions>
             <.button phx-disable-with="Signing in..." class="w-full">
-              Sign in <span aria-hidden="true">→</span>
+              Log in <span aria-hidden="true">→</span>
             </.button>
           </:actions>
         </.simple_form>

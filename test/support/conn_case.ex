@@ -27,6 +27,7 @@ defmodule SentinelWeb.ConnCase do
       # Import conveniences for testing with connections
       import Plug.Conn
       import SentinelWeb.ConnCase
+      import SentinelWeb.Gettext
 
       @endpoint SentinelWeb.Endpoint
     end
