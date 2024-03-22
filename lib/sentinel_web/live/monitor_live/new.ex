@@ -30,7 +30,7 @@ defmodule SentinelWeb.MonitorLive.New do
       )
       |> assign(:intervals, intervals)
       |> assign(:request_timeouts, request_timeouts)
-      |> assign(:page_title, dgettext("monitors", "New Monitor"))
+      |> assign(:page_title, dgettext("monitors", "Create new monitor"))
       |> assign(:title, dgettext("monitors", "New Monitor"))
       |> assign_form(changeset)
 
@@ -39,9 +39,9 @@ defmodule SentinelWeb.MonitorLive.New do
 
   def header(assigns) do
     ~H"""
-    <header class="flex items-center justify-between gap-6 py-2">
+    <header class="mr-auto ml-auto flex max-w-2xl items-center justify-between gap-6 py-2">
       <div>
-        <h1 class="text-lg font-semibold leading-8 text-gray-800">
+        <h1 class="text-primary leading text-3xl font-bold leading-8">
           <%= @page_title %>
         </h1>
       </div>

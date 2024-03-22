@@ -32,37 +32,41 @@
     />
   </:tab_content>
   <:tab_content id="settings">
-    <.simple_form for={@form} id="monitor-form" phx-validate="validate" phx-submit="save">
-      <.input field={@form[:name]} label={dgettext("monitors", "Name")} />
-      <.input field={@form[:url]} label={dgettext("monitors", "URL")} />
-      <.input
-        field={@form[:http_method]}
-        label={dgettext("monitors", "HTTP Method")}
-        type="select"
-        options={@http_methods}
-      />
-      <.input
-        field={@form[:expected_status_code]}
-        label={dgettext("monitors", "Expected status code")}
-        type="select"
-        options={@status_codes}
-      />
-      <.input
-        field={@form[:interval]}
-        label={dgettext("monitors", "Interval")}
-        type="select"
-        options={@intervals}
-      />
-      <.input
-        field={@form[:request_timeout]}
-        label={dgettext("monitors", "Request timeout")}
-        type="select"
-        options={@request_timeouts}
-      />
-      <:actions>
-        <.button phx-disable-with="Saving..."><%= dgettext("forms", "Save") %></.button>
-      </:actions>
-    </.simple_form>
+    <div class="bg-card text-card-foreground margin-auto rounded-xl border p-6 shadow">
+      <.simple_form for={@form} id="monitor-form" phx-validate="validate" phx-submit="save">
+        <.input field={@form[:name]} label={dgettext("monitors", "Name")} />
+        <.input field={@form[:url]} label={dgettext("monitors", "URL")} />
+        <.input
+          field={@form[:http_method]}
+          label={dgettext("monitors", "HTTP Method")}
+          type="select"
+          options={@http_methods}
+        />
+        <.input
+          field={@form[:expected_status_code]}
+          label={dgettext("monitors", "Expected status code")}
+          type="select"
+          options={@status_codes}
+        />
+        <.input
+          field={@form[:interval]}
+          label={dgettext("monitors", "Interval")}
+          type="select"
+          options={@intervals}
+        />
+        <.input
+          field={@form[:request_timeout]}
+          label={dgettext("monitors", "Request timeout")}
+          type="select"
+          options={@request_timeouts}
+        />
+        <:actions>
+          <div class="flex w-full justify-end">
+            <.button phx-disable-with="Saving..."><%= dgettext("forms", "Save") %></.button>
+          </div>
+        </:actions>
+      </.simple_form>
+    </div>
   </:tab_content>
   <:tab_content id="notifications">
     <.live_component
