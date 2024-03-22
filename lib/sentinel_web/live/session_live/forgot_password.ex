@@ -19,7 +19,6 @@ defmodule SentinelWeb.SessionLive.ForgotPassword do
       <%= dgettext("sessions", "Login") %>
     </.link>
 
-
     <div class="mx-auto max-w-sm">
       <.header class="text-center">
         Forgot your password?
