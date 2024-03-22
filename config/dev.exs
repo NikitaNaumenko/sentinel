@@ -57,7 +57,9 @@ config :sentinel, SentinelWeb.Endpoint,
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/sentinel_web/(controllers|live|components)/.*(ex|heex)$"
+      ~r"lib/sentinel_web/(controllers|live|components)/.*(ex|heex)$",
+      interval: 1000,
+      web_console_logger: true
     ]
   ]
 

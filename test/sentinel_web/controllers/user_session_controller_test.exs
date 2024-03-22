@@ -36,7 +36,7 @@ defmodule SentinelWeb.UserSessionControllerTest do
         })
 
       assert conn.resp_cookies["_sentinel_web_user_remember_me"]
-      assert redirected_to(conn) == ~p"/"
+      assert redirected_to(conn) == ~p"/monitors"
     end
 
     test "logs the user in with return to", %{conn: conn, user: user} do
@@ -61,7 +61,7 @@ defmodule SentinelWeb.UserSessionControllerTest do
           "user" => %{"email" => user.email, "password" => valid_user_password()}
         })
 
-      assert redirected_to(conn) == ~p"/"
+      assert redirected_to(conn) == ~p"/monitors"
       assert Phoenix.Flash.get(conn.assigns.flash, :info) =~ "Account created successfully"
     end
 
@@ -72,7 +72,7 @@ defmodule SentinelWeb.UserSessionControllerTest do
           "user" => %{"email" => user.email, "password" => valid_user_password()}
         })
 
-      assert redirected_to(conn) == ~p"/users/settings"
+      assert redirected_to(conn) == ~p"/monitors"
       assert Phoenix.Flash.get(conn.assigns.flash, :info) =~ "Password updated successfully"
     end
 
@@ -83,7 +83,7 @@ defmodule SentinelWeb.UserSessionControllerTest do
         })
 
       assert Phoenix.Flash.get(conn.assigns.flash, :error) == "Invalid email or password"
-      assert redirected_to(conn) == ~p"/users/log_in"
+      assert redirected_to(conn) == ~p"/log_in"
     end
   end
 

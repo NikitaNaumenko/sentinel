@@ -20,9 +20,12 @@ defmodule SentinelWeb.SessionLive.Registration do
           <%= dgettext("session", "Create an account") %>
         </h1>
         <p class="text-muted-foreground text-center text-sm">Enter your data below to create your account</p>
+        <.error :if={@check_errors}>
+          Oops, something went wrong! Please check the errors below.
+        </.error>
+
         <.simple_form
           for={@form}
-          phx-update="ignore"
           phx-trigger-action={@trigger_submit}
           phx-change="validate"
           phx-submit="save"
@@ -30,9 +33,6 @@ defmodule SentinelWeb.SessionLive.Registration do
           method="post"
           action={~p"/users/log_in?_action=registered"}
         >
-          <.error :if={@check_errors}>
-            Oops, something went wrong! Please check the errors below.
-          </.error>
           <.inputs_for :let={f_nested} field={@form[:account]}>
             <.input field={f_nested[:name]} type="text" label="Account name" required />
           </.inputs_for>
@@ -86,7 +86,7 @@ defmodule SentinelWeb.SessionLive.Registration do
         {:ok, _} =
           Accounts.deliver_user_confirmation_instructions(
             user,
-            &url(~p"/users/confirm/#{&1}")
+            &url(~p"/confirm/#{&1}")
           )
 
         changeset = Accounts.change_user_registration(user)
@@ -99,6 +99,7 @@ defmodule SentinelWeb.SessionLive.Registration do
 
   def handle_event("validate", %{"user" => user_params}, socket) do
     changeset = Accounts.change_user_registration(%User{}, user_params)
+
     {:noreply, assign_form(socket, Map.put(changeset, :action, :validate))}
   end
 

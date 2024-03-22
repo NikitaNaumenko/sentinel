@@ -27,7 +27,7 @@ defmodule Sentinel.AccountsTest do
     test "create_account/1 with valid data creates a account" do
       valid_attrs = %{name: "Name"}
 
-      assert {:ok, %Account{} = account} = Accounts.create_account(valid_attrs)
+      assert {:ok, %Account{}} = Accounts.create_account(valid_attrs)
     end
 
     test "create_account/1 with invalid data returns error changeset" do
@@ -38,7 +38,7 @@ defmodule Sentinel.AccountsTest do
       account = account_fixture()
       update_attrs = %{}
 
-      assert {:ok, %Account{} = account} = Accounts.update_account(account, update_attrs)
+      assert {:ok, %Account{}} = Accounts.update_account(account, update_attrs)
     end
 
     # test "update_account/2 with invalid data returns error changeset" do
@@ -112,11 +112,11 @@ defmodule Sentinel.AccountsTest do
     end
 
     test "validates email and password when given" do
-      {:error, changeset} = Accounts.register_user(%{email: "not valid", password: "not valid"})
+      {:error, changeset} = Accounts.register_user(%{email: "not valid", password: "valid"})
 
       assert %{
                email: ["must have the @ sign and no spaces"],
-               password: ["should be at least 12 character(s)"]
+               password: ["should be at least 8 character(s)"]
              } = errors_on(changeset)
     end
 
@@ -315,12 +315,12 @@ defmodule Sentinel.AccountsTest do
     test "validates password", %{user: user} do
       {:error, changeset} =
         Accounts.update_user_password(user, valid_user_password(), %{
-          password: "not valid",
+          password: "valid",
           password_confirmation: "another"
         })
 
       assert %{
-               password: ["should be at least 12 character(s)"],
+               password: ["should be at least 8 character(s)"],
                password_confirmation: ["does not match password"]
              } = errors_on(changeset)
     end
@@ -524,12 +524,12 @@ defmodule Sentinel.AccountsTest do
     test "validates password", %{user: user} do
       {:error, changeset} =
         Accounts.reset_user_password(user, %{
-          password: "not valid",
+          password: "not va",
           password_confirmation: "another"
         })
 
       assert %{
-               password: ["should be at least 12 character(s)"],
+               password: ["should be at least 8 character(s)"],
                password_confirmation: ["does not match password"]
              } = errors_on(changeset)
     end

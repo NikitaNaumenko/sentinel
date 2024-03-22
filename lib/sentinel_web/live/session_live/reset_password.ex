@@ -6,6 +6,19 @@ defmodule SentinelWeb.SessionLive.ResetPassword do
 
   def render(assigns) do
     ~H"""
+    <.link
+      navigate={~p"/registration"}
+      class="absolute top-4 right-4 inline-flex h-9 items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 md:top-8 md:right-8"
+    >
+      <%= dgettext("sessions", "Sign up") %>
+    </.link>
+    <.link
+      navigate={~p"/log_in"}
+      class="absolute top-4 right-36 inline-flex h-9 items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 md:top-8 md:right-36"
+    >
+      <%= dgettext("sessions", "Login") %>
+    </.link>
+
     <div class="mx-auto max-w-sm">
       <.header class="text-center">Reset Password</.header>
 
@@ -20,10 +33,6 @@ defmodule SentinelWeb.SessionLive.ResetPassword do
           <.button phx-disable-with="Resetting..." class="w-full">Reset Password</.button>
         </:actions>
       </.simple_form>
-
-      <p class="mt-4 text-center text-sm">
-        <.link href={~p"/users/register"}>Register</.link> | <.link href={~p"/users/log_in"}>Log in</.link>
-      </p>
     </div>
     """
   end
@@ -51,7 +60,7 @@ defmodule SentinelWeb.SessionLive.ResetPassword do
         {:noreply,
          socket
          |> put_flash(:info, "Password reset successfully.")
-         |> redirect(to: ~p"/users/log_in")}
+         |> redirect(to: ~p"/log_in")}
 
       {:error, changeset} ->
         {:noreply, assign_form(socket, Map.put(changeset, :action, :insert))}

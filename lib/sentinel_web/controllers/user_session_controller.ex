@@ -10,7 +10,7 @@ defmodule SentinelWeb.UserSessionController do
 
   def create(conn, %{"_action" => "password_updated"} = params) do
     conn
-    |> put_session(:user_return_to, ~p"/settings")
+    |> put_session(:user_return_to, ~p"/monitors")
     |> create(params, "Password updated successfully!")
   end
 

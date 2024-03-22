@@ -88,7 +88,8 @@ defmodule SentinelWeb.Router do
     delete "/users/log_out", UserSessionController, :delete
 
     live_session :current_user,
-      on_mount: [{SentinelWeb.UserAuth, :mount_current_user}] do
+      on_mount: [{SentinelWeb.UserAuth, :mount_current_user}],
+      layout: {SentinelWeb.Layouts, :auth} do
       live "/confirm/:token", SessionLive.Confirmation, :edit
       live "/confirm", SessionLive.ConfirmationInstructions, :new
     end
