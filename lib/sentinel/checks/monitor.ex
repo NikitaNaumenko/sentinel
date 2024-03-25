@@ -78,10 +78,13 @@ defmodule Sentinel.Checks.Monitor do
     field :http_method, Ecto.Enum, values: [:get, :post, :put, :patch, :head, :options, :delete]
     field :request_timeout, :integer
     field :expected_status_code, :integer
-    field :last_check, :string, virtual: true, default: "success"
     field :state, Ecto.Enum, values: [:active, :disabled], default: :active
+
+    belongs_to :last_check, Sentinel.Checks.Check
     belongs_to :account, Sentinel.Accounts.Account
     has_many :certificates, Certificate
+    has_many :incidents, Sentinel.Checks.Incident
+    has_many :checks, Sentinel.Checks.Check
     has_one :notification_rule, NotificationRule
 
     timestamps(type: :utc_datetime_usec)
@@ -97,7 +100,8 @@ defmodule Sentinel.Checks.Monitor do
       :interval,
       :http_method,
       :request_timeout,
-      :expected_status_code
+      :expected_status_code,
+      :last_check_id
     ])
     |> cast_assoc(:certificates)
     |> cast_assoc(:notification_rule)

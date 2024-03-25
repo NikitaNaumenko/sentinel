@@ -1,7 +1,9 @@
 defmodule Sentinel.Checks.UseCases.RunCheck do
   @moduledoc false
   alias Sentinel.Checks.Check
+  alias Sentinel.Checks.Monitor
   alias Sentinel.Events
+  alias Sentinel.Repo
 
   def call(monitor) do
     # TODO: Should be calculated by telemetry
@@ -31,7 +33,11 @@ defmodule Sentinel.Checks.UseCases.RunCheck do
       |> Check.changeset()
       |> Sentinel.Repo.insert!()
       |> case do
-        %Check{result: :failure, inserted_at: inserted_at} ->
+        %Check{result: :failure, inserted_at: inserted_at, id: check_id} ->
+          monitor
+          |> Monitor.changeset(%{last_check_id: check_id})
+          |> Sentinel.Repo.update!()
+
           Events.create_event(:monitor_down, monitor, %{downed_at: inserted_at})
 
         # TODO: тут будет логика когда монитор поднялся
@@ -39,5 +45,17 @@ defmodule Sentinel.Checks.UseCases.RunCheck do
           :ok
       end
     end)
+  end
+
+  defp start_incident(monitor, check) do
+    %{
+      monitor_id: monitor.id,
+      start_check_id: check.id,
+      started_at: DateTime.utc_now(),
+      http_code: check.code,
+      status: :started
+    }
+    |> Incident.changeset()
+    |> Repo.insert!()
   end
 end

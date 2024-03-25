@@ -19,9 +19,29 @@ defmodule Sentinel.Checks.Incident do
   end
 
   @doc false
-  def changeset(incident, attrs) do
+  def start_changeset(incident, attrs) do
     incident
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [
+      :started_at,
+      :status,
+      :http_code,
+      :description,
+      :monitor_id,
+      :start_check_id
+    ])
+    |> validate_required([:started_at, :status, :monitor_id, :start_check_id, :http_code])
+  end
+
+  def end_changeset(incident, attrs) do
+    incident
+    |> cast(attrs, [
+      :ended_at,
+      :duration,
+      :status,
+      :end_check_id
+    ])
+    |> validate_required([:ended_at, :end_check_id])
+    |> put_duration()
+    |> put_status()
   end
 end
