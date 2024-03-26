@@ -21,7 +21,7 @@ defmodule Sentinel.Checks.UseCases.RunCheck do
     end
   end
 
-  def create_check!(monitor, %Finch.Response{status: status} = finch_response, duration) do
+  defp create_check!(monitor, %Finch.Response{status: status} = finch_response, duration) do
     Sentinel.Repo.transaction(fn ->
       check =
         %{
@@ -35,38 +35,32 @@ defmodule Sentinel.Checks.UseCases.RunCheck do
         |> Check.changeset()
         |> Sentinel.Repo.insert!()
 
-      monitor = Repo.preload(monitor, [:last_check])
-
-      process_incident(monitor, check)
+      monitor
+      |> Repo.preload([:last_check])
+      |> process_incident(check)
     end)
   end
 
-  defp process_incident(
-         %Monitor{last_check: nil} = monitor,
-         %Check{id: check_id, inserted_at: inserted_at, result: :failure} = check
-       ) do
+  defp process_incident(%Monitor{last_check: nil} = monitor, %Check{
+         id: check_id,
+         inserted_at: inserted_at,
+         result: :failure
+       }) do
     incident = start_incident(monitor, check_id)
 
-    monitor
-    |> Monitor.changeset(%{last_check_id: check_id, last_not_resolved_incident_id: incident.id})
-    |> Sentinel.Repo.update!()
-
     Events.create_event(:monitor_down, monitor, %{downed_at: inserted_at})
+    update_monitor(monitor, %{last_check_id: check_id, last_incidet_id: incident.id})
   end
 
   defp process_incident(%Monitor{last_check: nil} = monitor, %Check{id: check_id, result: :success}) do
-    monitor
-    |> Monitor.changeset(%{last_check_id: check_id})
-    |> Sentinel.Repo.update!()
+    update_monitor(monitor, %{last_check_id: check_id})
   end
 
   defp process_incident(%Monitor{last_check: %Check{result: :success}} = monitor, %Check{
          id: check_id,
          result: :success
        }) do
-    monitor
-    |> Monitor.changeset(%{last_check_id: check_id})
-    |> Sentinel.Repo.update!()
+    update_monitor(monitor, %{last_check_id: check_id})
   end
 
   defp process_incident(%Monitor{last_check: %Check{result: :success}} = monitor, %Check{
@@ -76,20 +70,15 @@ defmodule Sentinel.Checks.UseCases.RunCheck do
        }) do
     incident = start_incident(monitor, check_id)
 
-    monitor
-    |> Monitor.changeset(%{last_check_id: check_id, last_incident_id: incident.id})
-    |> Sentinel.Repo.update!()
-
     Events.create_event(:monitor_down, monitor, %{downed_at: inserted_at})
+    update_monitor(monitor, %{last_check_id: check_id, last_incidet_id: incident.id})
   end
 
   defp process_incident(%Monitor{last_check: %Check{result: :failure}} = monitor, %Check{
          id: check_id,
          result: :falure
        }) do
-    monitor
-    |> Monitor.changeset(%{last_check_id: check_id})
-    |> Sentinel.Repo.update!()
+    update_monitor(monitor, %{last_check_id: check_id})
   end
 
   defp process_incident(%Monitor{last_check: %Check{result: :failure}} = monitor, %Check{
@@ -99,16 +88,13 @@ defmodule Sentinel.Checks.UseCases.RunCheck do
        }) do
     resolve_incident(monitor, check_id)
 
-    monitor
-    |> Monitor.changeset(%{last_check_id: check_id})
-    |> Sentinel.Repo.update!()
-
     Events.create_event(:monitor_up, monitor, %{upped_at: inserted_at, check_id: check_id})
+    update_monitor(monitor, %{last_check_id: check_id})
   end
 
   defp start_incident(monitor, check) do
     %Incident{}
-    |> Incident.changeset(%{
+    |> Incident.start_changeset(%{
       monitor_id: monitor.id,
       start_check_id: check.id,
       started_at: DateTime.utc_now(),
@@ -119,11 +105,17 @@ defmodule Sentinel.Checks.UseCases.RunCheck do
   end
 
   defp resolve_incident(monitor, check_id) do
-    monitor.last_not_resolved_incident
-    |> Incident.changeset(%{
+    monitor.last_incident
+    |> Incident.end_changeset(%{
       ended_at: DateTime.utc_now(),
       end_check_id: check_id
     })
     |> Repo.update!()
+  end
+
+  defp update_monitor(monitor, attrs) do
+    monitor
+    |> Monitor.changeset(attrs)
+    |> Sentinel.Repo.update!()
   end
 end
