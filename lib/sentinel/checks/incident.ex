@@ -36,8 +36,6 @@ defmodule Sentinel.Checks.Incident do
     incident
     |> cast(attrs, [
       :ended_at,
-      :duration,
-      :status,
       :end_check_id
     ])
     |> validate_required([:ended_at, :end_check_id])
