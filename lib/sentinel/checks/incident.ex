@@ -41,7 +41,7 @@ defmodule Sentinel.Checks.Incident do
       :end_check_id
     ])
     |> validate_required([:ended_at, :end_check_id])
-    |> put_duration()
-    |> put_status()
+    |> put_change(:duration, DateTime.diff(attrs[:ended_at], incident.started_at))
+    |> put_change(:status, :resolved)
   end
 end

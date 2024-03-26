@@ -81,6 +81,7 @@ defmodule Sentinel.Checks.Monitor do
     field :state, Ecto.Enum, values: [:active, :disabled], default: :active
 
     belongs_to :last_check, Sentinel.Checks.Check
+    belongs_to :last_not_resolved_incident, Sentinel.Checks.Incident
     belongs_to :account, Sentinel.Accounts.Account
     has_many :certificates, Certificate
     has_many :incidents, Sentinel.Checks.Incident
