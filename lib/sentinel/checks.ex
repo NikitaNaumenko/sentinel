@@ -7,6 +7,7 @@ defmodule Sentinel.Checks do
 
   alias Sentinel.Checks.Certificate
   alias Sentinel.Checks.Check
+  alias Sentinel.Checks.Incident
   alias Sentinel.Checks.Monitor
   alias Sentinel.Checks.MonitorWorker
   alias Sentinel.Checks.NotificationRule
@@ -244,6 +245,10 @@ defmodule Sentinel.Checks do
     notification_rule
     |> NotificationRule.changeset(attrs)
     |> Repo.update()
+  end
+
+  def get_incident(id) do
+    Repo.get(Incident, id)
   end
 
   # @spec topic(Product.t()) :: String.t()

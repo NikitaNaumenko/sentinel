@@ -9,7 +9,7 @@ defmodule Sentinel.Checks.Incident do
     field :ended_at, :utc_datetime_usec
     field :duration, :integer
     field :status, Ecto.Enum, values: [:started, :resolved]
-    field :http_code, :string
+    field :http_code, :integer
     field :description, :string
     belongs_to :monitor, Sentinel.Checks.Monitor
     belongs_to :start_check, Sentinel.Checks.Check

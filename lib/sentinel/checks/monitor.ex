@@ -102,7 +102,8 @@ defmodule Sentinel.Checks.Monitor do
       :http_method,
       :request_timeout,
       :expected_status_code,
-      :last_check_id
+      :last_check_id,
+      :last_incident_id
     ])
     |> cast_assoc(:certificates)
     |> cast_assoc(:notification_rule)

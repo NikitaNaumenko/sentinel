@@ -26,7 +26,8 @@
         "x-cache": "HIT",
         "content-length": "1256"
       },
-      "status_code": 200
+      "status_code": 404
     }
   }
 ]
+

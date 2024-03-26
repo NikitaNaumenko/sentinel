@@ -7,7 +7,7 @@ defmodule Sentinel.Repo.Migrations.CreateIncidents do
       add :ended_at, :utc_datetime_usec
       add :duration, :integer
       add :status, :string
-      add :http_code, :string
+      add :http_code, :integer
       add :description, :string
       add :monitor_id, references(:monitors, on_delete: :delete_all), null: false
       add :start_check_id, references(:checks, on_delete: :delete_all)

@@ -41,15 +41,14 @@ defmodule Sentinel.Checks.UseCases.RunCheck do
     end)
   end
 
-  defp process_incident(%Monitor{last_check: nil} = monitor, %Check{
-         id: check_id,
-         inserted_at: inserted_at,
-         result: :failure
-       }) do
-    incident = start_incident(monitor, check_id)
+  defp process_incident(
+         %Monitor{last_check: nil} = monitor,
+         %Check{id: check_id, inserted_at: inserted_at, result: :failure} = check
+       ) do
+    incident = start_incident(monitor, check)
 
     Events.create_event(:monitor_down, monitor, %{downed_at: inserted_at})
-    update_monitor(monitor, %{last_check_id: check_id, last_incidet_id: incident.id})
+    update_monitor(monitor, %{last_check_id: check_id, last_incident_id: incident.id})
   end
 
   defp process_incident(%Monitor{last_check: nil} = monitor, %Check{id: check_id, result: :success}) do
@@ -63,15 +62,14 @@ defmodule Sentinel.Checks.UseCases.RunCheck do
     update_monitor(monitor, %{last_check_id: check_id})
   end
 
-  defp process_incident(%Monitor{last_check: %Check{result: :success}} = monitor, %Check{
-         id: check_id,
-         inserted_at: inserted_at,
-         result: :falure
-       }) do
-    incident = start_incident(monitor, check_id)
+  defp process_incident(
+         %Monitor{last_check: %Check{result: :success}} = monitor,
+         %Check{id: check_id, inserted_at: inserted_at, result: :falure} = check
+       ) do
+    incident = start_incident(monitor, check)
 
     Events.create_event(:monitor_down, monitor, %{downed_at: inserted_at})
-    update_monitor(monitor, %{last_check_id: check_id, last_incidet_id: incident.id})
+    update_monitor(monitor, %{last_check_id: check_id, last_incident_id: incident.id})
   end
 
   defp process_incident(%Monitor{last_check: %Check{result: :failure}} = monitor, %Check{
@@ -98,7 +96,7 @@ defmodule Sentinel.Checks.UseCases.RunCheck do
       monitor_id: monitor.id,
       start_check_id: check.id,
       started_at: DateTime.utc_now(),
-      http_code: check.code,
+      http_code: check.status_code,
       status: :started
     })
     |> Repo.insert!()
