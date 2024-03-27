@@ -230,6 +230,28 @@ defmodule Sentinel.Checks do
     )
   end
 
+  def last_five_incidents(%Monitor{id: monitor_id}) do
+    Repo.all(
+      from(c in Incident,
+        where: [monitor_id: ^monitor_id],
+        order_by: [desc: :id],
+        limit: 5
+      )
+    )
+  end
+
+  def this_month_incidents_count(%Monitor{id: monitor_id}) do
+    Repo.aggregate(
+      from(i in Incident,
+        where: [monitor_id: ^monitor_id],
+        where: fragment("DATE_TRUNC('month', inserted_at) = DATE_TRUNC('month', LOCALTIMESTAMP)"),
+        select: i.id
+      ),
+      :count,
+      :id
+    )
+  end
+
   def get_check(id) do
     Repo.get(Check, id)
   end

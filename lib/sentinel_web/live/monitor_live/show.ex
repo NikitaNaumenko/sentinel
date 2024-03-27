@@ -46,6 +46,8 @@ defmodule SentinelWeb.MonitorLive.Show do
      |> assign(:monitor, monitor)
      |> assign(:certificate, certificate)
      |> assign(:last_five_checks, Checks.last_five_checks(monitor))
+     |> assign(:last_five_incidents, Checks.last_five_incidents(monitor))
+     |> assign(:this_month_incidents_count, Checks.this_month_incidents_count(monitor))
      |> assign(:uptime_stats, Checks.list_checks_for_uptime_stats(monitor))
      |> assign(:response_times, Checks.list_checks_for_response_times(monitor))
      |> assign(:uptime, Checks.calculate_uptime(monitor))

@@ -23,7 +23,7 @@ defmodule Sentinel.Checks.MonitorWorker do
 
   @impl GenServer
   def handle_info(:run_check, %{monitor: monitor} = state) do
-    RunCheck.call(monitor)
-    {:noreply, state}
+    {:ok, monitor} = RunCheck.call(monitor)
+    {:noreply, %{state | monitor: monitor}}
   end
 end

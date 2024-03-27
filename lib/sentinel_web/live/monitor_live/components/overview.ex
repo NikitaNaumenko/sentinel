@@ -3,6 +3,8 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
 
   use SentinelWeb, :component
 
+  alias Sentinel.Checks.Incident
+
   def overview(assigns) do
     ~H"""
     <div class="flex w-full justify-between gap-4">
@@ -14,7 +16,7 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
             </div>
             <div class="p-6 pt-0">
               <div class="text-2xl font-bold"><%= @uptime %>%</div>
-              <p class="text-muted-foreground text-xs">+20.1% from last month</p>
+              <%!-- <p class="text-muted-foreground text-xs">+20.1% from last month</p> --%>
             </div>
           </div>
           <div class="bg-card text-card-foreground rounded-xl border shadow">
@@ -23,7 +25,7 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
             </div>
             <div class="p-6 pt-0">
               <div class="text-2xl font-bold"><%= @uptime_period %></div>
-              <p class="text-muted-foreground text-xs">+180.1% from last month</p>
+              <%!--<p class="text-muted-foreground text-xs">+180.1% from last month</p> --%>
             </div>
           </div>
           <div class="bg-card text-card-foreground rounded-xl border shadow">
@@ -32,7 +34,7 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
             </div>
             <div class="p-6 pt-0">
               <div class="text-2xl font-bold"><%= @avg_response_time %></div>
-              <p class="text-muted-foreground text-xs">+19% from last month</p>
+              <%!--<p class="text-muted-foreground text-xs">+19% from last month</p> --%>
             </div>
           </div>
           <div class="bg-card text-card-foreground rounded-xl border shadow">
@@ -41,7 +43,7 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
             </div>
             <div class="p-6 pt-0">
               <div class="text-2xl font-bold"><%= @incidents %></div>
-              <p class="text-muted-foreground text-xs">+201 since last hour</p>
+              <%!--<p class="text-muted-foreground text-xs">+201 since last hour</p> --%>
             </div>
           </div>
         </div>
@@ -73,19 +75,39 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
         <div class="bg-card text-card-foreground col-span-3 rounded-xl border shadow">
           <div class="flex flex-col space-y-1.5 p-6">
             <h3 class="font-semibold leading-none tracking-tight">Incidents</h3>
-            <p class="text-muted-foreground text-sm">You made 265 incidents this month.</p>
+            <p class="text-muted-foreground text-sm">
+              <%= dgettext("monitors", "You made %{incidents_count} incidents this month.",
+                incidents_count: @this_month_incidents_count
+              ) %>
+            </p>
           </div>
           <div class="p-6 pt-0">
             <div class="space-y-8">
-              <div class="flex items-center">
-                <span class="relative flex h-9 w-9 shrink-0 overflow-hidden rounded-full">
-                  <img class="aspect-square h-full w-full" alt="Avatar" src="/avatars/01.png" />
-                </span>
-                <div class="ml-4 space-y-1">
-                  <p class="text-sm font-medium leading-none">Olivia Martin</p>
-                  <p class="text-muted-foreground text-sm">olivia.martin@email.com</p>
+              <div :for={incident <- @last_five_incidents} class="flex justify-between">
+                <div class="space-y-1">
+                  <p class="text-sm font-medium leading-none"><%= dgettext("monitors", "Start date") %></p>
+                  <p class="text-muted-foreground text-sm">
+                    <%= Cldr.DateTime.to_string!(incident.started_at) %>
+                  </p>
                 </div>
-                <div class="ml-auto font-medium">+$1,999.00</div>
+                <div class="space-y-1">
+                  <p class="text-sm font-medium leading-none"><%= dgettext("monitors", "End date") %></p>
+                  <p class="text-muted-foreground text-sm">
+                    <%= incident.ended_at && Cldr.DateTime.to_string!(incident.ended_at) %>
+                  </p>
+                </div>
+                <div class="space-y-1">
+                  <p class="text-sm font-medium leading-none"><%= dgettext("monitors", "Duration") %></p>
+                  <p class="text-muted-foreground text-sm">
+                    <%= incident.duration &&
+                      Sentinel.Cldr.DateTime.Relative.to_string!(incident.duration, format: :narrow) %>
+                  </p>
+                </div>
+                <.incident_status incident={incident} />
+                <div class="space-y-1">
+                  <p class="text-sm font-medium leading-none"><%= dgettext("monitors", "Status code") %></p>
+                  <p class="text-muted-foreground text-sm"><%= incident.http_code %></p>
+                </div>
               </div>
             </div>
           </div>
@@ -161,6 +183,30 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
           <%!-- TODO: --%> Here will be HTTP transcription of checks
         </div>
       </div>
+    </div>
+    """
+  end
+
+  def incident_status(%{incident: %Incident{status: :started}} = assigns) do
+    ~H"""
+    <div class="space-y-1">
+      <p class="text-sm font-medium leading-none"><%= dgettext("monitors", "Status") %></p>
+      <p class="text-danger text-sm">
+        <.icon name="icon-alert-triangle" />
+        <%= dgettext("monitors", "Started") %>
+      </p>
+    </div>
+    """
+  end
+
+  def incident_status(%{incident: %Incident{status: :resolved}} = assigns) do
+    ~H"""
+    <div class="space-y-1">
+      <p class="text-sm font-medium leading-none"><%= dgettext("monitors", "Status") %></p>
+      <p class="text-success text-sm">
+        <.icon name="icon-check-circle" />
+        <%= dgettext("monitors", "Resolved") %>
+      </p>
     </div>
     """
   end
