@@ -1,44 +1,60 @@
-// import Chart from "chart.js/auto";
 //
-// const data = [
-//   { year: 2010, count: 10 },
-//   { year: 2011, count: 20 },
-//   { year: 2012, count: 15 },
-//   { year: 2013, count: 25 },
-//   { year: 2014, count: 22 },
-//   { year: 2015, count: 30 },
-//   { year: 2016, count: 28 },
-// ];
-//
-// const UptimeMonitorChart = {
-//   mounted() {
-//     console.log(this.el);
-//
-//     const data = JSON.parse(this.el.dataset.values);
-//     console.log(data);
-//     new Chart(document.getElementById("uptime-monitor-chart"), {
-//       type: "line",
-//
-//       options: {
-//         plugins: {
-//           decimation: {
-//             enabled: false,
-//             algorithm: "min-max",
-//             sample: "lltb",
-//           },
-//         },
-//       },
-//       data: {
-//         labels: data.map((row) => row.inserted_at),
-//
-//         datasets: [
-//           {
-//             label: "Uptime",
-//             data: data.map((row) => (row.result === "success" ? 1 : 0)),
-//           },
-//         ],
-//       },
-//     });
-//   },
-// };
-// export default UptimeMonitorChart;
+import ApexCharts from "apexcharts";
+
+const UptimeMonitorChart = {
+  mounted() {
+    console.log(this.el);
+    console.log("JOPA");
+
+    var options = {
+      chart: {
+        type: "area",
+        stroke: {
+          curve: "smooth",
+        },
+      },
+      series: [
+        {
+          name: "sales",
+          data: [30, 40, 35, 50, 49, 60, 70, 91, 125],
+        },
+      ],
+      xaxis: {
+        categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
+      },
+    };
+    const data = JSON.parse(this.el.dataset.values);
+    console.log(data);
+    var chart = new ApexCharts(
+      document.getElementById("uptime-monitor-chart"),
+      options,
+    );
+
+    chart.render();
+    // console.log(data);
+    // new Chart(document.getElementById("uptime-monitor-chart"), {
+    //   type: "line",
+    //
+    //   options: {
+    //     plugins: {
+    //       decimation: {
+    //         enabled: false,
+    //         algorithm: "min-max",
+    //         sample: "lltb",
+    //       },
+    //     },
+    //   },
+    //   data: {
+    //     labels: data.map((row) => row.inserted_at),
+    //
+    //     datasets: [
+    //       {
+    //         label: "Uptime",
+    //         data: data.map((row) => (row.result === "success" ? 1 : 0)),
+    //       },
+    //     ],
+    //   },
+    // });
+  },
+};
+export default UptimeMonitorChart;

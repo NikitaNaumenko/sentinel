@@ -215,7 +215,7 @@ defmodule Sentinel.Checks do
       from(c in Check,
         where: [monitor_id: ^monitor_id],
         where: c.inserted_at > ^yesterday,
-        select: %{duration: c.duration, inserted_at: c.inserted_at}
+        select: %{duration: c.duration, inserted_at: fragment("DATE_PART('EPOCH', ?)", c.inserted_at)}
       )
     )
   end

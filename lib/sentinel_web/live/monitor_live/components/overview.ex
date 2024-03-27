@@ -50,25 +50,27 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
         <div
           id="uptime-monitor"
           data-values={Jason.encode!(@uptime_stats)}
+          phx-hook="UptimeMonitorChart"
           class="bg-card text-card-foreground col-span-4 rounded-xl border shadow"
         >
           <div class="flex flex-col space-y-1.5 p-6">
             <h3 class="font-semibold leading-none tracking-tight">Uptime</h3>
           </div>
           <div class="p-6 pt-0 pl-2">
-            <canvas id="uptime-monitor-chart"></canvas>
+            <div id="uptime-monitor-chart" phx-update="ignore"></div>
           </div>
         </div>
         <div
           class="bg-card text-card-foreground col-span-4 rounded-xl border shadow"
           data-values={Jason.encode!(@response_times)}
           id="response-time-monitor"
+          phx-hook="ResponseTimeMonitorChart"
         >
           <div class="flex flex-col space-y-1.5 p-6">
             <h3 class="font-semibold leading-none tracking-tight">Response time</h3>
           </div>
           <div class="p-6 pt-0 pl-2">
-            <canvas id="response-time-monitor-chart"></canvas>
+            <div id="response-time-monitor-chart" phx-update="ignore"></div>
           </div>
         </div>
         <%!-- TODO: Incidents will be here --%>
