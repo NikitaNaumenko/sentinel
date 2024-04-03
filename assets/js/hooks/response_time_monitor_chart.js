@@ -1,27 +1,3 @@
-// import Chart from "chart.js/auto";
-//
-// export default {
-//   mounted() {
-//     console.log(this.el);
-//
-//     const data = JSON.parse(this.el.dataset.values);
-//     console.log(data);
-//
-//     new Chart(document.getElementById("response-time-monitor-chart"), {
-//       type: "bar",
-//       data: {
-//         labels: data.map((row) => row.inserted_at),
-//         datasets: [
-//           {
-//             label: "Response time",
-//             data: data.map((row) => row.duration),
-//           },
-//         ],
-//       },
-//     });
-//   },
-// };
-//
 import ApexCharts from "apexcharts";
 export default {
   mounted() {
@@ -29,6 +5,7 @@ export default {
     console.log("JOPA");
 
     const data = JSON.parse(this.el.dataset.values);
+    console.log(data);
     var options = {
       chart: {
         type: "area",

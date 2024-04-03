@@ -196,8 +196,13 @@ defmodule Sentinel.Checks do
 
   def list_checks_for_uptime_stats(%Monitor{id: monitor_id}) do
     # TODO: set 1
-    yesterday = DateTime.add(DateTime.utc_now(), -10, :day)
-
+    hour_ago = DateTime.add(DateTime.utc_now(), -1, :hour)
+    # series = from(f in fragment("select generate_series('today 00:00'::timestamp, (?)::timestamp, interval '10 minutes')", hour_ago), select: f.generate_series)
+    series = from(f in fragment("select generate_series('today 00:00'::timestamp, (?)::timestamp, interval '10 minutes') grid_time", ^hour_ago),
+      left_lateral_join: from c in subquery(from(c in Check, where: c.inserted_at >= f.grid_time, where: c.inserted_at < f.grid_time, order_by: [desc: :id], limit: 1)),
+      on: true,
+      select: %{grid_time: f.grid_time, inserted_at: c.insered_at, duration: c.duration})
+# Select grid_time, inserted_at, duration from generate_series( 'today 00:00'::timestamp, 'today 18:00'::timestamp, interval '10 minutes') grid_timeLEFT JOIN LATERAL (                                                                                                                                                                                       select inserted_at, duration from checks where inserted_at >= grid_time and inserted_at < grid_time + interval '10 minutes' order by inserted_at limit 1) t on true;
     Repo.all(
       from(c in Check,
         where: [monitor_id: ^monitor_id],
@@ -209,12 +214,17 @@ defmodule Sentinel.Checks do
 
   def list_checks_for_response_times(%Monitor{id: monitor_id}) do
     # TODO: set 1
-    yesterday = DateTime.add(DateTime.utc_now(), -10, :day)
+    hour_ago = DateTime.add(DateTime.utc_now(), -1, :hour)
+    series = from(f in fragment("select generate_series('today 00:00'::timestamp, (?)::timestamp, interval '10 minutes')", ^hour_ago), select: f.generate_series)
+    subquery  = from(c in Check, where: c.inserted_at > s.time, where: c.inserted_at < s.time + fragment("interval '10 minutes'"), order_by: [desc: :id], limit: 1)
+
 
     Repo.all(
-      from(c in Check,
-        where: [monitor_id: ^monitor_id],
-        where: c.inserted_at > ^yesterday,
+      from(s in series, as: :series,
+        left_join: subquery,
+        on: true,
+        # where: [monitor_id: ^monitor_id],
+        # where: c.inserted_at > ^yesterday,
         select: %{duration: c.duration, inserted_at: fragment("DATE_PART('EPOCH', ?)", c.inserted_at)}
       )
     )
