@@ -2,6 +2,7 @@ defmodule SentinelWeb.MonitorLive.MonitorComponent do
   @moduledoc false
   use SentinelWeb, :component
 
+  alias Sentinel.Checks.Check
   alias Sentinel.Checks.Monitor
 
   def render(assigns) do
@@ -34,12 +35,12 @@ defmodule SentinelWeb.MonitorLive.MonitorComponent do
   end
 
   defp outer_color_state(%Monitor{state: :disabled}), do: "bg-secondary/50"
-  defp outer_color_state(%Monitor{last_check: :failure}), do: "bg-danger/50"
-  defp outer_color_state(%Monitor{last_check: :success}), do: "bg-success/50"
+  defp outer_color_state(%Monitor{last_check: %Check{result: :failure}}), do: "bg-danger/50"
+  defp outer_color_state(%Monitor{last_check: %Check{result: :success}}), do: "bg-success/50"
   defp outer_color_state(_), do: "bg-warning/50"
 
   defp inner_color_state(%Monitor{state: :disabled}), do: "bg-secondary"
-  defp inner_color_state(%Monitor{last_check: :failure}), do: "bg-danger"
-  defp inner_color_state(%Monitor{last_check: :success}), do: "bg-success"
+  defp inner_color_state(%Monitor{last_check: %Check{result: :failure}}), do: "bg-danger"
+  defp inner_color_state(%Monitor{last_check: %Check{result: :success}}), do: "bg-success"
   defp inner_color_state(_), do: "bg-warning"
 end

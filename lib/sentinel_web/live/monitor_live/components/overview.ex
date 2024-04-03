@@ -78,9 +78,13 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
           <div class="flex flex-col space-y-1.5 p-6">
             <h3 class="font-semibold leading-none tracking-tight">Incidents</h3>
             <p class="text-muted-foreground text-sm">
-              <%= dgettext("monitors", "You made %{incidents_count} incidents this month.",
-                incidents_count: @this_month_incidents_count
-              ) %>
+              <%= if @this_month_incidents_count == 0 do %>
+                <%= dgettext("monitors", "No incidents this month.") %>
+              <% else %>
+                <%= dgettext("monitors", "You made %{incidents_count} incidents this month.",
+                  incidents_count: @this_month_incidents_count
+                ) %>
+              <% end %>
             </p>
           </div>
           <div class="p-6 pt-0">
