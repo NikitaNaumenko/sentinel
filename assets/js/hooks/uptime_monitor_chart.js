@@ -1,11 +1,8 @@
-//
 import ApexCharts from "apexcharts";
 
 const UptimeMonitorChart = {
   mounted() {
-    console.log(this.el);
-    console.log("JOPA");
-
+    const { time_series, result_series } = JSON.parse(this.el.dataset.values);
     var options = {
       chart: {
         type: "area",
@@ -13,48 +10,31 @@ const UptimeMonitorChart = {
           curve: "smooth",
         },
       },
+      dataLabels: {
+        enabled: false,
+      },
+      yaxis: { min: 0, max: 1, stepSize: 1 },
       series: [
         {
-          name: "sales",
-          data: [30, 40, 35, 50, 49, 60, 70, 91, 125],
+          name: "uptime",
+          data: result_series,
         },
       ],
       xaxis: {
-        categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
+        labels: {
+          show: true,
+          datetimeUTC: true,
+        },
+        type: "datetime",
+        categories: time_series,
       },
     };
-    const data = JSON.parse(this.el.dataset.values);
-    console.log(data);
     var chart = new ApexCharts(
       document.getElementById("uptime-monitor-chart"),
       options,
     );
 
     chart.render();
-    // console.log(data);
-    // new Chart(document.getElementById("uptime-monitor-chart"), {
-    //   type: "line",
-    //
-    //   options: {
-    //     plugins: {
-    //       decimation: {
-    //         enabled: false,
-    //         algorithm: "min-max",
-    //         sample: "lltb",
-    //       },
-    //     },
-    //   },
-    //   data: {
-    //     labels: data.map((row) => row.inserted_at),
-    //
-    //     datasets: [
-    //       {
-    //         label: "Uptime",
-    //         data: data.map((row) => (row.result === "success" ? 1 : 0)),
-    //       },
-    //     ],
-    //   },
-    // });
   },
 };
 export default UptimeMonitorChart;

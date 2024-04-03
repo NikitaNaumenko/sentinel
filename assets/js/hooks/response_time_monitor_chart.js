@@ -1,11 +1,7 @@
 import ApexCharts from "apexcharts";
 export default {
   mounted() {
-    console.log(this.el);
-    console.log("JOPA");
-
-    const data = JSON.parse(this.el.dataset.values);
-    console.log(data);
+    const { time_series, duration_series } = JSON.parse(this.el.dataset.values);
     var options = {
       chart: {
         type: "area",
@@ -16,43 +12,23 @@ export default {
       series: [
         {
           name: "duration",
-          data: [30, 40, 35, 50, 49, 60, 70, 91, 125],
+          data: duration_series,
         },
       ],
-      // xaxis: {
-      //   categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
-      // },
+      xaxis: {
+        labels: {
+          show: true,
+          datetimeUTC: true,
+        },
+        type: "datetime",
+        categories: time_series,
+      },
     };
-    console.log(data);
     var chart = new ApexCharts(
       document.getElementById("response-time-monitor-chart"),
       options,
     );
 
     chart.render();
-    // console.log(data);
-    // new Chart(document.getElementById("uptime-monitor-chart"), {
-    //   type: "line",
-    //
-    //   options: {
-    //     plugins: {
-    //       decimation: {
-    //         enabled: false,
-    //         algorithm: "min-max",
-    //         sample: "lltb",
-    //       },
-    //     },
-    //   },
-    //   data: {
-    //     labels: data.map((row) => row.inserted_at),
-    //
-    //     datasets: [
-    //       {
-    //         label: "Uptime",
-    //         data: data.map((row) => (row.result === "success" ? 1 : 0)),
-    //       },
-    //     ],
-    //   },
-    // });
   },
 };

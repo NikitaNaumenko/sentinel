@@ -195,39 +195,67 @@ defmodule Sentinel.Checks do
   end
 
   def list_checks_for_uptime_stats(%Monitor{id: monitor_id}) do
-    # TODO: set 1
-    hour_ago = DateTime.add(DateTime.utc_now(), -1, :hour)
-    # series = from(f in fragment("select generate_series('today 00:00'::timestamp, (?)::timestamp, interval '10 minutes')", hour_ago), select: f.generate_series)
-    series = from(f in fragment("select generate_series('today 00:00'::timestamp, (?)::timestamp, interval '10 minutes') grid_time", ^hour_ago),
-      left_lateral_join: from c in subquery(from(c in Check, where: c.inserted_at >= f.grid_time, where: c.inserted_at < f.grid_time, order_by: [desc: :id], limit: 1)),
-      on: true,
-      select: %{grid_time: f.grid_time, inserted_at: c.insered_at, duration: c.duration})
-# Select grid_time, inserted_at, duration from generate_series( 'today 00:00'::timestamp, 'today 18:00'::timestamp, interval '10 minutes') grid_timeLEFT JOIN LATERAL (                                                                                                                                                                                       select inserted_at, duration from checks where inserted_at >= grid_time and inserted_at < grid_time + interval '10 minutes' order by inserted_at limit 1) t on true;
-    Repo.all(
-      from(c in Check,
-        where: [monitor_id: ^monitor_id],
-        where: c.inserted_at > ^yesterday,
-        select: %{result: c.result, inserted_at: c.inserted_at}
-      )
+    # TODO: too short interval
+    hour_ago = DateTime.add(DateTime.utc_now(), -1, :minute)
+
+    series = from(
+      f in fragment(
+        "select generate_series('today 17:00'::timestamp, (?)::timestamp, interval '1 minutes') grid_time",
+        ^hour_ago
+      ),
+      as: :grid_time
     )
+    |> join(
+      :left_lateral,
+      [],
+      subquery(
+        Check
+        |> where([c], c.inserted_at >= parent_as(:grid_time).grid_time)
+        |> where([c], c.inserted_at < parent_as(:grid_time).grid_time + fragment("interval '10 minutes'"))
+        |> where([c], c.monitor_id == ^monitor_id)
+        |> order_by(desc: :id)
+        |> limit(1)
+      ),
+      on: true
+    )
+    |> select([f, a], %{grid_time: f.grid_time, inserted_at: a.inserted_at, result: a.result})
+    |> Repo.all()
+
+    %{result_series: Enum.map(series, & if(&1.result == :success, do: 1, else: 0)), time_series: Enum.map(series, & &1.grid_time)}
   end
 
   def list_checks_for_response_times(%Monitor{id: monitor_id}) do
-    # TODO: set 1
-    hour_ago = DateTime.add(DateTime.utc_now(), -1, :hour)
-    series = from(f in fragment("select generate_series('today 00:00'::timestamp, (?)::timestamp, interval '10 minutes')", ^hour_ago), select: f.generate_series)
-    subquery  = from(c in Check, where: c.inserted_at > s.time, where: c.inserted_at < s.time + fragment("interval '10 minutes'"), order_by: [desc: :id], limit: 1)
-
-
-    Repo.all(
-      from(s in series, as: :series,
-        left_join: subquery,
-        on: true,
-        # where: [monitor_id: ^monitor_id],
-        # where: c.inserted_at > ^yesterday,
-        select: %{duration: c.duration, inserted_at: fragment("DATE_PART('EPOCH', ?)", c.inserted_at)}
-      )
+    hour_ago = DateTime.add(DateTime.utc_now(), -1, :minute)
+    #
+    series = from(
+      f in fragment(
+        "select generate_series('today 00:00'::timestamp, (?)::timestamp, interval '10 minutes') grid_time",
+        ^hour_ago
+      ),
+      as: :grid_time
     )
+    |> join(
+      :left_lateral,
+      [],
+      subquery(
+        Check
+        |> where([c], c.inserted_at >= parent_as(:grid_time).grid_time)
+        |> where([c], c.inserted_at < parent_as(:grid_time).grid_time + fragment("interval '10 minutes'"))
+        |> where([c], c.monitor_id == ^monitor_id)
+        |> order_by(desc: :id)
+        |> limit(1)
+      ),
+      on: true
+    )
+    |> where([f, a], not is_nil(f.grid_time) and not is_nil(a.duration))
+    |> select([f, a], %{
+      grid_time: fragment("to_char(?, 'YYYY-MM-DD HH24:MI:SS')", f.grid_time),
+      inserted_at: a.inserted_at,
+      duration: a.duration
+    })
+    |> Repo.all()
+
+    %{duration_series: Enum.map(series, & &1.duration), time_series: Enum.map(series, & &1.grid_time)}
   end
 
   def last_five_checks(%Monitor{id: monitor_id}) do
