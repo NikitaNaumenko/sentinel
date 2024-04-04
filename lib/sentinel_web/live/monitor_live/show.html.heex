@@ -37,41 +37,51 @@
     <div class="bg-card text-card-foreground margin-auto rounded-xl border p-6 shadow">
       <.simple_form for={@form} id="monitor-form" phx-validate="validate" phx-submit="save">
         <div class="border-b pb-4">
-        <.input field={@form[:name]} label={dgettext("monitors", "Name")} />
-        <.input field={@form[:url]} label={dgettext("monitors", "URL")} />
-      </div>
-        <div class="flex items-center justify-between pb-4 border-b">
-          <div>
-            <div class=""><%= dgettext("monitors", "Check interval") %></div>
-            <div class=""><%= dgettext("monitors", "How often should we run your check?") %></div>
-          </div>
+          <.input field={@form[:name]} label={dgettext("monitors", "Name")} />
+          <.input field={@form[:url]} label={dgettext("monitors", "URL")} />
+        </div>
+        <div class="flex w-full items-center justify-between space-x-4">
+          <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <span><%= dgettext("monitors", "Check interval") %></span>
+            <span class="text-muted-foreground text-sm font-normal leading-snug">
+              <%= dgettext("monitors", "How often should we run your check?") %>
+            </span>
+          </label>
           <div class="relative">
             <.input field={@form[:interval]} type="select" options={@intervals} />
           </div>
         </div>
-        <div class="flex items-center justify-between pb-4 border-b">
-          <div>
-            <div class=""><%= dgettext("monitors", "HTTP method") %></div>
-            <div class=""><%= dgettext("monitors", "HTTP method used to make the request") %></div>
-          </div>
+        <div class="flex w-full items-center justify-between space-x-4">
+          <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <span><%= dgettext("monitors", "HTTP method") %></span>
+
+            <span class="text-muted-foreground text-sm font-normal leading-snug">
+              <%= dgettext("monitors", "HTTP method used to make the request") %>
+            </span>
+          </label>
           <div class="relative">
             <.input field={@form[:http_method]} type="select" options={@http_methods} />
           </div>
         </div>
-        <div class="flex items-center justify-between pb-4 border-b">
-          <div>
-            <div class=""><%= dgettext("monitors", "Expected Status Code") %></div>
-            <div class=""><%= dgettext("monitors", "What status code must your HTTP request return?") %></div>
-          </div>
+        <div class="flex w-full items-center justify-between space-x-4">
+          <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <span><%= dgettext("monitors", "Expected Status Code") %></span>
+
+            <span class="text-muted-foreground text-sm font-normal leading-snug">
+              <%= dgettext("monitors", "What status code must your HTTP request return?") %>
+            </span>
+          </label>
           <div class="relative">
             <.input field={@form[:expected_status_code]} type="select" options={@status_codes} />
           </div>
         </div>
-       <div class="flex items-center justify-between pb-4 border-b">
-          <div>
-            <div class=""><%= dgettext("monitors", "Request timeout") %></div>
-            <div class=""><%= dgettext("monitors", "After how many seconds is the request considered timeout?") %></div>
-          </div>
+        <div class="flex w-full items-center justify-between space-x-4">
+          <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <span><%= dgettext("monitors", "Request timeout") %></span>
+            <span class="text-muted-foreground text-sm font-normal leading-snug">
+              <%= dgettext("monitors", "After how many seconds is the request considered timeout?") %>
+            </span>
+          </label>
           <div class="relative">
             <.input field={@form[:request_timeout]} type="select" options={@request_timeouts} />
           </div>
