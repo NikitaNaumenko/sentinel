@@ -4,8 +4,9 @@ defmodule Sentinel.Monitors.NotificationRule do
 
   import Ecto.Changeset
 
-  alias Sentinel.Monitors.Monitor
+  alias Sentinel.Integrations.TelegramBot
   alias Sentinel.Integrations.Webhook
+  alias Sentinel.Monitors.Monitor
 
   schema "monitor_notification_rules" do
     field :timeout, Ecto.Enum,
@@ -21,6 +22,7 @@ defmodule Sentinel.Monitors.NotificationRule do
     field :via_email, :boolean, default: false
     field :via_telegram, :boolean, default: false
 
+    belongs_to :telegram, TelegramBot
     belongs_to :monitor, Monitor
     belongs_to :webhook, Webhook
     timestamps(type: :utc_datetime_usec)

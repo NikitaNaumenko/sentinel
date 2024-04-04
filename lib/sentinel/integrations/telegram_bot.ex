@@ -1,16 +1,16 @@
-defmodule Sentinel.Events.Acceptors.Telegram do
+defmodule Sentinel.Integrations.TelegramBot do
   @moduledoc false
   use Ecto.Schema
 
   import Ecto.Changeset
 
-  schema "event_acceptor_telegram" do
+  schema "telegram_bots" do
     timestamps(type: :utc_datetime_usec)
   end
 
   @doc false
-  def changeset(telegram, attrs) do
-    telegram
+  def changeset(telegram_bot, attrs) do
+    telegram_bot
     |> cast(attrs, [])
     |> validate_required([])
   end

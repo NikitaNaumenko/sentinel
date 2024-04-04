@@ -67,6 +67,7 @@ defmodule Sentinel.MixProject do
       {:cva, "~> 0.2"},
       {:ecto_commons, "~> 0.3.4"},
       {:finitomata, "~> 0.1"},
+      {:telegram, github: "visciang/telegram", tag: "1.2.1"},
       {:styler, "~> 0.11", only: [:dev, :test], runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:tailwind_formatter, "~> 0.4.0", only: [:dev, :test], runtime: false},

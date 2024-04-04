@@ -76,13 +76,34 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
             >
               <input
                 type="checkbox"
-                id="email"
+                id="webhook"
                 name="via_webhook"
                 value="true"
                 checked={@notification_rule.via_webhook}
                 class="border-primary text-primary rounded focus:ring-0"
               />
               <%= dgettext("monitors", "Webhook") %>
+            </label>
+          </div>
+          <div class="mr-5">
+            <label
+              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              phx-target={@myself}
+              phx-click={
+                JS.push("toggle-via",
+                  value: %{id: @notification_rule.id, attr: "via_telegram", value: @notification_rule.via_telegram}
+                )
+              }
+            >
+              <input
+                type="checkbox"
+                id="telegram"
+                name="via_telegram"
+                value="true"
+                checked={@notification_rule.via_telegram}
+                class="border-primary text-primary rounded focus:ring-0"
+              />
+              <%= dgettext("monitors", "Telegram") %>
             </label>
           </div>
         </div>
