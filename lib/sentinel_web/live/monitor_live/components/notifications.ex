@@ -64,7 +64,7 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
               <%= dgettext("monitors", "Email") %>
             </label>
           </div>
-          <div class="mr-5">
+          <%!-- <div class="mr-5">
             <label
               class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               phx-target={@myself}
@@ -84,14 +84,18 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
               />
               <%= dgettext("monitors", "Webhook") %>
             </label>
-          </div>
-          <div class="mr-5">
+          </div> --%>
+          <%!-- <div class="mr-5">
             <label
               class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               phx-target={@myself}
               phx-click={
                 JS.push("toggle-via",
-                  value: %{id: @notification_rule.id, attr: "via_telegram", value: @notification_rule.via_telegram}
+                  value: %{
+                    id: @notification_rule.id,
+                    attr: "via_telegram",
+                    value: @notification_rule.via_telegram
+                  }
                 )
               }
             >
@@ -105,9 +109,56 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
               />
               <%= dgettext("monitors", "Telegram") %>
             </label>
+          </div> --%>
+        </div>
+        <div class="mt-5 flex w-full items-center justify-between space-x-4">
+          <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <span>
+              <%= dgettext("monitors", "Webhook") %>
+            </span>
+            <span class="text-muted-foreground text-sm font-normal leading-snug">
+              <%= if Enum.any?(@webhooks) do %>
+                <%= dgettext("monitors", "Choose webhook from created earlier") %>
+              <% else %>
+                <%= dgettext("monitors", "To choose webhook you have to create it before") %>
+              <% end %>
+            </span>
+          </label>
+          <div>
+            <.form :if={Enum.any?(@webhooks)} for={@form} phx-submit="update-webhook">
+              <.input
+                type="select"
+                options={collection_for_select(@webhooks, {:id, :name})}
+                field={@form[:webhook_id]}
+              />
+            </.form>
           </div>
         </div>
-        <div :if={@notification_rule.via_webhook} class="mt-5">
+        <div class="mt-5 flex w-full items-center justify-between space-x-4">
+          <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <span>
+              <%= dgettext("monitors", "Telegram") %>
+            </span>
+            <span class="text-muted-foreground text-sm font-normal leading-snug">
+              <%= if Enum.any?(@telegram_bots) do %>
+                <%= dgettext("monitors", "Choose webhook from created earlier") %>
+              <% else %>
+                <%= dgettext("monitors", "To choose telegram bot you have to create it before") %>
+              <% end %>
+            </span>
+          </label>
+          <div>
+            <.form :if={Enum.any?(@telegram_bots)} for={@form} phx-change="update-telegram">
+              <.input
+                type="select"
+                options={collection_for_select(@telegram_bots, {:id, :name})}
+                field={@form[:telegram_bot_id]}
+              />
+            </.form>
+          </div>
+        </div>
+
+        <%!-- <div :if={@notification_rule.via_webhook} class="mt-5">
           <.simple_form
             for={@form}
             phx-target={@myself}
@@ -121,7 +172,7 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
               <.button phx-disable-with="Saving..."><%= dgettext("forms", "Save") %></.button>
             </:actions>
           </.simple_form>
-        </div>
+        </div> --%>
         <div class="mt-5 flex w-full items-center justify-between space-x-4">
           <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
             <span>

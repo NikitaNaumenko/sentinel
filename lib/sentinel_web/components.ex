@@ -4,6 +4,7 @@ defmodule SentinelWeb.Components do
     quote do
       import SentinelWeb.Components.Badge
       import SentinelWeb.Components.Button
+      import SentinelWeb.Components.Card
       import SentinelWeb.Components.Icon
       import SentinelWeb.Components.Input
       import SentinelWeb.Components.Label

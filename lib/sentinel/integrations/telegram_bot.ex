@@ -5,6 +5,9 @@ defmodule Sentinel.Integrations.TelegramBot do
   import Ecto.Changeset
 
   schema "telegram_bots" do
+    field :name, :string
+    field :token, :string
+    belongs_to :account, Sentinel.Account
     timestamps(type: :utc_datetime_usec)
   end
 

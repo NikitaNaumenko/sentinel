@@ -6,6 +6,9 @@ defmodule Sentinel.Repo.Migrations.CreateTelegramBots do
       add :token, :string
       add :name, :string
 
+      add :account_id,
+          references(:accounts, on_delete: :nothing, type: :integer)
+
       timestamps(type: :utc_datetime_usec)
     end
 

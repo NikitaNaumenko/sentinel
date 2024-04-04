@@ -98,6 +98,7 @@ defmodule SentinelWeb do
       # Core UI components and translation
       import SentinelWeb.CoreComponents
       import SentinelWeb.EnumHelpers
+      import SentinelWeb.FormHelpers
       import SentinelWeb.Gettext
       import SentinelWeb.HTMLHelpers
       import SentinelWeb.StatusCodes

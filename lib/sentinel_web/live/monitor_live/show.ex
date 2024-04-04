@@ -5,12 +5,21 @@ defmodule SentinelWeb.MonitorLive.Show do
   import SentinelWeb.MonitorLive.Components.Overview, only: [overview: 1]
   import SentinelWeb.MonitorLive.MonitorComponent, only: [indicator: 1]
 
+  alias Sentinel.Integrations
   alias Sentinel.Monitors
   alias Sentinel.Monitors.Monitor
   alias Sentinel.Repo
 
   @impl true
   def mount(_params, _session, socket) do
+    webhooks = Integrations.list_webhooks(socket.assigns.current_user.account)
+    telegram_bots = Integrations.list_telegram_bots(socket.assigns.current_user.account)
+
+    socket =
+      socket
+      |> assign(:webhooks, webhooks)
+      |> assign(:telegram_bots, telegram_bots)
+
     {:ok, socket}
   end
 

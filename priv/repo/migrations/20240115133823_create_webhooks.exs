@@ -3,6 +3,7 @@ defmodule Sentinel.Repo.Migrations.CreateWebhooks do
 
   def change do
     create table(:webhooks) do
+      add :name, :string
       add :endpoint, :string
       add :account_id, references(:accounts), null: false
 

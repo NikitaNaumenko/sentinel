@@ -94,5 +94,36 @@ module.exports = {
         ".phx-change-loading &",
       ]),
     ),
+    plugin(function ({ matchComponents, theme }) {
+      let icons = path.join(__dirname, "./vendor/simple_icons");
+      let values = {};
+
+      fs.readdirSync(icons).forEach((file) => {
+        let name = path.basename(file, ".svg");
+        values[name] = { name, fullPath: path.join(icons, file) };
+      });
+      matchComponents(
+        {
+          simple: ({ name, fullPath }) => {
+            let content = fs
+              .readFileSync(fullPath)
+              .toString()
+              .replace(/\r?\n|\r/g, "");
+            return {
+              [`--simple-${name}`]: `url('data:image/svg+xml;utf8,${content}')`,
+              "-webkit-mask": `var(--hero-${name})`,
+              mask: `var(--simple-${name})`,
+              "mask-repeat": "no-repeat",
+              "background-color": "currentColor",
+              "vertical-align": "middle",
+              display: "inline-block",
+              width: theme("spacing.5"),
+              height: theme("spacing.5"),
+            };
+          },
+        },
+        { values },
+      );
+    }),
   ],
 };

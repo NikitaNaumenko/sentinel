@@ -2,6 +2,7 @@ defmodule Sentinel.Integrations do
   @moduledoc false
   import Ecto.Query
 
+  alias Sentinel.Integrations.TelegramBot
   alias Sentinel.Integrations.Webhook
   alias Sentinel.Repo
 
@@ -29,5 +30,19 @@ defmodule Sentinel.Integrations do
     webhook
     |> Webhook.changeset(attrs)
     |> Repo.update()
+  end
+
+  def list_webhooks(account) do
+    Webhook
+    |> where([w], w.account_id == ^account.id)
+    |> order_by(asc: :id)
+    |> Repo.all()
+  end
+
+  def list_telegram_bots(account) do
+    TelegramBot
+    |> where([t], t.account_id == ^account.id)
+    |> order_by(asc: :id)
+    |> Repo.all()
   end
 end
