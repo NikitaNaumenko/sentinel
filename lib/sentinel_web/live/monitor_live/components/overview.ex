@@ -16,7 +16,6 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
             </div>
             <div class="p-6 pt-0">
               <div class="text-2xl font-bold"><%= @uptime %>%</div>
-              <%!-- <p class="text-muted-foreground text-xs">+20.1% from last month</p> --%>
             </div>
           </div>
           <div class="bg-card text-card-foreground rounded-xl border shadow">
@@ -25,7 +24,6 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
             </div>
             <div class="p-6 pt-0">
               <div class="text-2xl font-bold"><%= @uptime_period %></div>
-              <%!--<p class="text-muted-foreground text-xs">+180.1% from last month</p> --%>
             </div>
           </div>
           <div class="bg-card text-card-foreground rounded-xl border shadow">
@@ -34,7 +32,6 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
             </div>
             <div class="p-6 pt-0">
               <div class="text-2xl font-bold"><%= @avg_response_time %></div>
-              <%!--<p class="text-muted-foreground text-xs">+19% from last month</p> --%>
             </div>
           </div>
           <div class="bg-card text-card-foreground rounded-xl border shadow">
@@ -43,7 +40,6 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
             </div>
             <div class="p-6 pt-0">
               <div class="text-2xl font-bold"><%= @incidents %></div>
-              <%!--<p class="text-muted-foreground text-xs">+201 since last hour</p> --%>
             </div>
           </div>
         </div>
@@ -73,7 +69,6 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
             <div id="response-time-monitor-chart" phx-update="ignore"></div>
           </div>
         </div>
-        <%!-- TODO: Incidents will be here --%>
         <div class="bg-card text-card-foreground col-span-3 rounded-xl border shadow">
           <div class="flex flex-col space-y-1.5 p-6">
             <h3 class="font-semibold leading-none tracking-tight">Incidents</h3>
@@ -121,7 +116,7 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
       </div>
 
       <div class="min-w-[326px]">
-        <div class="">
+        <div>
           <div class="block rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
             <%= if @certificate do %>
               <h5 class="text-l font-bold tracking-tight text-gray-900 dark:text-white">

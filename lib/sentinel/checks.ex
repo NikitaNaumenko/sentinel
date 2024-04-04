@@ -198,62 +198,67 @@ defmodule Sentinel.Checks do
     # TODO: too short interval
     hour_ago = DateTime.add(DateTime.utc_now(), -1, :minute)
 
-    series = from(
-      f in fragment(
-        "select generate_series('today 17:00'::timestamp, (?)::timestamp, interval '1 minutes') grid_time",
-        ^hour_ago
-      ),
-      as: :grid_time
-    )
-    |> join(
-      :left_lateral,
-      [],
-      subquery(
-        Check
-        |> where([c], c.inserted_at >= parent_as(:grid_time).grid_time)
-        |> where([c], c.inserted_at < parent_as(:grid_time).grid_time + fragment("interval '10 minutes'"))
-        |> where([c], c.monitor_id == ^monitor_id)
-        |> order_by(desc: :id)
-        |> limit(1)
-      ),
-      on: true
-    )
-    |> select([f, a], %{grid_time: f.grid_time, inserted_at: a.inserted_at, result: a.result})
-    |> Repo.all()
+    series =
+      from(
+        f in fragment(
+          "select generate_series('today 17:00'::timestamp, (?)::timestamp, interval '1 minutes') grid_time",
+          ^hour_ago
+        ),
+        as: :grid_time
+      )
+      |> join(
+        :left_lateral,
+        [],
+        subquery(
+          Check
+          |> where([c], c.inserted_at >= parent_as(:grid_time).grid_time)
+          |> where([c], c.inserted_at < parent_as(:grid_time).grid_time + fragment("interval '10 minutes'"))
+          |> where([c], c.monitor_id == ^monitor_id)
+          |> order_by(desc: :id)
+          |> limit(1)
+        ),
+        on: true
+      )
+      |> select([f, a], %{grid_time: f.grid_time, inserted_at: a.inserted_at, result: a.result})
+      |> Repo.all()
 
-    %{result_series: Enum.map(series, & if(&1.result == :success, do: 1, else: 0)), time_series: Enum.map(series, & &1.grid_time)}
+    %{
+      result_series: Enum.map(series, &if(&1.result == :success, do: 1, else: 0)),
+      time_series: Enum.map(series, & &1.grid_time)
+    }
   end
 
   def list_checks_for_response_times(%Monitor{id: monitor_id}) do
     hour_ago = DateTime.add(DateTime.utc_now(), -1, :minute)
-    #
-    series = from(
-      f in fragment(
-        "select generate_series('today 00:00'::timestamp, (?)::timestamp, interval '10 minutes') grid_time",
-        ^hour_ago
-      ),
-      as: :grid_time
-    )
-    |> join(
-      :left_lateral,
-      [],
-      subquery(
-        Check
-        |> where([c], c.inserted_at >= parent_as(:grid_time).grid_time)
-        |> where([c], c.inserted_at < parent_as(:grid_time).grid_time + fragment("interval '10 minutes'"))
-        |> where([c], c.monitor_id == ^monitor_id)
-        |> order_by(desc: :id)
-        |> limit(1)
-      ),
-      on: true
-    )
-    |> where([f, a], not is_nil(f.grid_time) and not is_nil(a.duration))
-    |> select([f, a], %{
-      grid_time: fragment("to_char(?, 'YYYY-MM-DD HH24:MI:SS')", f.grid_time),
-      inserted_at: a.inserted_at,
-      duration: a.duration
-    })
-    |> Repo.all()
+
+    series =
+      from(
+        f in fragment(
+          "select generate_series('today 00:00'::timestamp, (?)::timestamp, interval '10 minutes') grid_time",
+          ^hour_ago
+        ),
+        as: :grid_time
+      )
+      |> join(
+        :left_lateral,
+        [],
+        subquery(
+          Check
+          |> where([c], c.inserted_at >= parent_as(:grid_time).grid_time)
+          |> where([c], c.inserted_at < parent_as(:grid_time).grid_time + fragment("interval '10 minutes'"))
+          |> where([c], c.monitor_id == ^monitor_id)
+          |> order_by(desc: :id)
+          |> limit(1)
+        ),
+        on: true
+      )
+      |> where([f, a], not is_nil(f.grid_time) and not is_nil(a.duration))
+      |> select([f, a], %{
+        grid_time: fragment("to_char(?, 'YYYY-MM-DD HH24:MI:SS')", f.grid_time),
+        inserted_at: a.inserted_at,
+        duration: a.duration
+      })
+      |> Repo.all()
 
     %{duration_series: Enum.map(series, & &1.duration), time_series: Enum.map(series, & &1.grid_time)}
   end
@@ -310,9 +315,4 @@ defmodule Sentinel.Checks do
   def get_incident(id) do
     Repo.get(Incident, id)
   end
-
-  # @spec topic(Product.t()) :: String.t()
-  # defp topic(monitor) do
-  #   "monitor-#{monitor.account_id}-#{monitor.id}"
-  # end
 end

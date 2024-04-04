@@ -11,7 +11,7 @@ defmodule Sentinel.Checks.Monitor do
 
   # In seconds
   @request_timeouts [1, 3, 5, 10, 15, 30, 60]
-  @intervals [15, 30, 60, 120]
+  @intervals [60, 120, 180, 300]
 
   schema "monitors" do
     field :name, :string

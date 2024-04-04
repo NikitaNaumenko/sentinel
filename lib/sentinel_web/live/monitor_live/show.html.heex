@@ -6,16 +6,16 @@
 </.header>
 
 <.tabs current_tab={@current_tab}>
-  <:tab id="overview" patch={~p"/monitors/#{@monitor}?#{%{tab: "overview"}}"}>
+  <:tab id="overview-tab" patch={~p"/monitors/#{@monitor}?#{%{tab: "overview"}}"}>
     <%= dgettext("monitors", "Overview") %>
   </:tab>
-  <:tab id="settings" patch={~p"/monitors/#{@monitor}?#{%{tab: "settings"}}"}>
+  <:tab id="settings-tab" patch={~p"/monitors/#{@monitor}?#{%{tab: "settings"}}"}>
     <%= dgettext("monitors", "Settings") %>
   </:tab>
-  <:tab id="notifications" patch={~p"/monitors/#{@monitor}?#{%{tab: "notifications"}}"}>
+  <:tab id="notifications-tab" patch={~p"/monitors/#{@monitor}?#{%{tab: "notifications"}}"}>
     <%= dgettext("monitors", "Notifications") %>
   </:tab>
-  <:tab id="danger" patch={~p"/monitors/#{@monitor}?#{%{tab: "danger"}}"}>
+  <:tab id="danger-tab" patch={~p"/monitors/#{@monitor}?#{%{tab: "danger"}}"}>
     <%= dgettext("monitors", "Danger Zone") %>
   </:tab>
   <:tab_content id="overview">
@@ -36,35 +36,50 @@
   <:tab_content id="settings">
     <div class="bg-card text-card-foreground margin-auto rounded-xl border p-6 shadow">
       <.simple_form for={@form} id="monitor-form" phx-validate="validate" phx-submit="save">
+        <div class="border-b pb-4">
         <.input field={@form[:name]} label={dgettext("monitors", "Name")} />
         <.input field={@form[:url]} label={dgettext("monitors", "URL")} />
-        <.input
-          field={@form[:http_method]}
-          label={dgettext("monitors", "HTTP Method")}
-          type="select"
-          options={@http_methods}
-        />
-        <.input
-          field={@form[:expected_status_code]}
-          label={dgettext("monitors", "Expected status code")}
-          type="select"
-          options={@status_codes}
-        />
-        <.input
-          field={@form[:interval]}
-          label={dgettext("monitors", "Interval")}
-          type="select"
-          options={@intervals}
-        />
-        <.input
-          field={@form[:request_timeout]}
-          label={dgettext("monitors", "Request timeout")}
-          type="select"
-          options={@request_timeouts}
-        />
+      </div>
+        <div class="flex items-center justify-between pb-4 border-b">
+          <div>
+            <div class=""><%= dgettext("monitors", "Check interval") %></div>
+            <div class=""><%= dgettext("monitors", "How often should we run your check?") %></div>
+          </div>
+          <div class="relative">
+            <.input field={@form[:interval]} type="select" options={@intervals} />
+          </div>
+        </div>
+        <div class="flex items-center justify-between pb-4 border-b">
+          <div>
+            <div class=""><%= dgettext("monitors", "HTTP method") %></div>
+            <div class=""><%= dgettext("monitors", "HTTP method used to make the request") %></div>
+          </div>
+          <div class="relative">
+            <.input field={@form[:http_method]} type="select" options={@http_methods} />
+          </div>
+        </div>
+        <div class="flex items-center justify-between pb-4 border-b">
+          <div>
+            <div class=""><%= dgettext("monitors", "Expected Status Code") %></div>
+            <div class=""><%= dgettext("monitors", "What status code must your HTTP request return?") %></div>
+          </div>
+          <div class="relative">
+            <.input field={@form[:expected_status_code]} type="select" options={@status_codes} />
+          </div>
+        </div>
+       <div class="flex items-center justify-between pb-4 border-b">
+          <div>
+            <div class=""><%= dgettext("monitors", "Request timeout") %></div>
+            <div class=""><%= dgettext("monitors", "After how many seconds is the request considered timeout?") %></div>
+          </div>
+          <div class="relative">
+            <.input field={@form[:request_timeout]} type="select" options={@request_timeouts} />
+          </div>
+        </div>
+
         <:actions>
           <div class="flex w-full justify-end">
-            <.button phx-disable-with="Saving..."><%= dgettext("forms", "Save") %></.button>
+            <.button phx-disable-with="Saving..."><%= dgettext("forms", "Save changes") %></.button>
           </div>
         </:actions>
       </.simple_form>

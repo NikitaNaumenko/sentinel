@@ -29,16 +29,15 @@ defmodule SentinelWeb.Components.Tabs do
         type="button"
         role="tab"
         aria-selected="true"
-        aria-controls="radix-:r10:-content-overview"
+        aria-controls="content-overview"
         data-state="active"
         id={tab[:id]}
         class={[
           "ring-offset-background inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium transition-all focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-          active_tab(tab[:id], @current_tab)
+          active_tab(tab_name(tab[:id]), @current_tab)
         ]}
         tabindex="0"
         data-orientation="horizontal"
-        data-radix-collection-item=""
         patch={tab[:patch]}
       >
         <%= render_slot(tab) %>
@@ -64,6 +63,7 @@ defmodule SentinelWeb.Components.Tabs do
     ""
   end
 
+  defp tab_name(tab), do: tab |> String.split("-") |> hd()
   def hidden_tab_content?(tab, tab), do: false
   def hidden_tab_content?(_tab, _current_tab), do: true
 end
