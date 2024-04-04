@@ -1,4 +1,4 @@
-defmodule Sentinel.Repo.Migrations.CreateChecks do
+defmodule Sentinel.Repo.Migrations.CreateMonitors do
   use Ecto.Migration
   import EctoEnumMigration
 

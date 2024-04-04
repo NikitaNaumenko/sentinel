@@ -2,8 +2,8 @@ defmodule SentinelWeb.MonitorLive.New do
   @moduledoc false
   use SentinelWeb, :live_view
 
-  alias Sentinel.Checks
-  alias Sentinel.Checks.Monitor
+  alias Sentinel.Monitors
+  alias Sentinel.Monitors.Monitor
 
   @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
@@ -64,7 +64,7 @@ defmodule SentinelWeb.MonitorLive.New do
   end
 
   def handle_event("save", %{"monitor" => monitor_attrs}, socket) do
-    case Checks.create_monitor(Map.put(monitor_attrs, "account_id", socket.assigns.current_user.account_id)) do
+    case Monitors.create_monitor(Map.put(monitor_attrs, "account_id", socket.assigns.current_user.account_id)) do
       {:ok, monitor} ->
         socket =
           socket

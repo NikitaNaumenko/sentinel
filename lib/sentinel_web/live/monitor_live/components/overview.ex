@@ -3,7 +3,7 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
 
   use SentinelWeb, :component
 
-  alias Sentinel.Checks.Incident
+  alias Sentinel.Monitors.Incident
 
   def overview(assigns) do
     ~H"""

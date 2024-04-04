@@ -1,12 +1,12 @@
-defmodule Sentinel.Checks.Monitor do
+defmodule Sentinel.Monitors.Monitor do
   @moduledoc false
   use Ecto.Schema
 
   import Ecto.Changeset
   import EctoCommons.URLValidator
 
-  alias Sentinel.Checks.Certificate
-  alias Sentinel.Checks.NotificationRule
+  alias Sentinel.Monitors.Certificate
+  alias Sentinel.Monitors.NotificationRule
   alias Sentinel.Validators.HTTPCodeValidator
 
   # In seconds
@@ -22,12 +22,12 @@ defmodule Sentinel.Checks.Monitor do
     field :expected_status_code, :integer
     field :state, Ecto.Enum, values: [:active, :disabled], default: :active
 
-    belongs_to :last_check, Sentinel.Checks.Check
-    belongs_to :last_incident, Sentinel.Checks.Incident
+    belongs_to :last_check, Sentinel.Monitors.Check
+    belongs_to :last_incident, Sentinel.Monitors.Incident
     belongs_to :account, Sentinel.Accounts.Account
     has_many :certificates, Certificate
-    has_many :incidents, Sentinel.Checks.Incident
-    has_many :checks, Sentinel.Checks.Check
+    has_many :incidents, Sentinel.Monitors.Incident
+    has_many :checks, Sentinel.Monitors.Check
     has_one :notification_rule, NotificationRule
 
     timestamps(type: :utc_datetime_usec)

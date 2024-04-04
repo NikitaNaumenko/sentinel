@@ -1,10 +1,10 @@
-defmodule Sentinel.Checks.NotificationRule do
+defmodule Sentinel.Monitors.NotificationRule do
   @moduledoc false
   use Ecto.Schema
 
   import Ecto.Changeset
 
-  alias Sentinel.Checks.Monitor
+  alias Sentinel.Monitors.Monitor
   alias Sentinel.Integrations.Webhook
 
   schema "monitor_notification_rules" do

@@ -1,4 +1,4 @@
-defmodule Sentinel.Checks.RequestTelemetry do
+defmodule Sentinel.Monitors.RequestTelemetry do
   @moduledoc false
 
   require Logger

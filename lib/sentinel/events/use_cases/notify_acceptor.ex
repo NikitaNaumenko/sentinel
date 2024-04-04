@@ -30,7 +30,7 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
 
   This example demonstrates how to invoke the `NotifyAcceptor` module to notify an acceptor about a `MonitorDown` event. The function returns `:ok` upon successful execution.
   """
-  alias Sentinel.Checks
+  alias Sentinel.Monitors
   alias Sentinel.Events
   alias Sentinel.Events.Acceptor
   alias Sentinel.Events.Event
@@ -45,7 +45,7 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
   end
 
   defp process_acceptor(%Acceptor{recipient_type: "email"} = acceptor, %Event{type: %MonitorDown{}} = event) do
-    monitor = Checks.get_monitor!(event.resource_id)
+    monitor = Monitors.get_monitor!(event.resource_id)
 
     SendEmail.call(%{
       acceptor: acceptor,
@@ -56,7 +56,7 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
   end
 
   defp process_acceptor(%Acceptor{recipient_type: "webhook"} = acceptor, %Event{type: %MonitorDown{}} = event) do
-    monitor = Checks.get_monitor!(event.resource_id)
+    monitor = Monitors.get_monitor!(event.resource_id)
 
     SendWebhook.call(%{
       acceptor: acceptor,

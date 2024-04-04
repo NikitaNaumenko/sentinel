@@ -11,7 +11,7 @@
 # and so on) as they will fail if something goes wrong.
 
 alias Sentinel.Accounts
-alias Sentinel.Checks
+alias Sentinel.Monitors
 alias Sentinel.StatusPages
 
 Sentinel.Repo.transaction(fn ->
@@ -24,7 +24,7 @@ Sentinel.Repo.transaction(fn ->
   })
 
   monitor =
-    Sentinel.Repo.insert!(%Checks.Monitor{
+    Sentinel.Repo.insert!(%Monitors.Monitor{
       name: "Monitor 1",
       url: "http://example.com",
       interval: 10,
@@ -34,11 +34,11 @@ Sentinel.Repo.transaction(fn ->
       account_id: account.id
     })
 
-  Sentinel.Repo.insert!(%Checks.NotificationRule{
+  Sentinel.Repo.insert!(%Monitors.NotificationRule{
     monitor_id: monitor.id
   })
 
-  # Sentinel.Repo.insert!(%Checks.Monitor{
+  # Sentinel.Repo.insert!(%Monitors.Monitor{
   #   name: "Monitor 2",
   #   url: "http://example.com",
   #   interval: 15,
@@ -48,7 +48,7 @@ Sentinel.Repo.transaction(fn ->
   #   account_id: account.id
   # })
   #
-  # Sentinel.Repo.insert!(%Checks.Monitor{
+  # Sentinel.Repo.insert!(%Monitors.Monitor{
   #   name: "Monitor 3",
   #   url: "http://example.com",
   #   interval: 20,

@@ -1,4 +1,4 @@
-defmodule Sentinel.Checks.Incident do
+defmodule Sentinel.Monitors.Incident do
   @moduledoc false
   use Ecto.Schema
 
@@ -11,9 +11,9 @@ defmodule Sentinel.Checks.Incident do
     field :status, Ecto.Enum, values: [:started, :resolved]
     field :http_code, :integer
     field :description, :string
-    belongs_to :monitor, Sentinel.Checks.Monitor
-    belongs_to :start_check, Sentinel.Checks.Check
-    belongs_to :end_check, Sentinel.Checks.Check
+    belongs_to :monitor, Sentinel.Monitors.Monitor
+    belongs_to :start_check, Sentinel.Monitors.Check
+    belongs_to :end_check, Sentinel.Monitors.Check
 
     timestamps(type: :utc_datetime_usec)
   end

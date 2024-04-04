@@ -1,11 +1,11 @@
-defmodule Sentinel.Checks.UseCases.CreateMonitorTest do
+defmodule Sentinel.Monitors.UseCases.CreateMonitorTest do
   use Sentinel.DataCase, async: true
 
   import Sentinel.AccountsFixtures
 
-  alias Sentinel.Checks.Monitor
-  alias Sentinel.Checks.MonitorWorker
-  alias Sentinel.Checks.UseCases.CreateMonitor
+  alias Sentinel.Monitors.Monitor
+  alias Sentinel.Monitors.MonitorWorker
+  alias Sentinel.Monitors.UseCases.CreateMonitor
 
   setup do
     account = account_fixture(%{name: "account"})

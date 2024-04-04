@@ -1,4 +1,4 @@
-defmodule Sentinel.Checks.UseCases.CreateMonitor do
+defmodule Sentinel.Monitors.UseCases.CreateMonitor do
   @moduledoc """
   This module defines the `CreateMonitor` use case for the Sentinel application.
 
@@ -9,7 +9,7 @@ defmodule Sentinel.Checks.UseCases.CreateMonitor do
 
   ## Usage
 
-      alias Sentinel.Checks.UseCases.CreateMonitor
+      alias Sentinel.Monitors.UseCases.CreateMonitor
 
       # Attributes for the new monitor
       monitor_attrs = %{
@@ -36,9 +36,9 @@ defmodule Sentinel.Checks.UseCases.CreateMonitor do
 
   """
 
-  alias Sentinel.Checks.Monitor
-  alias Sentinel.Checks.MonitorWorker
-  alias Sentinel.Checks.UseCases.CheckCertificate
+  alias Sentinel.Monitors.Monitor
+  alias Sentinel.Monitors.MonitorWorker
+  alias Sentinel.Monitors.UseCases.CheckCertificate
   alias Sentinel.Repo
 
   def call(monitor_attrs) do

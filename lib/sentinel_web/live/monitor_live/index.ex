@@ -2,19 +2,19 @@ defmodule SentinelWeb.MonitorLive.Index do
   @moduledoc false
   use SentinelWeb, :live_view
 
-  alias Sentinel.Checks
-  alias Sentinel.Checks.Monitor
+  alias Sentinel.Monitors
+  alias Sentinel.Monitors.Monitor
   alias SentinelWeb.MonitorLive.MonitorComponent
 
   @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
-    Checks.subscribe("monitors-#{socket.assigns.current_user.account_id}")
-    {:ok, stream(socket, :monitors, Checks.list_monitors())}
+    Monitors.subscribe("monitors-#{socket.assigns.current_user.account_id}")
+    {:ok, stream(socket, :monitors, Monitors.list_monitors())}
   end
 
   @impl Phoenix.LiveView
   def terminate(_reason, socket) do
-    Checks.unsubscribe("monitors-#{socket.assigns.current_user.account_id}")
+    Monitors.unsubscribe("monitors-#{socket.assigns.current_user.account_id}")
   end
 
   @impl true
@@ -25,7 +25,7 @@ defmodule SentinelWeb.MonitorLive.Index do
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit Monitor")
-    |> assign(:monitor, Checks.get_monitor!(id))
+    |> assign(:monitor, Monitors.get_monitor!(id))
   end
 
   defp apply_action(socket, :new, _params) do
@@ -51,8 +51,8 @@ defmodule SentinelWeb.MonitorLive.Index do
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
-    monitor = Checks.get_monitor!(id)
-    {:ok, _} = Checks.delete_monitor(monitor)
+    monitor = Monitors.get_monitor!(id)
+    {:ok, _} = Monitors.delete_monitor(monitor)
 
     {:noreply, stream_delete(socket, :monitors, monitor)}
   end

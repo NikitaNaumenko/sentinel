@@ -1,10 +1,10 @@
-defmodule Sentinel.Checks.Check do
+defmodule Sentinel.Monitors.Check do
   @moduledoc false
   use Ecto.Schema
 
   import Ecto.Changeset
 
-  alias Sentinel.Checks.Monitor
+  alias Sentinel.Monitors.Monitor
 
   schema "checks" do
     field :result, Ecto.Enum, values: [:undefined, :success, :failure]
@@ -32,7 +32,7 @@ defmodule Sentinel.Checks.Check do
   def to_payload(%__MODULE__{result: :failure} = check) do
     %{
       event_type: :monitor_down,
-      resource_type: to_string(Sentinel.Checks.Monitor),
+      resource_type: to_string(Sentinel.Monitors.Monitor),
       resource_id: check.monitor_id
     }
   end

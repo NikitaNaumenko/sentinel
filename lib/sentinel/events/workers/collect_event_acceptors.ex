@@ -5,7 +5,7 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
 
   use Oban.Worker, queue: :notifications
 
-  alias Sentinel.Checks
+  alias Sentinel.Monitors
   alias Sentinel.Events
   alias Sentinel.Events.Acceptor
   alias Sentinel.Events.Event
@@ -20,7 +20,7 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
   end
 
   defp process_event(%MonitorDown{}, event) do
-    %{account: account} = monitor = Checks.get_monitor!(event.resource_id)
+    %{account: account} = monitor = Monitors.get_monitor!(event.resource_id)
 
     account = Sentinel.Repo.preload(account, :users)
 

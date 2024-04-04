@@ -1,4 +1,4 @@
-defmodule Sentinel.Checks.UseCases.CheckCertificate do
+defmodule Sentinel.Monitors.UseCases.CheckCertificate do
   @moduledoc """
     Check ssl certificate and return map with info about expirations and issuer of certificate.
   """

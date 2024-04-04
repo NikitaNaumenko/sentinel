@@ -1,8 +1,8 @@
-defmodule Sentinel.Checks.UseCases.RunCheck do
+defmodule Sentinel.Monitors.UseCases.RunCheck do
   @moduledoc false
-  alias Sentinel.Checks.Check
-  alias Sentinel.Checks.Incident
-  alias Sentinel.Checks.Monitor
+  alias Sentinel.Monitors.Check
+  alias Sentinel.Monitors.Incident
+  alias Sentinel.Monitors.Monitor
   alias Sentinel.Events
   alias Sentinel.Repo
 

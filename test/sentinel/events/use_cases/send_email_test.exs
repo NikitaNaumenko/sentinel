@@ -2,7 +2,7 @@ defmodule Sentinel.Events.UseCases.SendEmailTest do
   use Sentinel.DataCase
 
   import Sentinel.AccountsFixtures
-  import Sentinel.ChecksFixtures
+  import Sentinel.MonitorsFixtures
   import Sentinel.EventsFixtures
   import Swoosh.TestAssertions
 

@@ -1,10 +1,10 @@
-defmodule Sentinel.Checks.Certificate do
+defmodule Sentinel.Monitors.Certificate do
   @moduledoc false
   use Ecto.Schema
 
   import Ecto.Changeset
 
-  alias Sentinel.Checks.Monitor
+  alias Sentinel.Monitors.Monitor
 
   schema "monitor_certificates" do
     field :issuer, :string

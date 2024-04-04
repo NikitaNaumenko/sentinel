@@ -16,7 +16,7 @@ defmodule Sentinel.Application do
       # Start the Finch HTTP client for sending emails
       {Finch, name: Sentinel.Finch},
       {Registry, keys: :unique, name: Sentinel.Monitors.Registry},
-      Sentinel.Checks.MonitorSupervisor,
+      Sentinel.Monitors.MonitorSupervisor,
       Finitomata.Supervisor,
 
       # Start a worker by calling: Sentinel.Worker.start_link(arg)
@@ -25,7 +25,7 @@ defmodule Sentinel.Application do
       SentinelWeb.Endpoint
     ]
 
-    Sentinel.Checks.RequestTelemetry.attach()
+    Sentinel.Monitors.RequestTelemetry.attach()
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Sentinel.Supervisor]

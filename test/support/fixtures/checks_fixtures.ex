@@ -1,10 +1,10 @@
-defmodule Sentinel.ChecksFixtures do
+defmodule Sentinel.MonitorsFixtures do
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `Sentinel.Checks` context.
+  entities via the `Sentinel.Monitors` context.
   """
 
-  alias Sentinel.Checks.Monitor
+  alias Sentinel.Monitors.Monitor
   alias Sentinel.Repo
 
   @doc """

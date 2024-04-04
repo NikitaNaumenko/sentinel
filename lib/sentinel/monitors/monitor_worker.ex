@@ -1,9 +1,9 @@
-defmodule Sentinel.Checks.MonitorWorker do
+defmodule Sentinel.Monitors.MonitorWorker do
   @moduledoc false
   use GenServer
 
-  alias Sentinel.Checks.MonitorSupervisor
-  alias Sentinel.Checks.UseCases.RunCheck
+  alias Sentinel.Monitors.MonitorSupervisor
+  alias Sentinel.Monitors.UseCases.RunCheck
 
   def start_link(monitor) do
     MonitorSupervisor.start_child(monitor)

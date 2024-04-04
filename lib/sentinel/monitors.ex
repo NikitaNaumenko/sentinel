@@ -1,18 +1,18 @@
-defmodule Sentinel.Checks do
+defmodule Sentinel.Monitors do
   @moduledoc """
-  The Checks context.
+  The Monitors context.
   """
 
   import Ecto.Query, warn: false
 
-  alias Sentinel.Checks.Certificate
-  alias Sentinel.Checks.Check
-  alias Sentinel.Checks.Incident
-  alias Sentinel.Checks.Monitor
-  alias Sentinel.Checks.MonitorWorker
-  alias Sentinel.Checks.NotificationRule
-  alias Sentinel.Checks.UseCases.CheckCertificate
-  alias Sentinel.Checks.UseCases.CreateMonitor
+  alias Sentinel.Monitors.Certificate
+  alias Sentinel.Monitors.Check
+  alias Sentinel.Monitors.Incident
+  alias Sentinel.Monitors.Monitor
+  alias Sentinel.Monitors.MonitorWorker
+  alias Sentinel.Monitors.NotificationRule
+  alias Sentinel.Monitors.UseCases.CheckCertificate
+  alias Sentinel.Monitors.UseCases.CreateMonitor
   alias Sentinel.Repo
 
   require Logger

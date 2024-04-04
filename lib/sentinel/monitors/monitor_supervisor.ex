@@ -1,9 +1,9 @@
-defmodule Sentinel.Checks.MonitorSupervisor do
+defmodule Sentinel.Monitors.MonitorSupervisor do
   @moduledoc false
   use DynamicSupervisor
 
-  alias Sentinel.Checks.MonitorWorker
-  alias Sentinel.Checks.Workers.StartApplicationWorker
+  alias Sentinel.Monitors.MonitorWorker
+  alias Sentinel.Monitors.Workers.StartApplicationWorker
 
   @impl DynamicSupervisor
   def init(_args) do

@@ -50,7 +50,7 @@ defmodule Sentinel.Accounts.UserToken do
   end
 
   @doc """
-  Checks if the token is valid and returns its underlying lookup query.
+  Monitors if the token is valid and returns its underlying lookup query.
 
   The query returns the user found by the token, if any.
 
@@ -98,7 +98,7 @@ defmodule Sentinel.Accounts.UserToken do
   end
 
   @doc """
-  Checks if the token is valid and returns its underlying lookup query.
+  Monitors if the token is valid and returns its underlying lookup query.
 
   The query returns the user found by the token, if any.
 
@@ -133,7 +133,7 @@ defmodule Sentinel.Accounts.UserToken do
   defp days_for_context("reset_password"), do: @reset_password_validity_in_days
 
   @doc """
-  Checks if the token is valid and returns its underlying lookup query.
+  Monitors if the token is valid and returns its underlying lookup query.
 
   The query returns the user found by the token, if any.
 

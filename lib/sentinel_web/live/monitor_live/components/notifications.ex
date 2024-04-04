@@ -2,9 +2,9 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
   @moduledoc false
   use SentinelWeb, :live_component
 
-  alias Sentinel.Checks
-  alias Sentinel.Checks.Monitor
-  alias Sentinel.Checks.NotificationRule
+  alias Sentinel.Monitors
+  alias Sentinel.Monitors.Monitor
+  alias Sentinel.Monitors.NotificationRule
 
   @impl Phoenix.LiveComponent
   def render(assigns) do
@@ -177,7 +177,7 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
 
   @impl Phoenix.LiveComponent
   def handle_event("toggle-via", %{"id" => id, "attr" => attr, "value" => value}, socket) do
-    case Checks.toggle_via(id, attr, value) do
+    case Monitors.toggle_via(id, attr, value) do
       {:ok, notification_rule} ->
         notification_rule = Sentinel.Repo.preload(notification_rule, :webhook)
         {:noreply, assign(socket, :notification_rule, notification_rule)}
@@ -199,7 +199,7 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
   def handle_event("update-webhook-url", %{"notification_rule" => params}, socket) do
     params = put_in(params, ["webhook", "account_id"], socket.assigns.account_id)
 
-    case Checks.update_notification_rule(socket.assigns.notification_rule, params) do
+    case Monitors.update_notification_rule(socket.assigns.notification_rule, params) do
       {:ok, notification_rule} ->
         notify_parent({:updated, notification_rule})
 
