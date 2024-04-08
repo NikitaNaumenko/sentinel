@@ -15,6 +15,7 @@ defmodule Sentinel.Integrations.Webhook do
         }
 
   schema "webhooks" do
+    field :name, :string
     field :endpoint, :string
     belongs_to :account, Account
 
@@ -24,8 +25,9 @@ defmodule Sentinel.Integrations.Webhook do
   @doc false
   def changeset(webhook, attrs \\ %{}) do
     webhook
-    |> cast(attrs, [:endpoint, :account_id])
-    |> validate_required([:endpoint, :account_id])
+    |> cast(attrs, [:name, :endpoint, :account_id])
+    |> validate_required([:endpoint, :account_id, :name])
+    |> validate_length(:name, min: 4)
     |> validate_url(:endpoint)
   end
 

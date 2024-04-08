@@ -12,9 +12,9 @@ defmodule Sentinel.Integrations.TelegramBot do
   end
 
   @doc false
-  def changeset(telegram_bot, attrs) do
+  def changeset(telegram_bot, attrs \\ %{}) do
     telegram_bot
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:name, :token, :account_id])
+    |> validate_required([:name, :token, :account_id])
   end
 end

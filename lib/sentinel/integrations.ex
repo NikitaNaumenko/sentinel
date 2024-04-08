@@ -45,4 +45,11 @@ defmodule Sentinel.Integrations do
     |> order_by(asc: :id)
     |> Repo.all()
   end
+
+  @spec create_telegram_bot(attrs :: map()) :: {:ok, TelegramBot.t()} | {:error, Ecto.Changeset.t()}
+  def create_telegram_bot(attrs) do
+    %TelegramBot{}
+    |> TelegramBot.changeset(attrs)
+    |> Repo.insert()
+  end
 end

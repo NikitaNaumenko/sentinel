@@ -3,11 +3,14 @@ defmodule SentinelWeb.IntegrationLive.Index do
   use SentinelWeb, :live_view
 
   alias Sentinel.Integrations
+  alias Sentinel.Integrations.TelegramBot
   alias Sentinel.Integrations.Webhook
 
   @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
-    {:ok, socket}
+    webhooks = Integrations.list_webhooks(socket.assigns.current_user.account)
+    telegram_bots = Integrations.list_webhooks(socket.assigns.current_user.account)
+    {:ok, assign(socket, :enabled, webhooks ++ telegram_bots)}
   end
 
   @impl true
@@ -32,6 +35,28 @@ defmodule SentinelWeb.IntegrationLive.Index do
   @impl Phoenix.LiveView
   def handle_info({SentinelWeb.IntegrationLive.WebhookFormComponent, {:saved, _webhook}}, socket) do
     {:noreply, socket}
+  end
+
+  def integration(%{integration: %Webhook{}} = assigns) do
+    ~H"""
+    <.link navigate={~p"/integrations/webhooks/#{@integration.id}/edit"}></.link>
+    """
+  end
+
+  def integration(%{integration: %TelegramBot{}} = assigns) do
+    ~H"""
+    <.card variant="horizontal">
+      <.icon name="icon-webhook" class="inline-block text-lg" />
+      <div>
+        <span>
+          <%= @integration.name %>
+        </span>
+        <p class="text-primary mb-3 font-normal">
+          Telegram bot
+        </p>
+      </div>
+    </.card>
+    """
   end
 
   # @impl true

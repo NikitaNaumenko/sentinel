@@ -1,7 +1,8 @@
-<div class="w-2xl mb-10 grid grid-cols-2 space-x-3 border-b p-10">
-  Enabled
+Enabled <br />
+<div class="w-2xl mb-10 grid grid-cols-2 gap-3 border-b p-10 lg:grid-cols-4">
+  <.integration :for={integration <- @enabled} integration={integration} />
 </div>
-<div class="w-2xl grid grid-cols-2 space-x-3">
+<div class="w-2xl grid grid-cols-1 gap-3 lg:grid-cols-2">
   <.card>
     <.card_header>
       <div>
@@ -15,21 +16,12 @@
       </p>
     </.card_content>
     <.card_footer class="justify-end">
-      <%= if @webhook do %>
-        <.button_link
-          class="bg-brand inline-flex items-center rounded-lg px-3 py-2 text-center text-sm font-medium text-white hover:bg-brand-emphasis focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 justify-self-end"
-          patch={~p"/integrations/webhooks/#{@webhook}/edit"}
-        >
-          Edit
-        </.button_link>
-      <% else %>
-        <.button_link
-          patch={~p"/integrations/webhooks/new"}
-          class="bg-brand inline-flex items-center rounded-lg px-3 py-2 text-center text-sm font-medium text-white hover:bg-brand-emphasis focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 justify-self-end"
-        >
-          Connect
-        </.button_link>
-      <% end %>
+      <.button_link
+        navigate={~p"/integrations/webhooks/new"}
+        class="bg-brand inline-flex items-center rounded-lg px-3 py-2 text-center text-sm font-medium text-white hover:bg-brand-emphasis focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 justify-self-end"
+      >
+        Connect
+      </.button_link>
     </.card_footer>
   </.card>
 
@@ -46,18 +38,9 @@
       </p>
     </.card_content>
     <.card_footer class="justify-end">
-      <%= if @webhook do %>
-        <.button_link
-          class="bg-primary inline-flex items-center rounded-lg px-3 py-2 text-center text-sm font-medium text-white hover:bg-brand-emphasis focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 justify-self-end"
-          patch={~p"/integrations/webhooks/#{@webhook}/edit"}
-        >
-          Edit
-        </.button_link>
-      <% else %>
-        <.button_link patch={~p"/integrations/webhooks/new"}>
-          Connect
-        </.button_link>
-      <% end %>
+      <.button_link navigate={~p"/integrations/telegram_bots/new"}>
+        Connect
+      </.button_link>
     </.card_footer>
   </.card>
 </div>
