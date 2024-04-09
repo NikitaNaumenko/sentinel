@@ -1,7 +1,7 @@
 defmodule Sentinel.Events.UseCases.SendTelegram do
   @moduledoc false
-  alias Sentinel.Events.Acceptors.Email
-  alias Sentinel.Events.Fsm.EmailFsm
+  alias Sentinel.Events.Acceptors.TelegramBot
+  alias Sentinel.Events.Fsm.TelegramBotFsm
   alias Sentinel.Repo
 
   require Logger
