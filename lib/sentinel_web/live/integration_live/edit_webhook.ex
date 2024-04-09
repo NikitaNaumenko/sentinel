@@ -1,16 +1,19 @@
-defmodule SentinelWeb.IntegrationLive.NewTelegramBot do
+defmodule SentinelWeb.IntegrationLive.EditWebhook do
   @moduledoc false
 
   use SentinelWeb, :live_view
 
   alias Sentinel.Integrations
-  alias Sentinel.Integrations.TelegramBot
+  alias Sentinel.Integrations.Webhook
 
-  def mount(_params, _session, socket) do
-    changeset = TelegramBot.changeset(%TelegramBot{})
+  def mount(%{"id" => id}, _session, socket) do
+    webhook = Integration.get_webhook!(id)
+    changeset = Webhook.changeset(webhook)
 
     socket =
-      assign_form(socket, changeset)
+      socket
+      |> assign(:webhook, webhook)
+      |> assign_form(changeset)
 
     {:ok, socket}
   end
@@ -20,13 +23,13 @@ defmodule SentinelWeb.IntegrationLive.NewTelegramBot do
     <div>
       <div class="flex items-center border-b p-5">
         <div class="flex items-center justify-center rounded-md border p-3">
-          <img src={~p"/images/telegram.svg"} class="h-6 md:h-8" alt="Telegram" />
+          <img src={~p"/images/webhook.svg"} class="h-4 md:h-6" alt="webhook" />
         </div>
         <div class="ml-1">
-          <%= dgettext("integrations", "Telegram Bot") %>
+          <%= dgettext("integrations", "Webhook") %>
         </div>
       </div>
-      <.form for={@form} id="telegram-bot-form" phx-change="validate" phx-submit="save">
+      <.form for={@form} id="webhook-form" phx-change="validate" phx-submit="save">
         <div class="flex items-center justify-between p-4">
           <div class="text-md mb-2 block max-w-xs">
             <%= dgettext("integrations", "Name") %>
@@ -37,16 +40,16 @@ defmodule SentinelWeb.IntegrationLive.NewTelegramBot do
         </div>
         <div class="flex items-center justify-between p-4">
           <div class="text-md mb-2 block max-w-xs">
-            <%= dgettext("integrations", "Telegram bot Token") %>
+            <%= dgettext("integrations", "Endpoint") %>
             <div class="text-sm text-gray-400">
               <%= dgettext(
                 "integrations",
-                "Use telegram bots to notify external systems when something happens in sentinel."
+                "Use webhooks to notify external systems when something happens in sentinel."
               ) %>
             </div>
           </div>
           <div class="min-w-[320px]">
-            <.input field={@form[:token]} phx-debounce="200" />
+            <.input field={@form[:endpoint]} phx-debounce="200" />
           </div>
         </div>
 
@@ -60,23 +63,21 @@ defmodule SentinelWeb.IntegrationLive.NewTelegramBot do
   end
 
   @impl Phoenix.LiveComponent
-  def handle_event("validate", %{"telegram_bot" => params}, socket) do
+  def handle_event("validate", %{"webhook" => webhook_params}, socket) do
     changeset =
-      %TelegramBot{}
-      |> TelegramBot.changeset(Map.put(params, "account_id", socket.assigns.current_user.account_id))
+      socket.assigns.webhook
+      |> Webhook.changeset(webhook_params)
       |> Map.put(:action, :validate)
 
     {:noreply, assign_form(socket, changeset)}
   end
 
-  def handle_event("save", %{"telegram_bot" => params}, socket) do
-    case Integrations.create_telegram_bot(
-           Map.put(params, "account_id", socket.assigns.current_user.account_id)
-         ) do
-      {:ok, webhook} ->
+  def handle_event("save", %{"webhook" => webhook_params}, socket) do
+    case Integrations.update_webhook(webhook_params) do
+      {:ok, _webhook} ->
         {:noreply,
          socket
-         |> put_flash(:info, dgettext("integrations", "Telegram Bot created successfully"))
+         |> put_flash(:info, dgettext("webhook", "Webhook created successfully"))
          |> push_navigate(to: ~p"/integrations")}
 
       {:error, %Ecto.Changeset{} = changeset} ->

@@ -47,7 +47,13 @@ defimpl Finitomata.Persistency.Persistable, for: Sentinel.Events.Acceptors.Teleg
     |> Sentinel.Repo.update()
   end
 
-  def store(telegram_bot, %{from: _from, to: to, event: _event, event_payload: _event_payload, object: telegram_bot}) do
+  def store(telegram_bot, %{
+        from: _from,
+        to: to,
+        event: _event,
+        event_payload: _event_payload,
+        object: telegram_bot
+      }) do
     telegram_bot
     |> Ecto.Changeset.change(%{state: to})
     |> Sentinel.Repo.update()

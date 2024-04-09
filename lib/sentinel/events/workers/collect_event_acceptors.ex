@@ -5,12 +5,12 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
 
   use Oban.Worker, queue: :notifications
 
-  alias Sentinel.Monitors
   alias Sentinel.Events
   alias Sentinel.Events.Acceptor
   alias Sentinel.Events.Event
   alias Sentinel.Events.EventTypes.MonitorDown
   alias Sentinel.Events.Workers.NotifyAcceptor
+  alias Sentinel.Monitors
 
   @impl Oban.Worker
   def perform(%Oban.Job{args: %{"id" => id}}) do

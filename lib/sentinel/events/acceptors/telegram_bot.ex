@@ -1,10 +1,10 @@
 defmodule Sentinel.Events.Acceptors.TelegramBot do
+  @moduledoc false
   use Ecto.Schema
+
   import Ecto.Changeset
 
   schema "event_acceptors_telegram_bot" do
-
-
     timestamps(type: :utc_datetime_usec)
   end
 

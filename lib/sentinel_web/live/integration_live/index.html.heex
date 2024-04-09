@@ -1,46 +1,35 @@
 Enabled <br />
-<div class="w-2xl mb-10 grid grid-cols-2 gap-3 border-b p-10 lg:grid-cols-4">
+<div class="w-2xl mb-10 grid grid-cols-2 gap-3 border-b py-10 lg:grid-cols-4">
   <.integration :for={integration <- @enabled} integration={integration} />
 </div>
 <div class="w-2xl grid grid-cols-1 gap-3 lg:grid-cols-2">
-  <.card>
-    <.card_header>
-      <div>
-        <.icon name="icon-webhook" class="mr-2 inline-block h-6 w-6" />
+  <.link class="flex hover:bg-secondary p-6 border rounded-lg gap-3" navigate={~p"/integrations/webhooks/new"}>
+    <div class="flex items-center justify-center rounded-md border p-3">
+      <img src={~p"/images/webhook.svg"} class="h-6 md:h-8" alt="Webhook" />
+    </div>
+    <div class="flex flex-col">
+      <span>
         <%= dgettext("integrations", "Webhook") %>
-      </div>
-    </.card_header>
-    <.card_content>
-      <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+      </span>
+      <span>
         <%= dgettext("integrations", "Receive alert notifications via Webhooks.") %>
-      </p>
-    </.card_content>
-    <.card_footer class="justify-end">
-      <.button_link
-        navigate={~p"/integrations/webhooks/new"}
-        class="bg-brand inline-flex items-center rounded-lg px-3 py-2 text-center text-sm font-medium text-white hover:bg-brand-emphasis focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 justify-self-end"
-      >
-        Connect
-      </.button_link>
-    </.card_footer>
-  </.card>
-
-  <.card>
-    <.card_header>
-      <div>
-        <.icon name="simple-telegram" class="mr-2 inline-block h-6 w-6" />
-        <%= dgettext("integrations", "Telegram") %>
-      </div>
-    </.card_header>
-    <.card_content>
-      <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-        <%= dgettext("integrations", "Receive alert notifications via Telegram bot.") %>
-      </p>
-    </.card_content>
-    <.card_footer class="justify-end">
-      <.button_link navigate={~p"/integrations/telegram_bots/new"}>
-        Connect
-      </.button_link>
-    </.card_footer>
-  </.card>
+      </span>
+    </div>
+  </.link>
+  <.link
+    class="flex hover:bg-secondary p-6 border rounded-lg gap-3"
+    navigate={~p"/integrations/telegram_bots/new"}
+  >
+    <div class="flex items-center justify-center rounded-md border p-3">
+      <img src={~p"/images/telegram.svg"} class="h-6 md:h-8" alt="Telegram" />
+    </div>
+    <div class="flex flex-col">
+      <span>
+        <%= dgettext("integrations", "Telegram bots") %>
+      </span>
+      <span>
+        <%= dgettext("integrations", "Receive alert notifications via telegram.") %>
+      </span>
+    </div>
+  </.link>
 </div>

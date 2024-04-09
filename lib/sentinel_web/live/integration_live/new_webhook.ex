@@ -18,9 +18,13 @@ defmodule SentinelWeb.IntegrationLive.NewWebhook do
   def render(assigns) do
     ~H"""
     <div>
-      <div class="border-b p-5">
-        <span class="icon-webhook"></span>
-        <%= dgettext("integrations", "Webhook") %>
+      <div class="flex items-center border-b p-5">
+        <div class="flex items-center justify-center rounded-md border p-3">
+          <img src={~p"/images/webhook.svg"} class="h-4 md:h-6" alt="webhook" />
+        </div>
+        <div class="ml-1">
+          <%= dgettext("integrations", "Webhook") %>
+        </div>
       </div>
       <.form for={@form} id="webhook-form" phx-change="validate" phx-submit="save">
         <div class="flex items-center justify-between p-4">

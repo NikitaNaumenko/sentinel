@@ -30,13 +30,13 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
 
   This example demonstrates how to invoke the `NotifyAcceptor` module to notify an acceptor about a `MonitorDown` event. The function returns `:ok` upon successful execution.
   """
-  alias Sentinel.Monitors
   alias Sentinel.Events
   alias Sentinel.Events.Acceptor
   alias Sentinel.Events.Event
   alias Sentinel.Events.EventTypes.MonitorDown
   alias Sentinel.Events.UseCases.SendEmail
   alias Sentinel.Events.UseCases.SendWebhook
+  alias Sentinel.Monitors
   alias Sentinel.Repo
 
   def call(acceptor_id) do

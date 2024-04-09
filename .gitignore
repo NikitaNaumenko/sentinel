@@ -37,10 +37,5 @@ npm-debug.log
 /assets/node_modules/
 
 .DS_Store
-<<<<<<< HEAD
-
 .zed
-||||||| parent of 0a3b68c (add elixir-tools to gitignore)
-=======
 .elixir-tools/
->>>>>>> 0a3b68c (add elixir-tools to gitignore)

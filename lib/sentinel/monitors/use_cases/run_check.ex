@@ -1,9 +1,9 @@
 defmodule Sentinel.Monitors.UseCases.RunCheck do
   @moduledoc false
+  alias Sentinel.Events
   alias Sentinel.Monitors.Check
   alias Sentinel.Monitors.Incident
   alias Sentinel.Monitors.Monitor
-  alias Sentinel.Events
   alias Sentinel.Repo
 
   def call(monitor) do

@@ -3,9 +3,9 @@ defmodule Sentinel.Events.UseCases.SendWebhookTest do
   use ExVCR.Mock, adapter: ExVCR.Adapter.Finch
 
   import Sentinel.AccountsFixtures
-  import Sentinel.MonitorsFixtures
   import Sentinel.EventsFixtures
   import Sentinel.IntegrationsFixtures
+  import Sentinel.MonitorsFixtures
 
   alias Sentinel.Events.UseCases.SendWebhook
 
