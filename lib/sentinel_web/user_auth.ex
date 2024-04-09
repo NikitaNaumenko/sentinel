@@ -174,9 +174,16 @@ defmodule SentinelWeb.UserAuth do
   end
 
   defp mount_current_user(socket, session) do
-    Phoenix.Component.assign_new(socket, :current_user, fn ->
-      if user_token = session["user_token"] do
-        Accounts.get_user_by_session_token(user_token)
+    socket =
+      Phoenix.Component.assign_new(socket, :current_user, fn ->
+        if user_token = session["user_token"] do
+          Accounts.get_user_by_session_token(user_token)
+        end
+      end)
+
+    Phoenix.Component.assign_new(socket, :current_account, fn ->
+      if socket.assigns.current_user do
+        Accounts.get_account!(socket.assigns.current_user.account_id)
       end
     end)
   end

@@ -6,8 +6,9 @@ defmodule SentinelWeb.IntegrationLive.EditTelegramBot do
   alias Sentinel.Integrations
   alias Sentinel.Integrations.TelegramBot
 
+  @impl Phoenix.LiveView
   def mount(%{"id" => id}, _session, socket) do
-    telegram_bot = Integrations.get_telegram_bot!(id)
+    telegram_bot = Integrations.get_telegram_bot!(id, socket.assigns.current_account.id)
     changeset = TelegramBot.changeset(telegram_bot)
 
     socket =
@@ -18,6 +19,7 @@ defmodule SentinelWeb.IntegrationLive.EditTelegramBot do
     {:ok, socket}
   end
 
+  @impl Phoenix.LiveView
   def render(assigns) do
     ~H"""
     <div>
@@ -62,7 +64,7 @@ defmodule SentinelWeb.IntegrationLive.EditTelegramBot do
     """
   end
 
-  @impl Phoenix.LiveComponent
+  @impl Phoenix.LiveView
   def handle_event("validate", %{"telegram_bot" => params}, socket) do
     changeset =
       socket.assigns.telegram_bot
@@ -73,7 +75,7 @@ defmodule SentinelWeb.IntegrationLive.EditTelegramBot do
   end
 
   def handle_event("save", %{"telegram_bot" => params}, socket) do
-    case Integrations.update_telegram_bot(params) do
+    case Integrations.update_telegram_bot(socket.assigns.telegram_bot, params) do
       {:ok, _telegram_bot} ->
         {:noreply,
          socket

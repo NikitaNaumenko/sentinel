@@ -32,7 +32,7 @@ defmodule SentinelWeb.IntegrationLive.NewTelegramBot do
             <%= dgettext("integrations", "Name") %>
           </div>
           <div class="min-w-[320px]">
-            <.input field={@form[:name]} phx-debounce="200" />
+            <.input field={@form[:name]} phx-debounce="200" placeholder="Support" />
           </div>
         </div>
         <div class="flex items-center justify-between p-4">
@@ -46,7 +46,7 @@ defmodule SentinelWeb.IntegrationLive.NewTelegramBot do
             </div>
           </div>
           <div class="min-w-[320px]">
-            <.input field={@form[:token]} phx-debounce="200" />
+            <.input field={@form[:token]} phx-debounce="200" placeholder="7223159943:AaG18cIB7gsU7Z4erJQ" />
           </div>
         </div>
 

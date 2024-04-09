@@ -1,6 +1,11 @@
-Enabled <br />
+<div>
+  <%= dgettext("integrations", "Enabled") %>
+</div>
 <div class="w-2xl mb-10 grid grid-cols-2 gap-3 border-b py-10 lg:grid-cols-4">
   <.integration :for={integration <- @enabled} integration={integration} />
+</div>
+<div>
+  <%= dgettext("integrations", "Integrations") %>
 </div>
 <div class="w-2xl grid grid-cols-1 gap-3 lg:grid-cols-2">
   <.link class="flex hover:bg-secondary p-6 border rounded-lg gap-3" navigate={~p"/integrations/webhooks/new"}>

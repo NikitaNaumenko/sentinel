@@ -7,7 +7,7 @@ defmodule SentinelWeb.IntegrationLive.EditWebhook do
   alias Sentinel.Integrations.Webhook
 
   def mount(%{"id" => id}, _session, socket) do
-    webhook = Integration.get_webhook!(id)
+    webhook = Integrations.get_webhook!(id, socket.assigns.current_account.id)
     changeset = Webhook.changeset(webhook)
 
     socket =

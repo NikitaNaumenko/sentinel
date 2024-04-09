@@ -32,7 +32,7 @@ defmodule SentinelWeb.IntegrationLive.NewWebhook do
             <%= dgettext("integrations", "Name") %>
           </div>
           <div class="min-w-[320px]">
-            <.input field={@form[:name]} phx-debounce="200" />
+            <.input field={@form[:name]} phx-debounce="200" placeholder="Support" />
           </div>
         </div>
         <div class="flex items-center justify-between p-4">
@@ -46,7 +46,11 @@ defmodule SentinelWeb.IntegrationLive.NewWebhook do
             </div>
           </div>
           <div class="min-w-[320px]">
-            <.input field={@form[:endpoint]} phx-debounce="200" />
+            <.input
+              field={@form[:endpoint]}
+              phx-debounce="200"
+              placeholder="https://incident-happened.com/webhoooks"
+            />
           </div>
         </div>
 

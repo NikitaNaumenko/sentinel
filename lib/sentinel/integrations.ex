@@ -6,9 +6,9 @@ defmodule Sentinel.Integrations do
   alias Sentinel.Integrations.Webhook
   alias Sentinel.Repo
 
-  @spec get_webhook!(non_neg_integer()) :: Webhook.t()
-  def get_webhook!(id) do
-    Repo.get!(Webhook, id)
+  @spec get_webhook!(non_neg_integer(), non_neg_integer()) :: Webhook.t()
+  def get_webhook!(id, account_id) do
+    Repo.get_by!(Webhook, id: id, account_id: account_id)
   end
 
   @spec get_account_webhook(non_neg_integer()) :: Webhook.t() | nil
@@ -39,6 +39,10 @@ defmodule Sentinel.Integrations do
     |> Repo.all()
   end
 
+  def get_telegram_bot!(id, account_id) do
+    Repo.get_by!(TelegramBot, id: id, account_id: account_id)
+  end
+
   def list_telegram_bots(account) do
     TelegramBot
     |> where([t], t.account_id == ^account.id)
@@ -51,5 +55,11 @@ defmodule Sentinel.Integrations do
     %TelegramBot{}
     |> TelegramBot.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def update_telegram_bot(telegram_bot, attrs) do
+    telegram_bot
+    |> TelegramBot.changeset(attrs)
+    |> Repo.update()
   end
 end

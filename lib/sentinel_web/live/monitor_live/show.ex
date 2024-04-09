@@ -20,7 +20,7 @@ defmodule SentinelWeb.MonitorLive.Show do
       |> assign(:webhooks, webhooks)
       |> assign(:telegram_bots, telegram_bots)
 
-    {:ok, socket}
+    {:ok, socket, layout: {SentinelWeb.Layouts, "monitor.html"}}
   end
 
   @impl true
