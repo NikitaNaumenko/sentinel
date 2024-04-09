@@ -64,52 +64,6 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
               <%= dgettext("monitors", "Email") %>
             </label>
           </div>
-          <%!-- <div class="mr-5">
-            <label
-              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              phx-target={@myself}
-              phx-click={
-                JS.push("toggle-via",
-                  value: %{id: @notification_rule.id, attr: "via_webhook", value: @notification_rule.via_webhook}
-                )
-              }
-            >
-              <input
-                type="checkbox"
-                id="webhook"
-                name="via_webhook"
-                value="true"
-                checked={@notification_rule.via_webhook}
-                class="border-primary text-primary rounded focus:ring-0"
-              />
-              <%= dgettext("monitors", "Webhook") %>
-            </label>
-          </div> --%>
-          <%!-- <div class="mr-5">
-            <label
-              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              phx-target={@myself}
-              phx-click={
-                JS.push("toggle-via",
-                  value: %{
-                    id: @notification_rule.id,
-                    attr: "via_telegram",
-                    value: @notification_rule.via_telegram
-                  }
-                )
-              }
-            >
-              <input
-                type="checkbox"
-                id="telegram"
-                name="via_telegram"
-                value="true"
-                checked={@notification_rule.via_telegram}
-                class="border-primary text-primary rounded focus:ring-0"
-              />
-              <%= dgettext("monitors", "Telegram") %>
-            </label>
-          </div> --%>
         </div>
         <div class="mt-5 flex w-full items-center justify-between space-x-4">
           <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
@@ -128,8 +82,9 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
             <.form :if={Enum.any?(@webhooks)} for={@form} phx-submit="update-webhook">
               <.input
                 type="select"
-                options={collection_for_select(@webhooks, {:id, :name})}
+                options={collection_for_select(@webhooks, {:id, :name}, empty: {gettext("Not selected"), nil})}
                 field={@form[:webhook_id]}
+                class="min-w-[360px]"
               />
             </.form>
           </div>
@@ -151,7 +106,9 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
             <.form :if={Enum.any?(@telegram_bots)} for={@form} phx-change="update-telegram">
               <.input
                 type="select"
-                options={collection_for_select(@telegram_bots, {:id, :name})}
+                options={
+                  collection_for_select(@telegram_bots, {:id, :name}, empty: {gettext("Not selected"), nil})
+                }
                 field={@form[:telegram_bot_id]}
               />
             </.form>
