@@ -25,7 +25,10 @@ defmodule SentinelWeb.MonitorLive.Show do
 
   @impl true
   def handle_params(%{"id" => id} = params, _, socket) do
-    monitor = id |> Monitors.get_monitor!() |> Repo.preload([:last_check, notification_rule: :webhook])
+    monitor =
+      id
+      |> Monitors.get_monitor!()
+      |> Repo.preload([:last_check, notification_rule: [:webhook, :telegram_bot]])
 
     changeset = Monitor.changeset(monitor, %{})
 

@@ -22,7 +22,8 @@ defmodule Sentinel.Monitors.NotificationRule do
     field :via_email, :boolean, default: false
     field :via_telegram, :boolean, default: false
 
-    # belongs_to :telegram, TelegramBot
+    field :telegram_chat_id, :string
+    belongs_to :telegram_bot, TelegramBot
     belongs_to :monitor, Monitor
     belongs_to :webhook, Webhook
     timestamps(type: :utc_datetime_usec)
@@ -37,7 +38,10 @@ defmodule Sentinel.Monitors.NotificationRule do
       :via_webhook,
       :via_slack,
       :via_email,
-      :via_telegram
+      :via_telegram,
+      :telegram_chat_id,
+      :telegram_bot_id,
+      :webhook_id
     ])
     |> cast_assoc(:webhook, with: &Webhook.changeset/2)
   end

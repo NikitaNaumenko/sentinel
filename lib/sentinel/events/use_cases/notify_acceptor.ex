@@ -35,6 +35,7 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
   alias Sentinel.Events.Event
   alias Sentinel.Events.EventTypes.MonitorDown
   alias Sentinel.Events.UseCases.SendEmail
+  alias Sentinel.Events.UseCases.SendTelegram
   alias Sentinel.Events.UseCases.SendWebhook
   alias Sentinel.Monitors
   alias Sentinel.Repo
@@ -63,6 +64,21 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
       recipient: acceptor.recipient,
       event_type: :monitor_down,
       resource: monitor
+    })
+  end
+
+  defp process_acceptor(
+         %Acceptor{recipient_type: "telegram_bot"} = acceptor,
+         %Event{type: %MonitorDown{}} = event
+       ) do
+    monitor = event.resource_id |> Monitors.get_monitor!() |> Repo.preload(:notification_rule)
+
+    SendTelegram.call(%{
+      acceptor: acceptor,
+      recipient: acceptor.recipient,
+      event_type: :monitor_down,
+      resource: monitor,
+      chat_id: monitor.notification_rule.telegram_chat_id
     })
   end
 end

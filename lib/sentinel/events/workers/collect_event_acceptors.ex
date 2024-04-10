@@ -53,6 +53,20 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
         }
         |> Acceptor.create()
         |> Map.get(:id)
+
+      {:via_telegram, true} ->
+        rule = Sentinel.Repo.preload(monitor.notification_rule, :telegram_bot)
+
+        %{
+          recipient: %{
+            id: rule.telegram_bot.id,
+            type: to_string(rule.telegram.__struct__)
+          },
+          event_id: event.id,
+          recipient_type: "telegram_bot"
+        }
+        |> Acceptor.create()
+        |> Map.get(:id)
     end)
     |> Enum.each(fn
       ids when is_list(ids) ->

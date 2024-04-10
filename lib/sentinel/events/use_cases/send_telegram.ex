@@ -6,12 +6,18 @@ defmodule Sentinel.Events.UseCases.SendTelegram do
 
   require Logger
 
-  def call(%{acceptor: acceptor, recipient: user, resource: resource, event_type: event_type}) do
+  def call(%{
+        acceptor: acceptor,
+        recipient: telegram_bot,
+        resource: resource,
+        event_type: event_type,
+        chat_id: chat_id
+      }) do
     acceptor = Repo.preload(acceptor, [:event])
 
-    with {:ok, _pid} <- create_email_acceptor(acceptor, user),
+    with {:ok, _pid} <- create_telegram_acceptor(acceptor, telegram_bot),
          :ok <- transition(acceptor.id, :send, %{}),
-         {:ok, response} <- send_email(user, resource, event_type),
+         {:ok, response} <- send_message(user, resource, event_type),
          :ok <- transition(acceptor.id, :finish, %{}) do
       Logger.info(response)
       {:ok, :sent}
@@ -21,18 +27,18 @@ defmodule Sentinel.Events.UseCases.SendTelegram do
     end
   end
 
-  def create_email_acceptor(acceptor, user) do
+  def create_telegram_acceptor(acceptor, telegram_bot) do
     attrs = %{
       acceptor_id: acceptor.id,
-      user_id: user.id
+      telegram_bot_id: telegram_bot.id
     }
 
-    Finitomata.start_fsm(EmailFsm, acceptor.id, struct!(Email, attrs))
+    Finitomata.start_fsm(TelegramBotFsm, acceptor.id, struct!(TelegramBot, attrs))
   end
 
-  defp send_email(user, resource, event_type) do
+  defp send_message(telegram_bot, resource, event_type) do
     Sentinel.Events.Notifications.Email
-    |> apply(event_type, [build_args(event_type, resource, user)])
+    |> apply(event_type, [build_args(event_type, resource, telegram_bot)])
     |> Sentinel.Mailer.deliver()
   end
 

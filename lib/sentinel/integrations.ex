@@ -62,4 +62,22 @@ defmodule Sentinel.Integrations do
     |> TelegramBot.changeset(attrs)
     |> Repo.update()
   end
+
+  def parse_bot_my_chat_member_updates(updates) do
+    updates
+    |> Enum.filter(
+      &(Map.has_key?(&1, "my_chat_member") &&
+          get_in(&1, ["my_chat_member", "new_chat_member", "user", "is_bot"]))
+    )
+    |> dbg()
+    |> Enum.map(fn value ->
+      %{
+        chat: %{
+          id: get_in(value, ["my_chat_member", "chat", "id"]),
+          title: get_in(value, ["my_chat_member", "chat", "title"])
+        },
+        bot_info: %{bot_name: get_in(value, ["my_chat_member", "new_chat_member", "user", "username"])}
+      }
+    end)
+  end
 end

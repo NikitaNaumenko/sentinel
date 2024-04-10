@@ -2,6 +2,7 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
   @moduledoc false
   use SentinelWeb, :live_component
 
+  alias Sentinel.Integrations
   alias Sentinel.Monitors
   alias Sentinel.Monitors.Monitor
   alias Sentinel.Monitors.NotificationRule
@@ -79,7 +80,7 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
             </span>
           </label>
           <div>
-            <.form :if={Enum.any?(@webhooks)} for={@form} phx-submit="update-webhook">
+            <.form :if={Enum.any?(@webhooks)} for={@form} phx-change="update-webhook" phx-target={@myself}>
               <.input
                 type="select"
                 options={collection_for_select(@webhooks, {:id, :name}, empty: {gettext("Not selected"), nil})}
@@ -96,40 +97,37 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
             </span>
             <span class="text-muted-foreground text-sm font-normal leading-snug">
               <%= if Enum.any?(@telegram_bots) do %>
-                <%= dgettext("monitors", "Choose webhook from created earlier") %>
+                <%= dgettext("monitors", "Choose telegram bot from created earlier, invite bot and then run sync") %>
               <% else %>
                 <%= dgettext("monitors", "To choose telegram bot you have to create it before") %>
               <% end %>
             </span>
+            <div :if={@telegram_bot_info}>
+              <.bot_info :for={bot_info <- @telegram_bot_info} telegram_bot_info={bot_info} />
+            </div>
           </label>
           <div>
-            <.form :if={Enum.any?(@telegram_bots)} for={@form} phx-change="update-telegram">
-              <.input
-                type="select"
-                options={
-                  collection_for_select(@telegram_bots, {:id, :name}, empty: {gettext("Not selected"), nil})
-                }
-                field={@form[:telegram_bot_id]}
-              />
-            </.form>
+            <div :if={Enum.any?(@telegram_bots)}>
+              <.form for={@form} phx-change="update-telegram" phx-target={@myself} class="flex flex-col gap-2">
+                <.input
+                  type="select"
+                  options={
+                    collection_for_select(@telegram_bots, {:id, :name}, empty: {gettext("Not selected"), nil})
+                  }
+                  field={@form[:telegram_bot_id]}
+                />
+                <.input
+                  field={@form[:telegram_chat_id]}
+                  class="mt-2"
+                  placeholder={dgettext("monitors", "Chat id: -10102043")}
+                />
+              </.form>
+              <.button phx-click="sync-telegram" phx-target={@myself} class="mt-2">
+                <%= dgettext("monitors", "Fetch chat info") %>
+              </.button>
+            </div>
           </div>
         </div>
-
-        <%!-- <div :if={@notification_rule.via_webhook} class="mt-5">
-          <.simple_form
-            for={@form}
-            phx-target={@myself}
-            phx-submit="update-webhook-url"
-            phx-change="validate-webhook-url"
-          >
-            <%= inputs_for @form, :webhook, fn webhook -> %>
-              <.input field={webhook[:endpoint]} label={dgettext("notification_rule", "Webhook url")} />
-            <% end %>
-            <:actions>
-              <.button phx-disable-with="Saving..."><%= dgettext("forms", "Save") %></.button>
-            </:actions>
-          </.simple_form>
-        </div> --%>
         <div class="mt-5 flex w-full items-center justify-between space-x-4">
           <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
             <span>
@@ -198,7 +196,12 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
 
     socket =
       socket
-      |> assign(form: form, timeout_options: timeout_options, resend_interval_options: interval_options)
+      |> assign(
+        form: form,
+        timeout_options: timeout_options,
+        resend_interval_options: interval_options,
+        telegram_bot_info: nil
+      )
       |> assign(assigns)
 
     {:ok, socket}
@@ -216,25 +219,67 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
     end
   end
 
-  def handle_event("validate-webhook-url", %{"notification_rule" => params}, socket) do
-    changeset =
-      socket.assigns.notification_rule
-      |> NotificationRule.changeset(Map.put(params, "account_id", socket.assigns.account_id))
-      |> Map.put(:action, :validate)
-
-    {:noreply, assign(socket, :form, to_form(changeset))}
-  end
-
-  def handle_event("update-webhook-url", %{"notification_rule" => params}, socket) do
-    params = put_in(params, ["webhook", "account_id"], socket.assigns.account_id)
+  def handle_event("update-webhook", %{"notification_rule" => params}, socket) do
+    params =
+      if Map.get(params, "webhook_id") == nil do
+        Map.put(params, "via_webhook", false)
+      else
+        Map.put(params, "via_webhook", true)
+      end
 
     case Monitors.update_notification_rule(socket.assigns.notification_rule, params) do
       {:ok, notification_rule} ->
         notify_parent({:updated, notification_rule})
+        {:noreply, socket}
 
       {:error, changeset} ->
         {:noreply, assign(socket, :form, to_form(changeset))}
     end
+  end
+
+  def handle_event("update-telegram", %{"notification_rule" => params}, socket) do
+    params =
+      if Map.get(params, "telegram_bot_id") == nil do
+        Map.put(params, "via_telegram", false)
+      else
+        Map.put(params, "via_telegram", true)
+      end
+
+    case Monitors.update_notification_rule(socket.assigns.notification_rule, params) do
+      {:ok, notification_rule} ->
+        notify_parent({:updated, notification_rule})
+        {:noreply, socket}
+
+      {:error, changeset} ->
+        {:noreply, assign(socket, :form, to_form(changeset))}
+    end
+  end
+
+  def handle_event("sync-telegram", _params, socket) do
+    notification_rule = socket.assigns.notification_rule
+    monitor = socket.assigns.monitor
+    telegram_bot = Integrations.get_telegram_bot!(notification_rule.telegram_bot_id, monitor.account_id)
+
+    {:ok, updates} =
+      Telegram.Api.request(telegram_bot.token, "getUpdates", allowed_updates: ["my_chat_member"], offset: -1)
+
+    {:noreply, assign(socket, telegram_bot_info: Integrations.parse_bot_my_chat_member_updates(updates))}
+  end
+
+  def bot_info(assigns) do
+    ~H"""
+    <div class="text-muted-foreground mt-2 text-sm font-normal leading-snug">
+      <p>
+        <%= dgettext("monitors", "Chat id") %>: <%= @telegram_bot_info.chat.id %>
+      </p>
+      <p>
+        <%= dgettext("monitors", "Chat title") %>: <%= @telegram_bot_info.chat.title %>
+      </p>
+      <p>
+        <%= dgettext("monitors", "Bot name") %>: <%= @telegram_bot_info.bot_info.bot_name %>
+      </p>
+    </div>
+    """
   end
 
   defp active?(%Monitor{state: :active}), do: true
