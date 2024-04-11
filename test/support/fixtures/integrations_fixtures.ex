@@ -4,7 +4,7 @@ defmodule Sentinel.IntegrationsFixtures do
   alias Sentinel.Repo
 
   def webhook_fixture(attrs \\ %{}) do
-    attrs = Map.merge(%{endpoint: "http://example.com"}, attrs)
+    attrs = Map.merge(%{name: "Webhook", endpoint: "http://example.com"}, attrs)
 
     %Webhook{}
     |> Webhook.changeset(attrs)

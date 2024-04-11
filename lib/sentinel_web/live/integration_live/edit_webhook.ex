@@ -6,6 +6,7 @@ defmodule SentinelWeb.IntegrationLive.EditWebhook do
   alias Sentinel.Integrations
   alias Sentinel.Integrations.Webhook
 
+  @impl Phoenix.LiveView
   def mount(%{"id" => id}, _session, socket) do
     webhook = Integrations.get_webhook!(id, socket.assigns.current_account.id)
     changeset = Webhook.changeset(webhook)
@@ -18,6 +19,7 @@ defmodule SentinelWeb.IntegrationLive.EditWebhook do
     {:ok, socket}
   end
 
+  @impl Phoenix.LiveView
   def render(assigns) do
     ~H"""
     <div>
@@ -62,7 +64,7 @@ defmodule SentinelWeb.IntegrationLive.EditWebhook do
     """
   end
 
-  @impl Phoenix.LiveComponent
+  @impl Phoenix.LiveView
   def handle_event("validate", %{"webhook" => webhook_params}, socket) do
     changeset =
       socket.assigns.webhook
@@ -72,8 +74,9 @@ defmodule SentinelWeb.IntegrationLive.EditWebhook do
     {:noreply, assign_form(socket, changeset)}
   end
 
+  @impl Phoenix.LiveView
   def handle_event("save", %{"webhook" => webhook_params}, socket) do
-    case Integrations.update_webhook(webhook_params) do
+    case Integrations.update_webhook(socket.assigns.webhook, webhook_params) do
       {:ok, _webhook} ->
         {:noreply,
          socket

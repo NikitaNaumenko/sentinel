@@ -8,7 +8,6 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
   alias Sentinel.Events
   alias Sentinel.Events.Acceptor
   alias Sentinel.Events.Event
-  alias Sentinel.Events.EventTypes.MonitorDown
   alias Sentinel.Events.Workers.NotifyAcceptor
   alias Sentinel.Monitors
 
@@ -16,10 +15,10 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
   def perform(%Oban.Job{args: %{"id" => id}}) do
     %Event{type: event_type} = event = Events.get_event(id)
 
-    process_event(event)
+    process_event(event_type.type, event)
   end
 
-  defp process_event(event) do
+  defp process_event(event_type, event) when event_type in ["monitor_down", "monitor_up"] do
     %{account: account} = monitor = Monitors.get_monitor!(event.resource_id)
 
     account = Sentinel.Repo.preload(account, :users)

@@ -8,7 +8,6 @@ defmodule Sentinel.Monitors.UseCases.RunCheckTest do
   alias Sentinel.Monitors
   alias Sentinel.Monitors.Check
   alias Sentinel.Monitors.Incident
-  alias Sentinel.Monitors.Monitor
   alias Sentinel.Monitors.UseCases.RunCheck
 
   setup do
@@ -21,7 +20,7 @@ defmodule Sentinel.Monitors.UseCases.RunCheckTest do
   describe "when last check nil" do
     test "next check success", %{monitor: monitor} do
       use_cassette "check_success" do
-        {:ok, monitor} = RunCheck.call(monitor)
+        {:ok, monitor} = RunCheck.call(monitor.id)
         assert %Check{result: :success} = Monitors.get_check(monitor.last_check_id)
         assert is_nil(monitor.last_incident_id)
       end
@@ -29,7 +28,7 @@ defmodule Sentinel.Monitors.UseCases.RunCheckTest do
 
     test "next check failure create incident", %{monitor: monitor} do
       use_cassette "check_failure" do
-        {:ok, monitor} = RunCheck.call(monitor)
+        {:ok, monitor} = RunCheck.call(monitor.id)
         assert %Check{result: :failure} = Monitors.get_check(monitor.last_check_id)
         assert %Incident{status: :started} = Monitors.get_incident(monitor.last_incident_id)
       end
@@ -39,26 +38,22 @@ defmodule Sentinel.Monitors.UseCases.RunCheckTest do
   describe "when last check success" do
     setup %{monitor: monitor} do
       use_cassette "check_success" do
-        {:ok, monitor} = RunCheck.call(monitor)
+        {:ok, monitor} = RunCheck.call(monitor.id)
         [monitor_id: monitor.id]
       end
     end
 
     test "next check success", %{monitor_id: monitor_id} do
-      monitor = Monitors.get_monitor!(monitor_id)
-
       use_cassette "check_success" do
-        {:ok, monitor} = RunCheck.call(monitor)
+        {:ok, monitor} = RunCheck.call(monitor_id)
         assert %Check{result: :success} = Monitors.get_check(monitor.last_check_id)
         assert is_nil(monitor.last_incident_id)
       end
     end
 
     test "next check failure create incident", %{monitor_id: monitor_id} do
-      monitor = Monitors.get_monitor!(monitor_id)
-
       use_cassette "check_failure" do
-        {:ok, monitor} = RunCheck.call(monitor)
+        {:ok, monitor} = RunCheck.call(monitor_id)
         assert %Check{result: :failure} = Monitors.get_check(monitor.last_check_id)
         assert %Incident{status: :started} = Monitors.get_incident(monitor.last_incident_id)
       end
@@ -68,7 +63,7 @@ defmodule Sentinel.Monitors.UseCases.RunCheckTest do
   describe "when last check failure" do
     setup %{monitor: monitor} do
       use_cassette "check_failure" do
-        {:ok, monitor} = RunCheck.call(monitor)
+        {:ok, monitor} = RunCheck.call(monitor.id)
         [monitor_id: monitor.id]
       end
     end
@@ -78,7 +73,7 @@ defmodule Sentinel.Monitors.UseCases.RunCheckTest do
 
       use_cassette "check_success" do
         assert %Check{result: :failure} = Monitors.get_check(monitor.last_check_id)
-        {:ok, monitor} = RunCheck.call(monitor)
+        {:ok, monitor} = RunCheck.call(monitor_id)
         assert %Check{result: :success} = Monitors.get_check(monitor.last_check_id)
         assert %Incident{status: :resolved} = Monitors.get_incident(monitor.last_incident_id)
       end
@@ -89,7 +84,7 @@ defmodule Sentinel.Monitors.UseCases.RunCheckTest do
       last_incident_id = monitor.last_incident_id
 
       use_cassette "check_failure" do
-        {:ok, monitor} = RunCheck.call(monitor)
+        {:ok, monitor} = RunCheck.call(monitor_id)
         assert %Check{result: :failure} = Monitors.get_check(monitor.last_check_id)
 
         assert %Incident{status: :started, id: ^last_incident_id} =
