@@ -17,7 +17,7 @@ defmodule Sentinel.Events.UseCases.SendTelegram do
 
     with {:ok, _pid} <- create_telegram_acceptor(acceptor, telegram_bot),
          :ok <- transition(acceptor.id, :send, %{}),
-         {:ok, response} <- send_message(user, resource, event_type),
+         {:ok, response} <- send_message(telegram_bot, resource, event_type, chat_id),
          :ok <- transition(acceptor.id, :finish, %{}) do
       Logger.info(response)
       {:ok, :sent}
@@ -36,14 +36,15 @@ defmodule Sentinel.Events.UseCases.SendTelegram do
     Finitomata.start_fsm(TelegramBotFsm, acceptor.id, struct!(TelegramBot, attrs))
   end
 
-  defp send_message(telegram_bot, resource, event_type) do
-    Sentinel.Events.Notifications.Email
-    |> apply(event_type, [build_args(event_type, resource, telegram_bot)])
-    |> Sentinel.Mailer.deliver()
+  defp send_message(telegram_bot, resource, event_type, chat_id) do
+    message = build_message(event_type, resource)
+    Telegram.Api.request(telegram_bot.token, "sendMessage", chat_id: chat_id, text: message)
   end
 
-  defp build_args(:monitor_down, resource, user) do
-    %{monitor: resource, user: user}
+  defp build_message(:monitor_down, resource) do
+    """
+    ❗️❗️❗️ Monitor #{resource.name} is down ❗️❗️❗️
+    """
   end
 
   defp transition(id, event, payload) do

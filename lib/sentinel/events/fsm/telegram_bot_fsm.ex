@@ -40,8 +40,6 @@ defimpl Finitomata.Persistency.Persistable, for: Sentinel.Events.Acceptors.Teleg
         event_payload: %{response: response},
         object: telegram_bot
       }) do
-    response = Jason.decode!(response)
-
     telegram_bot
     |> Ecto.Changeset.change(%{state: to, result: response})
     |> Sentinel.Repo.update()

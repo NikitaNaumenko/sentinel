@@ -16,6 +16,7 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
   def perform(%Oban.Job{args: %{"id" => id}}) do
     %Event{type: event_type} = event = Events.get_event(id)
 
+    Logger.error("JOPA")
     process_event(event_type, event)
   end
 
@@ -60,7 +61,7 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
         %{
           recipient: %{
             id: rule.telegram_bot.id,
-            type: to_string(rule.telegram.__struct__)
+            type: to_string(rule.telegram_bot.__struct__)
           },
           event_id: event.id,
           recipient_type: "telegram_bot"
