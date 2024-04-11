@@ -1,12 +1,16 @@
 defmodule Sentinel.Monitors.UseCases.RunCheck do
   @moduledoc false
   alias Sentinel.Events
+  alias Sentinel.Monitors
   alias Sentinel.Monitors.Check
   alias Sentinel.Monitors.Incident
   alias Sentinel.Monitors.Monitor
   alias Sentinel.Repo
 
-  def call(monitor) do
+  require Logger
+
+  def call(monitor_id) do
+    monitor = Monitors.get_monitor!(monitor_id)
     # TODO: Should be calculated by telemetry
     start_time = System.monotonic_time(:millisecond)
     result = monitor.http_method |> Finch.build(monitor.url) |> Finch.request(Sentinel.Finch)
@@ -35,9 +39,9 @@ defmodule Sentinel.Monitors.UseCases.RunCheck do
         |> Check.changeset()
         |> Sentinel.Repo.insert!()
 
-      monitor
-      |> Repo.preload([:last_check, :last_incident])
-      |> process_incident(check)
+      monitor = Repo.preload(monitor, [:last_check, :last_incident])
+      Logger.info(inspect(monitor))
+      process_incident(monitor, check)
     end)
   end
 

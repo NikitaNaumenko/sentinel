@@ -16,7 +16,6 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
   def perform(%Oban.Job{args: %{"id" => id}}) do
     %Event{type: event_type} = event = Events.get_event(id)
 
-    Logger.error("JOPA")
     process_event(event_type, event)
   end
 
