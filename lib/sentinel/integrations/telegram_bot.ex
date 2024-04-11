@@ -4,6 +4,7 @@ defmodule Sentinel.Integrations.TelegramBot do
 
   import Ecto.Changeset
 
+  @type t :: %__MODULE__{}
   schema "telegram_bots" do
     field :name, :string
     field :token, :string
