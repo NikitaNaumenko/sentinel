@@ -34,6 +34,7 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
   alias Sentinel.Events.Acceptor
   alias Sentinel.Events.Event
   alias Sentinel.Events.EventTypes.MonitorDown
+  alias Sentinel.Events.EventTypes.MonitorUp
   alias Sentinel.Events.UseCases.SendEmail
   alias Sentinel.Events.UseCases.SendTelegram
   alias Sentinel.Events.UseCases.SendWebhook
@@ -80,5 +81,46 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
       resource: monitor,
       chat_id: monitor.notification_rule.telegram_chat_id
     })
+  end
+
+  defp process_acceptor(%Acceptor{recipient_type: "email"} = acceptor, %Event{type: %MonitorUp{}} = event) do
+    monitor = Monitors.get_monitor!(event.resource_id)
+
+    SendEmail.call(%{
+      acceptor: acceptor,
+      recipient: acceptor.recipient,
+      event_type: :monitor_up,
+      resource: monitor
+    })
+  end
+
+  defp process_acceptor(%Acceptor{recipient_type: "webhook"} = acceptor, %Event{type: %MonitorUp{}} = event) do
+    monitor = Monitors.get_monitor!(event.resource_id)
+
+    SendWebhook.call(%{
+      acceptor: acceptor,
+      recipient: acceptor.recipient,
+      event_type: :monitor_up,
+      resource: monitor
+    })
+  end
+
+  defp process_acceptor(
+         %Acceptor{recipient_type: "telegram_bot"} = acceptor,
+         %Event{type: %MonitorUp{}} = event
+       ) do
+    monitor = event.resource_id |> Monitors.get_monitor!() |> Repo.preload(:notification_rule)
+
+    SendTelegram.call(%{
+      acceptor: acceptor,
+      recipient: acceptor.recipient,
+      event_type: :monitor_up,
+      resource: monitor,
+      chat_id: monitor.notification_rule.telegram_chat_id
+    })
+  end
+
+  defp process_acceptor(_acceptor, _event) do
+    {:error, "Unsupported acceptor type or event"}
   end
 end

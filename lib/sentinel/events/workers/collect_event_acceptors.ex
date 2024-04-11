@@ -16,10 +16,10 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
   def perform(%Oban.Job{args: %{"id" => id}}) do
     %Event{type: event_type} = event = Events.get_event(id)
 
-    process_event(event_type, event)
+    process_event(event)
   end
 
-  defp process_event(%MonitorDown{}, event) do
+  defp process_event(event) do
     %{account: account} = monitor = Monitors.get_monitor!(event.resource_id)
 
     account = Sentinel.Repo.preload(account, :users)

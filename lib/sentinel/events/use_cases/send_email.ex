@@ -40,6 +40,10 @@ defmodule Sentinel.Events.UseCases.SendEmail do
     %{monitor: resource, user: user}
   end
 
+  defp build_args(:monitor_up, resource, user) do
+    %{monitor: resource, user: user}
+  end
+
   defp transition(id, event, payload) do
     Finitomata.transition(id, {event, payload})
   end

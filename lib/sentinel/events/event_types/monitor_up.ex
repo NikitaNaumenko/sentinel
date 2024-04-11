@@ -1,4 +1,4 @@
-defmodule Sentinel.Events.EventTypes.MonitorDown do
+defmodule Sentinel.Events.EventTypes.MonitorUp do
   @moduledoc false
 
   use Ecto.Schema
@@ -6,7 +6,7 @@ defmodule Sentinel.Events.EventTypes.MonitorDown do
   @primary_key false
 
   embedded_schema do
-    field :type, :string, default: "monitor_down"
+    field :type, :string, default: "monitor_up"
     field :send_email, :boolean, default: true
     field :send_slack, :boolean, default: true
     field :send_webhook, :boolean, default: true

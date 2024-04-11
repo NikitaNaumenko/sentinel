@@ -47,6 +47,12 @@ defmodule Sentinel.Events.UseCases.SendTelegram do
     """
   end
 
+  defp build_message(:monitor_up, resource) do
+    """
+    ✅✅✅Monitor #{resource.name} is up ✅✅✅
+    """
+  end
+
   defp transition(id, event, payload) do
     Finitomata.transition(id, {event, payload})
   end

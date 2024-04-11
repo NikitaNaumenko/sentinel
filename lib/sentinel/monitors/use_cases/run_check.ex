@@ -40,7 +40,6 @@ defmodule Sentinel.Monitors.UseCases.RunCheck do
         |> Sentinel.Repo.insert!()
 
       monitor = Repo.preload(monitor, [:last_check, :last_incident])
-      Logger.info(inspect(monitor))
       process_incident(monitor, check)
     end)
   end
@@ -90,7 +89,7 @@ defmodule Sentinel.Monitors.UseCases.RunCheck do
        }) do
     resolve_incident(monitor, check_id)
 
-    # Events.create_event(:monitor_up, monitor, %{upped_at: inserted_at, check_id: check_id})
+    Events.create_event(:monitor_up, monitor, %{upped_at: inserted_at, check_id: check_id})
     update_monitor(monitor, %{last_check_id: check_id})
   end
 
