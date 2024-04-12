@@ -82,8 +82,4 @@ defmodule SentinelWeb.IntegrationLive.NewTelegramBot do
         {:noreply, assign_form(socket, changeset)}
     end
   end
-
-  defp assign_form(socket, %Ecto.Changeset{} = changeset) do
-    assign(socket, :form, to_form(changeset))
-  end
 end

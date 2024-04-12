@@ -12,7 +12,7 @@ defmodule SentinelWeb.Components.Sidebar do
       class="mt-2 ml-3 inline-flex items-center rounded-lg p-3 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 sm:hidden"
     >
       <span class="sr-only">Open sidebar</span>
-      <.icon name="icon-menu"/>
+      <.icon name="icon-menu" />
     </button>
 
     <aside
@@ -52,6 +52,13 @@ defmodule SentinelWeb.Components.Sidebar do
               />
               <span class="ml-3"><%= dgettext("sidebar", "Integrations") %></span>
             </.sidebar_link>
+            <.sidebar_link path={~p"/teammates"}>
+              <.icon
+                name="icon-users-round"
+                class="h-6 w-6 text-gray-400 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+              />
+              <span class="ml-3"><%= dgettext("sidebar", "Teammates") %></span>
+            </.sidebar_link>
           </li>
         </ul>
       </div>
@@ -64,7 +71,7 @@ defmodule SentinelWeb.Components.Sidebar do
           <.icon name="icon-log-out" />
           <span class="ml-3"><%= dgettext("sidebar", "Log out") %></span>
         </.link>
-    </div>
+      </div>
     </aside>
     """
   end

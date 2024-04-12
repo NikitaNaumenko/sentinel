@@ -55,6 +55,10 @@ defmodule SentinelWeb do
         layout: {SentinelWeb.Layouts, :app}
 
       unquote(html_helpers())
+
+      defp assign_form(socket, changeset) do
+        assign(socket, :form, to_form(changeset))
+      end
     end
   end
 
@@ -97,7 +101,6 @@ defmodule SentinelWeb do
 
       # Core UI components and translation
       import SentinelWeb.CoreComponents
-      import SentinelWeb.EnumHelpers
       import SentinelWeb.FormHelpers
       import SentinelWeb.Gettext
       import SentinelWeb.HTMLHelpers

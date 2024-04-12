@@ -1,0 +1,20 @@
+<div class="flex justify-end gap-10 py-4">
+  <div class="md:max-w-xl">
+    <div class="flex-none">
+      <.link navigate={~p"/teammates/new"}>
+        <.button>
+          <%= dgettext("teammates", "New teammate") %>
+        </.button>
+      </.link>
+    </div>
+  </div>
+</div>
+
+<div class="flex w-full flex-col gap-4">
+  <.table id="teammates" rows={@streams.teammates}>
+    <:col :let={{_id, teammate}} label={dgettext("teammates", "Full Name")}>
+      <%= teammate.full_name %>
+    </:col>
+    <:col :let={{_id, teammate}} label={dgettext("teammates", "Role")}><%= teammate.role %></:col>
+  </.table>
+</div>

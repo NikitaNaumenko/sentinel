@@ -26,8 +26,10 @@ defmodule Sentinel.Monitors do
       [%Monitor{}, ...]
 
   """
-  def list_monitors do
-    Repo.all(Monitor)
+  def list_monitors(account_id) do
+    Monitor
+    |> where([m], m.account_id == ^account_id)
+    |> Repo.all()
   end
 
   @doc """

@@ -9,7 +9,7 @@ defmodule SentinelWeb.MonitorLive.Index do
   @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
     Monitors.subscribe("monitors-#{socket.assigns.current_user.account_id}")
-    {:ok, stream(socket, :monitors, Monitors.list_monitors())}
+    {:ok, stream(socket, :monitors, Monitors.list_monitors(socket.assigns.current_account.id))}
   end
 
   @impl Phoenix.LiveView
