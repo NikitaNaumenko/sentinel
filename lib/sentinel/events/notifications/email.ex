@@ -18,6 +18,14 @@ defmodule Sentinel.Events.Notifications.Email do
     |> text_body(success_body(monitor))
   end
 
+  def teammate_created(%{user: user}) do
+    new()
+    |> to({user.email, user.email})
+    |> from({"Sentinel", "noreply@sentinel.com"})
+    |> subject("✅ #{monitor.name} is up")
+    |> text_body(invite_body(user))
+  end
+
   defp alert_body(monitor) do
     """
     ==============================
@@ -39,6 +47,16 @@ defmodule Sentinel.Events.Notifications.Email do
     Sentinel notification: Finished an outage
     Your monitor #{monitor.name} is up:
     ==============================
+    """
+  end
+
+  defp invite_body(user) do
+    """
+    ===============================
+    Sentinel notification: You were invited
+    Follow the link to join Sentinel:
+    #{user.invite_url}
+    ===============================
     """
   end
 end

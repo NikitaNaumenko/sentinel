@@ -20,6 +20,7 @@ defmodule Sentinel.Teammates.User do
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
     field :full_name, :string, virtual: true
+    field :invite_url, :string, virutal: true
 
     belongs_to :account, Account
     timestamps(type: :utc_datetime)

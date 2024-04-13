@@ -2,6 +2,7 @@ defmodule SentinelWeb.TeammateLive.New do
   @moduledoc false
   use SentinelWeb, :live_view
 
+  alias Sentinel.Accounts
   alias Sentinel.Teammates
   alias Sentinel.Teammates.User
 
@@ -24,7 +25,9 @@ defmodule SentinelWeb.TeammateLive.New do
 
   def handle_event("save", %{"user" => teammate_params}, socket) do
     case Teammates.create_teammate(Map.put(teammate_params, "account_id", socket.assigns.current_account.id)) do
-      {:ok, _teammate} ->
+      {:ok, teammate} ->
+        Accounts.deliver_user_confirmation_instructions(teammate, &url(~p"/confirm/#{&1}"))
+
         socket =
           socket
           |> put_flash(:info, dgettext("teammates", "Teammate created successfully. Invite was sent"))
