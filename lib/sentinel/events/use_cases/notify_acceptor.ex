@@ -35,11 +35,13 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
   alias Sentinel.Events.Event
   alias Sentinel.Events.EventTypes.MonitorDown
   alias Sentinel.Events.EventTypes.MonitorUp
+  alias Sentinel.Events.EventTypes.TeammateCreated
   alias Sentinel.Events.UseCases.SendEmail
   alias Sentinel.Events.UseCases.SendTelegram
   alias Sentinel.Events.UseCases.SendWebhook
   alias Sentinel.Monitors
   alias Sentinel.Repo
+  alias Sentinel.Teammates
 
   def call(acceptor_id) do
     acceptor = acceptor_id |> Events.get_acceptor() |> Repo.preload([:event])
@@ -122,5 +124,19 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
 
   defp process_acceptor(_acceptor, _event) do
     {:error, "Unsupported acceptor type or event"}
+  end
+
+  defp process_acceptor(
+         %Acceptor{recipient_type: "email"} = acceptor,
+         %Event{type: %TeammateCreated{}} = event
+       ) do
+    user = Teammates.get_teammate(event.resource_id)
+
+    SendEmail.call(%{
+      acceptor: acceptor,
+      recipient: acceptor.recipient,
+      event_type: :teammate_created,
+      resource: user
+    })
   end
 end

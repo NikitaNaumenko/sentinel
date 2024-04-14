@@ -1,5 +1,7 @@
 defmodule Sentinel.Events.Notifications.Email do
   @moduledoc false
+  use SentinelWeb, :verified_routes
+
   import Swoosh.Email
 
   def monitor_down(%{monitor: monitor, user: user}) do
@@ -18,12 +20,12 @@ defmodule Sentinel.Events.Notifications.Email do
     |> text_body(success_body(monitor))
   end
 
-  def teammate_created(%{user: user}) do
+  def teammate_created(%{user: user, url: url}) do
     new()
     |> to({user.email, user.email})
     |> from({"Sentinel", "noreply@sentinel.com"})
-    |> subject("✅ #{monitor.name} is up")
-    |> text_body(invite_body(user))
+    |> subject("Confirm invitation")
+    |> text_body(confirmation_body(user, url))
   end
 
   defp alert_body(monitor) do
@@ -50,13 +52,19 @@ defmodule Sentinel.Events.Notifications.Email do
     """
   end
 
-  defp invite_body(user) do
+  defp confirmation_body(user, token) do
     """
-    ===============================
-    Sentinel notification: You were invited
-    Follow the link to join Sentinel:
-    #{user.invite_url}
-    ===============================
+    ==============================
+
+    Hi #{user.email},
+
+    You can confirm your invitation by visiting the URL below:
+
+    #{url(~p"/confirm/#{token}")}
+
+    If you didn't understand what happened, please ignore this.
+
+    ==============================
     """
   end
 end

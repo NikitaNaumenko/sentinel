@@ -10,6 +10,7 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
   alias Sentinel.Events.Event
   alias Sentinel.Events.Workers.NotifyAcceptor
   alias Sentinel.Monitors
+  alias Sentinel.Teammates
 
   @impl Oban.Worker
   def perform(%Oban.Job{args: %{"id" => id}}) do
@@ -79,7 +80,16 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
   end
 
   defp process_event("teammate_created", event) do
-    # TODO: Should be implemented
-    :ok
+    user = Teammates.get_teammate!(event.resource_id)
+
+    %{
+      recipient: %{id: user.id, type: to_string(user.__struct__)},
+      event_id: event.id,
+      recipient_type: "email"
+    }
+    |> Acceptor.create()
+    |> Map.take([:id])
+    |> NotifyAcceptor.new()
+    |> Oban.insert()
   end
 end
