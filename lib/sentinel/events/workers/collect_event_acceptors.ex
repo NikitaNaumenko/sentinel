@@ -77,4 +77,9 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
 
     :ok
   end
+
+  defp process_event("teammate_created", event) do
+    # TODO: Should be implemented
+    :ok
+  end
 end
