@@ -10,7 +10,7 @@ defmodule Sentinel.Monitors.Workers.StartApplicationWorker do
   @impl Oban.Worker
   def perform(_args) do
     # TODO: Rewrite query
-    for monitor <- Monitors.list_monitors() do
+    for monitor <- Monitors.all_monitors() do
       %{id: monitor.id}
       |> StartMonitor.new()
       |> Oban.insert()

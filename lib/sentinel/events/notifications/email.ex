@@ -20,12 +20,12 @@ defmodule Sentinel.Events.Notifications.Email do
     |> text_body(success_body(monitor))
   end
 
-  def teammate_created(%{user: user, url: url}) do
+  def teammate_created(%{user: user, token: token}) do
     new()
     |> to({user.email, user.email})
     |> from({"Sentinel", "noreply@sentinel.com"})
     |> subject("Confirm invitation")
-    |> text_body(confirmation_body(user, url))
+    |> text_body(confirmation_body(user, token))
   end
 
   defp alert_body(monitor) do

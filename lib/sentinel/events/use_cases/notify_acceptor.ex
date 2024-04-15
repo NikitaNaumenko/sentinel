@@ -122,15 +122,11 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
     })
   end
 
-  defp process_acceptor(_acceptor, _event) do
-    {:error, "Unsupported acceptor type or event"}
-  end
-
   defp process_acceptor(
          %Acceptor{recipient_type: "email"} = acceptor,
          %Event{type: %TeammateCreated{}} = event
        ) do
-    user = Teammates.get_teammate(event.resource_id)
+    user = Teammates.get_teammate!(event.resource_id)
 
     SendEmail.call(%{
       acceptor: acceptor,
@@ -138,5 +134,9 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
       event_type: :teammate_created,
       resource: user
     })
+  end
+
+  defp process_acceptor(_acceptor, _event) do
+    {:error, "Unsupported acceptor type or event"}
   end
 end

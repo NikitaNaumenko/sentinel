@@ -1,4 +1,4 @@
-defmodule Sentinel.Events.EventTypes.TeammaateCreated do
+defmodule Sentinel.Events.EventTypes.TeammateCreated do
   @moduledoc false
 
   use Ecto.Schema

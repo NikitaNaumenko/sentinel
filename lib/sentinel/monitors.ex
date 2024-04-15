@@ -32,6 +32,10 @@ defmodule Sentinel.Monitors do
     |> Repo.all()
   end
 
+  def all_monitors do
+    Repo.all(Monitor)
+  end
+
   @doc """
   Gets a single monitor.
 

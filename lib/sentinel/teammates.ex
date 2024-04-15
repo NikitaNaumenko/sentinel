@@ -2,6 +2,7 @@ defmodule Sentinel.Teammates do
   @moduledoc false
   import Ecto.Query, warn: false
 
+  alias Sentinel.Accounts.UserToken
   alias Sentinel.Events
   alias Sentinel.Repo
   alias Sentinel.Teammates.User
@@ -22,12 +23,12 @@ defmodule Sentinel.Teammates do
       user =
         %User{}
         |> User.changeset(params)
-        |> Repo.insert()
+        |> Repo.insert!()
 
       {encoded_token, user_token} = UserToken.build_email_token(user, "confirm")
       Repo.insert!(user_token)
 
-      Events.create_event(:teammate_created, user, %{token: token})
+      Events.create_event(:teammate_created, user, %{token: encoded_token})
     end)
   end
 end

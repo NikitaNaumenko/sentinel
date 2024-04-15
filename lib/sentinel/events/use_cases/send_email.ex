@@ -45,7 +45,7 @@ defmodule Sentinel.Events.UseCases.SendEmail do
   end
 
   defp build_args(acceptor, :teammate_created, resource, _user) do
-    %{user: resource, token: acceptor.event.payload.token}
+    %{user: resource, token: acceptor.event.payload["token"]}
   end
 
   defp transition(id, event, payload) do
