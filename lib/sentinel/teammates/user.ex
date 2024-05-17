@@ -1,8 +1,11 @@
 defmodule Sentinel.Teammates.User do
   @moduledoc false
+  @behaviour Bodyguard.Schema
+
   use Ecto.Schema
 
   import Ecto.Changeset
+  import Ecto.Query, only: [from: 2]
 
   alias Sentinel.Accounts.Account
 
@@ -54,6 +57,11 @@ defmodule Sentinel.Teammates.User do
     |> put_change(:password, Ecto.UUID.generate())
     |> validate_email(opts)
     |> validate_password(opts)
+  end
+
+  @impl Bodyguard.Schema
+  def scope(query, account_id, _) do
+    from u in query, where: u.account_id == ^account_id
   end
 
   defp validate_email(changeset, opts) do

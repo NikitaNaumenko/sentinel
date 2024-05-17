@@ -31,7 +31,10 @@ defmodule SentinelWeb.Components.Sidebar do
 
         <ul class="space-y-2">
           <li>
-            <.sidebar_link path={~p"/monitors"}>
+            <.sidebar_link
+              :if={permit?(Sentinel.Monitors.MonitorPolicy, :index, @current_user)}
+              path={~p"/monitors"}
+            >
               <.icon
                 name="icon-activity-square"
                 class="w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -45,14 +48,20 @@ defmodule SentinelWeb.Components.Sidebar do
               />
               <span class="ml-3"><%= dgettext("sidebar", "Status pages") %></span>
             </.sidebar_link>
-            <.sidebar_link path={~p"/integrations"}>
+            <.sidebar_link
+              :if={permit?(Sentinel.Integrations.IntegrationPolicy, :index, @current_user)}
+              path={~p"/integrations"}
+            >
               <.icon
                 name="icon-blocks"
                 class="h-6 w-6 text-gray-400 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
               />
               <span class="ml-3"><%= dgettext("sidebar", "Integrations") %></span>
             </.sidebar_link>
-            <.sidebar_link path={~p"/teammates"}>
+            <.sidebar_link
+              :if={permit?(Sentinel.Teammates.UserPolicy, :index, @current_user)}
+              path={~p"/teammates"}
+            >
               <.icon
                 name="icon-users-round"
                 class="h-6 w-6 text-gray-400 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"

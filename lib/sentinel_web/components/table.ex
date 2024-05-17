@@ -3,8 +3,6 @@ defmodule SentinelWeb.Components.Table do
 
   use Phoenix.Component
 
-  import SentinelWeb.Gettext
-
   @doc ~S"""
   Renders a table with generic styling.
 

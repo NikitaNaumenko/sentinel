@@ -4,8 +4,10 @@ defmodule SentinelWeb.MonitorLive.Index do
 
   alias Sentinel.Monitors
   alias Sentinel.Monitors.Monitor
+  alias Sentinel.Monitors.MonitorPolicy
   alias SentinelWeb.MonitorLive.MonitorComponent
 
+  on_mount {AuthorizeHook, policy: MonitorPolicy}
   @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
     Monitors.subscribe("monitors-#{socket.assigns.current_user.account_id}")

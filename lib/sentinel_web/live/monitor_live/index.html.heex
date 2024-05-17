@@ -1,7 +1,10 @@
 <div class="flex justify-end gap-10 py-4">
   <div class="md:max-w-xl">
     <div class="flex-none">
-      <.link navigate={~p"/monitors/new"}>
+      <.link
+        :if={permit?(Sentinel.Monitors.MonitorPolicy, :create, @current_user)}
+        navigate={~p"/monitors/new"}
+      >
         <.button>
           <%= dgettext("monitors", "New monitor") %>
         </.button>

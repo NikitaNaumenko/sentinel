@@ -4,7 +4,9 @@ defmodule SentinelWeb.MonitorLive.New do
 
   alias Sentinel.Monitors
   alias Sentinel.Monitors.Monitor
+  alias Sentinel.Monitors.MonitorPolicy
 
+  on_mount {AuthorizeHook, policy: MonitorPolicy}
   @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
     changeset = Monitor.changeset(%Monitor{}, %{})

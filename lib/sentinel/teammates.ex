@@ -9,7 +9,7 @@ defmodule Sentinel.Teammates do
 
   def list_teammates(account_id) do
     User
-    |> where([u], u.account_id == ^account_id)
+    |> Bodyguard.scope(account_id)
     |> select_merge([u], %{full_name: fragment("CONCAT_WS(' ', last_name, first_name)")})
     |> Repo.all()
   end

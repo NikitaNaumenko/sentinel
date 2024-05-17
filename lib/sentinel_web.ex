@@ -54,6 +54,8 @@ defmodule SentinelWeb do
       use Phoenix.LiveView,
         layout: {SentinelWeb.Layouts, :app}
 
+      alias SentinelWeb.Hooks.AuthorizeHook
+
       unquote(html_helpers())
 
       defp assign_form(socket, changeset) do
@@ -97,6 +99,7 @@ defmodule SentinelWeb do
       use PhoenixHTMLHelpers
       use SentinelWeb.Components
 
+      import Bodyguard, only: [permit?: 4, permit?: 3]
       import Phoenix.HTML
 
       # Core UI components and translation

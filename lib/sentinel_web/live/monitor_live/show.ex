@@ -8,7 +8,10 @@ defmodule SentinelWeb.MonitorLive.Show do
   alias Sentinel.Integrations
   alias Sentinel.Monitors
   alias Sentinel.Monitors.Monitor
+  alias Sentinel.Monitors.MonitorPolicy
   alias Sentinel.Repo
+
+  on_mount {AuthorizeHook, policy: MonitorPolicy}
 
   @impl true
   def mount(_params, _session, socket) do
