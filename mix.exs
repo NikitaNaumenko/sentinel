@@ -68,6 +68,7 @@ defmodule Sentinel.MixProject do
       {:ecto_commons, "~> 0.3.4"},
       {:finitomata, "~> 0.1"},
       {:bodyguard, "~> 2.4.3"},
+      {:salad_ui, "~> 0.4.2"},
       {:telegram, github: "visciang/telegram", tag: "1.2.1"},
       {:styler, "~> 0.11", only: [:dev, :test], runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
