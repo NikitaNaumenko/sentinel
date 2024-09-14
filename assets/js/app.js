@@ -2,6 +2,7 @@ import "../css/app.css";
 import "flowbite/dist/flowbite.phoenix.js";
 
 import "lucide-static/font/lucide.css";
+import "@tabler/core";
 
 import "phoenix_html";
 // Establish Phoenix Socket and LiveView configuration.

@@ -163,7 +163,7 @@ defmodule SentinelWeb.Components.Input do
         name={@name}
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
-        class={["border-input flex h-9 w-full rounded-md border bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50"]}
+        class={["form-control"]}
         {@rest}
       />
       <.error :for={msg <- @errors}><%= msg %></.error>

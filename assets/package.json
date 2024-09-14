@@ -7,6 +7,7 @@
     "format-check": "prettier --trailing-comma es5 --check '{js,test,css}/**/*.{js,json,css,md}' --no-error-on-unmatched-pattern"
   },
   "dependencies": {
+    "@tabler/core": "^1.0.0-beta21",
     "apexcharts": "^3.48.0",
     "chart.js": "^4.4.2",
     "esbuild": "^0.19.11",
