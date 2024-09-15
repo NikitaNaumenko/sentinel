@@ -1,22 +1,31 @@
-<Sidebar.sidebar current_user={@current_user} />
+<main class="page">
+  <Sidebar.sidebar current_user={@current_user} />
 
-<main class="p-4 sm:ml-64">
-  <div class="z-[100] fixed top-0 flex max-h-screen w-full flex-col-reverse p-4 sm:top-auto sm:right-0 sm:flex-col md:max-w-[420px]">
-    <.toast
-      :for={{kind, content} <- @flash}
-      :if={kind in ["info", "success", "error", "warning"]}
-      kind={kind}
-      id={"#{kind}-flash"}
-    >
-      <%= content %>
-    </.toast>
-  </div>
-
-  <div class="mr-auto ml-auto md:max-w-4xl">
+  <%!-- <div class="z-[100] fixed top-0 flex max-h-screen w-full flex-col-reverse p-4 sm:top-auto sm:right-0 sm:flex-col md:max-w-[420px]"> --%>
+  <%!--   <.toast --%>
+  <%!--     :for={{kind, content} <- @flash} --%>
+  <%!--     :if={kind in ["info", "success", "error", "warning"]} --%>
+  <%!--     kind={kind} --%>
+  <%!--     id={"#{kind}-flash"} --%>
+  <%!--   > --%>
+  <%!--     <%= content %> --%>
+  <%!--   </.toast> --%>
+  <%!-- </div> --%>
+  <%!----%>
+  <div class="page-wrapper px-5">
     <%= if function_exported?(@socket.view, :header, 1) do %>
-      <%= @socket.view.header(assigns) %>
+      <div class="page-header d-print-none">
+        <div class="container-xl">
+          <div class="row g-2 align-items-center">
+            <%= @socket.view.header(assigns) %>
+          </div>
+        </div>
+      </div>
     <% end %>
-
-    <%= @inner_content %>
+    <div class="page-body">
+      <div class="container-xl">
+        <%= @inner_content %>
+      </div>
+    </div>
   </div>
 </main>

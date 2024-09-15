@@ -8,7 +8,7 @@ const path = require("path");
 module.exports = {
   content: [
     "./js/**/*.js",
-    "./node_modules/flowbite/**/*.js",
+    // "./node_modules/flowbite/**/*.js",
     "../lib/sentinel_web.ex",
     "../lib/sentinel_web/**/*.*ex",
   ],
@@ -18,7 +18,7 @@ module.exports = {
       // strategy: "base", // only generate global styles
       strategy: "class", // only generate classes
     }),
-    require("flowbite/plugin"),
+    // require("flowbite/plugin"),
     plugin(({ addVariant }) =>
       addVariant("phx-no-feedback", [
         ".phx-no-feedback&",

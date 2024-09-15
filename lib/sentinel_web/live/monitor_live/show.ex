@@ -129,6 +129,43 @@ defmodule SentinelWeb.MonitorLive.Show do
     end
   end
 
+  def header(assigns) do
+    ~H"""
+    <div class="row g-3 align-items-center">
+      <div class="col-auto">
+        <span class="status-indicator status-green status-indicator-animated">
+          <span class="status-indicator-circle"></span>
+          <span class="status-indicator-circle"></span>
+          <span class="status-indicator-circle"></span>
+        </span>
+      </div>
+      <div class="col">
+        <h2 class="page-title">
+          <%= @monitor.name %>
+        </h2>
+        <div class="text-secondary">
+          <ul class="list-inline list-inline-dots mb-0">
+            <li class="list-inline-item"><span class="text-green">Up</span></li>
+            <li class="list-inline-item">Checked every 3 minutes</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-auto ms-auto d-print-none">
+        <div class="btn-list">
+          <a href="#" class="btn">
+            <!-- Download SVG icon from http://tabler-icons.io/i/settings -->
+           Configure
+          </a>
+          <a href="#" class="btn btn-primary">
+            <!-- Download SVG icon from http://tabler-icons.io/i/player-pause -->
+           Pause this monitor
+          </a>
+        </div>
+      </div>
+    </div>
+    """
+  end
+
   # def handle_event("validate-webhook-url", params, socket) do
   #   {:noreply, put_flash(socket, :info, dgettext("notification_rule", "Webhook url updated!"))}
   # end

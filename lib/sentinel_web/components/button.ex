@@ -64,10 +64,7 @@ defmodule SentinelWeb.Components.Button do
   def button_link(assigns) do
     ~H"""
     <.link
-      class={[
-        "ring-offset-background inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-        @cva_class
-      ]}
+      class={["btn", "btn-primary"]}
       {@rest}
     >
       <%= render_slot(@inner_block) %>

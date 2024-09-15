@@ -10,14 +10,14 @@ defmodule SentinelWeb.MonitorLive.MonitorComponent do
     <div id={@id}>
       <.link
         navigate={~p"/monitors/#{@monitor}"}
-        class="flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent"
+        class="card"
       >
-        <div class="flex flex-col justify-between leading-normal">
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        <div class="card-body">
+          <h5 class="card-title">
             <.indicator monitor={@monitor} />
             <%= @monitor.name %>
           </h5>
-          <p class="mb-3 font-normal text-gray-500 dark:text-gray-300">
+          <p class="text-secondary">
             <%= @monitor.url %>
           </p>
         </div>

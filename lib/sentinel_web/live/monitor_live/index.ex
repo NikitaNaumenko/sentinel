@@ -51,6 +51,26 @@ defmodule SentinelWeb.MonitorLive.Index do
     {:noreply, stream_insert(socket, :monitors, monitor)}
   end
 
+  def header(assigns) do
+    ~H"""
+    <div class="col">
+      <h2 class="page-title">
+        <%= dgettext("monitors", "Monitors") %>
+      </h2>
+    </div>
+    <div class="ms-auto d-print-none col-auto">
+      <.link
+        :if={permit?(Sentinel.Monitors.MonitorPolicy, :create, @current_user)}
+        navigate={~p"/monitors/new"}
+        class="btn btn-primary"
+      >
+          <%= dgettext("monitors", "New monitor") %>
+      </.link>
+ 
+    </div>
+    """
+  end
+
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
     monitor = Monitors.get_monitor!(id)

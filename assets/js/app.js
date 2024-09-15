@@ -1,8 +1,7 @@
 import "../css/app.css";
-import "flowbite/dist/flowbite.phoenix.js";
+// import "flowbite/dist/flowbite.phoenix.js";
 
 import "lucide-static/font/lucide.css";
-import "@tabler/core";
 
 import "phoenix_html";
 // Establish Phoenix Socket and LiveView configuration.
@@ -11,6 +10,7 @@ import { LiveSocket } from "phoenix_live_view";
 import Hooks from "./hooks";
 import topbar from "topbar";
 
+import "@tabler/core";
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");
