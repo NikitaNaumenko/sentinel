@@ -72,7 +72,7 @@ defmodule SentinelWeb.Components.Input do
       end)
 
     ~H"""
-    <div phx-feedback-for={@name}>
+    <div phx-feedback-for={@name} class="mb-3">
       <.label class={["flex items-center gap-2 text-sm leading-6", @errors != [] && "text-danger"]}>
         <input type="hidden" name={@name} value="false" />
         <input
@@ -93,15 +93,9 @@ defmodule SentinelWeb.Components.Input do
 
   def input(%{type: "select"} = assigns) do
     ~H"""
-    <div phx-feedback-for={@name}>
+    <div phx-feedback-for={@name} class="mb-3">
       <.label for={@id}><%= @label %></.label>
-      <select
-        id={@id}
-        name={@name}
-        class="mt-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-zinc-400 focus:ring-0 sm:text-sm"
-        multiple={@multiple}
-        {@rest}
-      >
+      <select id={@id} name={@name} class="form-select" multiple={@multiple} {@rest}>
         <option :if={@prompt} value=""><%= @prompt %></option>
         <%= Phoenix.HTML.Form.options_for_select(@options, @value) %>
       </select>
@@ -112,7 +106,7 @@ defmodule SentinelWeb.Components.Input do
 
   def input(%{type: "textarea"} = assigns) do
     ~H"""
-    <div phx-feedback-for={@name}>
+    <div phx-feedback-for={@name} class="mb-3">
       <.label :if={@label} class={@errors != [] && "text-danger"} for={@id}><%= @label %></.label>
       <textarea
         id={@id}
@@ -156,7 +150,7 @@ defmodule SentinelWeb.Components.Input do
 
   def input(assigns) do
     ~H"""
-    <div phx-feedback-for={@name}>
+    <div phx-feedback-for={@name} class="mb-3">
       <.label :if={@label} class={@errors != [] && "text-danger"} for={@id}><%= @label %></.label>
       <input
         type={@type}

@@ -32,7 +32,7 @@ defmodule SentinelWeb.Components.Button do
 
   require Logger
 
-  attr :rest, :global
+  attr :rest, :global, include: ~w[on_click]
   attr :class, :any, default: ""
   slot :inner_block
 
@@ -63,10 +63,7 @@ defmodule SentinelWeb.Components.Button do
 
   def button_link(assigns) do
     ~H"""
-    <.link
-      class={["btn", "btn-primary"]}
-      {@rest}
-    >
+    <.link class={["btn", "btn-primary"]} {@rest}>
       <%= render_slot(@inner_block) %>
     </.link>
     """

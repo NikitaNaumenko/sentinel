@@ -41,13 +41,20 @@ defmodule SentinelWeb.MonitorLive.New do
 
   def header(assigns) do
     ~H"""
-    <header class="mr-auto ml-auto flex max-w-2xl items-center justify-between gap-6 py-2">
+    <header>
+      <div class="col">
+        <h2 class="page-title">
+          <%= @page_title %>
+        </h2>
+      </div>
+    </header>
+    <%!-- <header class="mr-auto ml-auto flex max-w-2xl items-center justify-between gap-6 py-2">
       <div>
         <h1 class="text-primary leading text-3xl font-bold leading-8">
           <%= @page_title %>
         </h1>
       </div>
-    </header>
+    </header> --%>
     """
   end
 

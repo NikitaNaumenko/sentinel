@@ -32,10 +32,7 @@ defmodule SentinelWeb.Components.Label do
 
   def label(assigns) do
     ~H"""
-    <label
-      for={@for}
-      class={["text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 phx-no-feedback:text-primary", @class]}
-    >
+    <label for={@for} class={["fom-label", @class]}>
       <%= render_slot(@inner_block) %>
     </label>
     """

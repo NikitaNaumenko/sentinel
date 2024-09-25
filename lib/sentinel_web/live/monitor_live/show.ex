@@ -152,17 +152,31 @@ defmodule SentinelWeb.MonitorLive.Show do
       </div>
       <div class="col-md-auto ms-auto d-print-none">
         <div class="btn-list">
-          <a href="#" class="btn">
-            <!-- Download SVG icon from http://tabler-icons.io/i/settings -->
-           Configure
-          </a>
-          <a href="#" class="btn btn-primary">
-            <!-- Download SVG icon from http://tabler-icons.io/i/player-pause -->
-           Pause this monitor
-          </a>
+          <.link href="#" class="btn">
+            <.icon name="icon-cog" /> Configure
+          </.link>
+          <.toggle_button monitor={@monitor} />
         </div>
       </div>
     </div>
+    """
+  end
+
+  def toggle_button(%{monitor: %Monitor{state: :disabled}} = assigns) do
+    ~H"""
+    <.button phx-click={JS.push("toggle-monitor", value: %{id: @monitor.id})}>
+      <.icon name="icon-play" />
+      <%= dgettext("monitors", "Activate monitor") %>
+    </.button>
+    """
+  end
+
+  def toggle_button(%{monitor: %Monitor{state: :active}} = assigns) do
+    ~H"""
+    <.button phx-click={JS.push("toggle-monitor", value: %{id: @monitor.id})}>
+      <.icon name="icon-pause" />
+      <%= dgettext("monitors", "Pause monitor") %>
+    </.button>
     """
   end
 

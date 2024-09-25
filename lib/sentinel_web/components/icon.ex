@@ -15,7 +15,7 @@ defmodule SentinelWeb.Components.Icon do
   """
   def icon(assigns) do
     ~H"""
-    <span class={[@name, @class]} />
+    <span class={[@name, @class, "icon"]} />
     """
   end
 end
