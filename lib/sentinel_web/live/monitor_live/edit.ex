@@ -1,10 +1,10 @@
-defmodule SentinelWeb.MonitorLive.Show do
+defmodule SentinelWeb.MonitorLive.Edit do
   @moduledoc false
   use SentinelWeb, :live_view
 
-  import SentinelWeb.MonitorLive.Components.Overview, only: [overview: 1]
-  import SentinelWeb.MonitorLive.MonitorComponent, only: [indicator: 1]
-
+  # import SentinelWeb.MonitorLive.Components.Overview, only: [overview: 1]
+  # import SentinelWeb.MonitorLive.MonitorComponent, only: [indicator: 1]
+  #
   alias Sentinel.Integrations
   alias Sentinel.Monitors
   alias Sentinel.Monitors.Monitor
@@ -60,16 +60,7 @@ defmodule SentinelWeb.MonitorLive.Show do
      |> assign(:page_title, monitor.name)
      |> assign(:monitor, monitor)
      |> assign(:certificate, certificate)
-     |> assign(:last_five_checks, Monitors.last_five_checks(monitor))
-     |> assign(:last_five_incidents, Monitors.last_five_incidents(monitor))
-     |> assign(:this_month_incidents_count, Monitors.this_month_incidents_count(monitor))
-     |> assign(:uptime_stats, Monitors.list_checks_for_uptime_stats(monitor))
-     |> assign(:response_times, Monitors.list_checks_for_response_times(monitor))
-     |> assign(:uptime, Monitors.calculate_uptime(monitor))
-     |> assign(:avg_response_time, Monitors.avg_response_time(monitor))
-     |> assign(:incidents, Monitors.count_incidents(monitor))
-     |> assign(:uptime_period, Monitors.calculate_uptime_sequence(monitor))
-     |> assign(:current_tab, params["tab"] || "overview")
+     |> assign(:current_tab, params["tab"] || "settings")
      |> assign_form(changeset)}
   end
 
@@ -152,8 +143,8 @@ defmodule SentinelWeb.MonitorLive.Show do
       </div>
       <div class="col-md-auto ms-auto d-print-none">
         <div class="btn-list">
-          <.link navigate={~p"/monitors/#{@monitor}/edit"} class="btn">
-            <.icon name="icon-cog" /> <%= dgettext("monitors", "Configure") %>
+          <.link navigate={~p"/monitors#{@monitor}"} class="btn">
+            <.icon name="icon-arrow-big-left" /> Back
           </.link>
           <.toggle_button monitor={@monitor} />
         </div>

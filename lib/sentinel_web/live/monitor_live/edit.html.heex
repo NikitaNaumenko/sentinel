@@ -1,0 +1,94 @@
+<.tabs current_tab={@current_tab}>
+  <:tab id="settings-tab" patch={~p"/monitors/#{@monitor}/edit?#{%{tab: "settings"}}"}>
+    <%= dgettext("monitors", "Settings") %>
+  </:tab>
+  <:tab id="notifications-tab" patch={~p"/monitors/#{@monitor}/edit?#{%{tab: "notifications"}}"}>
+    <%= dgettext("monitors", "Notifications") %>
+  </:tab>
+  <:tab id="danger-tab" patch={~p"/monitors/#{@monitor}/edit?#{%{tab: "danger"}}"}>
+    <%= dgettext("monitors", "Danger Zone") %>
+  </:tab>
+  <:tab_content id="settings">
+    <div class="card card-md">
+      <div class="card-body">
+        <.simple_form for={@form} id="monitor-form" phx-validate="validate" phx-submit="save">
+          <.input field={@form[:name]} label={dgettext("monitors", "Name")} />
+          <.input field={@form[:url]} label={dgettext("monitors", "URL")} />
+          <div class="hstack gap-3">
+            <div class="vstack gap-1">
+              <span class="fw-medium"><%= dgettext("monitors", "Check interval") %></span>
+              <%= dgettext("monitors", "How often should we run your check?") %>
+            </div>
+            <.input field={@form[:interval]} type="select" options={@intervals} />
+          </div>
+          <div class="hstack gap-3">
+            <div class="vstack gap-1">
+              <span class="fw-medium"><%= dgettext("monitors", "HTTP method") %></span>
+              <%= dgettext("monitors", "HTTP method used to make the request") %>
+            </div>
+            <.input field={@form[:http_method]} type="select" options={@http_methods} />
+          </div>
+          <div class="hstack gap-3">
+            <div class="vstack gap-1">
+              <span class="fw-medium"><%= dgettext("monitors", "Expected Status Code") %></span>
+              <%= dgettext("monitors", "What status code must your HTTP request return?") %>
+            </div>
+            <.input field={@form[:expected_status_code]} type="select" options={@status_codes} />
+          </div>
+          <div class="hstack gap-3">
+            <div class="vstack gap-1">
+              <span class="fw-medium"><%= dgettext("monitors", "Request timeout") %></span>
+              <%= dgettext("monitors", "After how many seconds is the request considered timeout?") %>
+            </div>
+            <.input field={@form[:request_timeout]} type="select" options={@request_timeouts} />
+          </div>
+
+          <:actions>
+            <.button phx-disable-with="Saving..."><%= dgettext("forms", "Save changes") %></.button>
+          </:actions>
+        </.simple_form>
+      </div>
+    </div>
+  </:tab_content>
+  <:tab_content id="notifications">
+    <.live_component
+      module={SentinelWeb.MonitorLive.Components.Notifications}
+      id="notifications"
+      monitor={@monitor}
+      account_id={@current_user.account_id}
+      notification_rule={@monitor.notification_rule}
+      webhooks={@webhooks}
+      telegram_bots={@telegram_bots}
+    />
+  </:tab_content>
+  <:tab_content id="danger">
+    <div class="card card-md">
+      <div class="card-body">
+        <div class="hstack gap-3">
+          <div class="vstack gap-1">
+            <span class="fw-medium">
+              <%= dgettext("monitors", "Delete monitor") %>
+            </span>
+            <span class="text-muted-foreground text-sm font-normal leading-snug">
+              <%= dgettext(
+                "monitors",
+                "Delete the %{monitor} endpoint monitor and all its data. Careful, this action cannot be undone.",
+                monitor: @monitor.name
+              ) %>
+            </span>
+          </div>
+          <div class="ms-auto">
+            <.button
+              variant="danger"
+              class="ms-auto"
+              phx-click={JS.push("delete", value: %{id: @monitor.id})}
+              data-confirm={dgettext("confirms", "Are you sure?")}
+            >
+              <%= dgettext("buttons", "Delete") %>
+            </.button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </:tab_content>
+</.tabs>

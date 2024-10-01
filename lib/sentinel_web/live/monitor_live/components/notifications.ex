@@ -10,8 +10,8 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
   @impl Phoenix.LiveComponent
   def render(assigns) do
     ~H"""
-    <div>
-      <div class="bg-card text-card-foreground mb-5 flex flex-col rounded-lg border p-6 shadow-sm md:flex-row">
+    <div class="card card-md">
+      <div class="card-body">
         <div class="flex w-full items-center justify-between space-x-4">
           <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
             <span>

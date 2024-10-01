@@ -2,8 +2,6 @@ defmodule SentinelWeb.Components.Button do
   @moduledoc """
   A component module for rendering buttons in a Phoenix application.
 
-  The `Carbon.Button` module provides a flexible and customizable button component that can be used across the web application. It supports various variants and sizes, allowing for consistent yet adaptable button styling throughout the application.
-
   ## Variants
   The button component supports the following variants:
   - "default": Standard button with primary color.
@@ -36,6 +34,16 @@ defmodule SentinelWeb.Components.Button do
   attr :class, :any, default: ""
   slot :inner_block
 
+  variant(
+    :variant,
+    [
+      primary: "btn-primary",
+      danger: "btn-danger"
+    ],
+    default: :primary
+  )
+
+
   @doc """
   Renders a button component with specified attributes.
 
@@ -52,7 +60,7 @@ defmodule SentinelWeb.Components.Button do
 
   def button(assigns) do
     ~H"""
-    <button class={["btn btn-primary", @class]} {@rest}>
+    <button class={["btn", @class, @cva_class]} {@rest}>
       <%= render_slot(@inner_block) %>
     </button>
     """

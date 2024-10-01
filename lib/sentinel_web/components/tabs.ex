@@ -16,33 +16,18 @@ defmodule SentinelWeb.Components.Tabs do
 
   def tabs(assigns) do
     ~H"""
-    <div
-      role="tablist"
-      aria-orientation="horizontal"
-      class="bg-muted text-muted-foreground inline-flex h-9 items-center justify-center rounded-lg p-1"
-      tabindex="0"
-      data-orientation="horizontal"
-      style="outline: none;"
-    >
-      <.link
-        :for={tab <- @tab}
-        type="button"
-        role="tab"
-        aria-selected="true"
-        aria-controls="content-overview"
-        data-state="active"
-        id={tab[:id]}
-        class={[
-          "ring-offset-background inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium transition-all focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-          active_tab(tab_name(tab[:id]), @current_tab)
-        ]}
-        tabindex="0"
-        data-orientation="horizontal"
-        patch={tab[:patch]}
-      >
-        <%= render_slot(tab) %>
-      </.link>
-    </div>
+    <ul class="nav nav-pills nav-fill">
+      <li :for={tab <- @tab} class="nav-item">
+        <.link
+          class={["nav-link", active_tab(tab_name(tab[:id]), @current_tab)]}
+          patch={tab[:patch]}
+          aria-current="page"
+          href="#"
+        >
+          <%= render_slot(tab) %>
+        </.link>
+      </li>
+    </ul>
     <div
       :for={tab_content <- @tab_content}
       id={tab_content[:id]}
@@ -56,7 +41,7 @@ defmodule SentinelWeb.Components.Tabs do
   end
 
   def active_tab(tab, tab) do
-    "bg-background text-foreground shadow"
+    "active"
   end
 
   def active_tab(_tab_name, _current_tab) do
