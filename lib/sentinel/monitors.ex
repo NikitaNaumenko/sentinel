@@ -301,6 +301,17 @@ defmodule Sentinel.Monitors do
     )
   end
 
+  def last_checked_at(%Monitor{id: monitor_id}) do
+    Repo.one(
+      from(c in Check,
+        where: [monitor_id: ^monitor_id],
+        order_by: [desc: :id],
+        limit: 1,
+        select: c.inserted_at
+      )
+    )
+  end
+
   def get_check(id) do
     Repo.get(Check, id)
   end

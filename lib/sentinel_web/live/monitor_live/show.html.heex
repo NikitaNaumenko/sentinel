@@ -3,7 +3,8 @@
     <div class="card">
       <div class="card-body">
         <div class="subheader">Currently up for</div>
-        <div class="h3 m-0">14 days 2 hours 54 mins 34 seconds</div>
+        <%!-- <div class="h3 m-0">14 days 2 hours 54 mins 34 seconds</div> --%>
+        <div class="h3 m-0"><%= @uptime_period %></div>
       </div>
     </div>
   </div>
@@ -11,7 +12,7 @@
     <div class="card">
       <div class="card-body">
         <div class="subheader">Last checked at</div>
-        <div class="h3 m-0">27 seconds ago</div>
+        <div class="h3 m-0"><%= Sentinel.Cldr.DateTime.Relative.to_string!(@last_checked_at) %></div>
       </div>
     </div>
   </div>
@@ -19,7 +20,7 @@
     <div class="card">
       <div class="card-body">
         <div class="subheader">Incidents</div>
-        <div class="h3 m-0">3</div>
+        <div class="h3 m-0"><%= @incidents %></div>
       </div>
     </div>
   </div>
@@ -438,9 +439,9 @@
                       <g class="apexcharts-series-markers">
                         <path
                           id="SvgjsPath1356"
-                          d="M 0, 0 
-           m -0, 0 
-           a 0,0 0 1,0 0,0 
+                          d="M 0, 0
+           m -0, 0
+           a 0,0 0 1,0 0,0
            a 0,0 0 1,0 -0,0"
                           fill="#066fd1"
                           fill-opacity="1"

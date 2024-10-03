@@ -143,7 +143,7 @@ defmodule SentinelWeb.MonitorLive.Edit do
       </div>
       <div class="col-md-auto ms-auto d-print-none">
         <div class="btn-list">
-          <.link navigate={~p"/monitors#{@monitor}"} class="btn">
+          <.link navigate={~p"/monitors/#{@monitor}"} class="btn">
             <.icon name="icon-arrow-big-left" /> Back
           </.link>
           <.toggle_button monitor={@monitor} />
