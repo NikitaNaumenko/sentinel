@@ -7,6 +7,7 @@ defmodule SentinelWeb.MonitorLive.Show do
 
   alias Sentinel.Integrations
   alias Sentinel.Monitors
+  alias Sentinel.Monitors.Incident
   alias Sentinel.Monitors.Monitor
   alias Sentinel.Monitors.MonitorPolicy
   alias Sentinel.Repo
@@ -191,5 +192,23 @@ defmodule SentinelWeb.MonitorLive.Show do
 
   defp assign_form(socket, changeset) do
     assign(socket, :form, to_form(changeset))
+  end
+
+  def incident_status(%{incident: %Incident{status: :started}} = assigns) do
+    ~H"""
+    <p class="text-danger text-sm">
+      <.icon name="icon-alert-triangle" />
+      <%= dgettext("monitors", "Started") %>
+    </p>
+    """
+  end
+
+  def incident_status(%{incident: %Incident{status: :resolved}} = assigns) do
+    ~H"""
+    <p class="text-success text-sm">
+      <.icon name="icon-check-circle" />
+      <%= dgettext("monitors", "Resolved") %>
+    </p>
+    """
   end
 end

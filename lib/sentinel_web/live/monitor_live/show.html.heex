@@ -1970,6 +1970,44 @@
       </div>
     </div>
   </div>
+  <%!-- Incidents --%>
+  <div class="col-12">
+    <div class="card">
+      <div class="card-table table-responsive">
+      <table class="table">
+      <thead>
+        <tr>
+          <th><%= dgettext("monitors", "Start date") %></th>
+          <th><%= dgettext("monitors", "End date") %></th>
+          <th><%= dgettext("monitors", "Duration") %></th>
+          <th><%= dgettext("monitors", "Status") %></th>
+          <th><%= dgettext("monitors", "Status code") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr :for={incident <- @last_five_incidents}>
+          <td>
+
+          <%= Cldr.DateTime.to_string!(incident.started_at) %>
+          </td>
+          <td>
+            <%= incident.ended_at && Cldr.DateTime.to_string!(incident.ended_at) %>
+          </td>
+          <td>                    <%= incident.duration &&
+            Sentinel.Cldr.DateTime.Relative.to_string!(incident.duration, format: :narrow) %>
+</td>
+
+          <td><.incident_status incident={incident} /></td>
+          <td>
+          <p class="text-muted-foreground text-sm"><%= incident.http_code %></p>
+</td>
+        </tr>
+        </tbody>
+
+      </table>
+      </div>
+    </div>
+  </div>
   <div class="col-12">
     <div class="card">
       <div class="card-table table-responsive">
@@ -2031,139 +2069,3 @@
     </div>
   </div>
 </div>
-<%!-- <.header class="mb-5"> --%>
-<%!--   <%!-- <.back navigate={~p"/monitors"}>Back to monitors</.back> --%>
-<%!--   <.indicator monitor={@monitor} /> --%>
-<%!--   <%= @monitor.name %> --%>
-<%!--   <:subtitle><%= @monitor.url %></:subtitle> --%>
-<%!-- </.header> --%>
-<%!----%>
-<%!-- <.tabs current_tab={@current_tab}> --%>
-<%!--   <:tab id="overview-tab" patch={~p"/monitors/#{@monitor}?#{%{tab: "overview"}}"}> --%>
-<%!--     <%= dgettext("monitors", "Overview") %> --%>
-<%!--   </:tab> --%>
-<%!--   <:tab id="settings-tab" patch={~p"/monitors/#{@monitor}?#{%{tab: "settings"}}"}> --%>
-<%!--     <%= dgettext("monitors", "Settings") %> --%>
-<%!--   </:tab> --%>
-<%!--   <:tab id="notifications-tab" patch={~p"/monitors/#{@monitor}?#{%{tab: "notifications"}}"}> --%>
-<%!--     <%= dgettext("monitors", "Notifications") %> --%>
-<%!--   </:tab> --%>
-<%!--   <:tab id="danger-tab" patch={~p"/monitors/#{@monitor}?#{%{tab: "danger"}}"}> --%>
-<%!--     <%= dgettext("monitors", "Danger Zone") %> --%>
-<%!--   </:tab> --%>
-<%!--   <:tab_content id="overview"> --%>
-<%!--     <.overview --%>
-<%!--       monitor={@monitor} --%>
-<%!--       uptime={@uptime} --%>
-<%!--       uptime_period={@uptime_period} --%>
-<%!--       avg_response_time={@avg_response_time} --%>
-<%!--       incidents={@incidents} --%>
-<%!--       uptime_stats={@uptime_stats} --%>
-<%!--       response_times={@response_times} --%>
-<%!--       certificate={@certificate} --%>
-<%!--       last_five_checks={@last_five_checks} --%>
-<%!--       last_five_incidents={@last_five_incidents} --%>
-<%!--       this_month_incidents_count={@this_month_incidents_count} --%>
-<%!--     /> --%>
-<%!--   </:tab_content> --%>
-<%!--   <:tab_content id="settings"> --%>
-<%!--     <div class="bg-card text-card-foreground margin-auto rounded-xl border p-6 shadow"> --%>
-<%!--       <.simple_form for={@form} id="monitor-form" phx-validate="validate" phx-submit="save"> --%>
-<%!--         <div class="border-b pb-4"> --%>
-<%!--           <.input field={@form[:name]} label={dgettext("monitors", "Name")} /> --%>
-<%!--           <.input field={@form[:url]} label={dgettext("monitors", "URL")} /> --%>
-<%!--         </div> --%>
-<%!--         <div class="flex w-full items-center justify-between space-x-4"> --%>
-<%!--           <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"> --%>
-<%!--             <span><%= dgettext("monitors", "Check interval") %></span> --%>
-<%!--             <span class="text-muted-foreground text-sm font-normal leading-snug"> --%>
-<%!--               <%= dgettext("monitors", "How often should we run your check?") %> --%>
-<%!--             </span> --%>
-<%!--           </label> --%>
-<%!--           <div class="relative"> --%>
-<%!--             <.input field={@form[:interval]} type="select" options={@intervals} /> --%>
-<%!--           </div> --%>
-<%!--         </div> --%>
-<%!--         <div class="flex w-full items-center justify-between space-x-4"> --%>
-<%!--           <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"> --%>
-<%!--             <span><%= dgettext("monitors", "HTTP method") %></span> --%>
-<%!----%>
-<%!--             <span class="text-muted-foreground text-sm font-normal leading-snug"> --%>
-<%!--               <%= dgettext("monitors", "HTTP method used to make the request") %> --%>
-<%!--             </span> --%>
-<%!--           </label> --%>
-<%!--           <div class="relative"> --%>
-<%!--             <.input field={@form[:http_method]} type="select" options={@http_methods} /> --%>
-<%!--           </div> --%>
-<%!--         </div> --%>
-<%!--         <div class="flex w-full items-center justify-between space-x-4"> --%>
-<%!--           <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"> --%>
-<%!--             <span><%= dgettext("monitors", "Expected Status Code") %></span> --%>
-<%!----%>
-<%!--             <span class="text-muted-foreground text-sm font-normal leading-snug"> --%>
-<%!--               <%= dgettext("monitors", "What status code must your HTTP request return?") %> --%>
-<%!--             </span> --%>
-<%!--           </label> --%>
-<%!--           <div class="relative"> --%>
-<%!--             <.input field={@form[:expected_status_code]} type="select" options={@status_codes} /> --%>
-<%!--           </div> --%>
-<%!--         </div> --%>
-<%!--         <div class="flex w-full items-center justify-between space-x-4"> --%>
-<%!--           <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"> --%>
-<%!--             <span><%= dgettext("monitors", "Request timeout") %></span> --%>
-<%!--             <span class="text-muted-foreground text-sm font-normal leading-snug"> --%>
-<%!--               <%= dgettext("monitors", "After how many seconds is the request considered timeout?") %> --%>
-<%!--             </span> --%>
-<%!--           </label> --%>
-<%!--           <div class="relative"> --%>
-<%!--             <.input field={@form[:request_timeout]} type="select" options={@request_timeouts} /> --%>
-<%!--           </div> --%>
-<%!--         </div> --%>
-<%!----%>
-<%!--         <:actions> --%>
-<%!--           <div class="flex w-full justify-end"> --%>
-<%!--             <.button phx-disable-with="Saving..."><%= dgettext("forms", "Save changes") %></.button> --%>
-<%!--           </div> --%>
-<%!--         </:actions> --%>
-<%!--       </.simple_form> --%>
-<%!--     </div> --%>
-<%!--   </:tab_content> --%>
-<%!--   <:tab_content id="notifications"> --%>
-<%!--     <.live_component --%>
-<%!--       module={SentinelWeb.MonitorLive.Components.Notifications} --%>
-<%!--       id="notifications" --%>
-<%!--       monitor={@monitor} --%>
-<%!--       account_id={@current_user.account_id} --%>
-<%!--       notification_rule={@monitor.notification_rule} --%>
-<%!--       webhooks={@webhooks} --%>
-<%!--       telegram_bots={@telegram_bots} --%>
-<%!--     /> --%>
-<%!--   </:tab_content> --%>
-<%!--   <:tab_content id="danger"> --%>
-<%!--     <div class="bg-card text-card-foreground mb-5 flex flex-col rounded-lg border p-6 shadow-sm md:flex-row"> --%>
-<%!--       <div class="flex w-full items-center justify-between space-x-4"> --%>
-<%!--         <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"> --%>
-<%!--           <span> --%>
-<%!--             <%= dgettext("monitors", "Delete monitor") %> --%>
-<%!--           </span> --%>
-<%!--           <span class="text-muted-foreground text-sm font-normal leading-snug"> --%>
-<%!--             <%= dgettext( --%>
-<%!--               "monitors", --%>
-<%!--               "Delete the %{monitor} endpoint monitor and all its data. Careful, this action cannot be undone.", --%>
-<%!--               monitor: @monitor.name --%>
-<%!--             ) %> --%>
-<%!--           </span> --%>
-<%!--         </label> --%>
-<%!--         <div> --%>
-<%!--           <.button_link --%>
-<%!--             variant="danger" --%>
-<%!--             phx-click={JS.push("delete", value: %{id: @monitor.id})} --%>
-<%!--             data-confirm={dgettext("confirms", "Are you sure?")} --%>
-<%!--           > --%>
-<%!--             <%= dgettext("buttons", "Delete") %> --%>
-<%!--           </.button_link> --%>
-<%!--         </div> --%>
-<%!--       </div> --%>
-<%!--     </div> --%>
-<%!--   </:tab_content> --%>
-<%!-- </.tabs> --%>
