@@ -10,161 +10,148 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
   @impl Phoenix.LiveComponent
   def render(assigns) do
     ~H"""
-    <div class="card card-md">
-      <div class="card-body">
-        <div class="flex w-full items-center justify-between space-x-4">
-          <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-            <span>
-              <%= dgettext("monitors", "Activate monitoring") %>
-            </span>
-            <span class="text-muted-foreground text-sm font-normal leading-snug">
-              When unchecked, Sentinel will stop pinging this monitor.
-            </span>
-          </label>
-          <div>
-            <.switch
-              checked={active?(assigns.monitor)}
-              on_click={JS.push("toggle-monitor", value: %{id: @monitor.id})}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div class="text-muted-foreground text-sm">
+    <div>
+      <div class="fw-semibold">
         <%= dgettext("monitors", "Notification Rules") %>
       </div>
 
-      <div class="bg-card text-card-foreground flex flex-col rounded-lg border p-6 shadow-sm">
-        <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-          <span>
-            <%= dgettext("monitors", "Team level notifications") %>
-          </span>
-          <span class="text-muted-foreground text-sm font-normal leading-snug">
-            You will receive notifications for the enabled channels that are configured. To send emails & SMS to specific teammates, please configure an escalation policy.
-          </span>
-        </label>
-        <div class="mt-2 flex gap-1">
-          <div class="mr-5">
-            <label
-              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              phx-target={@myself}
-              phx-click={
-                JS.push("toggle-via",
-                  value: %{id: @notification_rule.id, attr: "via_email", value: @notification_rule.via_email}
-                )
-              }
-            >
-              <input
-                type="checkbox"
-                id="email"
-                name="via_email"
-                value="true"
-                checked={@notification_rule.via_email}
-                class="border-primary text-primary rounded focus:ring-0"
-              />
-              <%= dgettext("monitors", "Email") %>
-            </label>
-          </div>
-        </div>
-        <div class="mt-5 flex w-full items-center justify-between space-x-4">
-          <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+      <div class="card cad-md">
+        <div class="card-body">
+          <div class="vstack gap-1">
+            <span class="fw-medium">
+              <%= dgettext("monitors", "Team level notifications") %>
+            </span>
             <span>
-              <%= dgettext("monitors", "Webhook") %>
+              You will receive notifications for the enabled channels that are configured. To send emails & SMS to specific teammates, please configure an escalation policy.
             </span>
-            <span class="text-muted-foreground text-sm font-normal leading-snug">
-              <%= if Enum.any?(@webhooks) do %>
-                <%= dgettext("monitors", "Choose webhook from created earlier") %>
-              <% else %>
-                <%= dgettext("monitors", "To choose webhook you have to create it before") %>
-              <% end %>
-            </span>
-          </label>
-          <div>
-            <.form :if={Enum.any?(@webhooks)} for={@form} phx-change="update-webhook" phx-target={@myself}>
-              <.input
-                type="select"
-                options={collection_for_select(@webhooks, {:id, :name}, empty: {gettext("Not selected"), nil})}
-                field={@form[:webhook_id]}
-                class="min-w-[360px]"
-              />
-            </.form>
           </div>
-        </div>
-        <div class="mt-5 flex w-full items-center justify-between space-x-4">
-          <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-            <span>
-              <%= dgettext("monitors", "Telegram") %>
-            </span>
-            <span class="text-muted-foreground text-sm font-normal leading-snug">
-              <%= if Enum.any?(@telegram_bots) do %>
-                <%= dgettext("monitors", "Choose telegram bot from created earlier, invite bot and then run sync") %>
-              <% else %>
-                <%= dgettext("monitors", "To choose telegram bot you have to create it before") %>
-              <% end %>
-            </span>
-            <div :if={@telegram_bot_info}>
-              <.bot_info :for={bot_info <- @telegram_bot_info} telegram_bot_info={bot_info} />
+          <div class="mt-2 flex gap-1">
+            <div class="mr-5">
+              <label
+                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                phx-target={@myself}
+                phx-click={
+                  JS.push("toggle-via",
+                    value: %{id: @notification_rule.id, attr: "via_email", value: @notification_rule.via_email}
+                  )
+                }
+              >
+                <input
+                  type="checkbox"
+                  id="email"
+                  name="via_email"
+                  value="true"
+                  checked={@notification_rule.via_email}
+                  class="border-primary text-primary rounded focus:ring-0"
+                />
+                <%= dgettext("monitors", "Email") %>
+              </label>
             </div>
-          </label>
-          <div>
-            <div :if={Enum.any?(@telegram_bots)}>
-              <.form for={@form} phx-change="update-telegram" phx-target={@myself} class="flex flex-col gap-2">
+          </div>
+          <div class="mt-5 flex w-full items-center justify-between space-x-4">
+            <%!-- <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              <span>
+                <%= dgettext("monitors", "Webhook") %>
+              </span>
+              <span class="text-muted-foreground text-sm font-normal leading-snug">
+                <%= if Enum.any?(@webhooks) do %>
+                  <%= dgettext("monitors", "Choose webhook from created earlier") %>
+                <% else %>
+                  <%= dgettext("monitors", "To choose webhook you have to create it before") %>
+                <% end %>
+              </span>
+            </label>
+            <div>
+              <.form :if={Enum.any?(@webhooks)} for={@form} phx-change="update-webhook" phx-target={@myself}>
                 <.input
                   type="select"
-                  options={
-                    collection_for_select(@telegram_bots, {:id, :name}, empty: {gettext("Not selected"), nil})
-                  }
-                  field={@form[:telegram_bot_id]}
-                />
-                <.input
-                  field={@form[:telegram_chat_id]}
-                  class="mt-2"
-                  placeholder={dgettext("monitors", "Chat id: -10102043")}
+                  options={collection_for_select(@webhooks, {:id, :name}, empty: {gettext("Not selected"), nil})}
+                  field={@form[:webhook_id]}
+                  class="min-w-[360px]"
                 />
               </.form>
-              <.button phx-click="sync-telegram" phx-target={@myself} class="mt-2">
-                <%= dgettext("monitors", "Fetch chat info") %>
-              </.button>
+            </div> --%>
+          </div>
+          <div class="mt-5 flex w-full items-center justify-between space-x-4">
+            <%!-- <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              <span>
+                <%= dgettext("monitors", "Telegram") %>
+              </span>
+              <span class="text-muted-foreground text-sm font-normal leading-snug">
+                <%= if Enum.any?(@telegram_bots) do %>
+                  <%= dgettext(
+                    "monitors",
+                    "Choose telegram bot from created earlier, invite bot and then run sync"
+                  ) %>
+                <% else %>
+                  <%= dgettext("monitors", "To choose telegram bot you have to create it before") %>
+                <% end %>
+              </span>
+              <div :if={@telegram_bot_info}>
+                <.bot_info :for={bot_info <- @telegram_bot_info} telegram_bot_info={bot_info} />
+              </div>
+            </label> --%>
+            <%!-- <div>
+              <div :if={Enum.any?(@telegram_bots)}>
+                <.form for={@form} phx-change="update-telegram" phx-target={@myself} class="flex flex-col gap-2">
+                  <.input
+                    type="select"
+                    options={
+                      collection_for_select(@telegram_bots, {:id, :name}, empty: {gettext("Not selected"), nil})
+                    }
+                    field={@form[:telegram_bot_id]}
+                  />
+                  <.input
+                    field={@form[:telegram_chat_id]}
+                    class="mt-2"
+                    placeholder={dgettext("monitors", "Chat id: -10102043")}
+                  />
+                </.form>
+                <.button phx-click="sync-telegram" phx-target={@myself} class="mt-2">
+                  <%= dgettext("monitors", "Fetch chat info") %>
+                </.button>
+              </div>
+            </div> --%>
+          </div>
+          <%!-- <div class="mt-5 flex w-full items-center justify-between space-x-4">
+            <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              <span>
+                <%= dgettext("monitors", "Activate monitoring") %>
+              </span>
+              <span class="text-muted-foreground text-sm font-normal leading-snug">
+                When unchecked, Sentinel will stop pinging this monitor.
+              </span>
+            </label>
+            <div>
+              <.form for={@form}>
+                <.input type="select" options={@resend_interval_options} field={@form[:resend_interval]} />
+              </.form>
             </div>
           </div>
-        </div>
-        <div class="mt-5 flex w-full items-center justify-between space-x-4">
-          <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-            <span>
-              <%= dgettext("monitors", "Activate monitoring") %>
-            </span>
-            <span class="text-muted-foreground text-sm font-normal leading-snug">
-              When unchecked, Sentinel will stop pinging this monitor.
-            </span>
-          </label>
-          <div>
-            <.form for={@form}>
-              <.input type="select" options={@resend_interval_options} field={@form[:resend_interval]} />
-            </.form>
-          </div>
-        </div>
-        <div class="mt-5 flex w-full items-center justify-between space-x-4">
-          <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-            <span>
-              <%= dgettext("monitors", "Activate monitoring") %>
-            </span>
-            <span class="text-muted-foreground text-sm font-normal leading-snug">
-              When unchecked, Sentinel will stop pinging this monitor.
-            </span>
-          </label>
-          <div>
-            <.form for={@form}>
-              <.input type="select" options={@timeout_options} field={@form[:timeout]} />
-            </.form>
-          </div>
+          <div class="mt-5 flex w-full items-center justify-between space-x-4">
+            <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              <span>
+                <%= dgettext("monitors", "Activate monitoring") %>
+              </span>
+              <span class="text-muted-foreground text-sm font-normal leading-snug">
+                When unchecked, Sentinel will stop pinging this monitor.
+              </span>
+            </label>
+            <div>
+              <.form for={@form}>
+                <.input type="select" options={@timeout_options} field={@form[:timeout]} />
+              </.form>
+            </div>
+          </div> --%>
         </div>
       </div>
-      <div class="text-muted-foreground mt-10 text-sm">
+
+      <div class="fw-semibold">
         <%= dgettext("monitors", "SSL monitoring") %>
       </div>
 
-      <div class="bg-card text-card-foreground flex flex-col rounded-lg border p-4 shadow-sm">
-        <div class="flex w-full items-center justify-between space-x-4">
+      <div class="card card-md">
+        <div class="card-body">
           <label class="flex flex-col font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
             <span>
               <%= dgettext("monitors", "SSL Expiry alerts") %>
