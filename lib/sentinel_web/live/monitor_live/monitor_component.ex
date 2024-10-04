@@ -8,10 +8,7 @@ defmodule SentinelWeb.MonitorLive.MonitorComponent do
   def render(assigns) do
     ~H"""
     <div id={@id}>
-      <.link
-        navigate={~p"/monitors/#{@monitor}"}
-        class="card"
-      >
+      <.link navigate={~p"/monitors/#{@monitor}"} class="card">
         <div class="card-body">
           <h5 class="card-title">
             <.indicator monitor={@monitor} />
@@ -28,19 +25,16 @@ defmodule SentinelWeb.MonitorLive.MonitorComponent do
 
   def indicator(assigns) do
     ~H"""
-    <span class={["z-10 inline-flex h-6 w-6 shrink-0 animate-pulse items-center justify-center rounded-full ring-0", outer_color_state(@monitor)]}>
-      <span class={["flex h-3 w-3 rounded-full", inner_color_state(@monitor)]}></span>
+    <span class={["status-indicator status-indicator-animated", color(@monitor)]}>
+      <span class="status-indicator-circle"></span>
+      <span class="status-indicator-circle"></span>
+      <span class="status-indicator-circle"></span>
     </span>
     """
   end
 
-  defp outer_color_state(%Monitor{state: :disabled}), do: "bg-secondary/50"
-  defp outer_color_state(%Monitor{last_check: %Check{result: :failure}}), do: "bg-danger/50"
-  defp outer_color_state(%Monitor{last_check: %Check{result: :success}}), do: "bg-success/50"
-  defp outer_color_state(_), do: "bg-warning/50"
-
-  defp inner_color_state(%Monitor{state: :disabled}), do: "bg-secondary"
-  defp inner_color_state(%Monitor{last_check: %Check{result: :failure}}), do: "bg-danger"
-  defp inner_color_state(%Monitor{last_check: %Check{result: :success}}), do: "bg-success"
-  defp inner_color_state(_), do: "bg-warning"
+  defp color(%Monitor{state: :disabled}), do: "status-secondary"
+  defp color(%Monitor{last_check: %Check{result: :failure}}), do: "status-danger"
+  defp color(%Monitor{last_check: %Check{result: :success}}), do: "status-success"
+  defp color(_), do: "status-warning"
 end
