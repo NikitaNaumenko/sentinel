@@ -26,8 +26,7 @@
               variant="danger"
               size="icon"
               name="escalation_policy[escalation_steps_drop][]"
-              value={step_f.index}
-              phx-click="delete-step"
+              phx-click={JS.push("delete-step", value: %{step_index: step_f.index})}
             >
               <.icon name="icon-trash-2" />
             </.button>
@@ -71,7 +70,7 @@
             type="button"
             value={step_f.index}
             name="escalation_policy[escalation_steps][escalation_alert_sort][]"
-            phx-click="add-alert"
+            phx-click={JS.push("add-alert", value: %{step_index: step_f.index})}
           >
             Add alert
           </.button>

@@ -59,49 +59,44 @@ defmodule SentinelWeb.EscalationPolicyLive.New do
   end
 
   def handle_event("add-step", _, socket) do
-    step = Escalations.escalation_step_changeset()
+    step_changeset = Escalations.escalation_step_changeset()
 
     socket =
       update(socket, :form, fn %{source: policy_changeset} ->
         existing_steps = get_change_or_field(policy_changeset, :escalation_steps)
 
-        policy_changeset =
-          Ecto.Changeset.put_assoc(policy_changeset, :escalation_steps, existing_steps ++ [step])
-
-        to_form(policy_changeset)
+        policy_changeset
+        |> Ecto.Changeset.put_assoc(:escalation_steps, existing_steps ++ [step_changeset])
+        |> to_form()
       end)
 
     {:noreply, socket}
   end
 
-  def handle_event("add-alert", %{"value" => index}, socket) do
+  def handle_event("add-alert", %{"step_index" => step_index}, socket) do
     alert_changeset = Escalations.escalation_alert_changeset()
 
     socket =
       update(socket, :form, fn %{source: policy_changeset} ->
         steps = get_change_or_field(policy_changeset, :escalation_steps)
-        step_changeset = Enum.at(steps, String.to_integer(index))
+        step_changeset = Enum.at(steps, step_index)
         existing_alerts = get_change_or_field(step_changeset, :escalation_alerts)
 
         step_changeset =
           Ecto.Changeset.put_assoc(step_changeset, :escalation_alerts, existing_alerts ++ [alert_changeset])
 
-        policy_changeset =
-          Ecto.Changeset.put_assoc(
-            policy_changeset,
-            :escalation_steps,
-            List.replace_at(steps, String.to_integer(index), step_changeset)
-          )
-
-        to_form(policy_changeset)
+        policy_changeset
+        |> Ecto.Changeset.put_assoc(
+          :escalation_steps,
+          List.replace_at(steps, step_index, step_changeset)
+        )
+        |> to_form()
       end)
 
     {:noreply, socket}
   end
 
-  def handle_event("delete-step", %{"value" => index}, socket) do
-    index = String.to_integer(index)
-
+  def handle_event("delete-step", %{"step_index" => index}, socket) do
     socket =
       update(socket, :form, fn %{source: changeset} ->
         existing = Ecto.Changeset.get_assoc(changeset, :escalation_steps)
@@ -123,9 +118,6 @@ defmodule SentinelWeb.EscalationPolicyLive.New do
   end
 
   def handle_event("delete-alert", %{"alert_index" => alert_index, "step_index" => step_index}, socket) do
-    # alert_index = String.to_integer(alert_index)
-    # step_index = String.to_integer(step_index)
-
     socket =
       update(socket, :form, fn %{source: changeset} ->
         steps = Ecto.Changeset.get_assoc(changeset, :escalation_steps)
@@ -159,16 +151,6 @@ defmodule SentinelWeb.EscalationPolicyLive.New do
       Ecto.Changeset.get_field(changeset, field, [])
     end
   end
-
-  # @impl Phoenix.LiveView
-  # def handle_event("validate", %{"monitor" => monitor_attrs}, socket) do
-  #   changeset =
-  #     %Monitor{}
-  #     |> Monitor.changeset(monitor_attrs)
-  #     |> Map.put(:action, :validate)
-
-  #   {:noreply, assign_form(socket, changeset)}
-  # end
 
   # def handle_event("save", %{"monitor" => monitor_attrs}, socket) do
   #   case Monitors.create_monitor(Map.put(monitor_attrs, "account_id", socket.assigns.current_user.account_id)) do
