@@ -1,31 +1,87 @@
-<.simple_form for={@form} id="monitor-form"  phx-submit="save">
-<div class="d-flex col-12">
-  <div class="col-8">
-    <.input field={@form[:name]} label={dgettext("monitors", "Name")} phx-debounce="300" />
-  </div>
-  <div class="col-4 d-flex justify-content-end">
-  <div class="mb-3 align-content-end">
+<.simple_form for={@form} id="monitor-form" phx-change="validate" phx-submit="save">
+  <div class="d-flex col-12">
+    <div class="col-8">
+      <.input field={@form[:name]} label={dgettext("monitors", "Name")} phx-debounce="300" />
+    </div>
+    <div class="col-4 d-flex justify-content-end">
+      <div class="align-content-end mb-3">
         <.button phx-disable-with="Saving..."><%= dgettext("forms", "Save") %></.button>
-        </div>
-  </div>
+      </div>
+    </div>
   </div>
 
   <div class="col-12">
-  <.inputs_for :let={step_f} field={@form[:escalation_steps]}>
-  <div class="card">
-    <div class="card-header">
-      <div class="col-1">
-        <.input field={step_f[:notify_after]} type="text" />
-      </div>
-      <div class="col-8">
-        Notify after minutes
-      </div>
-    </div>
-    <div class="card-body">
-    </div>
-  </div>
-  </.inputs_for>
-  </div>
+    <.inputs_for :let={step_f} field={@form[:escalation_steps]}>
+      <div class="card mb-3">
+        <div class="card-header">
+          <div class="col-1 pt-3">
+            <.input field={step_f[:notify_after]} type="text" />
+          </div>
+          <div class="col-8 px-3">
+            Notify after minutes
+          </div>
+          <div class="col-3 d-flex justify-content-end">
+            <.button
+              type="button"
+              variant="danger"
+              size="icon"
+              name="escalation_policy[escalation_steps_drop][]"
+              value={step_f.index}
+              phx-click="delete-step"
+            >
+              <.icon name="icon-trash-2" />
+            </.button>
+          </div>
+        </div>
+        <div class="card-body">
+          <.inputs_for :let={alert_f} field={step_f[:escalation_alerts]}>
+            <div class="row">
+              <div class="col-4">
+                <.input
+                  field={alert_f[:alert_type]}
+                  type="select"
+                  options={translated_select_enums(Alert, :alert_type)}
+                />
+              </div>
+              <div class="col-4">
+                <.input
+                  field={alert_f[:alert_type]}
+                  type="select"
+                  options={translated_select_enums(Alert, :alert_type)}
+                />
+              </div>
 
-  <.button type="button" value="new" name="escalation_policy[escalation_step_sort][]" phx-click="add">Add Step</.button>
+              <div class="col-4 d-flex justify-content-end">
+                <.button
+                  type="button"
+                  variant="danger"
+                  size="icon"
+                  name="escalation_policy[escalation_steps][escalation_alert_drop][]"
+                  phx-click={
+                    JS.push("delete-alert", value: %{alert_index: alert_f.index, step_index: step_f.index})
+                  }
+                >
+                  <.icon name="icon-trash-2" />
+                </.button>
+              </div>
+            </div>
+          </.inputs_for>
+
+          <.button
+            type="button"
+            value={step_f.index}
+            name="escalation_policy[escalation_steps][escalation_alert_sort][]"
+            phx-click="add-alert"
+          >
+            Add alert
+          </.button>
+        </div>
+      </div>
+    </.inputs_for>
+  </div>
+  <input type="hidden" name="escalation_policy[escalation_step_drop][]" />
+
+  <.button type="button" value="new" name="escalation_policy[escalation_step_sort][]" phx-click="add-step">
+    Add Step
+  </.button>
 </.simple_form>

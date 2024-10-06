@@ -1,15 +1,18 @@
 defmodule Sentinel.Escalations.Alert do
+  @moduledoc false
   use Ecto.Schema
+
   import Ecto.Changeset
-  alias Sentinel.Escalation.Step
+
   alias Sentinel.Accounts.User
-  alias Sentinel.Integrations.Webhook
+  alias Sentinel.Escalations.Step
   alias Sentinel.Integrations.TelegramBot
+  alias Sentinel.Integrations.Webhook
 
   @alert_types ~w[email webhook telegram_bot]a
 
   schema "escalation_alerts" do
-    field :alert_types, Ecto.Enum, values: @alert_types
+    field :alert_type, Ecto.Enum, values: @alert_types
     belongs_to :user, User
     belongs_to :webhook, Webhook
     belongs_to :telegram_bot, TelegramBot
@@ -21,7 +24,7 @@ defmodule Sentinel.Escalations.Alert do
   @doc false
   def changeset(alert, attrs) do
     alert
-    |> cast(attrs, [])
+    |> cast(attrs, [:user_id, :alert_type])
     |> validate_required([])
   end
 end

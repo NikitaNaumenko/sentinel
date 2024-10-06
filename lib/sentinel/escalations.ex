@@ -4,6 +4,7 @@ defmodule Sentinel.Escalations do
 
   alias Sentinel.Escalations.Alert
   alias Sentinel.Escalations.Policy
+  alias Sentinel.Escalations.Step
   alias Sentinel.Repo
 
   @doc """
@@ -17,7 +18,15 @@ defmodule Sentinel.Escalations do
     Policy.changeset(policy, attrs)
   end
 
+  def escalation_step_changeset(step \\ %Step{}, attrs \\ %{}) do
+    Step.changeset(step, attrs)
+  end
+
+  def escalation_alert_changeset(alert \\ %Alert{}, attrs \\ %{}) do
+    Alert.changeset(alert, attrs)
+  end
+
   def alert_types do
-    Ecto.Enum.values(Alert, :alert_types)
+    Ecto.Enum.values(Alert, :alert_type)
   end
 end

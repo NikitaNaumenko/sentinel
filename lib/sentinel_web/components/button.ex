@@ -43,6 +43,11 @@ defmodule SentinelWeb.Components.Button do
     default: :primary
   )
 
+  variant(
+    :size,
+    [default: "", sm: "btn-sm", icon: "btn-icon"],
+    default: :default
+  )
 
   @doc """
   Renders a button component with specified attributes.
