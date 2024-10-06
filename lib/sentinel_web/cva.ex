@@ -73,7 +73,7 @@ defmodule CVA do
     cva(
       base,
       Enum.into(config, %{variants: nil, compound_variants: nil, default_variants: nil}),
-      Enum.into(props, %{})
+      Map.new(props)
     )
   end
 
@@ -175,8 +175,7 @@ defmodule CVA do
     compound_variants = config[:compound_variants]
 
     if compound_variants do
-      compound_variants
-      |> Enum.reduce([], fn compound_variant, acc ->
+      Enum.reduce(compound_variants, [], fn compound_variant, acc ->
         {class, compound} = Keyword.pop(compound_variant, :class)
         props_with_default = Keyword.merge(config[:default_variants] || [], Map.to_list(props))
 

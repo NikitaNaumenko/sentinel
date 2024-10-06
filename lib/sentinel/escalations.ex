@@ -14,6 +14,12 @@ defmodule Sentinel.Escalations do
     Repo.all(from(p in Policy, where: p.account_id == ^account_id))
   end
 
+  def create_escalation_policy(attrs) do
+    %Policy{}
+    |> escalation_policy_changeset(attrs)
+    |> Repo.insert()
+  end
+
   def escalation_policy_changeset(policy \\ %Policy{}, attrs \\ %{}) do
     Policy.changeset(policy, attrs)
   end

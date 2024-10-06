@@ -13,7 +13,7 @@ defmodule Sentinel.Escalations.Step do
     field :temp_id, :string, virtual: true
 
     belongs_to :escalation_policy, Policy
-    has_many :escalation_alerts, Alert, foreign_key: :escalation_alert_id
+    has_many :escalation_alerts, Alert, foreign_key: :escalation_step_id
     timestamps(type: :utc_datetime_usec)
   end
 

@@ -9,7 +9,7 @@ defmodule SentinelWeb.EscalationPolicyLive.Index do
   on_mount {AuthorizeHook, policy: EscalationPolicy}
   @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
-    {:ok,socket }
+    {:ok, socket}
   end
 
   @impl Phoenix.LiveView

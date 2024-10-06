@@ -11,7 +11,6 @@ defmodule Sentinel.Repo.Migrations.CreateEscalationAlerts do
       add :telegram_bot_id, references(:telegram_bots, on_delete: :nothing)
       add :alert_type, :string
 
-
       timestamps(type: :utc_datetime_usec)
     end
   end

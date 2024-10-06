@@ -152,21 +152,22 @@ defmodule SentinelWeb.EscalationPolicyLive.New do
     end
   end
 
-  # def handle_event("save", %{"monitor" => monitor_attrs}, socket) do
-  #   case Monitors.create_monitor(Map.put(monitor_attrs, "account_id", socket.assigns.current_user.account_id)) do
-  #     {:ok, monitor} ->
-  #       socket =
-  #         socket
-  #         |> put_flash(:success, dgettext("monitors", "Monitor created successfully"))
-  #         |> push_navigate(to: ~p"/monitors/#{monitor}")
+  def handle_event("save", %{"policy" => policy_attrs}, socket) do
+    case Escalations.create_escalation_policy(
+           Map.put(policy_attrs, "account_id", socket.assigns.current_user.account_id)
+         ) do
+      {:ok, policy} ->
+        dbg(policy)
 
-  #       {:noreply, socket}
+        socket =
+          socket
+          |> put_flash(:success, dgettext("escalation_policies", "Escalation policy created successfully"))
+          |> push_navigate(to: ~p"/escalation_policies")
 
-  #     {:error, {:already_started, _pid}} ->
-  #       {:noreply, put_flash(socket, :error, dgettext("monitors", "Something went wrong"))}
+        {:noreply, socket}
 
-  #     {:error, changeset} ->
-  #       {:noreply, assign_form(socket, changeset)}
-  #   end
-  # end
+      {:error, changeset} ->
+        {:noreply, assign_form(socket, changeset)}
+    end
+  end
 end

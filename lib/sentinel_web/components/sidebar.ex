@@ -44,7 +44,7 @@ defmodule SentinelWeb.Components.Sidebar do
               <.icon name="icon-radio-tower" class="nav-link-icon d-md-none d-lg-inline-block" />
               <span class="nav-link-title"><%= dgettext("sidebar", "Status pages") %></span>
             </.sidebar_link>
-           <.sidebar_link
+            <.sidebar_link
               :if={permit?(Sentinel.Escalations.EscalationPolicy, :index, @current_user)}
               path={~p"/escalation_policies"}
             >
@@ -66,13 +66,10 @@ defmodule SentinelWeb.Components.Sidebar do
               <.icon name="icon-users-round" class="nav-link-icon d-md-none d-lg-inline-block" />
               <span class="nav-link-title"><%= dgettext("sidebar", "Teammates") %></span>
             </.sidebar_link>
-       <.link
-          href={~p"/users/log_out"}
-          method="delete"
-        >
-          <.icon name="icon-log-out" class="nav-link-icon d-md-none d-lg-inline-block" />
-          <span class="nav-link-title"><%= dgettext("sidebar", "Log out") %></span>
-        </.link>
+            <.link href={~p"/users/log_out"} method="delete">
+              <.icon name="icon-log-out" class="nav-link-icon d-md-none d-lg-inline-block" />
+              <span class="nav-link-title"><%= dgettext("sidebar", "Log out") %></span>
+            </.link>
           </ul>
         </div>
       </div>
