@@ -1,0 +1,31 @@
+<.simple_form for={@form} id="monitor-form"  phx-submit="save">
+<div class="d-flex col-12">
+  <div class="col-8">
+    <.input field={@form[:name]} label={dgettext("monitors", "Name")} phx-debounce="300" />
+  </div>
+  <div class="col-4 d-flex justify-content-end">
+  <div class="mb-3 align-content-end">
+        <.button phx-disable-with="Saving..."><%= dgettext("forms", "Save") %></.button>
+        </div>
+  </div>
+  </div>
+
+  <div class="col-12">
+  <.inputs_for :let={step_f} field={@form[:escalation_steps]}>
+  <div class="card">
+    <div class="card-header">
+      <div class="col-1">
+        <.input field={step_f[:notify_after]} type="text" />
+      </div>
+      <div class="col-8">
+        Notify after minutes
+      </div>
+    </div>
+    <div class="card-body">
+    </div>
+  </div>
+  </.inputs_for>
+  </div>
+
+  <.button type="button" value="new" name="escalation_policy[escalation_step_sort][]" phx-click="add">Add Step</.button>
+</.simple_form>

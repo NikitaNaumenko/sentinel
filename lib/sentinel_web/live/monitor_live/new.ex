@@ -58,10 +58,6 @@ defmodule SentinelWeb.MonitorLive.New do
     """
   end
 
-  defp assign_form(socket, changeset) do
-    assign(socket, :form, to_form(changeset))
-  end
-
   @impl Phoenix.LiveView
   def handle_event("validate", %{"monitor" => monitor_attrs}, socket) do
     changeset =

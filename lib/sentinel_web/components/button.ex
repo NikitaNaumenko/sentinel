@@ -30,7 +30,7 @@ defmodule SentinelWeb.Components.Button do
 
   require Logger
 
-  attr :rest, :global, include: ~w[on_click]
+  attr :rest, :global, include: ~w[phx-click value name type]
   attr :class, :any, default: ""
   slot :inner_block
 

@@ -82,7 +82,7 @@ defmodule SentinelWeb.SessionLive.ResetPassword do
     end
   end
 
-  defp assign_form(socket, %{} = source) do
-    assign(socket, :form, to_form(source, as: "user"))
-  end
+  # defp assign_form(socket, %{} = source) do
+  #   assign(socket, :form, to_form(source, as: "user"))
+  # end
 end

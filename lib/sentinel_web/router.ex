@@ -75,6 +75,9 @@ defmodule SentinelWeb.Router do
       live "/status_pages", PageLive.Index, :index
       live "/status_pages/:id", PageLive.Show, :index
       live "/status_pages/new", PageLive.New, :new
+      live "/escalation_policies", EscalationPolicyLive.Index, :index
+      live "/escalation_policies/new", EscalationPolicyLive.New, :new
+      live "/escalation_policies/:id/edit", EscalationPolicyLive.Edit, :edit
       # live "/users/settings", UserSettingsLive, :edit
       # live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
       live "/integrations", IntegrationLive.Index, :index

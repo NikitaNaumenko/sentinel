@@ -84,13 +84,13 @@ defmodule SentinelWeb.SessionLive.Registration do
     {:noreply, assign_form(socket, Map.put(changeset, :action, :validate))}
   end
 
-  defp assign_form(socket, %Ecto.Changeset{} = changeset) do
-    form = to_form(changeset, as: "user")
+  # defp assign_form(socket, %Ecto.Changeset{} = changeset) do
+  #   form = to_form(changeset, as: "user")
 
-    if changeset.valid? do
-      assign(socket, form: form, check_errors: false)
-    else
-      assign(socket, form: form)
-    end
-  end
+  #   if changeset.valid? do
+  #     assign(socket, form: form, check_errors: false)
+  #   else
+  #     assign(socket, form: form)
+  #   end
+  # end
 end

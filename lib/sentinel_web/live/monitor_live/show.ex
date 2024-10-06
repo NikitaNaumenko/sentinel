@@ -2,7 +2,6 @@ defmodule SentinelWeb.MonitorLive.Show do
   @moduledoc false
   use SentinelWeb, :live_view
 
-  import SentinelWeb.MonitorLive.Components.Overview, only: [overview: 1]
   import SentinelWeb.MonitorLive.MonitorComponent, only: [indicator: 1]
 
   alias Sentinel.Integrations
@@ -99,13 +98,17 @@ defmodule SentinelWeb.MonitorLive.Show do
     end
   end
 
+  def handle_event("update-webhook-url", _params, socket) do
+    {:noreply, put_flash(socket, :info, dgettext("notification_rule", "Webhook url updated!"))}
+  end
+
   def handle_event("delete", %{"id" => id}, socket) do
     case id |> Monitors.get_monitor!() |> Monitors.delete_monitor() do
       {:ok, _monitor} ->
         socket =
           socket
           |> put_flash(:info, dgettext("monitors", "Monitor deleted successfully"))
-          |> push_redirect(to: ~p"/monitors")
+          |> push_navigate(to: ~p"/monitors")
 
         {:noreply, socket}
 
@@ -182,14 +185,6 @@ defmodule SentinelWeb.MonitorLive.Show do
   #   {:noreply, put_flash(socket, :info, dgettext("notification_rule", "Webhook url updated!"))}
   # end
   #
-  def handle_event("update-webhook-url", _params, socket) do
-    {:noreply, put_flash(socket, :info, dgettext("notification_rule", "Webhook url updated!"))}
-  end
-
-  defp assign_form(socket, changeset) do
-    assign(socket, :form, to_form(changeset))
-  end
-
   def incident_status(%{incident: %Incident{status: :started}} = assigns) do
     ~H"""
     <p class="text-danger text-sm">

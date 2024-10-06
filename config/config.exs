@@ -32,7 +32,7 @@ config :sentinel, SentinelWeb.Endpoint,
 config :sentinel, Sentinel.Mailer, adapter: Swoosh.Adapters.Local
 
 config :ex_cldr,
-  default_locale: "en",
+  default_locale: :en,
   default_backend: Sentinel.Cldr
 
 # Configures Elixir's Logger

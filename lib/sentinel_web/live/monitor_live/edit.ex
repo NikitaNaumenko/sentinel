@@ -94,7 +94,7 @@ defmodule SentinelWeb.MonitorLive.Edit do
         socket =
           socket
           |> put_flash(:info, dgettext("monitors", "Monitor deleted successfully"))
-          |> push_redirect(to: ~p"/monitors")
+          |> push_navigate(to: ~p"/monitors")
 
         {:noreply, socket}
 
@@ -120,6 +120,10 @@ defmodule SentinelWeb.MonitorLive.Edit do
     end
   end
 
+
+  def handle_event("update-webhook-url", _params, socket) do
+    {:noreply, put_flash(socket, :info, dgettext("notification_rule", "Webhook url updated!"))}
+  end
   def header(assigns) do
     ~H"""
     <div class="row g-3 align-items-center">
@@ -175,11 +179,4 @@ defmodule SentinelWeb.MonitorLive.Edit do
   #   {:noreply, put_flash(socket, :info, dgettext("notification_rule", "Webhook url updated!"))}
   # end
   #
-  def handle_event("update-webhook-url", _params, socket) do
-    {:noreply, put_flash(socket, :info, dgettext("notification_rule", "Webhook url updated!"))}
-  end
-
-  defp assign_form(socket, changeset) do
-    assign(socket, :form, to_form(changeset))
-  end
 end

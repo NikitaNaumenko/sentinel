@@ -32,9 +32,9 @@ defmodule Sentinel.Integrations do
     |> Repo.update()
   end
 
-  def list_webhooks(account) do
+  def list_webhooks(account_id) do
     Webhook
-    |> where([w], w.account_id == ^account.id)
+    |> where([w], w.account_id == ^account_id)
     |> order_by(asc: :id)
     |> Repo.all()
   end
@@ -43,9 +43,9 @@ defmodule Sentinel.Integrations do
     Repo.get_by!(TelegramBot, id: id, account_id: account_id)
   end
 
-  def list_telegram_bots(account) do
+  def list_telegram_bots(account_id) do
     TelegramBot
-    |> where([t], t.account_id == ^account.id)
+    |> where([t], t.account_id == ^account_id)
     |> order_by(asc: :id)
     |> Repo.all()
   end

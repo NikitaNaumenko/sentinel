@@ -25,6 +25,13 @@ defmodule Sentinel.Accounts do
   end
 
   @doc """
+  Returns the list of users by account
+  """
+  def list_users(account_id) do
+    from(u in User, where: u.account_id == ^account_id) |> Repo.all()
+  end
+
+  @doc """
   Gets a single account.
 
   Raises `Ecto.NoResultsError` if the Account does not exist.

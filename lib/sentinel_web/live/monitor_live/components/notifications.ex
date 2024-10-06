@@ -4,7 +4,6 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
 
   alias Sentinel.Integrations
   alias Sentinel.Monitors
-  alias Sentinel.Monitors.Monitor
   alias Sentinel.Monitors.NotificationRule
 
   @impl Phoenix.LiveComponent
@@ -268,9 +267,6 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
     </div>
     """
   end
-
-  defp active?(%Monitor{state: :active}), do: true
-  defp active?(_), do: false
 
   defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
 end
