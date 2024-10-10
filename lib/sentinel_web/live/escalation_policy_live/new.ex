@@ -16,9 +16,9 @@ defmodule SentinelWeb.EscalationPolicyLive.New do
     account_id = socket.assigns.current_account.id
     changeset = Escalations.escalation_policy_changeset()
 
-    users = Accounts.list_users(account_id)
-    webhooks = Integrations.list_webhooks(account_id)
-    telegram_bots = Integrations.list_telegram_bots(account_id)
+    users = account_id |> Accounts.list_users() |> collection_for_select({:id, :email})
+    webhooks = account_id |> Integrations.list_webhooks() |> collection_for_select({:id, :name})
+    telegram_bots = account_id |> Integrations.list_telegram_bots() |> collection_for_select({:id, :name})
     alert_types = Escalations.alert_types()
 
     socket =
@@ -27,6 +27,8 @@ defmodule SentinelWeb.EscalationPolicyLive.New do
       |> assign(:users, users)
       |> assign(:webhooks, webhooks)
       |> assign(:telegram_bots, telegram_bots)
+      # тут должна быть мапа с индексами alert type, и по каждому индексу лежать {alert_type, collection}
+      |> assign(:step_alert_types, %{})
       |> assign(:page_title, dgettext("escalation_policy", "Create new escalation policy"))
       |> assign(:title, dgettext("monitors", "New Escalation Policy"))
       |> assign_form(changeset)
@@ -48,15 +50,58 @@ defmodule SentinelWeb.EscalationPolicyLive.New do
 
   @impl Phoenix.LiveView
   def handle_event("validate", %{"policy" => escalation_policy_attrs}, socket) do
-    dbg(escalation_policy_attrs)
-
     changeset =
       %Policy{}
       |> Escalations.escalation_policy_changeset(escalation_policy_attrs)
+      |> dbg()
       |> Map.put(:action, :validate)
 
     {:noreply, assign_form(socket, changeset)}
   end
+
+  def handle_event("change-alert-type", %{"_target" => target} = attrs, socket) do
+    [_, _, step_index, _, alert_index, _] = target
+
+    alert_type = get_in(attrs, target)
+
+    socket =
+      update(socket, :step_alert_types, fn alert_types ->
+        Map.update(alert_types, "#{step_index}-#{alert_index}", socket.assigns.users, fn _ ->
+          alert_infos(alert_type, socket)
+        end)
+      end)
+
+    socket =
+      update(socket, :form, fn %{source: policy_changeset} ->
+        step_index = String.to_integer(step_index)
+        alert_index = String.to_integer(alert_index)
+        steps = Ecto.Changeset.get_assoc(policy_changeset, :escalation_steps)
+        step_changeset = Enum.at(steps, step_index)
+        alerts = Ecto.Changeset.get_assoc(step_changeset, :escalation_alerts)
+
+        alert_changeset = alerts |> Enum.at(alert_index) |> Ecto.Changeset.change(%{alert_type: alert_type})
+
+        step_changeset =
+          Ecto.Changeset.put_assoc(
+            step_changeset,
+            :escalation_alerts,
+            List.replace_at(alerts, alert_index, alert_changeset)
+          )
+
+        policy_changeset
+        |> Ecto.Changeset.put_assoc(
+          :escalation_steps,
+          List.replace_at(steps, step_index, step_changeset)
+        )
+        |> to_form()
+      end)
+
+    {:noreply, socket}
+  end
+
+  def alert_infos("users", socket), do: socket.assigns.users
+  def alert_infos("webhook", socket), do: socket.assigns.webhooks
+  def alert_infos("telegram_bot", socket), do: socket.assigns.telegram_bots
 
   def handle_event("add-step", _, socket) do
     step_changeset = Escalations.escalation_step_changeset()

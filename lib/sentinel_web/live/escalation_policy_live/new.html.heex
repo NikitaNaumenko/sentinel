@@ -11,72 +11,66 @@
   </div>
 
   <div class="col-12">
-    <.inputs_for :let={step_f} field={@form[:escalation_steps]}>
-      <div class="card mb-3">
-        <div class="card-header">
-          <div class="col-1 pt-3">
-            <.input field={step_f[:notify_after]} type="text" />
+    <ol class="timeline timeline-simple">
+      <.inputs_for :let={step_f} field={@form[:escalation_steps]}>
+        <li class="timeline-event">
+          <div class="timeline-event-icon bg-primary">
+            <.icon name="icon-bell" />
           </div>
-          <div class="col-8 px-3">
-            Notify after minutes
-          </div>
-          <div class="col-3 d-flex justify-content-end">
-            <.button
-              type="button"
-              variant="danger"
-              size="icon"
-              name="escalation_policy[escalation_steps_drop][]"
-              phx-click={JS.push("delete-step", value: %{step_index: step_f.index})}
-            >
-              <.icon name="icon-trash-2" />
-            </.button>
-          </div>
-        </div>
-        <div class="card-body">
-          <.inputs_for :let={alert_f} field={step_f[:escalation_alerts]}>
-            <div class="row">
-              <div class="col-4">
-                <.input
-                  field={alert_f[:alert_type]}
-                  type="select"
-                  options={translated_select_enums(Alert, :alert_type)}
-                />
-              </div>
-              <div class="col-4">
-                <.input
-                  field={alert_f[:alert_type]}
-                  type="select"
-                  options={translated_select_enums(Alert, :alert_type)}
-                />
-              </div>
+          <div class="card timeline-event-card">
+            <div class="card-body">
+              <h4>Step <%= step_f.index + 1 %></h4>
 
-              <div class="col-4 d-flex justify-content-end">
-                <.button
-                  type="button"
-                  variant="danger"
-                  size="icon"
-                  name="escalation_policy[escalation_steps][escalation_alert_drop][]"
-                  phx-click={
-                    JS.push("delete-alert", value: %{alert_index: alert_f.index, step_index: step_f.index})
-                  }
-                >
-                  <.icon name="icon-trash-2" />
-                </.button>
-              </div>
+              <.input field={step_f[:notify_after]} type="number" label="Delay (minutes)" />
+
+              <.inputs_for :let={alert_f} field={step_f[:escalation_alerts]}>
+                <div class="mb-3">
+                  <div class="row g-2">
+                    <div class="col">
+                      <.input
+                        field={alert_f[:alert_type]}
+
+                        phx-change="change-alert-type"
+                        type="select"
+                        options={translated_select_enums(Alert, :alert_type)}
+                      />
+                    </div>
+                    <div class="col">
+                      <.input
+                        field={alert_f[:user_id]}
+                        type="select"
+                        options={Map.get(@step_alert_types, "#{step_f.index}-#{alert_f.index}", @users)}
+                      />
+                    </div>
+                    <div class="col-auto">
+                      <.button
+                        type="button"
+                        variant="danger"
+                        phx-click={
+                          JS.push("delete-alert",
+                            value: %{alert_index: alert_f.index, step_index: step_f.index}
+                          )
+                        }
+                      >
+                        <.icon name="icon-trash-2" />
+                      </.button>
+                    </div>
+                  </div>
+                </div>
+              </.inputs_for>
+
+              <.button
+                type="button"
+                variant="primary"
+                phx-click={JS.push("add-alert", value: %{step_index: step_f.index})}
+              >
+                Add alert
+              </.button>
             </div>
-          </.inputs_for>
-
-          <.button
-            type="button"
-            value={step_f.index}
-            name="escalation_policy[escalation_steps][escalation_alert_sort][]"
-            phx-click={JS.push("add-alert", value: %{step_index: step_f.index})}
-          >
-            Add alert
-          </.button>
-        </div>
-      </div>
-    </.inputs_for>
+          </div>
+        </li>
+      </.inputs_for>
+    </ol>
   </div>
   <input type="hidden" name="escalation_policy[escalation_step_drop][]" />
 
