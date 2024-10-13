@@ -2,6 +2,7 @@ defmodule Sentinel.Integrations do
   @moduledoc false
   import Ecto.Query
 
+  alias Sentinel.Accounts.Account
   alias Sentinel.Integrations.TelegramBot
   alias Sentinel.Integrations.Webhook
   alias Sentinel.Repo
@@ -32,7 +33,7 @@ defmodule Sentinel.Integrations do
     |> Repo.update()
   end
 
-  def list_webhooks(account_id) do
+  def list_webhooks(%Account{id: account_id}) do
     Webhook
     |> where([w], w.account_id == ^account_id)
     |> order_by(asc: :id)
@@ -43,7 +44,7 @@ defmodule Sentinel.Integrations do
     Repo.get_by!(TelegramBot, id: id, account_id: account_id)
   end
 
-  def list_telegram_bots(account_id) do
+  def list_telegram_bots(%Account{id: account_id}) do
     TelegramBot
     |> where([t], t.account_id == ^account_id)
     |> order_by(asc: :id)

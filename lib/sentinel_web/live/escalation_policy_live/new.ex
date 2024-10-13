@@ -13,12 +13,12 @@ defmodule SentinelWeb.EscalationPolicyLive.New do
   on_mount {AuthorizeHook, policy: EscalationPolicy}
   @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
-    account_id = socket.assigns.current_account.id
+    account = socket.assigns.current_account
     changeset = Escalations.escalation_policy_changeset()
 
-    users = account_id |> Accounts.list_users() |> collection_for_select({:id, :email})
-    webhooks = account_id |> Integrations.list_webhooks() |> collection_for_select({:id, :name})
-    telegram_bots = account_id |> Integrations.list_telegram_bots() |> collection_for_select({:id, :name})
+    users = account |> Accounts.list_users() |> collection_for_select({:id, :email})
+    webhooks = account |> Integrations.list_webhooks() |> collection_for_select({:id, :name})
+    telegram_bots = account |> Integrations.list_telegram_bots() |> collection_for_select({:id, :name})
     alert_types = Escalations.alert_types()
 
     socket =
@@ -27,7 +27,6 @@ defmodule SentinelWeb.EscalationPolicyLive.New do
       |> assign(:users, users)
       |> assign(:webhooks, webhooks)
       |> assign(:telegram_bots, telegram_bots)
-      # тут должна быть мапа с индексами alert type, и по каждому индексу лежать {alert_type, collection}
       |> assign(:step_alert_types, %{})
       |> assign(:page_title, dgettext("escalation_policy", "Create new escalation policy"))
       |> assign(:title, dgettext("monitors", "New Escalation Policy"))
@@ -66,7 +65,9 @@ defmodule SentinelWeb.EscalationPolicyLive.New do
 
     socket =
       update(socket, :step_alert_types, fn alert_types ->
-        Map.update(alert_types, "#{step_index}-#{alert_index}", socket.assigns.users, fn _ ->
+        default = alert_infos(alert_type, socket)
+
+        Map.update(alert_types, "#{step_index}-#{alert_index}", default, fn _ ->
           alert_infos(alert_type, socket)
         end)
       end)
@@ -98,10 +99,6 @@ defmodule SentinelWeb.EscalationPolicyLive.New do
 
     {:noreply, socket}
   end
-
-  def alert_infos("users", socket), do: socket.assigns.users
-  def alert_infos("webhook", socket), do: socket.assigns.webhooks
-  def alert_infos("telegram_bot", socket), do: socket.assigns.telegram_bots
 
   def handle_event("add-step", _, socket) do
     step_changeset = Escalations.escalation_step_changeset()
@@ -215,4 +212,8 @@ defmodule SentinelWeb.EscalationPolicyLive.New do
         {:noreply, assign_form(socket, changeset)}
     end
   end
+
+  defp alert_infos("users", socket), do: socket.assigns.users
+  defp alert_infos("webhook", socket), do: socket.assigns.webhooks
+  defp alert_infos("telegram_bot", socket), do: socket.assigns.telegram_bots
 end

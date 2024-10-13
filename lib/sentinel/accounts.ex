@@ -27,7 +27,7 @@ defmodule Sentinel.Accounts do
   @doc """
   Returns the list of users by account
   """
-  def list_users(account_id) do
+  def list_users(%Account{id: account_id}) do
     Repo.all(from(u in User, where: u.account_id == ^account_id))
   end
 
