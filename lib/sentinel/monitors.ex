@@ -50,7 +50,15 @@ defmodule Sentinel.Monitors do
       ** (Ecto.NoResultsError)
 
   """
-  def get_monitor!(id), do: Monitor |> Repo.get!(id) |> Repo.preload([:account, :notification_rule])
+  def get_monitor!(id) do
+    Repo.one(
+      from(m in Monitor,
+        where: m.state != :deleted,
+        where: m.id == ^id,
+        preload: [:account, :notification_rule]
+      )
+    )
+  end
 
   def check_certificate(url), do: CheckCertificate.call(url)
 
@@ -92,8 +100,11 @@ defmodule Sentinel.Monitors do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_monitor(%Monitor{} = monitor) do
-    Repo.delete(monitor)
+  def delete_monitor(id) do
+    id
+    |> get_monitor!()
+    |> Ecto.Changeset.change(%{state: :deleted})
+    |> Repo.update()
   end
 
   @doc """

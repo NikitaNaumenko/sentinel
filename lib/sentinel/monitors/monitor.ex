@@ -20,7 +20,7 @@ defmodule Sentinel.Monitors.Monitor do
     field :http_method, Ecto.Enum, values: [:get, :post, :put, :patch, :head, :options, :delete]
     field :request_timeout, :integer
     field :expected_status_code, :integer
-    field :state, Ecto.Enum, values: [:active, :disabled], default: :active
+    field :state, Ecto.Enum, values: [:active, :disabled, :deleted], default: :active
 
     belongs_to :last_check, Sentinel.Monitors.Check
     belongs_to :last_incident, Sentinel.Monitors.Incident

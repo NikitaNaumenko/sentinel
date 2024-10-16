@@ -23,7 +23,7 @@ defmodule SentinelWeb.MonitorLive.Edit do
       |> assign(:webhooks, webhooks)
       |> assign(:telegram_bots, telegram_bots)
 
-    {:ok, socket, layout: {SentinelWeb.Layouts, "monitor.html"}}
+    {:ok, socket, layout: {SentinelWeb.Layouts, :monitor}}
   end
 
   @impl true
@@ -89,7 +89,7 @@ defmodule SentinelWeb.MonitorLive.Edit do
   end
 
   def handle_event("delete", %{"id" => id}, socket) do
-    case id |> Monitors.get_monitor!() |> Monitors.delete_monitor() do
+    case Monitors.delete_monitor(id) do
       {:ok, _monitor} ->
         socket =
           socket
