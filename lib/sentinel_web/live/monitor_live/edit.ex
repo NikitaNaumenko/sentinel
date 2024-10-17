@@ -4,7 +4,8 @@ defmodule SentinelWeb.MonitorLive.Edit do
 
   # import SentinelWeb.MonitorLive.Components.Overview, only: [overview: 1]
   # import SentinelWeb.MonitorLive.MonitorComponent, only: [indicator: 1]
-  #
+  import SentinelWeb.MonitorLive.MonitorComponent, only: [indicator: 1]
+
   alias Sentinel.Integrations
   alias Sentinel.Monitors
   alias Sentinel.Monitors.Monitor
@@ -128,11 +129,7 @@ defmodule SentinelWeb.MonitorLive.Edit do
     ~H"""
     <div class="row g-3 align-items-center">
       <div class="col-auto">
-        <span class="status-indicator status-green status-indicator-animated">
-          <span class="status-indicator-circle"></span>
-          <span class="status-indicator-circle"></span>
-          <span class="status-indicator-circle"></span>
-        </span>
+        <.indicator monitor={@monitor} />
       </div>
       <div class="col">
         <h2 class="page-title">
@@ -140,7 +137,7 @@ defmodule SentinelWeb.MonitorLive.Edit do
         </h2>
         <div class="text-secondary">
           <ul class="list-inline list-inline-dots mb-0">
-            <li class="list-inline-item"><span class="text-green">Up</span></li>
+            <%!-- <li class="list-inline-item"><span class="text-green">Up</span></li> --%>
             <li class="list-inline-item">Checked every 3 minutes</li>
           </ul>
         </div>

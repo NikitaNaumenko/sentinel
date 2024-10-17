@@ -155,15 +155,19 @@ defmodule SentinelWeb.CoreComponents do
 
   slot(:inner_block, required: true)
   slot(:actions, doc: "the slot for form actions, such as a submit button")
+  slot(:title)
 
   def simple_form(assigns) do
     ~H"""
-    <.form :let={f} for={@for} as={@as} {@rest}>
-      <div>
+    <.form :let={f} class="card" for={@for} as={@as} {@rest}>
+      <div class="card-header">
+        <h3 class="card-tile"><%= render_slot(@title, f) %></h3>
+      </div>
+      <div class="card-body">
         <%= render_slot(@inner_block, f) %>
-        <div :for={action <- @actions} class="mt-2 flex items-center justify-between gap-6">
-          <%= render_slot(action, f) %>
-        </div>
+      </div>
+      <div :for={action <- @actions} class="card-footer text-end">
+        <%= render_slot(action, f) %>
       </div>
     </.form>
     """
@@ -234,8 +238,8 @@ defmodule SentinelWeb.CoreComponents do
   def back(assigns) do
     ~H"""
     <div>
-      <.link navigate={@navigate} class="text-sm font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
-        <.icon name="hero-arrow-left-solid" class="h-3 w-3" />
+      <.link navigate={@navigate} class="btn btn-light mb-5">
+        <.icon name="icon-arrow-big-left" />
         <%= render_slot(@inner_block) %>
       </.link>
     </div>

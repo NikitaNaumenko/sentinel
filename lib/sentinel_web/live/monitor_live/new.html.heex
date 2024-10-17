@@ -1,37 +1,36 @@
-<div class="card card-md">
-  <div class="card-body">
-    <.simple_form for={@form} id="monitor-form" phx-change="validate" phx-submit="save">
-      <.input field={@form[:name]} label={dgettext("monitors", "Name")} phx-debounce="300" />
-      <.input field={@form[:url]} label={dgettext("monitors", "URL")} phx-debounce="300" />
-      <.input
-        field={@form[:http_method]}
-        label={dgettext("monitors", "HTTP Method")}
-        type="select"
-        options={@http_methods}
-      />
-      <.input
-        field={@form[:expected_status_code]}
-        label={dgettext("monitors", "Expected status code")}
-        type="select"
-        options={@status_codes}
-      />
-      <.input
-        field={@form[:interval]}
-        label={dgettext("monitors", "Interval")}
-        type="select"
-        options={@intervals}
-      />
-      <.input
-        field={@form[:request_timeout]}
-        label={dgettext("monitors", "Request timeout")}
-        type="select"
-        options={@request_timeouts}
-      />
-      <:actions>
-        <div class="flex w-full justify-end">
-          <.button phx-disable-with="Saving..."><%= dgettext("forms", "Save") %></.button>
-        </div>
-      </:actions>
-    </.simple_form>
-  </div>
-</div>
+<.simple_form for={@form} id="monitor-form" phx-change="validate" phx-submit="save">
+  <:title><%= @page_title %></:title>
+  <.input field={@form[:name]} label={dgettext("monitors", "Name")} phx-debounce="300" />
+  <.input field={@form[:url]} label={dgettext("monitors", "URL")} phx-debounce="300" />
+  <.input
+    field={@form[:http_method]}
+    label={dgettext("monitors", "HTTP Method")}
+    type="select"
+    options={@http_methods}
+  />
+  <.input
+    field={@form[:expected_status_code]}
+    label={dgettext("monitors", "Expected status code")}
+    type="select"
+    options={@status_codes}
+  />
+  <.input
+    field={@form[:interval]}
+    label={dgettext("monitors", "Interval")}
+    type="select"
+    options={@intervals}
+  />
+  <.input
+    field={@form[:request_timeout]}
+    label={dgettext("monitors", "Request timeout")}
+    type="select"
+    options={@request_timeouts}
+  />
+  <:actions>
+    <div class="d-flex">
+      <%!-- <.back navigate={~p"/monitors"}>Back</.back> --%>
+      <.link class="btn btn-link" navigate={~p"/monitors"}>Back</.link>
+      <.button class="ms-auto" phx-disable-with="Saving..."><%= dgettext("forms", "Create") %></.button>
+    </div>
+  </:actions>
+</.simple_form>

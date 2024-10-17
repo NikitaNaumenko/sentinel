@@ -1,11 +1,20 @@
-<.simple_form for={@form} id="monitor-form" phx-change="validate" phx-submit="save">
+<.simple_form for={@form} id="escalation-policy-form" phx-change="validate" phx-submit="save">
+<:title><%= @page_title %></:title>
+<:actions>
+  <div class="d-flex">
+    <.link class="btn btn-link" navigate={~p"/escalation_policies"}>Back</.link>
+    <.button class="ms-auto" phx-disable-with="Saving..."><%= dgettext("forms", "Create") %></.button>
+  </div>
+</:actions>
+
+
   <div class="d-flex col-12">
     <div class="col-8">
       <.input field={@form[:name]} label={dgettext("monitors", "Name")} phx-debounce="300" />
     </div>
     <div class="col-4 d-flex justify-content-end">
       <div class="align-content-end mb-3">
-        <.button phx-disable-with="Saving..."><%= dgettext("forms", "Save") %></.button>
+        <%!-- <.button phx-disable-with="Saving..."><%= dgettext("forms", "Save") %></.button> --%>
       </div>
     </div>
   </div>
@@ -20,7 +29,6 @@
           <div class="card timeline-event-card">
             <div class="card-body">
               <h4>Step <%= step_f.index + 1 %></h4>
-
               <.input field={step_f[:notify_after]} type="number" label="Delay (minutes)" />
 
               <.inputs_for :let={alert_f} field={step_f[:escalation_alerts]}>

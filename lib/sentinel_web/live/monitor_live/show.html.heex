@@ -12,7 +12,13 @@
     <div class="card">
       <div class="card-body">
         <div class="subheader">Last checked at</div>
-        <div class="h3 m-0"><%= Sentinel.Cldr.DateTime.Relative.to_string!(@last_checked_at) %></div>
+        <div class="h3 m-0">
+          <%= if @last_checked_at do %>
+            <%= Sentinel.Cldr.DateTime.Relative.to_string!(@last_checked_at) %>
+          <% else %>
+            <%= dgettext("monitors", "Never") %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

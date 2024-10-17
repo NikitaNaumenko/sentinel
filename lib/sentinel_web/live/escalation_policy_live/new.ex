@@ -16,7 +16,11 @@ defmodule SentinelWeb.EscalationPolicyLive.New do
     account = socket.assigns.current_account
     changeset = Escalations.escalation_policy_changeset()
 
-    users = account |> Accounts.list_users() |> collection_for_select({:id, :email})
+    users =
+      account
+      |> Accounts.list_users()
+      |> collection_for_select({:id, :email}, empty: {dgettext("escalation_policies", "All users"), nil})
+
     webhooks = account |> Integrations.list_webhooks() |> collection_for_select({:id, :name})
     telegram_bots = account |> Integrations.list_telegram_bots() |> collection_for_select({:id, :name})
     alert_types = Escalations.alert_types()
@@ -33,18 +37,6 @@ defmodule SentinelWeb.EscalationPolicyLive.New do
       |> assign_form(changeset)
 
     {:ok, socket}
-  end
-
-  def header(assigns) do
-    ~H"""
-    <header>
-      <div class="col">
-        <h2 class="page-title">
-          <%= @page_title %>
-        </h2>
-      </div>
-    </header>
-    """
   end
 
   @impl Phoenix.LiveView

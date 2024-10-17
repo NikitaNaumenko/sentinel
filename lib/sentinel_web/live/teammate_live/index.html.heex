@@ -1,16 +1,11 @@
-<div class="flex justify-end gap-10 py-4">
-  <div class="md:max-w-xl">
-    <div class="flex-none">
-      <.link navigate={~p"/teammates/new"}>
-        <.button>
-          <%= dgettext("teammates", "New teammate") %>
-        </.button>
-      </.link>
-    </div>
-  </div>
-</div>
+<.index_page_header
+  path={~p"/teammates/new"}
+  link_title={dgettext("teammates", "New teammate")}
+  page_title={dgettext("teammates", "Teammates")}
+  policy_func={fn -> permit?(Sentinel.Teammates.UserPolicy, :create, @current_user) end}
+/>
 
-<div class="flex w-full flex-col gap-4">
+<div class="mt-5">
   <.table id="teammates" rows={@streams.teammates}>
     <:col :let={{_id, teammate}} label={dgettext("teammates", "Full Name")}>
       <%= teammate.full_name %>

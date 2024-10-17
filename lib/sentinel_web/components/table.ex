@@ -36,33 +36,18 @@ defmodule SentinelWeb.Components.Table do
       end
 
     ~H"""
-    <div class="relative w-full overflow-auto">
-      <table class="caption-bottom w-full text-sm">
-        <thead class="[&_tr]:border-b">
-          <tr class="border-b transition-colors hover:bg-muted/50">
-            <th
-              :for={col <- @col}
-              class="text-muted-foreground w-[100px] h-12 px-4 text-left align-middle [&:has([role=checkbox])]:pr-0"
-            >
+    <div class="table-responsive">
+      <table class="table-vcenter table">
+        <thead>
+          <tr>
+            <th :for={col <- @col}>
               <%= col[:label] %>
             </th>
           </tr>
         </thead>
-        <tbody
-          id={@id}
-          phx-update={match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"}
-          class="[&_tr:last-child]:border-0"
-        >
-          <tr
-            :for={row <- @rows}
-            id={@row_id && @row_id.(row)}
-            class="border-b transition-colors hover:bg-muted/50"
-          >
-            <td
-              :for={{col, _i} <- Enum.with_index(@col)}
-              phx-click={@row_click && @row_click.(row)}
-              class={["p-4 align-middle [&:has([role=checkbox])]:pr-0", @row_click && "hover:cursor-pointer"]}
-            >
+        <tbody id={@id} phx-update={match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"}>
+          <tr :for={row <- @rows} id={@row_id && @row_id.(row)}>
+            <td :for={{col, _i} <- Enum.with_index(@col)} phx-click={@row_click && @row_click.(row)}>
               <%= render_slot(col, @row_item.(row)) %>
             </td>
           </tr>

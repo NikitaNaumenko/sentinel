@@ -2,6 +2,7 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
   @moduledoc false
   use SentinelWeb, :live_component
 
+  alias Sentinel.Escalations
   alias Sentinel.Integrations
   alias Sentinel.Monitors
   alias Sentinel.Monitors.NotificationRule
@@ -11,41 +12,35 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
     ~H"""
     <div>
       <div class="fw-semibold">
-        <%= dgettext("monitors", "Notification Rules") %>
+        <%= dgettext("monitors", "Escalation Policy") %>
       </div>
 
       <div class="card cad-md">
         <div class="card-body">
           <div class="vstack gap-1">
-            <span class="fw-medium">
-              <%= dgettext("monitors", "Team level notifications") %>
-            </span>
-            <span>
-              You will receive notifications for the enabled channels that are configured. To send emails & SMS to specific teammates, please configure an escalation policy.
-            </span>
-          </div>
-          <div class="mt-2 flex gap-1">
-            <div class="mr-5">
-              <label
-                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                phx-target={@myself}
-                phx-click={
-                  JS.push("toggle-via",
-                    value: %{id: @notification_rule.id, attr: "via_email", value: @notification_rule.via_email}
-                  )
-                }
-              >
-                <input
-                  type="checkbox"
-                  id="email"
-                  name="via_email"
-                  value="true"
-                  checked={@notification_rule.via_email}
-                  class="border-primary text-primary rounded focus:ring-0"
-                />
-                <%= dgettext("monitors", "Email") %>
-              </label>
-            </div>
+            <%= if @escalation_policies_exists  do %>
+            <% else %>
+              <span>
+                <%= dgettext("monitors", "Please set up escalation policy to get incidents alert instantly") %>
+
+                <.link class="btn btn-link" navigate={~p"/escalation_policies/new"}>
+                  <%= dgettext("monitors", "Create new escalation policy") %>
+                </.link>
+              </span>
+            <% end %>
+            <%!-- <label>
+              <span>
+                <%= dgettext("monitors", "SSL Expiry alerts") %>
+              </span>
+              <span class="text-muted-foreground text-sm font-normal leading-snug">
+                When to send SSL (HTTPS) alerts before expiry.
+              </span>
+            </label>
+            <div>
+              <.form for={@form}>
+                <.input type="select" options={@resend_interval_options} field={@form[:resend_interval]} />
+              </.form>
+            </div> --%>
           </div>
           <div class="mt-5 flex w-full items-center justify-between space-x-4">
             <%!-- <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
@@ -179,9 +174,11 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
 
     timeout_options = translated_select_enums(NotificationRule, :timeout)
     interval_options = translated_select_enums(NotificationRule, :resend_interval)
+    escalation_policies_exists = Escalations.escalation_policies_exists?(assigns.account_id)
 
     socket =
       socket
+      |> assign(:escalation_policies_exists, escalation_policies_exists)
       |> assign(
         form: form,
         timeout_options: timeout_options,

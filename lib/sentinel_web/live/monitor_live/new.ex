@@ -39,25 +39,6 @@ defmodule SentinelWeb.MonitorLive.New do
     {:ok, socket}
   end
 
-  def header(assigns) do
-    ~H"""
-    <header>
-      <div class="col">
-        <h2 class="page-title">
-          <%= @page_title %>
-        </h2>
-      </div>
-    </header>
-    <%!-- <header class="mr-auto ml-auto flex max-w-2xl items-center justify-between gap-6 py-2">
-      <div>
-        <h1 class="text-primary leading text-3xl font-bold leading-8">
-          <%= @page_title %>
-        </h1>
-      </div>
-    </header> --%>
-    """
-  end
-
   @impl Phoenix.LiveView
   def handle_event("validate", %{"monitor" => monitor_attrs}, socket) do
     changeset =
