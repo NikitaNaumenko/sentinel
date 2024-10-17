@@ -6,13 +6,15 @@
   condition={@monitors_total_count > 0}
 />
 <div id="monitors" phx-update="stream" class="mt-5 flex w-full flex-col gap-4">
-  <div id="monitors-empty" class="only-child d-none">
+  <%= if @monitors_total_count > 0 do %>
+    <MonitorComponent.render :for={{id, monitor} <- @streams.monitors} id={id} monitor={monitor} />
+  <% else %>
     <div class="bg-body-tertiary rounded-3 mb-4 p-5">
       <div class="container-fluid py-5">
         <h1 class="display-5 fw-bold"><%= dgettext("monitors", "Monitors") %></h1>
         <p class="col-md-8 fs-4">
           <%= dgettext(
-            "Monitors",
+            "monitors",
             "Set up monitor to track any incidents happens with your application "
           ) %>
         </p>
@@ -25,6 +27,5 @@
         </.link>
       </div>
     </div>
-  </div>
-  <MonitorComponent.render :for={{id, monitor} <- @streams.monitors} id={id} monitor={monitor} />
+  <% end %>
 </div>

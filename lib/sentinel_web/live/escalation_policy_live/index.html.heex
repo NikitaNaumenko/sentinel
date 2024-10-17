@@ -1,3 +1,10 @@
+<.index_page_header
+  path={~p"/escalation_policies/new"}
+  link_title={dgettext("escalation_policies", "New escalation policy")}
+  page_title={dgettext("escalation_policies", "Escalation Policies")}
+  policy_func={fn -> permit?(Sentinel.Escalations.EscalationPolicy, :create, @current_user) end}
+  condition={!Enum.empty?(@escalation_policies)}
+/>
 <%= if Enum.empty?(@escalation_policies) do %>
   <div class="bg-body-tertiary rounded-3 mb-4 p-5">
     <div class="container-fluid py-5">
@@ -18,7 +25,7 @@
     </div>
   </div>
 <% else %>
-  <div :for={policy <- @escalation_policies}>
+  <div :for={policy <- @escalation_policies} class="mt-5">
     <.link navigate={~p"/escalation_policies/#{policy}/edit"} class="card">
       <div class="card-body">
         <h5 class="card-title">

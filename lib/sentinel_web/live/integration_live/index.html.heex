@@ -1,4 +1,16 @@
-<%= if !Enum.empty?(@enabled) do %>
+<%= if Enum.empty?(@enabled) do %>
+  <div class="bg-body-tertiary rounded-3 mb-4 p-5">
+    <div class="container-fluid py-5">
+      <h1 class="display-5 fw-bold"><%= dgettext("integrations", "Integrations") %></h1>
+      <p class="col-md-8 fs-4">
+        <%= dgettext(
+          "integrations",
+          "Set up integrations, and be informed about incident as soon as posible"
+        ) %>
+      </p>
+    </div>
+  </div>
+<% else %>
   <div class="fs-3 mb-2">
     <%= dgettext("integrations", "Enabled integrations") %>
   </div>
