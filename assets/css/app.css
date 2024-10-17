@@ -1,4 +1,7 @@
 @import "@tabler/core";
+.only-child:only-child {
+  display: block !important;
+}
 /*@import "tailwindcss/base";*/
 /*@import "tailwindcss/components";*/
 /*@import "tailwindcss/utilities";*/

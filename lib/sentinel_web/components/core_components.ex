@@ -287,6 +287,31 @@ defmodule SentinelWeb.CoreComponents do
     |> JS.pop_focus()
   end
 
+  attr(:page_title, :string, required: true)
+  attr(:policy_func, :any, default: false)
+  attr(:path, :any, required: true)
+  attr(:link_title, :string, required: true)
+  attr(:condition, :boolean, default: true)
+
+  def index_page_header(assigns) do
+    ~H"""
+    <%= if @condition do %>
+      <header class="d-flex">
+        <div class="col">
+          <h2 class="page-title">
+            <%= @page_title %>
+          </h2>
+        </div>
+        <div class="ms-auto d-print-none col-auto">
+          <.link :if={@policy_func.()} navigate={@path} class="btn btn-primary">
+            <%= @link_title %>
+          </.link>
+        </div>
+      </header>
+    <% end %>
+    """
+  end
+
   #
   # @doc """
   # Translates an error message using gettext.

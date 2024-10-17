@@ -13,15 +13,10 @@
   <%!-- </div> --%>
   <%!----%>
   <div class="page-wrapper px-5">
-    <%= if function_exported?(@socket.view, :header, 1) do %>
-      <div class="page-header d-print-none">
-        <div class="container-xl">
-          <div class="row g-2 align-items-center">
+    <%!-- <%= if function_exported?(@socket.view, :header, 1) do %>
+
             <%= @socket.view.header(assigns) %>
-          </div>
-        </div>
-      </div>
-    <% end %>
+    <% end %> --%>
     <div class="page-body">
       <div class="container-xl">
         <%= @inner_content %>

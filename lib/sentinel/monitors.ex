@@ -28,7 +28,7 @@ defmodule Sentinel.Monitors do
   """
   def list_monitors(account_id) do
     Monitor
-    |> where([m], m.account_id == ^account_id)
+    |> where([m], m.account_id == ^account_id and m.state != :deleted)
     |> Repo.all()
   end
 
