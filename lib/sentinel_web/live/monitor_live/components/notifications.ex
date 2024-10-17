@@ -18,7 +18,20 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
       <div class="card cad-md">
         <div class="card-body">
           <div class="vstack gap-1">
-            <%= if @escalation_policies_exists  do %>
+            <%= if Enum.any?(@escalation_policies) do %>
+              <label>
+                <span>
+                  <%= dgettext("monitors", "Escalation policies") %>
+                </span>
+                <span class="text-muted-foreground text-sm font-normal leading-snug">
+                  When to send SSL (HTTPS) alerts before expiry.
+                </span>
+              </label>
+              <div>
+                <.form for={@form}>
+                  <.input type="select" options={@escalation_policies} field={@form[:resend_interval]} />
+                </.form>
+              </div>
             <% else %>
               <span>
                 <%= dgettext("monitors", "Please set up escalation policy to get incidents alert instantly") %>
@@ -28,19 +41,6 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
                 </.link>
               </span>
             <% end %>
-            <%!-- <label>
-              <span>
-                <%= dgettext("monitors", "SSL Expiry alerts") %>
-              </span>
-              <span class="text-muted-foreground text-sm font-normal leading-snug">
-                When to send SSL (HTTPS) alerts before expiry.
-              </span>
-            </label>
-            <div>
-              <.form for={@form}>
-                <.input type="select" options={@resend_interval_options} field={@form[:resend_interval]} />
-              </.form>
-            </div> --%>
           </div>
           <div class="mt-5 flex w-full items-center justify-between space-x-4">
             <%!-- <label class="flex flex-col space-y-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
@@ -174,11 +174,13 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
 
     timeout_options = translated_select_enums(NotificationRule, :timeout)
     interval_options = translated_select_enums(NotificationRule, :resend_interval)
-    escalation_policies_exists = Escalations.escalation_policies_exists?(assigns.account_id)
+
+    escalation_policies =
+      assigns.account_id |> Escalations.list_escalation_policies() |> collection_for_select({:id, :name})
 
     socket =
       socket
-      |> assign(:escalation_policies_exists, escalation_policies_exists)
+      |> assign(:escalation_policies, escalation_policies)
       |> assign(
         form: form,
         timeout_options: timeout_options,
