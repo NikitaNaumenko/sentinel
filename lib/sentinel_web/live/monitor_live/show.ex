@@ -31,7 +31,7 @@ defmodule SentinelWeb.MonitorLive.Show do
     monitor =
       id
       |> Monitors.get_monitor!()
-      |> Repo.preload([:last_check, notification_rule: [:webhook, :telegram_bot]])
+      |> Repo.preload([:last_check])
 
     changeset = Monitor.changeset(monitor, %{})
 
@@ -117,22 +117,22 @@ defmodule SentinelWeb.MonitorLive.Show do
     end
   end
 
-  def handle_event("toggle-monitor", %{"id" => id}, socket) do
-    monitor = id |> Monitors.get_monitor!() |> Repo.preload(:notification_rule)
+  # def handle_event("toggle-monitor", %{"id" => id}, socket) do
+  #   monitor = id |> Monitors.get_monitor!() |> Repo.preload(:notification_rule)
 
-    case Monitors.toggle_monitor(monitor) do
-      {:ok, monitor} ->
-        socket =
-          socket
-          |> assign(:monitor, monitor)
-          |> put_flash(:info, dgettext("monitors", "Monitor toggled successfully"))
+  #   case Monitors.toggle_monitor(monitor) do
+  #     {:ok, monitor} ->
+  #       socket =
+  #         socket
+  #         |> assign(:monitor, monitor)
+  #         |> put_flash(:info, dgettext("monitors", "Monitor toggled successfully"))
 
-        {:noreply, socket}
+  #       {:noreply, socket}
 
-      {:error, _error} ->
-        {:noreply, put_flash(socket, :error, dgettext("monitors", "Monitor cannot be toggled"))}
-    end
-  end
+  #     {:error, _error} ->
+  #       {:noreply, put_flash(socket, :error, dgettext("monitors", "Monitor cannot be toggled"))}
+  #   end
+  # end
 
   def header(assigns) do
     ~H"""

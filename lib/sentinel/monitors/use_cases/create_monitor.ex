@@ -55,7 +55,7 @@ defmodule Sentinel.Monitors.UseCases.CreateMonitor do
 
   defp create_monitor(attrs) do
     %Monitor{}
-    |> Monitor.changeset(Map.put(attrs, "notification_rule", %{}))
+    |> Monitor.changeset(attrs)
     |> Repo.insert()
   end
 end

@@ -19,13 +19,14 @@ defmodule SentinelWeb.Components.Alert do
   variant(
     :variant,
     [
-      primary: "bg-background text-foreground",
-      danger: "border-danger/50 text-danger [&>svg]:text-danger",
-      success: "border-success/50 text-success [&>svg]:text-success"
+      primary: "alert-primary",
+      danger: "alert-danger",
+      success: "alert-success"
     ],
     default: :primary
   )
 
+  attr(:closable, :boolean, default: true)
   attr(:icon, :string, default: nil)
   slot(:alert_header)
 
@@ -50,17 +51,16 @@ defmodule SentinelWeb.Components.Alert do
   """
   def alert(assigns) do
     ~H"""
-    <div
-      role="alert"
-      class={["relative w-full rounded-lg border px-4 py-3 text-sm", "[&>.icon+div]:translate-y-[-3px] [&>.icon]:text-foreground [&>.icon]:absolute [&>.icon]:top-4 [&>.icon]:left-4 [&>.icon~*]:pl-7", @cva_class]}
-    >
-      <.icon :if={@icon} name={@icon} class="icon" />
-      <h5 :if={@alert_header} class="mb-1 font-medium leading-none tracking-tight">
-        <%= render_slot(@alert_header) %>
-      </h5>
-      <div class="text-sm [&_p]:leading-relaxed">
-        <%= render_slot(@inner_block) %>
+    <div class={["alert alert-important alert-danger alert-dismissible", @cva_class]} role="alert">
+      <div class="d-flex">
+        <%!-- <div> --%>
+        <.icon :if={@icon} name={@icon} />
+        <%!-- </div> --%>
+        <div>
+          <%= render_slot(@inner_block) %>
+        </div>
       </div>
+      <a :if={@closable} class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="close"></a>
     </div>
     """
   end

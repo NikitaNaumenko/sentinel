@@ -55,7 +55,7 @@ defmodule Sentinel.Monitors do
       from(m in Monitor,
         where: m.state != :deleted,
         where: m.id == ^id,
-        preload: [:account, :notification_rule]
+        preload: [:account, :escalation_policy]
       )
     )
   end

@@ -9,46 +9,42 @@
     <%= dgettext("monitors", "Danger Zone") %>
   </:tab>
   <:tab_content id="settings">
-    <div class="card card-md">
-      <div class="card-body">
-        <.simple_form for={@form} id="monitor-form" phx-validate="validate" phx-submit="save">
-          <.input field={@form[:name]} label={dgettext("monitors", "Name")} />
-          <.input field={@form[:url]} label={dgettext("monitors", "URL")} />
-          <div class="hstack gap-3">
-            <div class="vstack gap-1">
-              <span class="fw-medium"><%= dgettext("monitors", "Check interval") %></span>
-              <%= dgettext("monitors", "How often should we run your check?") %>
-            </div>
-            <.input field={@form[:interval]} type="select" options={@intervals} />
-          </div>
-          <div class="hstack gap-3">
-            <div class="vstack gap-1">
-              <span class="fw-medium"><%= dgettext("monitors", "HTTP method") %></span>
-              <%= dgettext("monitors", "HTTP method used to make the request") %>
-            </div>
-            <.input field={@form[:http_method]} type="select" options={@http_methods} />
-          </div>
-          <div class="hstack gap-3">
-            <div class="vstack gap-1">
-              <span class="fw-medium"><%= dgettext("monitors", "Expected Status Code") %></span>
-              <%= dgettext("monitors", "What status code must your HTTP request return?") %>
-            </div>
-            <.input field={@form[:expected_status_code]} type="select" options={@status_codes} />
-          </div>
-          <div class="hstack gap-3">
-            <div class="vstack gap-1">
-              <span class="fw-medium"><%= dgettext("monitors", "Request timeout") %></span>
-              <%= dgettext("monitors", "After how many seconds is the request considered timeout?") %>
-            </div>
-            <.input field={@form[:request_timeout]} type="select" options={@request_timeouts} />
-          </div>
-
-          <:actions>
-            <.button phx-disable-with="Saving..."><%= dgettext("forms", "Save changes") %></.button>
-          </:actions>
-        </.simple_form>
+    <.simple_form for={@form} id="monitor-form" phx-validate="validate" phx-submit="save">
+      <.input field={@form[:name]} label={dgettext("monitors", "Name")} />
+      <.input field={@form[:url]} label={dgettext("monitors", "URL")} />
+      <div class="hstack gap-3">
+        <div class="vstack gap-1">
+          <span class="fw-medium"><%= dgettext("monitors", "Check interval") %></span>
+          <%= dgettext("monitors", "How often should we run your check?") %>
+        </div>
+        <.input field={@form[:interval]} type="select" options={@intervals} />
       </div>
-    </div>
+      <div class="hstack gap-3">
+        <div class="vstack gap-1">
+          <span class="fw-medium"><%= dgettext("monitors", "HTTP method") %></span>
+          <%= dgettext("monitors", "HTTP method used to make the request") %>
+        </div>
+        <.input field={@form[:http_method]} type="select" options={@http_methods} />
+      </div>
+      <div class="hstack gap-3">
+        <div class="vstack gap-1">
+          <span class="fw-medium"><%= dgettext("monitors", "Expected Status Code") %></span>
+          <%= dgettext("monitors", "What status code must your HTTP request return?") %>
+        </div>
+        <.input field={@form[:expected_status_code]} type="select" options={@status_codes} />
+      </div>
+      <div class="hstack gap-3">
+        <div class="vstack gap-1">
+          <span class="fw-medium"><%= dgettext("monitors", "Request timeout") %></span>
+          <%= dgettext("monitors", "After how many seconds is the request considered timeout?") %>
+        </div>
+        <.input field={@form[:request_timeout]} type="select" options={@request_timeouts} />
+      </div>
+
+      <:actions>
+        <.button phx-disable-with="Saving..."><%= dgettext("forms", "Save changes") %></.button>
+      </:actions>
+    </.simple_form>
   </:tab_content>
   <:tab_content id="notifications">
     <.live_component
@@ -56,7 +52,6 @@
       id="notifications"
       monitor={@monitor}
       account_id={@current_user.account_id}
-      notification_rule={@monitor.notification_rule}
       webhooks={@webhooks}
       telegram_bots={@telegram_bots}
     />

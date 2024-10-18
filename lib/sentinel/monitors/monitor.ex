@@ -5,8 +5,8 @@ defmodule Sentinel.Monitors.Monitor do
   import Ecto.Changeset
   import EctoCommons.URLValidator
 
+  alias Sentinel.Escalations.Policy, as: EscalationPolicy
   alias Sentinel.Monitors.Certificate
-  alias Sentinel.Monitors.NotificationRule
   alias Sentinel.Validators.HTTPCodeValidator
 
   # In seconds
@@ -28,7 +28,7 @@ defmodule Sentinel.Monitors.Monitor do
     has_many :certificates, Certificate
     has_many :incidents, Sentinel.Monitors.Incident
     has_many :checks, Sentinel.Monitors.Check
-    has_one :notification_rule, NotificationRule
+    belongs_to :escalation_policy, EscalationPolicy
 
     timestamps(type: :utc_datetime_usec)
   end
@@ -45,10 +45,10 @@ defmodule Sentinel.Monitors.Monitor do
       :request_timeout,
       :expected_status_code,
       :last_check_id,
-      :last_incident_id
+      :last_incident_id,
+      :escalation_policy_id
     ])
     |> cast_assoc(:certificates)
-    |> cast_assoc(:notification_rule)
     |> validate_url(:url)
     |> validate_required([
       :name,

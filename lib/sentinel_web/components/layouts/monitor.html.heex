@@ -16,6 +16,11 @@
     <%= if function_exported?(@socket.view, :header, 1) do %>
       <div class="page-header d-print-none">
         <div class="container-xl">
+          <%= if !@monitor.escalation_policy do %>
+            <.alert variant="danger" closable={false} icon="icon-alert-circle">
+              Please set up escalation policy
+            </.alert>
+          <% end %>
           <div class="row g-2 align-items-center">
             <%= @socket.view.header(assigns) %>
           </div>

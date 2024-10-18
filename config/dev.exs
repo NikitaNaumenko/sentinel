@@ -55,7 +55,7 @@ config :sentinel, SentinelWeb.Endpoint,
 config :sentinel, SentinelWeb.Endpoint,
   live_reload: [
     patterns: [
-      ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
+      ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg|woff2)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/sentinel_web/(controllers|live|components)/.*(ex|heex)$",
       interval: 1000,

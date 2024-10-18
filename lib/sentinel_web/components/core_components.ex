@@ -160,9 +160,11 @@ defmodule SentinelWeb.CoreComponents do
   def simple_form(assigns) do
     ~H"""
     <.form :let={f} class="card" for={@for} as={@as} {@rest}>
-      <div class="card-header">
-        <h3 class="card-tile"><%= render_slot(@title, f) %></h3>
-      </div>
+      <%= if Enum.any?(@title) do %>
+        <div class="card-header">
+          <h3 class="card-tile"><%= render_slot(@title, f) %></h3>
+        </div>
+      <% end %>
       <div class="card-body">
         <%= render_slot(@inner_block, f) %>
       </div>

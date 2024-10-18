@@ -44,7 +44,6 @@ defmodule SentinelWeb.EscalationPolicyLive.New do
     changeset =
       %Policy{}
       |> Escalations.escalation_policy_changeset(escalation_policy_attrs)
-      |> dbg()
       |> Map.put(:action, :validate)
 
     {:noreply, assign_form(socket, changeset)}
