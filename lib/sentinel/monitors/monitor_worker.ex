@@ -16,14 +16,14 @@ defmodule Sentinel.Monitors.MonitorWorker do
 
   @impl GenServer
   def handle_continue(:setup_monitor, %{monitor: monitor} = state) do
-    # interval = monitor.interval * 1_000
-    # :timer.send_interval(interval, :run_check)
+    interval = monitor.interval * 1_000
+    :timer.send_interval(interval, :run_check)
     {:noreply, state}
   end
 
   @impl GenServer
   def handle_info(:run_check, %{monitor: monitor} = state) do
-    # {:ok, monitor} = RunCheck.call(monitor.id)
-    # {:noreply, %{state | monitor: monitor}}
+    {:ok, monitor} = RunCheck.call(monitor.id)
+    {:noreply, %{state | monitor: monitor}}
   end
 end

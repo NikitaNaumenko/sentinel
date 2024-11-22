@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for sentinel-app on 2024-04-11T17:25:34+05:00
+# fly.toml app configuration file generated for sentinel-app-winter-river-4784 on 2024-11-22T13:15:23+05:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'sentinel-app'
+app = 'sentinel-app-winter-river-4784'
 primary_region = 'ams'
 kill_signal = 'SIGTERM'
 
@@ -13,7 +13,7 @@ kill_signal = 'SIGTERM'
   release_command = '/app/bin/migrate'
 
 [env]
-  PHX_HOST = 'sentinel-app.fly.dev'
+  PHX_HOST = 'sentinel-app-winter-river-4784.fly.dev'
   PORT = '8080'
 
 [http_service]
