@@ -13,13 +13,13 @@ defmodule SentinelWeb.SessionLive.Login do
     <h2 class="h2 mb-4 text-center"><%= dgettext("session", "Log in") %></h2>
     <.simple_form for={@form} id="login_form" action={~p"/users/log_in"} phx-update="ignore">
       <.input field={@form[:email]} type="email" label="Email" required />
+      <.link href={~p"/reset_password"} class="text-sm font-semibold">
+        Forgot your password?
+      </.link>
       <.input field={@form[:password]} type="password" label="Password" required />
 
       <:actions>
         <.input field={@form[:remember_me]} type="checkbox" label="Keep me logged in" />
-        <.link href={~p"/reset_password"} class="text-sm font-semibold">
-          Forgot your password?
-        </.link>
       </:actions>
       <:actions>
         <.button phx-disable-with="Signing in..." class="w-full">
@@ -27,14 +27,6 @@ defmodule SentinelWeb.SessionLive.Login do
         </.button>
       </:actions>
     </.simple_form>
-    <div class="hr-text">or</div>
-    <div class="row">
-      <div class="col">
-        <a href="#" class="btn w-100">
-          Login with Github
-        </a>
-      </div>
-    </div>
     """
   end
 

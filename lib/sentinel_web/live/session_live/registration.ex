@@ -39,14 +39,6 @@ defmodule SentinelWeb.SessionLive.Registration do
         </.button>
       </:actions>
     </.simple_form>
-    <div class="hr-text">or</div>
-    <div class="row">
-      <div class="col">
-        <a href="#" class="btn w-100">
-          Sign up with Github
-        </a>
-      </div>
-    </div>
     """
   end
 

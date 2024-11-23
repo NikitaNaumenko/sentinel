@@ -11,6 +11,7 @@ import Hooks from "./hooks";
 import topbar from "topbar";
 
 import "@tabler/core";
+
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");

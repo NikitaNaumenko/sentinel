@@ -80,7 +80,7 @@ defmodule SentinelWeb.MonitorLive.Edit do
     case Monitors.update_monitor(socket.assigns.monitor, monitor_attrs) do
       {:ok, _monitor} ->
         socket =
-          put_flash(socket, :info, dgettext("monitors", "Monitor updated successfully"))
+          put_flash(socket, :success, dgettext("monitors", "Monitor updated successfully"))
 
         {:noreply, socket}
 
