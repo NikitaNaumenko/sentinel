@@ -334,12 +334,6 @@ defmodule Sentinel.Monitors do
     |> Repo.update()
   end
 
-  def update_notification_rule(%NotificationRule{} = notification_rule, attrs) do
-    notification_rule
-    |> NotificationRule.changeset(attrs)
-    |> Repo.update()
-  end
-
   def get_incident(id) do
     Repo.get(Incident, id)
   end

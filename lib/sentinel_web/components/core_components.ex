@@ -302,7 +302,7 @@ defmodule SentinelWeb.CoreComponents do
   def index_page_header(assigns) do
     ~H"""
     <%= if @condition do %>
-      <header class="d-flex">
+      <header class="d-flex py-2">
         <div class="col">
           <h2 class="page-title">
             <%= @page_title %>

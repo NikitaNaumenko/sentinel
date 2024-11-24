@@ -125,6 +125,10 @@ defmodule SentinelWeb.MonitorLive.Edit do
     {:noreply, put_flash(socket, :info, dgettext("notification_rule", "Webhook url updated!"))}
   end
 
+  def handle_info({_, {:updated, _}}, socket) do
+    {:noreply, put_flash(socket, :success, dgettext("monitors", "Monitor updated successfully"))}
+  end
+
   def header(assigns) do
     ~H"""
     <div class="row g-3 align-items-center">

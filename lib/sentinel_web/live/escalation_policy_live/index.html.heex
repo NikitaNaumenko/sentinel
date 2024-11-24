@@ -5,6 +5,7 @@
   policy_func={fn -> permit?(Sentinel.Escalations.EscalationPolicy, :create, @current_user) end}
   condition={!Enum.empty?(@escalation_policies)}
 />
+
 <%= if Enum.empty?(@escalation_policies) do %>
   <div class="bg-body-tertiary rounded-3 mb-4 p-5">
     <div class="container-fluid py-5">

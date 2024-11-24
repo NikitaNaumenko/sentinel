@@ -21,25 +21,4 @@ defmodule SentinelWeb.EscalationPolicyLive.Index do
 
     {:noreply, socket}
   end
-
-  def header(assigns) do
-    ~H"""
-    <header class="d-flex">
-      <div class="col">
-        <h2 class="page-title">
-          <%= dgettext("escalation_policies", "Escalation Policies") %>
-        </h2>
-      </div>
-      <div class="ms-auto d-print-none col-auto">
-        <.link
-          :if={permit?(Sentinel.Escalations.EscalationPolicy, :create, @current_user)}
-          navigate={~p"/escalation_policies/new"}
-          class="btn btn-primary"
-        >
-          <%= dgettext("escalation_policies", "New escalation policy") %>
-        </.link>
-      </div>
-    </header>
-    """
-  end
 end

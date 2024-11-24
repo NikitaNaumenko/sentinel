@@ -12,7 +12,7 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
     ~H"""
     <div>
       <div class="fw-semibold">
-        <%= dgettext("monitors", "Escalation Policy") %>
+        <%= dgettext("monitors", "Notification rules") %>
       </div>
 
       <div class="card cad-md">
@@ -20,18 +20,24 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
           <div class="vstack gap-1">
             <%= if Enum.any?(@escalation_policies) do %>
               <label>
-                <span>
+                <span class="d-flex">
                   <%= dgettext("monitors", "Escalation policies") %>
                 </span>
                 <span class="text-muted-foreground text-sm font-normal leading-snug">
-                  When to send SSL (HTTPS) alerts before expiry.
+               <%= dgettext("monitors", "Set rules on how alerts escalade during an incident. It defines the order of channels that will be triggered for alerts.") %>
                 </span>
               </label>
               <div>
-                <%!-- <.form for={@form}>
-                  <.input type="select" options={@escalation_policies} field={@form[:resend_interval]} />
-                </.form> --%>
+                <.form phx-target={@myself} phx-change="update-escalation-policy" for={@form}>
+                  <.input type="select" options={@escalation_policies} field={@form[:escalation_policy_id]} />
+                </.form>
               </div>
+              <div>
+              <.link navigate={~p"/escalation_policies/new"}>
+                <%= dgettext("monitors", "Create new escalation policy") %>
+               </.link>
+              </div>
+
             <% else %>
               <span>
                 <%= dgettext("monitors", "Please set up escalation policy to get incidents alert instantly") %>
@@ -72,52 +78,28 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
 
   @impl Phoenix.LiveComponent
   def update(assigns, socket) do
-    # form =
-    #   assigns.notification_rule
-    #   |> NotificationRule.changeset(%{})
-    #   |> to_form()
-
     escalation_policies =
-      assigns.account_id |> Escalations.list_escalation_policies() |> collection_for_select({:id, :name})
+      assigns.account_id |> Escalations.list_escalation_policies() |> collection_for_select({:id, :name}, empty: {dgettext("monitors", "No escalation policy"), nil})
 
     socket =
       socket
       |> assign(:escalation_policies, escalation_policies)
-      # |> assign(form: form)
       |> assign(assigns)
 
     {:ok, socket}
   end
 
-  # @impl Phoenix.LiveComponent
-  # def handle_event("toggle-via", %{"id" => id, "attr" => attr, "value" => value}, socket) do
-  #   case Monitors.toggle_via(id, attr, value) do
-  #     {:ok, notification_rule} ->
-  #       # notification_rule = Sentinel.Repo.preload(notification_rule, :webhook)
-  #       {:noreply, socket}
+  @impl Phoenix.LiveComponent
+  def handle_event("update-escalation-policy", %{"monitor" => params}, socket) do
+    case Monitors.update_monitor(socket.assigns.monitor, params) do
+      {:ok, monitor} ->
+        notify_parent({:updated, monitor})
+        {:noreply, socket}
 
-  #     {:error, _changeset} ->
-  #       {:noreply, put_flash(socket, :error, dgettext("errors", "Something went wrong"))}
-  #   end
-  # end
-
-  # def handle_event("update-webhook", %{"notification_rule" => params}, socket) do
-  #   params =
-  #     if Map.get(params, "webhook_id") == nil do
-  #       Map.put(params, "via_webhook", false)
-  #     else
-  #       Map.put(params, "via_webhook", true)
-  #     end
-
-  #   case Monitors.update_notification_rule(socket.assigns.notification_rule, params) do
-  #     {:ok, notification_rule} ->
-  #       notify_parent({:updated, notification_rule})
-  #       {:noreply, socket}
-
-  #     {:error, changeset} ->
-  #       {:noreply, assign(socket, :form, to_form(changeset))}
-  #   end
-  # end
+      {:error, changeset} ->
+        {:noreply, assign(socket, :form, to_form(changeset))}
+    end
+  end
 
   # def handle_event("update-telegram", %{"notification_rule" => params}, socket) do
   #   params =
