@@ -36,16 +36,4 @@ defmodule SentinelWeb.TeammateLive.New do
         {:noreply, assign_form(socket, changeset)}
     end
   end
-
-  def header(assigns) do
-    ~H"""
-    <header class="mr-auto ml-auto flex max-w-2xl items-center justify-between gap-6 py-2">
-      <div>
-        <h1 class="text-primary leading text-3xl font-bold leading-8">
-          <%= @page_title %>
-        </h1>
-      </div>
-    </header>
-    """
-  end
 end

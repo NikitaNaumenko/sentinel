@@ -35,18 +35,14 @@ defmodule SentinelWeb.Components.Toast do
 
   def toast(assigns) do
     ~H"""
-    <div
-      id={@id}
-      class={["alert alert-dismissible", @cva_class]}
-      role="alert"
-    >
+    <div id={@id} class={["alert alert-dismissible", @cva_class]} role="alert">
       <div class="d-flex">
         <div>
           <h4 :if={@title} class="alert-title"><%= @title %></h4>
           <div class="text-secondary"><%= render_slot(@inner_block) %></div>
         </div>
       </div>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 
       <%!-- <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a> --%>
     </div>

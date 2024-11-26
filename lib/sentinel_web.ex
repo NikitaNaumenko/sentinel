@@ -116,6 +116,8 @@ defmodule SentinelWeb do
 
       # Routes generation with the ~p sigil
       unquote(verified_routes())
+
+      # defdelegate dt(context, key), to: SentinelWeb.Gettext, as: :dgettext
     end
   end
 

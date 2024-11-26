@@ -20,6 +20,7 @@ Sentinel.Repo.transaction(fn ->
   Sentinel.Repo.insert!(%Accounts.User{
     email: "full@mail.com",
     hashed_password: Bcrypt.hash_pwd_salt("password"),
+    role: :admin,
     account_id: account.id
   })
 

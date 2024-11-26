@@ -1,16 +1,19 @@
-<div class="bg-card text-card-foreground margin-auto rounded-xl border p-6 shadow">
-  <.simple_form for={@form} phx-change="validate" phx-submit="save">
-    <.input field={@form[:first_name]} label={dgettext("teammates", "First Name")} phx-debounce="200" />
-    <.input field={@form[:last_name]} label={dgettext("teammates", "Last Name")} phx-debounce="200" />
-    <.input field={@form[:email]} phx-debounce="200" label={dgettext("teammates", "Email")} />
-    <.input
-      field={@form[:role]}
-      type="select"
-      options={translated_select_enums(User, :role)}
-      phx-debounce="200"
-    />
-    <div class="flex justify-end p-4">
-      <.button phx-disable-with="Saving...">Save</.button>
+<.simple_form for={@form} phx-change="validate" phx-submit="save">
+  <:title><%= @page_title %></:title>
+  <.input field={@form[:first_name]} label={dgettext("teammates", "First Name")} phx-debounce="200" />
+  <.input field={@form[:last_name]} label={dgettext("teammates", "Last Name")} phx-debounce="200" />
+  <.input field={@form[:email]} phx-debounce="200" label={dgettext("teammates", "Email")} />
+  <.input
+    field={@form[:role]}
+    type="select"
+    label={dgettext("teammates", "Role")}
+    options={translated_select_enums(User, :role)}
+    phx-debounce="200"
+  />
+  <:actions>
+    <div class="d-flex">
+      <.link class="btn btn-link" navigate={~p"/teammates"}>Back</.link>
+      <.button class="ms-auto" phx-disable-with="Saving..."><%= dgettext("forms", "Create") %></.button>
     </div>
-  </.simple_form>
-</div>
+  </:actions>
+</.simple_form>

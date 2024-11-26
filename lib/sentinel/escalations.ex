@@ -39,4 +39,9 @@ defmodule Sentinel.Escalations do
   def alert_types do
     Ecto.Enum.values(Alert, :alert_type)
   end
+
+  def get_escalation_policy!(policy_id) do
+    from(p in Policy, where: p.id == ^policy_id, preload: [escalation_steps: :escalation_alerts])
+    |> Repo.one!()
+  end
 end

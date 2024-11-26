@@ -15,16 +15,19 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
         <%= dgettext("monitors", "Notification rules") %>
       </div>
 
-      <div class="card cad-md">
+      <div class="card cad-md mb-3">
         <div class="card-body">
           <div class="vstack gap-1">
-            <%= if Enum.any?(@escalation_policies) do %>
+            <%= if Enum.count(@escalation_policies) > 1 do %>
               <label>
                 <span class="d-flex">
                   <%= dgettext("monitors", "Escalation policies") %>
                 </span>
                 <span class="text-muted-foreground text-sm font-normal leading-snug">
-               <%= dgettext("monitors", "Set rules on how alerts escalade during an incident. It defines the order of channels that will be triggered for alerts.") %>
+                  <%= dgettext(
+                    "monitors",
+                    "Set rules on how alerts escalade during an incident. It defines the order of channels that will be triggered for alerts."
+                  ) %>
                 </span>
               </label>
               <div>
@@ -33,18 +36,19 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
                 </.form>
               </div>
               <div>
-              <.link navigate={~p"/escalation_policies/new"}>
-                <%= dgettext("monitors", "Create new escalation policy") %>
-               </.link>
+                <.link navigate={~p"/escalation_policies/new"}>
+                  <%= dgettext("monitors", "Create new escalation policy") %>
+                </.link>
               </div>
-
             <% else %>
               <span>
                 <%= dgettext("monitors", "Please set up escalation policy to get incidents alert instantly") %>
 
-                <.link class="btn btn-link" navigate={~p"/escalation_policies/new"}>
-                  <%= dgettext("monitors", "Create new escalation policy") %>
-                </.link>
+                <div class="mt-2">
+                  <.link navigate={~p"/escalation_policies/new"}>
+                    <%= dgettext("monitors", "Create new escalation policy") %>
+                  </.link>
+                </div>
               </span>
             <% end %>
           </div>
@@ -79,7 +83,9 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
   @impl Phoenix.LiveComponent
   def update(assigns, socket) do
     escalation_policies =
-      assigns.account_id |> Escalations.list_escalation_policies() |> collection_for_select({:id, :name}, empty: {dgettext("monitors", "No escalation policy"), nil})
+      assigns.account_id
+      |> Escalations.list_escalation_policies()
+      |> collection_for_select({:id, :name}, empty: {dgettext("monitors", "No escalation policy"), nil})
 
     socket =
       socket
