@@ -41,7 +41,6 @@ defmodule Sentinel.Escalations do
   end
 
   def get_escalation_policy!(policy_id) do
-    from(p in Policy, where: p.id == ^policy_id, preload: [escalation_steps: :escalation_alerts])
-    |> Repo.one!()
+    Repo.one!(from(p in Policy, where: p.id == ^policy_id, preload: [escalation_steps: :escalation_alerts]))
   end
 end

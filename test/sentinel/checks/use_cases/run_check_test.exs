@@ -3,6 +3,7 @@ defmodule Sentinel.Monitors.UseCases.RunCheckTest do
   use ExVCR.Mock, adapter: ExVCR.Adapter.Finch
 
   import Sentinel.AccountsFixtures
+  import Sentinel.EscalationsFixtures
   import Sentinel.MonitorsFixtures
 
   alias Sentinel.Monitors
@@ -11,9 +12,12 @@ defmodule Sentinel.Monitors.UseCases.RunCheckTest do
   alias Sentinel.Monitors.UseCases.RunCheck
 
   setup do
+    escalation_alert_attrs = escalation_alert_attrs(%{alert_type: :email})
+    escalation_step_attrs = escalation_step_attrs(%{escalation_alerts: [escalation_alert_attrs]})
+    escalation_policy = escalation_policy_fixture(%{escalation_steps: [escalation_step_attrs]})
     account = account_fixture(%{name: "account"})
 
-    monitor = monitor_fixture(%{account_id: account.id, notification_rule: %{via_email: true}})
+    monitor = monitor_fixture(%{account_id: account.id, escalation_policy_id: escalation_policy.id})
     [account_id: account.id, monitor: monitor]
   end
 
