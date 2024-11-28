@@ -1,6 +1,7 @@
 defmodule Sentinel.IntegrationsFixtures do
   @moduledoc false
   alias Sentinel.Integrations.Webhook
+  alias Sentinel.Integrations
   alias Sentinel.Repo
 
   def webhook_fixture(attrs \\ %{}) do
@@ -9,5 +10,12 @@ defmodule Sentinel.IntegrationsFixtures do
     %Webhook{}
     |> Webhook.changeset(attrs)
     |> Repo.insert!()
+  end
+
+  def telegram_bot_fixture(attrs \\ %{}) do
+    attrs = Map.merge(%{name: "Telegram bot", token: Ecto.UUID.generate()})
+
+    {:ok, bot} = Integrations.create_telegram_bot(attrs)
+    bot
   end
 end

@@ -73,7 +73,8 @@ defmodule Sentinel.MixProject do
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:tailwind_formatter, "~> 0.4.0", only: [:dev, :test], runtime: false},
       {:exvcr, "~> 0.11", only: :test},
-      {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false}
+      {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
+      {:repatch, "~> 1.0"}
     ]
   end
 
