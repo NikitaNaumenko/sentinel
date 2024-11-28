@@ -109,7 +109,7 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
 
   # def handle_event("update-telegram", %{"notification_rule" => params}, socket) do
   #   params =
-  #     if Map.get(params, "telegram_bot_id") == nil do
+  #     if Map.get(params, "telegram_id") == nil do
   #       Map.put(params, "via_telegram", false)
   #     else
   #       Map.put(params, "via_telegram", true)
@@ -128,25 +128,25 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
   # def handle_event("sync-telegram", _params, socket) do
   #   notification_rule = socket.assigns.notification_rule
   #   monitor = socket.assigns.monitor
-  #   telegram_bot = Integrations.get_telegram_bot!(notification_rule.telegram_bot_id, monitor.account_id)
+  #   telegram = Integrations.get_telegram!(notification_rule.telegram_id, monitor.account_id)
 
   #   {:ok, updates} =
-  #     Telegram.Api.request(telegram_bot.token, "getUpdates", allowed_updates: ["my_chat_member"], offset: -1)
+  #     Telegram.Api.request(telegram.token, "getUpdates", allowed_updates: ["my_chat_member"], offset: -1)
 
-  #   {:noreply, assign(socket, telegram_bot_info: Integrations.parse_bot_my_chat_member_updates(updates))}
+  #   {:noreply, assign(socket, telegram_info: Integrations.parse_bot_my_chat_member_updates(updates))}
   # end
 
   def bot_info(assigns) do
     ~H"""
     <div class="text-muted-foreground mt-2 text-sm font-normal leading-snug">
       <p>
-        <%= dgettext("monitors", "Chat id") %>: <%= @telegram_bot_info.chat.id %>
+        <%= dgettext("monitors", "Chat id") %>: <%= @telegram_info.chat.id %>
       </p>
       <p>
-        <%= dgettext("monitors", "Chat title") %>: <%= @telegram_bot_info.chat.title %>
+        <%= dgettext("monitors", "Chat title") %>: <%= @telegram_info.chat.title %>
       </p>
       <p>
-        <%= dgettext("monitors", "Bot name") %>: <%= @telegram_bot_info.bot_info.bot_name %>
+        <%= dgettext("monitors", "Bot name") %>: <%= @telegram_info.bot_info.bot_name %>
       </p>
     </div>
     """

@@ -71,7 +71,7 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
   end
 
   defp process_acceptor(
-         %Acceptor{recipient_type: "telegram_bot"} = acceptor,
+         %Acceptor{recipient_type: "telegram"} = acceptor,
          %Event{type: %MonitorDown{}} = event
        ) do
     monitor = event.resource_id |> Monitors.get_monitor!() |> Repo.preload(:notification_rule)
@@ -108,7 +108,7 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
   end
 
   defp process_acceptor(
-         %Acceptor{recipient_type: "telegram_bot"} = acceptor,
+         %Acceptor{recipient_type: "telegram"} = acceptor,
          %Event{type: %MonitorUp{}} = event
        ) do
     monitor = event.resource_id |> Monitors.get_monitor!() |> Repo.preload(:notification_rule)

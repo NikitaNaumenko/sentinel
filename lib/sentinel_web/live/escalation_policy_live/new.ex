@@ -22,7 +22,7 @@ defmodule SentinelWeb.EscalationPolicyLive.New do
       |> collection_for_select({:id, :email}, empty: {dgettext("escalation_policies", "All users"), nil})
 
     webhooks = account |> Integrations.list_webhooks() |> collection_for_select({:id, :name})
-    telegram_bots = account |> Integrations.list_telegram_bots() |> collection_for_select({:id, :name})
+    telegrams = account |> Integrations.list_telegrams() |> collection_for_select({:id, :name})
     alert_types = Escalations.alert_types()
 
     socket =
@@ -30,7 +30,7 @@ defmodule SentinelWeb.EscalationPolicyLive.New do
       |> assign(:alert_types, alert_types)
       |> assign(:users, users)
       |> assign(:webhooks, webhooks)
-      |> assign(:telegram_bots, telegram_bots)
+      |> assign(:telegrams, telegrams)
       |> assign(:step_alert_types, %{})
       |> assign(:page_title, dgettext("escalation_policy", "Create new escalation policy"))
       |> assign(:title, dgettext("monitors", "New Escalation Policy"))
@@ -206,5 +206,5 @@ defmodule SentinelWeb.EscalationPolicyLive.New do
 
   defp alert_infos("users", socket), do: socket.assigns.users
   defp alert_infos("webhook", socket), do: socket.assigns.webhooks
-  defp alert_infos("telegram_bot", socket), do: socket.assigns.telegram_bots
+  defp alert_infos("telegram", socket), do: socket.assigns.telegrams
 end

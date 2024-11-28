@@ -3,18 +3,18 @@ defmodule SentinelWeb.IntegrationLive.Index do
   use SentinelWeb, :live_view
 
   alias Sentinel.Integrations
-  alias Sentinel.Integrations.TelegramBot
+  alias Sentinel.Integrations.Telegram
   alias Sentinel.Integrations.Webhook
 
   @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
     webhooks = Integrations.list_webhooks(socket.assigns.current_user.account)
-    telegram_bots = Integrations.list_telegram_bots(socket.assigns.current_user.account)
+    telegrams = Integrations.list_telegrams(socket.assigns.current_user.account)
 
     socket =
       socket
       |> assign(:page_title, dgettext("integrations", "Integrations"))
-      |> assign(:enabled, webhooks ++ telegram_bots)
+      |> assign(:enabled, webhooks ++ telegrams)
 
     {:ok, socket}
   end
@@ -39,9 +39,9 @@ defmodule SentinelWeb.IntegrationLive.Index do
     """
   end
 
-  def integration(%{integration: %TelegramBot{}} = assigns) do
+  def integration(%{integration: %Telegram{}} = assigns) do
     ~H"""
-    <.link class="card" navigate={~p"/integrations/telegram_bots/#{@integration}/edit"}>
+    <.link class="card" navigate={~p"/integrations/telegrams/#{@integration}/edit"}>
       <div class="card-body d-flex">
         <div class="rounded-3 border p-2">
           <img src={~p"/images/telegram.svg"} class="h-4 md:h-6" alt="telegram" />

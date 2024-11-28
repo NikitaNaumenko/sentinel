@@ -1,11 +1,11 @@
-defmodule Sentinel.Integrations.TelegramBot do
+defmodule Sentinel.Integrations.Telegram do
   @moduledoc false
   use Ecto.Schema
 
   import Ecto.Changeset
 
   @type t :: %__MODULE__{}
-  schema "telegram_bots" do
+  schema "telegrams" do
     field :name, :string
     field :token, :string
     belongs_to :account, Sentinel.Account
@@ -13,8 +13,8 @@ defmodule Sentinel.Integrations.TelegramBot do
   end
 
   @doc false
-  def changeset(telegram_bot, attrs \\ %{}) do
-    telegram_bot
+  def changeset(telegram, attrs \\ %{}) do
+    telegram
     |> cast(attrs, [:name, :token, :account_id])
     |> validate_required([:name, :token, :account_id])
   end

@@ -5,8 +5,8 @@ fsm = """
   sending --> |fail| failed
 """
 
-defmodule Sentinel.Events.Fsm.TelegramBotFsm do
-  @moduledoc "FSM implementation for `Sentinel.Events.TelegramBot`"
+defmodule Sentinel.Events.Fsm.TelegramFsm do
+  @moduledoc "FSM implementation for `Sentinel.Events.Telegram`"
   use Finitomata, fsm: fsm, auto_terminate: true, persistency: Finitomata.Persistency.Protocol
 
   @impl Finitomata
@@ -16,48 +16,48 @@ defmodule Sentinel.Events.Fsm.TelegramBotFsm do
   def on_transition(:sending, :fail, _event_payload, state_payload), do: {:ok, :failed, state_payload}
 end
 
-defimpl Finitomata.Persistency.Persistable, for: Sentinel.Events.Acceptors.TelegramBot do
+defimpl Finitomata.Persistency.Persistable, for: Sentinel.Events.Acceptors.Telegram do
   @moduledoc """
-  Implementation of `Finitomata.Persistency.Persistable` for `TelegramBot`.
+  Implementation of `Finitomata.Persistency.Persistable` for `Telegram`.
   """
 
-  alias Sentinel.Events.Acceptors.TelegramBot
+  alias Sentinel.Events.Acceptors.Telegram
   alias Sentinel.Repo
 
   require Logger
 
-  def load(%TelegramBot{} = telegram_bot) do
-    telegram_bot =
-      Repo.insert!(telegram_bot)
+  def load(%Telegram{} = telegram) do
+    telegram =
+      Repo.insert!(telegram)
 
-    {:created, telegram_bot}
+    {:created, telegram}
   end
 
-  def store(telegram_bot, %{
+  def store(telegram, %{
         from: _from,
         to: to,
         event: _event,
         event_payload: %{response: response},
-        object: telegram_bot
+        object: telegram
       }) do
-    telegram_bot
+    telegram
     |> Ecto.Changeset.change(%{state: to, result: response})
     |> Sentinel.Repo.update()
   end
 
-  def store(telegram_bot, %{
+  def store(telegram, %{
         from: _from,
         to: to,
         event: _event,
         event_payload: _event_payload,
-        object: telegram_bot
+        object: telegram
       }) do
-    telegram_bot
+    telegram
     |> Ecto.Changeset.change(%{state: to})
     |> Sentinel.Repo.update()
   end
 
-  def store_error(_telegram_bot, _reason, _info) do
+  def store_error(_telegram, _reason, _info) do
     # TODO: Обработка ошибок
     :ok
   end

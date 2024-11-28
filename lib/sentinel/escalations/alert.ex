@@ -6,16 +6,16 @@ defmodule Sentinel.Escalations.Alert do
 
   alias Sentinel.Accounts.User
   alias Sentinel.Escalations.Step
-  alias Sentinel.Integrations.TelegramBot
+  alias Sentinel.Integrations.Telegram
   alias Sentinel.Integrations.Webhook
 
-  @alert_types ~w[email webhook telegram_bot]a
+  @alert_types ~w[email webhook telegram]a
 
   schema "escalation_alerts" do
     field :alert_type, Ecto.Enum, values: @alert_types
     belongs_to :user, User
     belongs_to :webhook, Webhook
-    belongs_to :telegram_bot, TelegramBot
+    belongs_to :telegram, Telegram
     belongs_to :escalation_step, Step
 
     timestamps(type: :utc_datetime_usec)

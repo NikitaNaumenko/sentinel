@@ -12,10 +12,10 @@ defmodule Sentinel.IntegrationsFixtures do
     |> Repo.insert!()
   end
 
-  def telegram_bot_fixture(attrs \\ %{}) do
+  def telegram_fixture(attrs \\ %{}) do
     attrs = Map.merge(%{name: "Telegram bot", token: Ecto.UUID.generate()})
 
-    {:ok, bot} = Integrations.create_telegram_bot(attrs)
+    {:ok, bot} = Integrations.create_telegram(attrs)
     bot
   end
 end

@@ -1,14 +1,14 @@
-defmodule SentinelWeb.IntegrationLive.NewTelegramBot do
+defmodule SentinelWeb.IntegrationLive.NewTelegram do
   @moduledoc false
 
   use SentinelWeb, :live_view
 
   alias Sentinel.Integrations
-  alias Sentinel.Integrations.TelegramBot
+  alias Sentinel.Integrations.Telegram
 
   @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
-    changeset = TelegramBot.changeset(%TelegramBot{})
+    changeset = Telegram.changeset(%Telegram{})
 
     {:ok, assign_form(socket, changeset)}
   end
@@ -51,20 +51,20 @@ defmodule SentinelWeb.IntegrationLive.NewTelegramBot do
   end
 
   @impl Phoenix.LiveView
-  def handle_event("validate", %{"telegram_bot" => params}, socket) do
+  def handle_event("validate", %{"telegram" => params}, socket) do
     changeset =
-      %TelegramBot{}
-      |> TelegramBot.changeset(Map.put(params, "account_id", socket.assigns.current_user.account_id))
+      %Telegram{}
+      |> Telegram.changeset(Map.put(params, "account_id", socket.assigns.current_user.account_id))
       |> Map.put(:action, :validate)
 
     {:noreply, assign_form(socket, changeset)}
   end
 
-  def handle_event("save", %{"telegram_bot" => params}, socket) do
-    case Integrations.create_telegram_bot(
+  def handle_event("save", %{"telegram" => params}, socket) do
+    case Integrations.create_telegram(
            Map.put(params, "account_id", socket.assigns.current_user.account_id)
          ) do
-      {:ok, _telegram_bot} ->
+      {:ok, _telegram} ->
         {:noreply,
          socket
          |> put_flash(:info, dgettext("integrations", "Telegram Bot created successfully"))

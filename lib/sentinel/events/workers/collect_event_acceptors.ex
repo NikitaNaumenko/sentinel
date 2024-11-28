@@ -76,14 +76,14 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
     |> Map.get(:id)
   end
 
-  defp process_alert(%{alert_type: :telegram_bot} = alert, event_id, _account) do
+  defp process_alert(%{alert_type: :telegram} = alert, event_id, _account) do
     %{
       recipient: %{
-        id: alert.telegram_bot_id,
-        type: to_string(Sentinel.Integrations.TelegramBot)
+        id: alert.telegram_id,
+        type: to_string(Sentinel.Integrations.Telegram)
       },
       event_id: event_id,
-      recipient_type: "telegram_bot"
+      recipient_type: "telegram"
     }
     |> Acceptor.create()
     |> Map.get(:id)

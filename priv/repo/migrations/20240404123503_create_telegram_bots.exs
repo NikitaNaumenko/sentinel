@@ -1,9 +1,9 @@
-defmodule Sentinel.Repo.Migrations.CreateTelegramBots do
+defmodule Sentinel.Repo.Migrations.CreateTelegrams do
   use Ecto.Migration
 
   def change do
-    create table(:telegram_bots) do
-      add :token, :string
+    create table(:telegrams) do
+      add :chat_id, :string
       add :name, :string
 
       add :account_id,
@@ -13,7 +13,7 @@ defmodule Sentinel.Repo.Migrations.CreateTelegramBots do
     end
 
     alter table(:monitor_notification_rules) do
-      add :telegram_bot_id, references(:telegram_bots, on_delete: :nothing)
+      add :telegram_id, references(:telegrams, on_delete: :nothing)
     end
   end
 end

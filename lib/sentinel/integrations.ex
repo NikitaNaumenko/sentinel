@@ -3,7 +3,7 @@ defmodule Sentinel.Integrations do
   import Ecto.Query
 
   alias Sentinel.Accounts.Account
-  alias Sentinel.Integrations.TelegramBot
+  alias Sentinel.Integrations.Telegram
   alias Sentinel.Integrations.Webhook
   alias Sentinel.Repo
 
@@ -40,27 +40,27 @@ defmodule Sentinel.Integrations do
     |> Repo.all()
   end
 
-  def get_telegram_bot!(id, account_id) do
-    Repo.get_by!(TelegramBot, id: id, account_id: account_id)
+  def get_telegram!(id, account_id) do
+    Repo.get_by!(Telegram, id: id, account_id: account_id)
   end
 
-  def list_telegram_bots(%Account{id: account_id}) do
-    TelegramBot
+  def list_telegrams(%Account{id: account_id}) do
+    Telegram
     |> where([t], t.account_id == ^account_id)
     |> order_by(asc: :id)
     |> Repo.all()
   end
 
-  @spec create_telegram_bot(attrs :: map()) :: {:ok, TelegramBot.t()} | {:error, Ecto.Changeset.t()}
-  def create_telegram_bot(attrs) do
-    %TelegramBot{}
-    |> TelegramBot.changeset(attrs)
+  @spec create_telegram(attrs :: map()) :: {:ok, Telegram.t()} | {:error, Ecto.Changeset.t()}
+  def create_telegram(attrs) do
+    %Telegram{}
+    |> Telegram.changeset(attrs)
     |> Repo.insert()
   end
 
-  def update_telegram_bot(telegram_bot, attrs) do
-    telegram_bot
-    |> TelegramBot.changeset(attrs)
+  def update_telegram(telegram, attrs) do
+    telegram
+    |> Telegram.changeset(attrs)
     |> Repo.update()
   end
 

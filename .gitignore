@@ -39,3 +39,4 @@ npm-debug.log
 .DS_Store
 .zed
 .elixir-tools/
+.lexical/

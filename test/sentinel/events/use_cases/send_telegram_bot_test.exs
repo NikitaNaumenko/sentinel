@@ -1,5 +1,5 @@
 
-defmodule Sentinel.Events.UseCases.SendTelegramBotTest do
+defmodule Sentinel.Events.UseCases.SendTelegramTest do
   use Sentinel.DataCase
   use Repatch.ExUnit
 
@@ -12,22 +12,22 @@ defmodule Sentinel.Events.UseCases.SendTelegramBotTest do
 
   setup do
     account = account_fixture()
-    telegram_bot = telegram_bot_fixture(%{account_id: account.id})
+    telegram = telegram_fixture(%{account_id: account.id})
     monitor = monitor_fixture(%{account_id: account.id})
     event = event_fixture(%{type: :monitor_down, resource: monitor})
 
     acceptor =
       acceptor_fixture(%{
-        recipient: %{id: telegram_bot.id, type: to_string(telegram_bot.__struct__)},
+        recipient: %{id: telegram.id, type: to_string(telegram.__struct__)},
         event_id: event.id,
-        recipient_type: "telegram_bot"
+        recipient_type: "telegram"
       })
 
-    [event: event, telegram_bot: telegram_bot, resource: monitor, acceptor: acceptor]
+    [event: event, telegram: telegram, resource: monitor, acceptor: acceptor]
   end
 
   describe "call/1" do
-    test "send telegram request", %{telegram_bot: telegram_bot, event: event, resource: resource, acceptor: acceptor} do
+    test "send telegram request", %{telegram: telegram, event: event, resource: resource, acceptor: acceptor} do
       {:ok, :sent} =
         SendEmail.call(%{
           acceptor: acceptor,

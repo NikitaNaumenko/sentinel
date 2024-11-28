@@ -4,7 +4,7 @@ defmodule Sentinel.Monitors.NotificationRule do
 
   import Ecto.Changeset
 
-  alias Sentinel.Integrations.TelegramBot
+  alias Sentinel.Integrations.Telegram
   alias Sentinel.Integrations.Webhook
   alias Sentinel.Monitors.Monitor
 
@@ -23,7 +23,7 @@ defmodule Sentinel.Monitors.NotificationRule do
     field :via_telegram, :boolean, default: false
 
     field :telegram_chat_id, :string
-    belongs_to :telegram_bot, TelegramBot
+    belongs_to :telegram, Telegram
     belongs_to :monitor, Monitor
     belongs_to :webhook, Webhook
     timestamps(type: :utc_datetime_usec)
@@ -40,7 +40,7 @@ defmodule Sentinel.Monitors.NotificationRule do
       :via_email,
       :via_telegram,
       :telegram_chat_id,
-      :telegram_bot_id,
+      :telegram_id,
       :webhook_id
     ])
     |> cast_assoc(:webhook, with: &Webhook.changeset/2)
