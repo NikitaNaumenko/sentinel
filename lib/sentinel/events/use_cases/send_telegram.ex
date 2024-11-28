@@ -1,6 +1,7 @@
 defmodule Sentinel.Events.UseCases.SendTelegram do
   @moduledoc false
   alias Sentinel.Events.Acceptors.Telegram
+  alias Sentinel.Integration.TelegramClient
   alias Sentinel.Events.Fsm.TelegramFsm
   alias Sentinel.Repo
 
@@ -38,7 +39,8 @@ defmodule Sentinel.Events.UseCases.SendTelegram do
 
   defp send_message(telegram, resource, event_type, chat_id) do
     message = build_message(event_type, resource)
-    Telegram.Api.request(telegram.token, "sendMessage", chat_id: chat_id, text: message)
+
+    TelegramClient.request("sendMessage", chat_id: chat_id, text: message)
   end
 
   defp build_message(:monitor_down, resource) do

@@ -6,6 +6,7 @@ import Config
 # which you should run after static files are built and
 # before starting your production server.
 config :sentinel, SentinelWeb.Endpoint, cache_static_manifest: "priv/static/cache_manifest.json"
+config :sentinel, :telegram_bot_token, System.fetch_env!("TELEGRAM_BOT_TOKEN")
 
 # Configures Swoosh API Client
 config :swoosh, api_client: Swoosh.ApiClient.Finch, finch_name: Sentinel.Finch

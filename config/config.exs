@@ -48,6 +48,8 @@ config :sentinel, Oban,
   plugins: [Oban.Plugins.Pruner],
   queues: [notifications: 5, monitors: 10]
 
+config :sentinel, :telegram_bot_token, "7081666666:AAFMKLLnnnnnnnnnnnG18cIBrrrrrrrrrJQ"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
