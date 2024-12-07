@@ -7,7 +7,7 @@ defmodule Sentinel.Integrations.Telegram do
   @type t :: %__MODULE__{}
   schema "telegrams" do
     field :name, :string
-    field :token, :string
+    field :chat_id, :string
     belongs_to :account, Sentinel.Account
     timestamps(type: :utc_datetime_usec)
   end
@@ -15,7 +15,7 @@ defmodule Sentinel.Integrations.Telegram do
   @doc false
   def changeset(telegram, attrs \\ %{}) do
     telegram
-    |> cast(attrs, [:name, :token, :account_id])
-    |> validate_required([:name, :token, :account_id])
+    |> cast(attrs, [:name, :chat_id, :account_id])
+    |> validate_required([:name, :chat_id, :account_id])
   end
 end

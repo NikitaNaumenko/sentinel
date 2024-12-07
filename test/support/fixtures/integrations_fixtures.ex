@@ -13,7 +13,7 @@ defmodule Sentinel.IntegrationsFixtures do
   end
 
   def telegram_fixture(attrs \\ %{}) do
-    attrs = Map.merge(%{name: "Telegram bot", token: Ecto.UUID.generate()})
+    attrs = Map.merge(attrs, %{name: "Telegram bot", chat_id: Ecto.UUID.generate()})
 
     {:ok, bot} = Integrations.create_telegram(attrs)
     bot

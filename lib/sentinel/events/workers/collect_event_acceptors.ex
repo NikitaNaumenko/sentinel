@@ -25,12 +25,11 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
 
     account = Sentinel.Repo.preload(account, :users)
 
-    dbg(monitor)
     escalation_policy = Escalations.get_escalation_policy!(monitor.escalation_policy_id)
 
     escalation_policy.escalation_steps
     |> Stream.flat_map(fn step ->
-      Enum.map(step.escalation_alerts, fn alert -> process_alert(alert, event, account) end)
+      Enum.map(step.escalation_alerts, fn alert -> process_alert(alert, event.id, account) end)
     end)
     |> Enum.each(fn
       ids when is_list(ids) ->
@@ -79,12 +78,14 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
   defp process_alert(%{alert_type: :telegram} = alert, event_id, _account) do
     %{
       recipient: %{
-        id: alert.telegram_id,
+        # id: alert.telegram_id,
+        id: alert.user_id,
         type: to_string(Sentinel.Integrations.Telegram)
       },
       event_id: event_id,
       recipient_type: "telegram"
     }
+      |>dbg()
     |> Acceptor.create()
     |> Map.get(:id)
   end

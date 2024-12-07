@@ -1,4 +1,3 @@
-
 defmodule Sentinel.Events.UseCases.SendTelegramTest do
   use Sentinel.DataCase
   use Repatch.ExUnit
@@ -6,7 +5,7 @@ defmodule Sentinel.Events.UseCases.SendTelegramTest do
   import Sentinel.AccountsFixtures
   import Sentinel.EventsFixtures
   import Sentinel.MonitorsFixtures
-  alias Sentinel.IntegrationsFixtures
+  import Sentinel.IntegrationsFixtures
 
   alias Sentinel.Events.UseCases.SendTelegram
 
@@ -29,17 +28,13 @@ defmodule Sentinel.Events.UseCases.SendTelegramTest do
   describe "call/1" do
     test "send telegram request", %{telegram: telegram, event: event, resource: resource, acceptor: acceptor} do
       {:ok, :sent} =
-        SendEmail.call(%{
+        SendTelegram.call(%{
           acceptor: acceptor,
-          recipient: user,
+          recipient: telegram,
           resource: resource,
-          event_type: String.to_existing_atom(event.type.type)
+          event_type: String.to_existing_atom(event.type.type),
+          chat_id: telegram.chat_id
         })
-
-      Process.sleep(100)
-
-      email = Sentinel.Events.Notifications.Email.monitor_down(%{monitor: resource, user: user})
-      assert_email_sent(email)
     end
   end
 end

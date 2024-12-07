@@ -34,15 +34,15 @@ defmodule SentinelWeb.IntegrationLive.NewTelegram do
           placeholder="Support"
         />
         <div class="text-md mb-2 block max-w-xs">
-          <%= dgettext("integrations", "Telegram bot Token") %>
+          <%= dgettext("integrations", "Telegram Chat id") %>
           <div class="text-body-secondary text-sm">
             <%= dgettext(
               "integrations",
-              "Use telegram bots to notify external systems when something happens in sentinel."
+              "Use telegram chat to notify external systems when something happens in sentinel."
             ) %>
           </div>
         </div>
-        <.input field={@form[:token]} phx-debounce="200" placeholder="7223159943:AaG18cIB7gsU7Z4erJQ" />
+        <.input field={@form[:chat_id]} phx-debounce="200" placeholder="7223159943:AaG18cIB7gsU7Z4erJQ" />
 
         <.button phx-disable-with="Saving..."><%= dgettext("integrations", "Create") %></.button>
       </.form>

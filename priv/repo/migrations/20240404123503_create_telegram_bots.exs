@@ -11,9 +11,5 @@ defmodule Sentinel.Repo.Migrations.CreateTelegrams do
 
       timestamps(type: :utc_datetime_usec)
     end
-
-    alter table(:monitor_notification_rules) do
-      add :telegram_id, references(:telegrams, on_delete: :nothing)
-    end
   end
 end

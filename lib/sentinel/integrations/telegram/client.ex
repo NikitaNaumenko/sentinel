@@ -12,12 +12,14 @@ defmodule Sentinel.Integrations.Telegram.Client do
           | {:file_content, content :: iodata(), filename :: String.t()}
   @type parameters :: [{parameter_name(), parameter_value()}]
 
-  @callback request(Telegram.Types.token(), Telegram.Types.method(), parameters()) :: request_result()
+  @telegram_bot_token Application.compile_env!(:sentinel, :telegram_bot_token)
+
+  @callback request(Telegram.Types.method(), parameters()) :: request_result()
   def request(action, opts \\ []) do
-    impl().request(action, opts)
+    impl().request(@telegram_bot_token, action, opts)
   end
 
   defp impl() do
-    Application.get_env(:sentinel, :telegram_client)
+    Application.get_env(:sentinel, :telegram_client, Telegram.Api)
   end
 end

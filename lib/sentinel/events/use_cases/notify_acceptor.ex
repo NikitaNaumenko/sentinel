@@ -74,15 +74,24 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
          %Acceptor{recipient_type: "telegram"} = acceptor,
          %Event{type: %MonitorDown{}} = event
        ) do
-    monitor = event.resource_id |> Monitors.get_monitor!() |> Repo.preload(:notification_rule)
+    monitor =
+      event.resource_id
+      |> Monitors.get_monitor!()
+      |> Repo.preload(escalation_policy: [escalation_steps: :escalation_alerts])
 
-    SendTelegram.call(%{
-      acceptor: acceptor,
-      recipient: acceptor.recipient,
-      event_type: :monitor_down,
-      resource: monitor,
-      chat_id: monitor.notification_rule.telegram_chat_id
-    })
+    Enum.each(monitor.escalation_policy.escalation_steps, fn step ->
+      #TODO Дичь
+      Enum.each(step.escalation_alerts, fn alert ->
+        SendTelegram.call(%{
+          acceptor: acceptor,
+          recipient: acceptor.recipient,
+          event_type: :monitor_down,
+          resource: monitor,
+          chat_id: "-4760403358"
+          # chat_id: alert.user_id
+        })
+      end)
+    end)
   end
 
   defp process_acceptor(%Acceptor{recipient_type: "email"} = acceptor, %Event{type: %MonitorUp{}} = event) do
@@ -107,19 +116,25 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
     })
   end
 
-  defp process_acceptor(
-         %Acceptor{recipient_type: "telegram"} = acceptor,
-         %Event{type: %MonitorUp{}} = event
-       ) do
-    monitor = event.resource_id |> Monitors.get_monitor!() |> Repo.preload(:notification_rule)
+  defp process_acceptor(%Acceptor{recipient_type: "telegram"} = acceptor, %Event{type: %MonitorUp{}} = event) do
+    monitor =
+      event.resource_id
+      |> Monitors.get_monitor!()
+      |> Repo.preload(escalation_policy: [escalation_steps: :escalation_alerts])
 
-    SendTelegram.call(%{
-      acceptor: acceptor,
-      recipient: acceptor.recipient,
-      event_type: :monitor_up,
-      resource: monitor,
-      chat_id: monitor.notification_rule.telegram_chat_id
-    })
+    Enum.each(monitor.escalation_policy.escalation_steps, fn step ->
+      #TODO Дичь
+      Enum.each(step.escalation_alerts, fn alert ->
+        SendTelegram.call(%{
+          acceptor: acceptor,
+          recipient: acceptor.recipient,
+          event_type: :monitor_up,
+          resource: monitor,
+          chat_id: "-4760403358"
+          # chat_id: alert.user_id
+        })
+      end)
+    end)
   end
 
   defp process_acceptor(

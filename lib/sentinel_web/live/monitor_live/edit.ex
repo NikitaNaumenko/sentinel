@@ -16,14 +16,6 @@ defmodule SentinelWeb.MonitorLive.Edit do
 
   @impl true
   def mount(_params, _session, socket) do
-    webhooks = Integrations.list_webhooks(socket.assigns.current_user.account)
-    telegrams = Integrations.list_telegrams(socket.assigns.current_user.account)
-
-    socket =
-      socket
-      |> assign(:webhooks, webhooks)
-      |> assign(:telegrams, telegrams)
-
     {:ok, socket, layout: {SentinelWeb.Layouts, :monitor}}
   end
 

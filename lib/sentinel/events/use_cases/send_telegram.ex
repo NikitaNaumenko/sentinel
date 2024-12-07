@@ -1,7 +1,7 @@
 defmodule Sentinel.Events.UseCases.SendTelegram do
   @moduledoc false
   alias Sentinel.Events.Acceptors.Telegram
-  alias Sentinel.Integration.TelegramClient
+  alias Sentinel.Integrations.Telegram.Client, as: TelegramClient
   alias Sentinel.Events.Fsm.TelegramFsm
   alias Sentinel.Repo
 
@@ -14,11 +14,12 @@ defmodule Sentinel.Events.UseCases.SendTelegram do
         event_type: event_type,
         chat_id: chat_id
       }) do
+
     acceptor = Repo.preload(acceptor, [:event])
 
     with {:ok, _pid} <- create_telegram_acceptor(acceptor, telegram),
          :ok <- transition(acceptor.id, :send, %{}),
-         {:ok, response} <- send_message(telegram, resource, event_type, chat_id),
+         {:ok, response} <- send_message(resource, event_type, chat_id),
          :ok <- transition(acceptor.id, :finish, %{}) do
       Logger.info(response)
       {:ok, :sent}
@@ -37,7 +38,7 @@ defmodule Sentinel.Events.UseCases.SendTelegram do
     Finitomata.start_fsm(TelegramFsm, acceptor.id, struct!(Telegram, attrs))
   end
 
-  defp send_message(telegram, resource, event_type, chat_id) do
+  defp send_message(resource, event_type, chat_id) do
     message = build_message(event_type, resource)
 
     TelegramClient.request("sendMessage", chat_id: chat_id, text: message)

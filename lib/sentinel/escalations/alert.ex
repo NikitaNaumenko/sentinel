@@ -24,7 +24,7 @@ defmodule Sentinel.Escalations.Alert do
   @doc false
   def changeset(alert, attrs) do
     alert
-    |> cast(attrs, [:user_id, :alert_type])
+    |> cast(attrs, [:user_id, :alert_type, :telegram_id])
     |> validate_required([])
   end
 end
