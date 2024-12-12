@@ -4,7 +4,7 @@ defmodule SentinelWeb.Components.Sidebar do
 
   def sidebar(assigns) do
     ~H"""
-    <aside class="navbar navbar-vertical navbar-expand-lg navbar-transparent">
+    <aside class="navbar navbar-vertical navbar-expand-lg">
       <div class="container-fluid">
         <button
           class="navbar-toggler"

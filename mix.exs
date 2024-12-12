@@ -74,7 +74,8 @@ defmodule Sentinel.MixProject do
       {:tailwind_formatter, "~> 0.4.0", only: [:dev, :test], runtime: false},
       {:exvcr, "~> 0.11", only: :test},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
-      {:repatch, "~> 1.0"}
+      {:repatch, "~> 1.0"},
+      {:dotenv, "~> 3.0.0", only: [:dev, :test]}
     ]
   end
 
