@@ -23,7 +23,7 @@ defmodule SentinelWeb.Components.Sidebar do
           </.link>
           <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
             <%!-- TODO: Truncate --%>
-            <%= @current_user.account.name %>
+            {@current_user.account.name}
           </span>
         </h1>
         <div class="navbar-nav d-lg-none flex-row">
@@ -38,18 +38,18 @@ defmodule SentinelWeb.Components.Sidebar do
               path={~p"/monitors"}
             >
               <.icon name="icon-activity-square" class="nav-link-icon d-md-none d-lg-inline-block" />
-              <span class="nav-link-title"><%= dgettext("sidebar", "Monitors") %></span>
+              <span class="nav-link-title">{dgettext("sidebar", "Monitors")}</span>
             </.sidebar_link>
             <.sidebar_link path={~p"/status_pages"}>
               <.icon name="icon-radio-tower" class="nav-link-icon d-md-none d-lg-inline-block" />
-              <span class="nav-link-title"><%= dgettext("sidebar", "Status pages") %></span>
+              <span class="nav-link-title">{dgettext("sidebar", "Status pages")}</span>
             </.sidebar_link>
             <.sidebar_link
               :if={permit?(Sentinel.Escalations.EscalationPolicy, :index, @current_user)}
               path={~p"/escalation_policies"}
             >
               <.icon name="icon-arrow-up-narrow-wide" class="nav-link-icon d-md-none d-lg-inline-block" />
-              <span class="nav-link-title"><%= dgettext("sidebar", "Escalation Policies") %></span>
+              <span class="nav-link-title">{dgettext("sidebar", "Escalation Policies")}</span>
             </.sidebar_link>
 
             <.sidebar_link
@@ -57,18 +57,18 @@ defmodule SentinelWeb.Components.Sidebar do
               path={~p"/integrations"}
             >
               <.icon name="icon-blocks" class="nav-link-icon d-md-none d-lg-inline-block" />
-              <span class="nav-link-title"><%= dgettext("sidebar", "Integrations") %></span>
+              <span class="nav-link-title">{dgettext("sidebar", "Integrations")}</span>
             </.sidebar_link>
             <.sidebar_link
               :if={permit?(Sentinel.Teammates.UserPolicy, :index, @current_user)}
               path={~p"/teammates"}
             >
               <.icon name="icon-users-round" class="nav-link-icon d-md-none d-lg-inline-block" />
-              <span class="nav-link-title"><%= dgettext("sidebar", "Teammates") %></span>
+              <span class="nav-link-title">{dgettext("sidebar", "Teammates")}</span>
             </.sidebar_link>
             <.link href={~p"/users/log_out"} method="delete">
               <.icon name="icon-log-out" class="nav-link-icon d-md-none d-lg-inline-block" />
-              <span class="nav-link-title"><%= dgettext("sidebar", "Log out") %></span>
+              <span class="nav-link-title">{dgettext("sidebar", "Log out")}</span>
             </.link>
           </ul>
         </div>
@@ -84,7 +84,7 @@ defmodule SentinelWeb.Components.Sidebar do
     ~H"""
     <li class="nav-item">
       <.link class="nav-link" navigate={@path}>
-        <%= render_slot(@inner_block) %>
+        {render_slot(@inner_block)}
       </.link>
     </li>
     """

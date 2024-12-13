@@ -1,18 +1,18 @@
 <%= if Enum.empty?(@enabled) do %>
   <div class="bg-body-tertiary rounded-3 mb-4 p-5">
     <div class="container-fluid py-5">
-      <h1 class="display-5 fw-bold"><%= dgettext("integrations", "Integrations") %></h1>
+      <h1 class="display-5 fw-bold">{dgettext("integrations", "Integrations")}</h1>
       <p class="col-md-8 fs-4">
-        <%= dgettext(
+        {dgettext(
           "integrations",
           "Set up integrations, and be informed about incident as soon as posible"
-        ) %>
+        )}
       </p>
     </div>
   </div>
 <% else %>
   <div class="fs-3 mb-2">
-    <%= dgettext("integrations", "Enabled integrations") %>
+    {dgettext("integrations", "Enabled integrations")}
   </div>
   <div class="mb-5 grid">
     <div :for={integration <- @enabled} class="g-col-4">
@@ -21,7 +21,7 @@
   </div>
 <% end %>
 <div class="fs-3 mb-2">
-  <%= dgettext("integrations", "Integrations") %>
+  {dgettext("integrations", "Integrations")}
 </div>
 <div class="grid">
   <div class="g-col-12 g-col-md-6">
@@ -32,10 +32,10 @@
         </div>
         <div class="d-flex flex-column ms-2">
           <span class="fw-semibold">
-            <%= dgettext("integrations", "Webhook") %>
+            {dgettext("integrations", "Webhook")}
           </span>
           <span>
-            <%= dgettext("integrations", "Receive alert notifications via Webhooks.") %>
+            {dgettext("integrations", "Receive alert notifications via Webhooks.")}
           </span>
         </div>
       </div>
@@ -49,10 +49,10 @@
         </div>
         <div class="d-flex flex-column ms-2">
           <span class="fw-semibold">
-            <%= dgettext("integrations", "Telegram bots") %>
+            {dgettext("integrations", "Telegram bots")}
           </span>
           <span>
-            <%= dgettext("integrations", "Receive alert notifications via telegram.") %>
+            {dgettext("integrations", "Receive alert notifications via telegram.")}
           </span>
         </div>
       </div>

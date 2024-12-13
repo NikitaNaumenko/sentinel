@@ -48,7 +48,7 @@ defmodule SentinelWeb.Components.Avatar do
         <img src={@image} class="h-full w-full rounded-full" />
       <% else %>
         <span class="bg-muted flex h-full w-full items-center justify-center rounded-full">
-          <%= @fallback %>
+          {@fallback}
         </span>
       <% end %>
     </span>

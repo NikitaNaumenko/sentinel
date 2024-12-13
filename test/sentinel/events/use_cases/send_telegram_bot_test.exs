@@ -4,8 +4,8 @@ defmodule Sentinel.Events.UseCases.SendTelegramTest do
 
   import Sentinel.AccountsFixtures
   import Sentinel.EventsFixtures
-  import Sentinel.MonitorsFixtures
   import Sentinel.IntegrationsFixtures
+  import Sentinel.MonitorsFixtures
 
   alias Sentinel.Events.UseCases.SendTelegram
 

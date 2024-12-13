@@ -25,6 +25,7 @@ config :sentinel, SentinelWeb.Endpoint,
 
 # In test we don't send emails.
 config :sentinel, Sentinel.Mailer, adapter: Swoosh.Adapters.Test
+
 config :sentinel,
   telegram_client: Sentinel.StubTelegramClient,
   telegram_bot_token: "7081666666:AAFMKLLnnnnnnnnnnnG18cIBrrrrrrrrrJQ"

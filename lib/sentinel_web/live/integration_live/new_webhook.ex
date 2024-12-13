@@ -25,8 +25,8 @@ defmodule SentinelWeb.IntegrationLive.NewWebhook do
           <img src={~p"/images/webhook.svg"} class="h-4 md:h-6" alt="webhook" />
         </div>
         <div class="ms-2">
-          <div class="fw-semibold"><%= dgettext("integrations", "New integration") %></div>
-          <div><%= dgettext("integrations", "Webhook") %></div>
+          <div class="fw-semibold">{dgettext("integrations", "New integration")}</div>
+          <div>{dgettext("integrations", "Webhook")}</div>
         </div>
       </div>
       <.form for={@form} id="webhook-form" phx-change="validate" phx-submit="save">
@@ -44,7 +44,7 @@ defmodule SentinelWeb.IntegrationLive.NewWebhook do
         />
 
         <div class="">
-          <.button phx-disable-with="Saving..."><%= dgettext("integrations", "Create") %></.button>
+          <.button phx-disable-with="Saving...">{dgettext("integrations", "Create")}</.button>
         </div>
       </.form>
     </div>

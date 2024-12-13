@@ -1,8 +1,8 @@
 defmodule Sentinel.Events.UseCases.SendTelegram do
   @moduledoc false
   alias Sentinel.Events.Acceptors.Telegram
-  alias Sentinel.Integrations.Telegram.Client, as: TelegramClient
   alias Sentinel.Events.Fsm.TelegramFsm
+  alias Sentinel.Integrations.Telegram.Client, as: TelegramClient
   alias Sentinel.Repo
 
   require Logger
@@ -14,7 +14,6 @@ defmodule Sentinel.Events.UseCases.SendTelegram do
         event_type: event_type,
         chat_id: chat_id
       }) do
-
     acceptor = Repo.preload(acceptor, [:event])
 
     with {:ok, _pid} <- create_telegram_acceptor(acceptor, telegram),

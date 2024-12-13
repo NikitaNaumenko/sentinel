@@ -9,19 +9,19 @@
 <%= if Enum.empty?(@escalation_policies) do %>
   <div class="bg-body-tertiary rounded-3 mb-4 p-5">
     <div class="container-fluid py-5">
-      <h1 class="display-5 fw-bold"><%= dgettext("escalation_policies", "Escalation Policies") %></h1>
+      <h1 class="display-5 fw-bold">{dgettext("escalation_policies", "Escalation Policies")}</h1>
       <p class="col-md-8 fs-4">
-        <%= dgettext(
+        {dgettext(
           "escalation_policies",
           "Set rules on how alerts escalade during an incident. It defines the order of channels that will be triggered for alerts."
-        ) %>
+        )}
       </p>
       <.link
         :if={permit?(Sentinel.Escalations.EscalationPolicy, :create, @current_user)}
         navigate={~p"/escalation_policies/new"}
         class="btn btn-primary btn-lg"
       >
-        <%= dgettext("escalation_policies", "New escalation policy") %>
+        {dgettext("escalation_policies", "New escalation policy")}
       </.link>
     </div>
   </div>
@@ -30,7 +30,7 @@
     <.link navigate={~p"/escalation_policies/#{policy}/edit"} class="card">
       <div class="card-body">
         <h5 class="card-title">
-          <%= policy.name %>
+          {policy.name}
         </h5>
         <p class="text-secondary">
           1 escalation across 1 channel

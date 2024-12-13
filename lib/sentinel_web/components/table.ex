@@ -41,14 +41,14 @@ defmodule SentinelWeb.Components.Table do
         <thead>
           <tr>
             <th :for={col <- @col}>
-              <%= col[:label] %>
+              {col[:label]}
             </th>
           </tr>
         </thead>
         <tbody id={@id} phx-update={match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"}>
           <tr :for={row <- @rows} id={@row_id && @row_id.(row)}>
             <td :for={{col, _i} <- Enum.with_index(@col)} phx-click={@row_click && @row_click.(row)}>
-              <%= render_slot(col, @row_item.(row)) %>
+              {render_slot(col, @row_item.(row))}
             </td>
           </tr>
         </tbody>

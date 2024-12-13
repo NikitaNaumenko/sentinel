@@ -66,7 +66,7 @@ defmodule SentinelWeb.Components.Breadcrumbs do
               navigate={breadcrumb[:path]}
               class="inline-flex items-center text-sm font-medium hover:underline"
             >
-              <%= render_slot(breadcrumb) %>
+              {render_slot(breadcrumb)}
             </.link>
           </li>
         <% end %>

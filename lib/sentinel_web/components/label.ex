@@ -33,7 +33,7 @@ defmodule SentinelWeb.Components.Label do
   def label(assigns) do
     ~H"""
     <label for={@for} class={["form-label", @class]}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </label>
     """
   end

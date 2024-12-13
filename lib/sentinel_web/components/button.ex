@@ -66,7 +66,7 @@ defmodule SentinelWeb.Components.Button do
   def button(assigns) do
     ~H"""
     <button class={["btn", @class, @cva_class]} {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </button>
     """
   end
@@ -77,7 +77,7 @@ defmodule SentinelWeb.Components.Button do
   def button_link(assigns) do
     ~H"""
     <.link class={["btn", "btn-primary"]} {@rest}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </.link>
     """
   end

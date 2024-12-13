@@ -84,9 +84,9 @@ defmodule SentinelWeb.Components.Input do
           class="border-primary text-primary rounded focus:ring-0"
           {@rest}
         />
-        <%= @label %>
+        {@label}
       </.label>
-      <.error :for={msg <- @errors}><%= msg %></.error>
+      <.error :for={msg <- @errors}>{msg}</.error>
     </div>
     """
   end
@@ -94,12 +94,12 @@ defmodule SentinelWeb.Components.Input do
   def input(%{type: "select"} = assigns) do
     ~H"""
     <div phx-feedback-for={@name} class="mb-3">
-      <.label :if={@label} for={@id}><%= @label %></.label>
+      <.label :if={@label} for={@id}>{@label}</.label>
       <select id={@id} name={@name} class="form-select" multiple={@multiple} {@rest}>
-        <option :if={@prompt} value=""><%= @prompt %></option>
-        <%= Phoenix.HTML.Form.options_for_select(@options, @value) %>
+        <option :if={@prompt} value="">{@prompt}</option>
+        {Phoenix.HTML.Form.options_for_select(@options, @value)}
       </select>
-      <.error :for={msg <- @errors}><%= msg %></.error>
+      <.error :for={msg <- @errors}>{msg}</.error>
     </div>
     """
   end
@@ -107,14 +107,14 @@ defmodule SentinelWeb.Components.Input do
   def input(%{type: "textarea"} = assigns) do
     ~H"""
     <div phx-feedback-for={@name} class="mb-3">
-      <.label :if={@label} class={@errors != [] && "text-danger"} for={@id}><%= @label %></.label>
+      <.label :if={@label} class={@errors != [] && "text-danger"} for={@id}>{@label}</.label>
       <textarea
         id={@id}
         name={@name}
         class={["min-h-[60px] border-input flex w-full rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50"]}
         {@rest}
       ><%= Phoenix.HTML.Form.normalize_value("textarea", @value) %></textarea>
-      <.error :for={msg <- @errors}><%= msg %></.error>
+      <.error :for={msg <- @errors}>{msg}</.error>
     </div>
     """
   end
@@ -128,7 +128,7 @@ defmodule SentinelWeb.Components.Input do
           for={@name}
           class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-normal"
         >
-          <%= label %>
+          {label}
         </.label>
       </div>
     </div>
@@ -151,7 +151,7 @@ defmodule SentinelWeb.Components.Input do
   def input(assigns) do
     ~H"""
     <div phx-feedback-for={@name} class="mb-3">
-      <.label :if={@label} class={@errors != [] && "text-danger"} for={@id}><%= @label %></.label>
+      <.label :if={@label} class={@errors != [] && "text-danger"} for={@id}>{@label}</.label>
       <input
         type={@type}
         name={@name}
@@ -160,7 +160,7 @@ defmodule SentinelWeb.Components.Input do
         class={["form-control"]}
         {@rest}
       />
-      <.error :for={msg <- @errors}><%= msg %></.error>
+      <.error :for={msg <- @errors}>{msg}</.error>
     </div>
     """
   end
@@ -173,7 +173,7 @@ defmodule SentinelWeb.Components.Input do
   def error(assigns) do
     ~H"""
     <p class="text-danger mt-1 flex gap-3 text-sm leading-6 phx-no-feedback:hidden">
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </p>
     """
   end

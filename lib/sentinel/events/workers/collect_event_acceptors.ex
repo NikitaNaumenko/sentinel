@@ -85,7 +85,7 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
       event_id: event_id,
       recipient_type: "telegram"
     }
-      |>dbg()
+    |> dbg()
     |> Acceptor.create()
     |> Map.get(:id)
   end

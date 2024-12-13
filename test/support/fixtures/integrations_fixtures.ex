@@ -1,7 +1,7 @@
 defmodule Sentinel.IntegrationsFixtures do
   @moduledoc false
-  alias Sentinel.Integrations.Webhook
   alias Sentinel.Integrations
+  alias Sentinel.Integrations.Webhook
   alias Sentinel.Repo
 
   def webhook_fixture(attrs \\ %{}) do

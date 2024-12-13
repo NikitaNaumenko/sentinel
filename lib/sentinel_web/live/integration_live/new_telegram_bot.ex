@@ -22,8 +22,8 @@ defmodule SentinelWeb.IntegrationLive.NewTelegram do
           <img src={~p"/images/telegram.svg"} class="h-4 md:h-6" alt="Telegram" />
         </div>
         <div class="ms-2">
-          <div class="fw-semibold"><%= dgettext("integrations", "New integration") %></div>
-          <div><%= dgettext("integrations", "Telegram Bot") %></div>
+          <div class="fw-semibold">{dgettext("integrations", "New integration")}</div>
+          <div>{dgettext("integrations", "Telegram Bot")}</div>
         </div>
       </div>
       <.form for={@form} id="telegram-bot-form" phx-change="validate" phx-submit="save">
@@ -34,17 +34,17 @@ defmodule SentinelWeb.IntegrationLive.NewTelegram do
           placeholder="Support"
         />
         <div class="text-md mb-2 block max-w-xs">
-          <%= dgettext("integrations", "Telegram Chat id") %>
+          {dgettext("integrations", "Telegram Chat id")}
           <div class="text-body-secondary text-sm">
-            <%= dgettext(
+            {dgettext(
               "integrations",
               "Use telegram chat to notify external systems when something happens in sentinel."
-            ) %>
+            )}
           </div>
         </div>
         <.input field={@form[:chat_id]} phx-debounce="200" placeholder="7223159943:AaG18cIB7gsU7Z4erJQ" />
 
-        <.button phx-disable-with="Saving..."><%= dgettext("integrations", "Create") %></.button>
+        <.button phx-disable-with="Saving...">{dgettext("integrations", "Create")}</.button>
       </.form>
     </div>
     """
@@ -61,9 +61,7 @@ defmodule SentinelWeb.IntegrationLive.NewTelegram do
   end
 
   def handle_event("save", %{"telegram" => params}, socket) do
-    case Integrations.create_telegram(
-           Map.put(params, "account_id", socket.assigns.current_user.account_id)
-         ) do
+    case Integrations.create_telegram(Map.put(params, "account_id", socket.assigns.current_user.account_id)) do
       {:ok, _telegram} ->
         {:noreply,
          socket

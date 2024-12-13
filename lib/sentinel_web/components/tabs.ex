@@ -24,7 +24,7 @@ defmodule SentinelWeb.Components.Tabs do
           aria-current="page"
           href="#"
         >
-          <%= render_slot(tab) %>
+          {render_slot(tab)}
         </.link>
       </li>
     </ul>
@@ -35,7 +35,7 @@ defmodule SentinelWeb.Components.Tabs do
       hidden={hidden_tab_content?(tab_content[:id], @current_tab)}
       aria-labelledby={"#{tab_content[:id]}-tab"}
     >
-      <%= render_slot(tab_content) %>
+      {render_slot(tab_content)}
     </div>
     """
   end

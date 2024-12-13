@@ -19,7 +19,7 @@ defmodule Sentinel.Integrations.Telegram.Client do
     impl().request(@telegram_bot_token, action, opts)
   end
 
-  defp impl() do
+  defp impl do
     Application.get_env(:sentinel, :telegram_client, Telegram.Api)
   end
 end

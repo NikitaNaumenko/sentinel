@@ -13,9 +13,9 @@ defmodule SentinelWeb.MonitorLive.MonitorComponent do
           <div class="card-title d-flex">
             <.indicator monitor={@monitor} />
             <div class="ms-2">
-              <%= @monitor.name %>
+              {@monitor.name}
               <p class="text-secondary fs-4 fw-normal">
-                <%= @monitor.url %>
+                {@monitor.url}
               </p>
             </div>
           </div>

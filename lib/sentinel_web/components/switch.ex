@@ -15,7 +15,7 @@ defmodule SentinelWeb.Components.Switch do
       <div class="peer bg-input h-5 w-9 rounded-full after:content-[''] after:top-[2px] after:start-[2px] after:absolute after:h-4 after:w-4 after:rounded-full after:bg-white after:transition-all peer-checked:bg-primary peer-checked:after:translate-x-full peer-checked:after:border-white">
       </div>
 
-      <span :if={@label} class="ms-3 text-sm font-medium text-gray-900"><%= @label %></span>
+      <span :if={@label} class="ms-3 text-sm font-medium text-gray-900">{@label}</span>
     </label>
     """
   end

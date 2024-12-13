@@ -28,13 +28,13 @@ defmodule SentinelWeb.IntegrationLive.EditTelegram do
           <img src={~p"/images/telegram.svg"} class="h-6 md:h-8" alt="Telegram" />
         </div>
         <div class="ml-1">
-          <%= dgettext("integrations", "Telegram Bot") %>
+          {dgettext("integrations", "Telegram Bot")}
         </div>
       </div>
       <.form for={@form} id="telegram-bot-form" phx-change="validate" phx-submit="save">
         <div class="flex items-center justify-between p-4">
           <div class="text-md mb-2 block max-w-xs">
-            <%= dgettext("integrations", "Name") %>
+            {dgettext("integrations", "Name")}
           </div>
           <div class="min-w-[320px]">
             <.input field={@form[:name]} phx-debounce="200" />
@@ -42,12 +42,12 @@ defmodule SentinelWeb.IntegrationLive.EditTelegram do
         </div>
         <div class="flex items-center justify-between p-4">
           <div class="text-md mb-2 block max-w-xs">
-            <%= dgettext("integrations", "Telegram bot Token") %>
+            {dgettext("integrations", "Telegram bot Token")}
             <div class="text-sm text-gray-400">
-              <%= dgettext(
+              {dgettext(
                 "integrations",
                 "Use telegram bots to notify external systems when something happens in sentinel."
-              ) %>
+              )}
             </div>
           </div>
           <div class="min-w-[320px]">

@@ -11,7 +11,7 @@ defmodule SentinelWeb.IntegrationLive.WebhookFormComponent do
     <div>
       <div class="border-b p-5">
         <span class="icon-webhook"></span>
-        <%= dgettext("integrations", "Webhook") %>
+        {dgettext("integrations", "Webhook")}
       </div>
       <.form
         for={@form}
@@ -23,12 +23,12 @@ defmodule SentinelWeb.IntegrationLive.WebhookFormComponent do
       >
         <div class="flex items-center justify-between border-b p-4">
           <div class="text-md mb-2 block max-w-xs">
-            <%= dgettext("integrations", "Endpoint") %>
+            {dgettext("integrations", "Endpoint")}
             <div class="text-sm text-gray-400">
-              <%= dgettext(
+              {dgettext(
                 "integrations",
                 "Use webhooks to notify external systems when something happens in hyperping.io. Read how to setup"
-              ) %>
+              )}
             </div>
           </div>
           <div class="min-w-[320px]">

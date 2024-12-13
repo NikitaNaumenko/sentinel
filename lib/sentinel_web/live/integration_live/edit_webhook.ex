@@ -28,13 +28,13 @@ defmodule SentinelWeb.IntegrationLive.EditWebhook do
           <img src={~p"/images/webhook.svg"} class="h-4 md:h-6" alt="webhook" />
         </div>
         <div class="ml-1">
-          <%= dgettext("integrations", "Webhook") %>
+          {dgettext("integrations", "Webhook")}
         </div>
       </div>
       <.form for={@form} id="webhook-form" phx-change="validate" phx-submit="save">
         <div class="flex items-center justify-between p-4">
           <div class="text-md mb-2 block max-w-xs">
-            <%= dgettext("integrations", "Name") %>
+            {dgettext("integrations", "Name")}
           </div>
           <div class="min-w-[320px]">
             <.input field={@form[:name]} phx-debounce="200" />
@@ -42,12 +42,12 @@ defmodule SentinelWeb.IntegrationLive.EditWebhook do
         </div>
         <div class="flex items-center justify-between p-4">
           <div class="text-md mb-2 block max-w-xs">
-            <%= dgettext("integrations", "Endpoint") %>
+            {dgettext("integrations", "Endpoint")}
             <div class="text-sm text-gray-400">
-              <%= dgettext(
+              {dgettext(
                 "integrations",
                 "Use webhooks to notify external systems when something happens in sentinel."
-              ) %>
+              )}
             </div>
           </div>
           <div class="min-w-[320px]">

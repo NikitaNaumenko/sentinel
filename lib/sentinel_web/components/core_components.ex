@@ -81,7 +81,7 @@ defmodule SentinelWeb.CoreComponents do
                 </button>
               </div>
               <div id={"#{@id}-content"}>
-                <%= render_slot(@inner_block) %>
+                {render_slot(@inner_block)}
               </div>
             </.focus_wrap>
           </div>
@@ -162,14 +162,14 @@ defmodule SentinelWeb.CoreComponents do
     <.form :let={f} class="card" for={@for} as={@as} {@rest}>
       <%= if Enum.any?(@title) do %>
         <div class="card-header">
-          <h3 class="card-tile"><%= render_slot(@title, f) %></h3>
+          <h3 class="card-tile">{render_slot(@title, f)}</h3>
         </div>
       <% end %>
       <div class="card-body">
-        <%= render_slot(@inner_block, f) %>
+        {render_slot(@inner_block, f)}
       </div>
       <div :for={action <- @actions} class="card-footer text-end">
-        <%= render_slot(action, f) %>
+        {render_slot(action, f)}
       </div>
     </.form>
     """
@@ -189,13 +189,13 @@ defmodule SentinelWeb.CoreComponents do
     <header class={[@actions != [] && "flex items-center justify-between", @class]}>
       <div class="space-y-1">
         <h1 class="text-2xl font-semibold tracking-tight">
-          <%= render_slot(@inner_block) %>
+          {render_slot(@inner_block)}
         </h1>
         <p :if={@subtitle != []} class="text-muted-foreground text-sm">
-          <%= render_slot(@subtitle) %>
+          {render_slot(@subtitle)}
         </p>
       </div>
-      <div class="flex-none"><%= render_slot(@actions) %></div>
+      <div class="flex-none">{render_slot(@actions)}</div>
     </header>
     """
   end
@@ -219,8 +219,8 @@ defmodule SentinelWeb.CoreComponents do
     <div class="mt-14">
       <dl class="-my-4 divide-y divide-zinc-100">
         <div :for={item <- @item} class="flex gap-4 py-4 text-sm leading-6 sm:gap-8">
-          <dt class="w-1/4 flex-none text-zinc-500"><%= item.title %></dt>
-          <dd class="text-zinc-700"><%= render_slot(item) %></dd>
+          <dt class="w-1/4 flex-none text-zinc-500">{item.title}</dt>
+          <dd class="text-zinc-700">{render_slot(item)}</dd>
         </div>
       </dl>
     </div>
@@ -242,7 +242,7 @@ defmodule SentinelWeb.CoreComponents do
     <div>
       <.link navigate={@navigate} class="btn btn-light mb-5">
         <.icon name="icon-arrow-big-left" />
-        <%= render_slot(@inner_block) %>
+        {render_slot(@inner_block)}
       </.link>
     </div>
     """
@@ -305,12 +305,12 @@ defmodule SentinelWeb.CoreComponents do
       <header class="d-flex py-2">
         <div class="col">
           <h2 class="page-title">
-            <%= @page_title %>
+            {@page_title}
           </h2>
         </div>
         <div class="ms-auto d-print-none col-auto">
           <.link :if={@policy_func.()} navigate={@path} class="btn btn-primary">
-            <%= @link_title %>
+            {@link_title}
           </.link>
         </div>
       </header>

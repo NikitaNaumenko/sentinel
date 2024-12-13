@@ -6,7 +6,6 @@ defmodule Sentinel.Monitors.UseCases.RunCheckTest do
   import Sentinel.EscalationsFixtures
   import Sentinel.MonitorsFixtures
 
-
   alias Sentinel.Monitors
   alias Sentinel.Monitors.Check
   alias Sentinel.Monitors.Incident

@@ -134,7 +134,7 @@ defmodule SentinelWeb.MonitorLive.Show do
       </div>
       <div class="col">
         <h2 class="page-title">
-          <%= @monitor.name %>
+          {@monitor.name}
         </h2>
         <div class="text-secondary">
           <ul class="list-inline list-inline-dots mb-0">
@@ -146,7 +146,7 @@ defmodule SentinelWeb.MonitorLive.Show do
       <div class="col-md-auto ms-auto d-print-none">
         <div class="btn-list">
           <.link navigate={~p"/monitors/#{@monitor}/edit"} class="btn">
-            <.icon name="icon-cog" /> <%= dgettext("monitors", "Configure") %>
+            <.icon name="icon-cog" /> {dgettext("monitors", "Configure")}
           </.link>
           <.toggle_button monitor={@monitor} />
         </div>
@@ -159,7 +159,7 @@ defmodule SentinelWeb.MonitorLive.Show do
     ~H"""
     <.button phx-click={JS.push("toggle-monitor", value: %{id: @monitor.id})}>
       <.icon name="icon-play" />
-      <%= dgettext("monitors", "Activate monitor") %>
+      {dgettext("monitors", "Activate monitor")}
     </.button>
     """
   end
@@ -168,7 +168,7 @@ defmodule SentinelWeb.MonitorLive.Show do
     ~H"""
     <.button phx-click={JS.push("toggle-monitor", value: %{id: @monitor.id})}>
       <.icon name="icon-pause" />
-      <%= dgettext("monitors", "Pause monitor") %>
+      {dgettext("monitors", "Pause monitor")}
     </.button>
     """
   end
@@ -181,7 +181,7 @@ defmodule SentinelWeb.MonitorLive.Show do
     ~H"""
     <p class="text-danger text-sm">
       <.icon name="icon-alert-triangle" />
-      <%= dgettext("monitors", "Started") %>
+      {dgettext("monitors", "Started")}
     </p>
     """
   end
@@ -190,7 +190,7 @@ defmodule SentinelWeb.MonitorLive.Show do
     ~H"""
     <p class="text-success text-sm">
       <.icon name="icon-check-circle" />
-      <%= dgettext("monitors", "Resolved") %>
+      {dgettext("monitors", "Resolved")}
     </p>
     """
   end

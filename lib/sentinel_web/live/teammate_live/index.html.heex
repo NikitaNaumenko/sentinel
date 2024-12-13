@@ -11,9 +11,9 @@
       <div class="card-table table-responsive">
         <.table id="teammates" rows={@streams.teammates}>
           <:col :let={{_id, teammate}} label={dgettext("teammates", "Full Name")}>
-            <%= teammate.full_name %>
+            {teammate.full_name}
           </:col>
-          <:col :let={{_id, teammate}} label={dgettext("teammates", "Role")}><%= teammate.role %></:col>
+          <:col :let={{_id, teammate}} label={dgettext("teammates", "Role")}>{teammate.role}</:col>
         </.table>
       </div>
     </div>

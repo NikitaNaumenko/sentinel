@@ -11,19 +11,19 @@
   <% else %>
     <div class="bg-body-tertiary rounded-3 mb-4 p-5">
       <div class="container-fluid py-5">
-        <h1 class="display-5 fw-bold"><%= dgettext("monitors", "Monitors") %></h1>
+        <h1 class="display-5 fw-bold">{dgettext("monitors", "Monitors")}</h1>
         <p class="col-md-8 fs-4">
-          <%= dgettext(
+          {dgettext(
             "monitors",
             "Set up monitor to track any incidents happens with your application "
-          ) %>
+          )}
         </p>
         <.link
           :if={permit?(Sentinel.Monitors.MonitorPolicy, :create, @current_user)}
           navigate={~p"/monitors/new"}
           class="btn btn-primary btn-lg"
         >
-          <%= dgettext("monitors", "New monitor") %>
+          {dgettext("monitors", "New monitor")}
         </.link>
       </div>
     </div>

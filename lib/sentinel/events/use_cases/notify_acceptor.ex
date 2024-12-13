@@ -80,7 +80,7 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
       |> Repo.preload(escalation_policy: [escalation_steps: :escalation_alerts])
 
     Enum.each(monitor.escalation_policy.escalation_steps, fn step ->
-      #TODO Дичь
+      # TODO Дичь
       Enum.each(step.escalation_alerts, fn alert ->
         SendTelegram.call(%{
           acceptor: acceptor,
@@ -123,7 +123,7 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
       |> Repo.preload(escalation_policy: [escalation_steps: :escalation_alerts])
 
     Enum.each(monitor.escalation_policy.escalation_steps, fn step ->
-      #TODO Дичь
+      # TODO Дичь
       Enum.each(step.escalation_alerts, fn alert ->
         SendTelegram.call(%{
           acceptor: acceptor,

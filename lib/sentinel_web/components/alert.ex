@@ -57,7 +57,7 @@ defmodule SentinelWeb.Components.Alert do
         <.icon :if={@icon} name={@icon} />
         <%!-- </div> --%>
         <div>
-          <%= render_slot(@inner_block) %>
+          {render_slot(@inner_block)}
         </div>
       </div>
       <a :if={@closable} class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="close"></a>

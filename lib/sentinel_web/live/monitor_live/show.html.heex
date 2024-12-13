@@ -4,7 +4,7 @@
       <div class="card-body">
         <div class="subheader">Currently up for</div>
         <%!-- <div class="h3 m-0">14 days 2 hours 54 mins 34 seconds</div> --%>
-        <div class="h3 m-0"><%= @uptime_period %></div>
+        <div class="h3 m-0">{@uptime_period}</div>
       </div>
     </div>
   </div>
@@ -14,9 +14,9 @@
         <div class="subheader">Last checked at</div>
         <div class="h3 m-0">
           <%= if @last_checked_at do %>
-            <%= Sentinel.Cldr.DateTime.Relative.to_string!(@last_checked_at) %>
+            {Sentinel.Cldr.DateTime.Relative.to_string!(@last_checked_at)}
           <% else %>
-            <%= dgettext("monitors", "Never") %>
+            {dgettext("monitors", "Never")}
           <% end %>
         </div>
       </div>
@@ -26,7 +26,7 @@
     <div class="card">
       <div class="card-body">
         <div class="subheader">Incidents</div>
-        <div class="h3 m-0"><%= @incidents %></div>
+        <div class="h3 m-0">{@incidents}</div>
       </div>
     </div>
   </div>
@@ -694,7 +694,7 @@
       <div class="card-body">
         <%= if @certificate do %>
           <h5 class="text-l font-bold tracking-tight text-gray-900 dark:text-white">
-            <%= dgettext("monitors", "SSL days remaining") %>
+            {dgettext("monitors", "SSL days remaining")}
             <.icon name="hero-lock-closed-solid" class="w-6 h-6 text-success-500 mb-2" />
           </h5>
           <div class="py-2">
@@ -705,42 +705,42 @@
           <div>
             <div class="py-1">
               <div class="text-l font-semibold text-gray-900 dark:text-white">
-                <%= dgettext("certificates", "Subject") %>
+                {dgettext("certificates", "Subject")}
               </div>
-              <div class="text-gray-500 dark:text-gray-400"><%= @certificate.subject %></div>
+              <div class="text-gray-500 dark:text-gray-400">{@certificate.subject}</div>
             </div>
             <div class="py-1">
               <div class="text-l font-semibold text-gray-900 dark:text-white">
-                <%= dgettext("certificates", "Issuer") %>
+                {dgettext("certificates", "Issuer")}
               </div>
-              <div class="text-gray-500 dark:text-gray-400"><%= @certificate.issuer %></div>
+              <div class="text-gray-500 dark:text-gray-400">{@certificate.issuer}</div>
             </div>
             <div class="py-1">
               <div class="text-l font-semibold text-gray-900 dark:text-white">
-                <%= dgettext("certificates", "Valid from") %>
+                {dgettext("certificates", "Valid from")}
               </div>
               <div class="text-gray-500 dark:text-gray-400">
-                <%= Cldr.DateTime.to_string!(@certificate.not_before) %>
+                {Cldr.DateTime.to_string!(@certificate.not_before)}
               </div>
             </div>
             <div class="py-1">
               <div class="text-l font-semibold text-gray-900 dark:text-white">
-                <%= dgettext("certificates", "Valid to") %>
+                {dgettext("certificates", "Valid to")}
               </div>
               <div class="text-gray-500 dark:text-gray-400">
-                <%= Cldr.DateTime.to_string!(@certificate.not_after) %>
+                {Cldr.DateTime.to_string!(@certificate.not_after)}
               </div>
             </div>
           </div>
         <% else %>
           <h5 class="text-l font-bold tracking-tight text-gray-900 dark:text-white">
-            <%= dgettext("monitors", "No Certificate") %>
+            {dgettext("monitors", "No Certificate")}
             <.icon name="hero-exclamation-triangle" class="w-6 h-6 text-danger-500 mb-2" />
           </h5>
         <% end %>
 
         <div class="subheader">Incidents</div>
-        <div class="h3 m-0"><%= @incidents %></div>
+        <div class="h3 m-0">{@incidents}</div>
       </div>
     </div>
   </div>
@@ -2038,14 +2038,14 @@
     <div class="card">
       <div class="card-body">
         <h5 class="text-l font-bold tracking-tight text-gray-900 dark:text-white">
-          <%= dgettext("monitors", "Last five checks") %>
+          {dgettext("monitors", "Last five checks")}
         </h5>
         <div :for={check <- @last_five_checks} class="py-2">
           <span class={["me-2 rounded px-2.5 py-0.5 text-xs font-medium", check.result == :success && "bg-success-100 text-success-800 dark:bg-success-900 dark:text-success-300", check.result == :failure && "bg-danger-100 text-danger-800 dark:bg-danger-900 dark:text-danger-300"]}>
-            <%= check.status_code %>
+            {check.status_code}
           </span>
           <span>
-            <%= Sentinel.Cldr.DateTime.Relative.to_string!(check.inserted_at, format: :narrow) %>
+            {Sentinel.Cldr.DateTime.Relative.to_string!(check.inserted_at, format: :narrow)}
           </span>
         </div>
       </div>
@@ -2058,29 +2058,29 @@
         <table class="table">
           <thead>
             <tr>
-              <th><%= dgettext("monitors", "Start date") %></th>
-              <th><%= dgettext("monitors", "End date") %></th>
-              <th><%= dgettext("monitors", "Duration") %></th>
-              <th><%= dgettext("monitors", "Status") %></th>
-              <th><%= dgettext("monitors", "Status code") %></th>
+              <th>{dgettext("monitors", "Start date")}</th>
+              <th>{dgettext("monitors", "End date")}</th>
+              <th>{dgettext("monitors", "Duration")}</th>
+              <th>{dgettext("monitors", "Status")}</th>
+              <th>{dgettext("monitors", "Status code")}</th>
             </tr>
           </thead>
           <tbody>
             <tr :for={incident <- @last_five_incidents}>
               <td>
-                <%= Cldr.DateTime.to_string!(incident.started_at) %>
+                {Cldr.DateTime.to_string!(incident.started_at)}
               </td>
               <td>
-                <%= incident.ended_at && Cldr.DateTime.to_string!(incident.ended_at) %>
+                {incident.ended_at && Cldr.DateTime.to_string!(incident.ended_at)}
               </td>
               <td>
-                <%= incident.duration &&
-                  Sentinel.Cldr.DateTime.Relative.to_string!(incident.duration, format: :narrow) %>
+                {incident.duration &&
+                  Sentinel.Cldr.DateTime.Relative.to_string!(incident.duration, format: :narrow)}
               </td>
 
               <td><.incident_status incident={incident} /></td>
               <td>
-                <p class="text-muted-foreground text-sm"><%= incident.http_code %></p>
+                <p class="text-muted-foreground text-sm">{incident.http_code}</p>
               </td>
             </tr>
           </tbody>

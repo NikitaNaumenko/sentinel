@@ -65,7 +65,7 @@ defmodule SentinelWeb.Components.Card do
   def card(assigns) do
     ~H"""
     <div class={["bg-card text-card-foreground rounded-lg border shadow-sm", @class, @cva_class]}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </div>
     """
   end
@@ -95,7 +95,7 @@ defmodule SentinelWeb.Components.Card do
   def card_header(assigns) do
     ~H"""
     <div class={["flex flex-col space-y-1.5 p-6", @class]}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </div>
     """
   end
@@ -125,7 +125,7 @@ defmodule SentinelWeb.Components.Card do
   def card_content(assigns) do
     ~H"""
     <div class={["p-6 pt-0", @class]}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </div>
     """
   end
@@ -155,7 +155,7 @@ defmodule SentinelWeb.Components.Card do
   def card_footer(assigns) do
     ~H"""
     <div class={["flex items-center p-6 pt-0", @class]}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </div>
     """
   end

@@ -11,9 +11,9 @@ defmodule SentinelWeb.SessionLive.Registration do
       navigate={~p"/log_in"}
       class="absolute top-4 right-4 inline-flex h-9 items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 md:top-8 md:right-8"
     >
-      <%= dgettext("sessions", "Login") %>
+      {dgettext("sessions", "Login")}
     </.link>
-    <h2 class="h2 mb-4 text-center"><%= dgettext("sessions", "Sign up") %></h2>
+    <h2 class="h2 mb-4 text-center">{dgettext("sessions", "Sign up")}</h2>
     <.error :if={@check_errors}>
       Oops, something went wrong! Please check the errors below.
     </.error>

@@ -14,11 +14,11 @@
   <%!----%>
   <div class="page-wrapper">
     <%= if function_exported?(@socket.view, :header, 1) do %>
-      <%= @socket.view.header(assigns) %>
+      {@socket.view.header(assigns)}
     <% end %>
     <div class="page-body">
       <div class="container-xl">
-        <%= @inner_content %>
+        {@inner_content}
       </div>
     </div>
   </div>

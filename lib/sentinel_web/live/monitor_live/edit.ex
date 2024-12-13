@@ -129,7 +129,7 @@ defmodule SentinelWeb.MonitorLive.Edit do
       </div>
       <div class="col">
         <h2 class="page-title">
-          <%= @monitor.name %>
+          {@monitor.name}
         </h2>
         <div class="text-secondary">
           <ul class="list-inline list-inline-dots mb-0">
@@ -154,7 +154,7 @@ defmodule SentinelWeb.MonitorLive.Edit do
     ~H"""
     <.button phx-click={JS.push("toggle-monitor", value: %{id: @monitor.id})}>
       <.icon name="icon-play" />
-      <%= dgettext("monitors", "Activate monitor") %>
+      {dgettext("monitors", "Activate monitor")}
     </.button>
     """
   end
@@ -163,7 +163,7 @@ defmodule SentinelWeb.MonitorLive.Edit do
     ~H"""
     <.button phx-click={JS.push("toggle-monitor", value: %{id: @monitor.id})}>
       <.icon name="icon-pause" />
-      <%= dgettext("monitors", "Pause monitor") %>
+      {dgettext("monitors", "Pause monitor")}
     </.button>
     """
   end

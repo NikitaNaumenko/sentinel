@@ -21,6 +21,7 @@ if System.get_env("PHX_SERVER") do
 end
 
 config :sentinel, :telegram_bot_token, System.fetch_env!("TELEGRAM_BOT_TOKEN")
+
 if config_env() == :prod do
   database_url =
     System.get_env("DATABASE_URL") ||

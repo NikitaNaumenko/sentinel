@@ -8,7 +8,7 @@
       kind={kind}
       id={"#{kind}-flash"}
     >
-      <%= content %>
+      {content}
     </.toast>
   </div>
 
@@ -22,14 +22,14 @@
             </.alert>
           <% end %>
           <div class="row g-2 align-items-center">
-            <%= @socket.view.header(assigns) %>
+            {@socket.view.header(assigns)}
           </div>
         </div>
       </div>
     <% end %>
     <div class="page-body">
       <div class="container-xl">
-        <%= @inner_content %>
+        {@inner_content}
       </div>
     </div>
   </div>

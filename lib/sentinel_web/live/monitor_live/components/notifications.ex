@@ -12,7 +12,7 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
     ~H"""
     <div>
       <div class="fw-semibold">
-        <%= dgettext("monitors", "Notification rules") %>
+        {dgettext("monitors", "Notification rules")}
       </div>
 
       <div class="card cad-md mb-3">
@@ -21,13 +21,13 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
             <%= if Enum.count(@escalation_policies) > 1 do %>
               <label>
                 <span class="d-flex">
-                  <%= dgettext("monitors", "Escalation policies") %>
+                  {dgettext("monitors", "Escalation policies")}
                 </span>
                 <span class="text-muted-foreground text-sm font-normal leading-snug">
-                  <%= dgettext(
+                  {dgettext(
                     "monitors",
                     "Set rules on how alerts escalade during an incident. It defines the order of channels that will be triggered for alerts."
-                  ) %>
+                  )}
                 </span>
               </label>
               <div>
@@ -37,16 +37,16 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
               </div>
               <div>
                 <.link navigate={~p"/escalation_policies/new"}>
-                  <%= dgettext("monitors", "Create new escalation policy") %>
+                  {dgettext("monitors", "Create new escalation policy")}
                 </.link>
               </div>
             <% else %>
               <span>
-                <%= dgettext("monitors", "Please set up escalation policy to get incidents alert instantly") %>
+                {dgettext("monitors", "Please set up escalation policy to get incidents alert instantly")}
 
                 <div class="mt-2">
                   <.link navigate={~p"/escalation_policies/new"}>
-                    <%= dgettext("monitors", "Create new escalation policy") %>
+                    {dgettext("monitors", "Create new escalation policy")}
                   </.link>
                 </div>
               </span>
@@ -56,14 +56,14 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
       </div>
 
       <div class="fw-semibold">
-        <%= dgettext("monitors", "SSL monitoring") %>
+        {dgettext("monitors", "SSL monitoring")}
       </div>
 
       <div class="card card-md">
         <div class="card-body">
           <label class="flex flex-col font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
             <span>
-              <%= dgettext("monitors", "SSL Expiry alerts") %>
+              {dgettext("monitors", "SSL Expiry alerts")}
             </span>
             <span class="text-muted-foreground text-sm font-normal leading-snug">
               When to send SSL (HTTPS) alerts before expiry.
@@ -140,13 +140,13 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
     ~H"""
     <div class="text-muted-foreground mt-2 text-sm font-normal leading-snug">
       <p>
-        <%= dgettext("monitors", "Chat id") %>: <%= @telegram_info.chat.id %>
+        {dgettext("monitors", "Chat id")}: {@telegram_info.chat.id}
       </p>
       <p>
-        <%= dgettext("monitors", "Chat title") %>: <%= @telegram_info.chat.title %>
+        {dgettext("monitors", "Chat title")}: {@telegram_info.chat.title}
       </p>
       <p>
-        <%= dgettext("monitors", "Bot name") %>: <%= @telegram_info.bot_info.bot_name %>
+        {dgettext("monitors", "Bot name")}: {@telegram_info.bot_info.bot_name}
       </p>
     </div>
     """

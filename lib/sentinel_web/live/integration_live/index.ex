@@ -28,10 +28,10 @@ defmodule SentinelWeb.IntegrationLive.Index do
         </div>
         <div class="d-flex flex-column ms-2">
           <span class="fw-semibold">
-            <%= @integration.name %>
+            {@integration.name}
           </span>
           <span>
-            <%= dgettext("integrations", "Webhook") %>
+            {dgettext("integrations", "Webhook")}
           </span>
         </div>
       </div>
@@ -48,10 +48,10 @@ defmodule SentinelWeb.IntegrationLive.Index do
         </div>
         <div class="d-flex flex-column ms-2">
           <span class="fw-semibold">
-            <%= @integration.name %>
+            {@integration.name}
           </span>
           <span>
-            <%= dgettext("integrations", "Telegram bot") %>
+            {dgettext("integrations", "Telegram bot")}
           </span>
         </div>
       </div>
