@@ -48,7 +48,7 @@ config :sentinel, Oban,
   plugins: [Oban.Plugins.Pruner],
   queues: [notifications: 5, monitors: 10]
 
-config :sentinel, :telegram_bot_token, System.fetch_env!("TELEGRAM_BOT_TOKEN")
+config :sentinel, :telegram_bot_token, System.get_env("TELEGRAM_BOT_TOKEN", "")
 config :sentinel, :telegram_client, Telegram.Api
 
 # Import environment specific config. This must remain at the bottom
