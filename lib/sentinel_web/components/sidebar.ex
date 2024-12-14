@@ -66,10 +66,11 @@ defmodule SentinelWeb.Components.Sidebar do
               <.icon name="icon-users-round" class="nav-link-icon d-md-none d-lg-inline-block" />
               <span class="nav-link-title">{dgettext("sidebar", "Teammates")}</span>
             </.sidebar_link>
-            <.link href={~p"/users/log_out"} method="delete">
+            <.link class="nav-link mt-auto" href={~p"/users/log_out"} method="delete">
               <.icon name="icon-log-out" class="nav-link-icon d-md-none d-lg-inline-block" />
               <span class="nav-link-title">{dgettext("sidebar", "Log out")}</span>
             </.link>
+            <div class="mt-5"></div>
           </ul>
         </div>
       </div>

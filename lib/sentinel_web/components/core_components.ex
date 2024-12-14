@@ -162,7 +162,7 @@ defmodule SentinelWeb.CoreComponents do
     <.form :let={f} class="card" for={@for} as={@as} {@rest}>
       <%= if Enum.any?(@title) do %>
         <div class="card-header">
-          <h3 class="card-tile">{render_slot(@title, f)}</h3>
+          <h3 class="card-title">{render_slot(@title, f)}</h3>
         </div>
       <% end %>
       <div class="card-body">

@@ -19,35 +19,40 @@ defmodule SentinelWeb.IntegrationLive.NewWebhook do
   @impl Phoenix.LiveView
   def render(assigns) do
     ~H"""
-    <div>
-      <div class="d-flex mb-3">
-        <div class="rounded-3 border p-2">
-          <img src={~p"/images/webhook.svg"} class="h-4 md:h-6" alt="webhook" />
+    <.simple_form for={@form} id="webhook-form" phx-change="validate" phx-submit="save">
+      <:title>
+        <div class="d-flex">
+          <div class="d-flex mb-3">
+            <div class="rounded-3 border p-2">
+              <img src={~p"/images/webhook.svg"} class="h-4 md:h-6" alt="webhook" />
+            </div>
+            <div class="ms-2">
+              <div class="fw-semibold">{dgettext("integrations", "New integration")}</div>
+              <div>{dgettext("integrations", "Webhook")}</div>
+            </div>
+          </div>
         </div>
-        <div class="ms-2">
-          <div class="fw-semibold">{dgettext("integrations", "New integration")}</div>
-          <div>{dgettext("integrations", "Webhook")}</div>
-        </div>
-      </div>
-      <.form for={@form} id="webhook-form" phx-change="validate" phx-submit="save">
-        <.input
-          label={dgettext("integrations", "Name")}
-          field={@form[:name]}
-          phx-debounce="200"
-          placeholder="Support"
-        />
-        <.input
-          field={@form[:endpoint]}
-          label={dgettext("integrations", "Endpoint")}
-          phx-debounce="200"
-          placeholder="https://incident-happened.com/webhoooks"
-        />
+      </:title>
+      <.input
+        label={dgettext("integrations", "Name")}
+        field={@form[:name]}
+        phx-debounce="200"
+        placeholder="Support"
+      />
+      <.input
+        field={@form[:endpoint]}
+        label={dgettext("integrations", "Endpoint")}
+        phx-debounce="200"
+        placeholder="https://incident-happened.com/webhoooks"
+      />
 
-        <div class="">
-          <.button phx-disable-with="Saving...">{dgettext("integrations", "Create")}</.button>
+      <:actions>
+        <div class="d-flex">
+          <.link class="btn btn-link" navigate={~p"/integrations"}>Back</.link>
+          <.button class="ms-auto" phx-disable-with="Saving...">{dgettext("integrations", "Create")}</.button>
         </div>
-      </.form>
-    </div>
+      </:actions>
+    </.simple_form>
     """
   end
 

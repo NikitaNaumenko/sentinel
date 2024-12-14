@@ -22,45 +22,50 @@ defmodule SentinelWeb.IntegrationLive.EditTelegram do
   @impl Phoenix.LiveView
   def render(assigns) do
     ~H"""
-    <div>
-      <div class="flex items-center border-b p-5">
-        <div class="flex items-center justify-center rounded-md border p-3">
-          <img src={~p"/images/telegram.svg"} class="h-6 md:h-8" alt="Telegram" />
-        </div>
-        <div class="ml-1">
-          {dgettext("integrations", "Telegram Bot")}
-        </div>
-      </div>
-      <.form for={@form} id="telegram-bot-form" phx-change="validate" phx-submit="save">
-        <div class="flex items-center justify-between p-4">
-          <div class="text-md mb-2 block max-w-xs">
-            {dgettext("integrations", "Name")}
-          </div>
-          <div class="min-w-[320px]">
-            <.input field={@form[:name]} phx-debounce="200" />
-          </div>
-        </div>
-        <div class="flex items-center justify-between p-4">
-          <div class="text-md mb-2 block max-w-xs">
-            {dgettext("integrations", "Telegram bot Token")}
-            <div class="text-sm text-gray-400">
-              {dgettext(
-                "integrations",
-                "Use telegram bots to notify external systems when something happens in sentinel."
-              )}
+    <.simple_form for={@form} id="telegram-bot-form" phx-change="validate" phx-submit="save">
+      <:title>
+        <div class="d-flex">
+          <div class="flex items-center border-b p-5">
+            <div class="flex items-center justify-center rounded-md border p-3">
+              <img src={~p"/images/telegram.svg"} class="h-6 md:h-8" alt="Telegram" />
+            </div>
+            <div class="ml-1">
+              {dgettext("integrations", "Telegram Bot")}
             </div>
           </div>
-          <div class="min-w-[320px]">
-            <.input field={@form[:token]} phx-debounce="200" />
+        </div>
+      </:title>
+      <div class="flex items-center justify-between p-4">
+        <div class="text-md mb-2 block max-w-xs">
+          {dgettext("integrations", "Name")}
+        </div>
+        <div class="min-w-[320px]">
+          <.input field={@form[:name]} phx-debounce="200" />
+        </div>
+      </div>
+      <div class="flex items-center justify-between p-4">
+        <div class="text-md mb-2 block max-w-xs">
+          {dgettext("integrations", "Telegram bot Token")}
+          <div class="text-sm text-gray-400">
+            {dgettext(
+              "integrations",
+              "Use telegram bots to notify external systems when something happens in sentinel."
+            )}
           </div>
         </div>
-
-        <div class="flex justify-end p-4">
-          <%!-- <.button class="mr-3">Cancel</.button> --%>
-          <.button phx-disable-with="Saving...">Save</.button>
+        <div class="min-w-[320px]">
+          <.input field={@form[:token]} phx-debounce="200" />
         </div>
-      </.form>
-    </div>
+      </div>
+
+      <:actions>
+        <div class="d-flex">
+          <%!-- <.back navigate={~p"/monitors"}>Back</.back> --%>
+          <.link class="btn btn-link" navigate={~p"/integrations"}>Back</.link>
+          <.button class="ms-auto" phx-disable-with="Saving...">{dgettext("integrations", "Save")}</.button>
+        </div>
+      </:actions>
+    </.simple_form>
     """
   end
 

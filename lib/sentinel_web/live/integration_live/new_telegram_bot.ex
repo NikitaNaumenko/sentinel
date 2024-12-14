@@ -16,37 +16,42 @@ defmodule SentinelWeb.IntegrationLive.NewTelegram do
   @impl Phoenix.LiveView
   def render(assigns) do
     ~H"""
-    <div>
-      <div class="d-flex mb-3">
-        <div class="rounded-3 border p-2">
-          <img src={~p"/images/telegram.svg"} class="h-4 md:h-6" alt="Telegram" />
-        </div>
-        <div class="ms-2">
-          <div class="fw-semibold">{dgettext("integrations", "New integration")}</div>
-          <div>{dgettext("integrations", "Telegram Bot")}</div>
-        </div>
-      </div>
-      <.form for={@form} id="telegram-bot-form" phx-change="validate" phx-submit="save">
-        <.input
-          field={@form[:name]}
-          label={dgettext("integrations", "Name")}
-          phx-debounce="200"
-          placeholder="Support"
-        />
-        <div class="text-md mb-2 block max-w-xs">
-          {dgettext("integrations", "Telegram Chat id")}
-          <div class="text-body-secondary text-sm">
-            {dgettext(
-              "integrations",
-              "Use telegram chat to notify external systems when something happens in sentinel."
-            )}
+    <.simple_form for={@form} id="telegram-bot-form" phx-change="validate" phx-submit="save">
+      <:title>
+        <div class="d-flex">
+          <div class="rounded-3 border p-2">
+            <img src={~p"/images/telegram.svg"} class="h-4 md:h-6" alt="Telegram" />
+          </div>
+          <div class="ms-2">
+            <div class="fw-semibold">{dgettext("integrations", "New integration")}</div>
+            <div>{dgettext("integrations", "Telegram Bot")}</div>
           </div>
         </div>
-        <.input field={@form[:chat_id]} phx-debounce="200" placeholder="7223159943:AaG18cIB7gsU7Z4erJQ" />
-
-        <.button phx-disable-with="Saving...">{dgettext("integrations", "Create")}</.button>
-      </.form>
-    </div>
+      </:title>
+      <.input
+        field={@form[:name]}
+        label={dgettext("integrations", "Name")}
+        phx-debounce="200"
+        placeholder="Support"
+      />
+      <div class="text-md mb-2 block max-w-xs">
+        {dgettext("integrations", "Telegram Chat id")}
+        <div class="text-body-secondary text-sm">
+          {dgettext(
+            "integrations",
+            "Use telegram chat to notify external systems when something happens in sentinel."
+          )}
+        </div>
+      </div>
+      <.input field={@form[:chat_id]} phx-debounce="200" placeholder="7223159943:AaG18cIB7gsU7Z4erJQ" />
+      <:actions>
+        <div class="d-flex">
+          <%!-- <.back navigate={~p"/monitors"}>Back</.back> --%>
+          <.link class="btn btn-link" navigate={~p"/integrations"}>Back</.link>
+          <.button class="ms-auto" phx-disable-with="Saving...">{dgettext("integrations", "Create")}</.button>
+        </div>
+      </:actions>
+    </.simple_form>
     """
   end
 

@@ -15,7 +15,7 @@ defmodule SentinelWeb.MonitorLive.Components.Notifications do
         {dgettext("monitors", "Notification rules")}
       </div>
 
-      <div class="card cad-md mb-3">
+      <div class="card card-md mb-3">
         <div class="card-body">
           <div class="vstack gap-1">
             <%= if Enum.count(@escalation_policies) > 1 do %>
