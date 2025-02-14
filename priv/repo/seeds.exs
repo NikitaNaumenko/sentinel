@@ -59,13 +59,14 @@ Sentinel.Repo.transaction(fn ->
   #   account_id: account.id
   # })
 
-  Sentinel.Repo.insert!(%StatusPages.Page{
-    name: "Status page",
-    slug: "status-page",
-    state: :published,
-    public: true,
-    account_id: account.id
-  })
+  # Sentinel.Repo.insert!(%StatusPages.Page{
+  #   name: "Status page",
+  #   slug: "status-page",
+  #   state: :published,
+  #   public: true,
+  #   account_id: account.id,
+  #     monitor_id: monitor.id
+  # })
 
   # Sentinel.Repo.insert!(%StatusPages.Page{
   #   name: "Other Status page",

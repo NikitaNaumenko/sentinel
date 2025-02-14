@@ -5,6 +5,7 @@ defmodule Sentinel.StatusPages.Page do
   import Ecto.Changeset
 
   alias Sentinel.Accounts.Account
+  alias Sentinel.Monitors.Monitor
 
   schema "pages" do
     field :name, :string
@@ -20,7 +21,7 @@ defmodule Sentinel.StatusPages.Page do
   @doc false
   def changeset(page, attrs) do
     page
-    |> cast(attrs, [:name, :slug, :website, :state, :public])
+    |> cast(attrs, [:name, :slug, :website, :state, :public, :monitor_id])
     |> validate_required([:name])
   end
 end

@@ -156,7 +156,7 @@ defmodule Sentinel.Monitors do
 
   def count_incidents(%Monitor{id: monitor_id}) do
     Repo.aggregate(
-      from(c in Check, where: [monitor_id: ^monitor_id, result: :failure]),
+      from(i in Incident, where: [monitor_id: ^monitor_id]),
       :count,
       :id
     )
