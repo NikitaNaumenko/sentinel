@@ -85,6 +85,8 @@ defmodule SentinelWeb.Router do
       live "/integrations/webhooks/:id/edit", IntegrationLive.EditWebhook, :edit_webhook
       live "/integrations/telegrams/new", IntegrationLive.NewTelegram, :new_telegrams
       live "/integrations/telegrams/:id/edit", IntegrationLive.EditTelegram, :edit_telegrams
+      live "/integrations/slack_webhooks/new", IntegrationLive.NewSlackWebhook, :new_slack_webhooks
+      live "/integrations/slack_webhooks/:id/edit", IntegrationLive.EditSlackWebhook, :edit_slack_webhooks
 
       live "/teammates", TeammateLive.Index, :index
       live "/teammates/new", TeammateLive.New, :new

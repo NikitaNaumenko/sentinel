@@ -42,6 +42,23 @@
     </.link>
   </div>
   <div class="g-col-12 g-col-md-6">
+    <.link class="card" navigate={~p"/integrations/slack_webhooks/new"}>
+      <div class="card-body d-flex">
+        <div class="rounded-3 border p-2">
+          <img src={~p"/images/slack.svg"} class="h-6 md:h-8" alt="Slack" />
+        </div>
+        <div class="d-flex flex-column ms-2">
+          <span class="fw-semibold">
+            {dgettext("integrations", "Slack")}
+          </span>
+          <span>
+            {dgettext("integrations", "Receive alert notifications via Slack.")}
+          </span>
+        </div>
+      </div>
+    </.link>
+  </div>
+  <div class="g-col-12 g-col-md-6">
     <.link class="card" navigate={~p"/integrations/telegrams/new"}>
       <div class="card-body d-flex">
         <div class="rounded-3 border p-2">

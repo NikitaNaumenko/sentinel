@@ -5,11 +5,17 @@ defmodule Sentinel.Integrations do
   alias Sentinel.Accounts.Account
   alias Sentinel.Integrations.Telegram
   alias Sentinel.Integrations.Webhook
+  alias Sentinel.Integrations.SlackWebhook
   alias Sentinel.Repo
 
   @spec get_webhook!(non_neg_integer(), non_neg_integer()) :: Webhook.t()
   def get_webhook!(id, account_id) do
     Repo.get_by!(Webhook, id: id, account_id: account_id)
+  end
+
+  @spec get_slack_webhook!(non_neg_integer(), non_neg_integer()) :: SlackWebhook.t()
+  def get_slack_webhook!(id, account_id) do
+    Repo.get_by!(SlackWebhook, id: id, account_id: account_id)
   end
 
   @spec get_account_webhook(non_neg_integer()) :: Webhook.t() | nil
@@ -80,5 +86,27 @@ defmodule Sentinel.Integrations do
         bot_info: %{bot_name: get_in(value, ["my_chat_member", "new_chat_member", "user", "username"])}
       }
     end)
+  end
+
+  @spec create_slack_webhook(attrs :: map()) :: {:ok, SlackWebhook.t()} | {:error, Ecto.Changeset.t()}
+  def create_slack_webhook(attrs) do
+    %SlackWebhook{}
+    |> SlackWebhook.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @spec update_slack_webhook(SlackWebhook.t(), attrs :: map()) ::
+          {:ok, SlackWebhook.t()} | {:error, Ecto.Changeset.t()}
+  def update_slack_webhook(slack, attrs) do
+    slack
+    |> SlackWebhook.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def list_slack_webhooks(%Account{id: account_id}) do
+    SlackWebhook
+    |> where([s], s.account_id == ^account_id)
+    |> order_by(asc: :id)
+    |> Repo.all()
   end
 end
