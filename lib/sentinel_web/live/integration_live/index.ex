@@ -3,9 +3,9 @@ defmodule SentinelWeb.IntegrationLive.Index do
   use SentinelWeb, :live_view
 
   alias Sentinel.Integrations
+  alias Sentinel.Integrations.SlackWebhook
   alias Sentinel.Integrations.Telegram
   alias Sentinel.Integrations.Webhook
-  alias Sentinel.Integrations.SlackWebhook
 
   @impl Phoenix.LiveView
   def mount(_params, _session, socket) do

@@ -2,7 +2,7 @@ const path = require("path");
 const esbuild = require("esbuild");
 const stylePlugin = require("esbuild-style-plugin");
 const postcssImport = require("postcss-import");
-const tailwind = require("tailwindcss");
+// const tailwind = require("tailwindcss");
 const autoprefixer = require("autoprefixer");
 
 const args = process.argv.slice(2);
@@ -24,7 +24,7 @@ async function main() {
     plugins: [
       stylePlugin({
         postcss: {
-          plugins: [postcssImport, tailwind, autoprefixer],
+          plugins: [postcssImport, autoprefixer],
         },
       }),
     ],

@@ -34,7 +34,7 @@ defmodule Sentinel.Teammates.User do
   It is important to validate the length of both email and password.
   Otherwise databases may truncate the email without warnings, which
   could lead to unpredictable or insecure behaviour. Long passwords may
-  also be very expensive to hash for certain algorithms.
+  a also be very expensive to hash for certain algorithms.
 
   ## Options
 

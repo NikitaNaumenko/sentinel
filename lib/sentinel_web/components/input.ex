@@ -126,7 +126,7 @@ defmodule SentinelWeb.Components.Input do
         <.input name={@name} value={value} checked={} type="radio" />
         <.label
           for={@name}
-          class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-normal"
+          class="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
           {label}
         </.label>

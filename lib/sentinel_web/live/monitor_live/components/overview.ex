@@ -121,7 +121,7 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
             <%= if @certificate do %>
               <h5 class="text-l font-bold tracking-tight text-gray-900 dark:text-white">
                 {dgettext("monitors", "SSL days remaining")}
-                <.icon name="hero-lock-closed-solid" class="w-6 h-6 text-success-500 mb-2" />
+                <.icon name="hero-lock-closed-solid" class="text-success-500 mb-2 h-6 w-6" />
               </h5>
               <div class="py-2">
                 <span class="text-success-600 text-2xl font-semibold dark:text-white">
@@ -161,7 +161,7 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
             <% else %>
               <h5 class="text-l font-bold tracking-tight text-gray-900 dark:text-white">
                 {dgettext("monitors", "No Certificate")}
-                <.icon name="hero-exclamation-triangle" class="w-6 h-6 text-danger-500 mb-2" />
+                <.icon name="hero-exclamation-triangle" class="text-danger-500 mb-2 h-6 w-6" />
               </h5>
             <% end %>
           </div>

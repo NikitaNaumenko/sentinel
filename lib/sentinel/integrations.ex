@@ -3,9 +3,9 @@ defmodule Sentinel.Integrations do
   import Ecto.Query
 
   alias Sentinel.Accounts.Account
+  alias Sentinel.Integrations.SlackWebhook
   alias Sentinel.Integrations.Telegram
   alias Sentinel.Integrations.Webhook
-  alias Sentinel.Integrations.SlackWebhook
   alias Sentinel.Repo
 
   @spec get_webhook!(non_neg_integer(), non_neg_integer()) :: Webhook.t()

@@ -1,6 +1,9 @@
 defmodule Sentinel.Integrations.SlackWebhook do
+  @moduledoc false
   use Ecto.Schema
+
   import Ecto.Changeset
+
   alias Sentinel.Accounts.Account
 
   schema "slack_webhooks" do

@@ -43,11 +43,7 @@ defmodule SentinelWeb.IntegrationLive.NewSlackWebhook do
           )}
         </div>
       </div>
-      <.input
-        field={@form[:url]}
-        phx-debounce="200"
-        placeholder="https://hooks.slack.com/services/xxx/yyy/zzz"
-      />
+      <.input field={@form[:url]} phx-debounce="200" placeholder="https://hooks.slack.com/services/xxx/yyy/zzz" />
       <:actions>
         <div class="d-flex">
           <.link class="btn btn-link" navigate={~p"/integrations"}>Back</.link>

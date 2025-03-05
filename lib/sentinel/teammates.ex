@@ -14,8 +14,8 @@ defmodule Sentinel.Teammates do
     |> Repo.all()
   end
 
-  def get_teammate!(id) do
-    Repo.get!(User, id)
+  def get_teammate!(account_id, id) do
+    Repo.one(from(u in User, where: u.id == ^id and u.account_id == ^account_id))
   end
 
   def create_teammate(params) do
