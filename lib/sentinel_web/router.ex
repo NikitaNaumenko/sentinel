@@ -90,6 +90,7 @@ defmodule SentinelWeb.Router do
 
       live "/teammates", TeammateLive.Index, :index
       live "/teammates/new", TeammateLive.New, :new
+      live "/teammates/:id/edit", TeammateLive.Edit, :edit
     end
   end
 

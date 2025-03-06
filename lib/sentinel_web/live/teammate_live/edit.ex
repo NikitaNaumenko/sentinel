@@ -5,8 +5,8 @@ defmodule SentinelWeb.TeammateLive.Edit do
   alias Sentinel.Teammates
   alias Sentinel.Teammates.User
 
-  def mount(_params, _session, socket) do
-    teammate = Teammates.get_teammate!(socket.assigns.current_account.id, socket.assigns.teammate_id)
+  def mount(%{"id" => id}, _session, socket) do
+    teammate = Teammates.get_teammate!(socket.assigns.current_account.id, id)
 
     changeset = Teammates.User.changeset(teammate, %{})
     socket =
