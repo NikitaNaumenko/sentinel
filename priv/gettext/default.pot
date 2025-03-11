@@ -11,13 +11,7 @@
 msgid ""
 msgstr ""
 
-#: lib/sentinel_web/components/core_components.ex:440
-#, elixir-autogen, elixir-format
-msgid "Actions"
-msgstr ""
-
 #: lib/sentinel_web/components/core_components.ex:78
-#: lib/sentinel_web/components/core_components.ex:128
 #, elixir-autogen, elixir-format
 msgid "close"
 msgstr ""

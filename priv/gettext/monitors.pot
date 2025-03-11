@@ -11,140 +11,321 @@
 msgid ""
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/components/notifications.ex:12
-#: lib/sentinel_web/live/monitor_live/components/notifications.ex:38
-#, elixir-autogen, elixir-format
-msgid "Activate monitoring"
-msgstr ""
-
-#: lib/sentinel_web/live/monitor_live/show.html.heex:51
+#: lib/sentinel_web/live/monitor_live/edit.html.heex:9
 #, elixir-autogen, elixir-format
 msgid "Danger Zone"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/show.html.heex:132
+#: lib/sentinel_web/live/monitor_live/edit.html.heex:64
 #, elixir-autogen, elixir-format
 msgid "Delete monitor"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/show.html.heex:134
+#: lib/sentinel_web/live/monitor_live/edit.html.heex:67
 #, elixir-autogen, elixir-format
 msgid "Delete the %{monitor} endpoint monitor and all its data. Careful, this action cannot be undone."
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/new.html.heex:12
-#: lib/sentinel_web/live/monitor_live/show.html.heex:93
+#: lib/sentinel_web/live/monitor_live/new.html.heex:13
 #, elixir-autogen, elixir-format
 msgid "Expected status code"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/new.html.heex:6
-#: lib/sentinel_web/live/monitor_live/show.html.heex:87
+#: lib/sentinel_web/live/monitor_live/new.html.heex:7
 #, elixir-autogen, elixir-format
 msgid "HTTP Method"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/new.html.heex:18
-#: lib/sentinel_web/live/monitor_live/show.html.heex:99
+#: lib/sentinel_web/live/monitor_live/new.html.heex:19
 #, elixir-autogen, elixir-format
 msgid "Interval"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/components/overview.ex:111
+#: lib/sentinel_web/live/monitor_live/components/overview.ex:171
+#: lib/sentinel_web/live/monitor_live/show.html.heex:104
 #, elixir-autogen, elixir-format
 msgid "Last five checks"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/show.ex:94
+#: lib/sentinel_web/live/monitor_live/edit.ex:95
+#: lib/sentinel_web/live/monitor_live/show.ex:108
 #, elixir-autogen, elixir-format
 msgid "Monitor cannot be deleted"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/show.ex:111
+#: lib/sentinel_web/live/monitor_live/edit.ex:112
 #, elixir-autogen, elixir-format
 msgid "Monitor cannot be toggled"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/new.ex:72
+#: lib/sentinel_web/live/monitor_live/new.ex:57
 #, elixir-autogen, elixir-format
 msgid "Monitor created successfully"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/show.ex:88
+#: lib/sentinel_web/live/monitor_live/edit.ex:89
+#: lib/sentinel_web/live/monitor_live/show.ex:102
 #, elixir-autogen, elixir-format
 msgid "Monitor deleted successfully"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/show.ex:106
+#: lib/sentinel_web/live/monitor_live/edit.ex:107
 #, elixir-autogen, elixir-format
 msgid "Monitor toggled successfully"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/show.ex:74
+#: lib/sentinel_web/live/monitor_live/edit.ex:75
+#: lib/sentinel_web/live/monitor_live/edit.ex:121
+#: lib/sentinel_web/live/monitor_live/show.ex:84
 #, elixir-autogen, elixir-format
 msgid "Monitor updated successfully"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/new.html.heex:2
-#: lib/sentinel_web/live/monitor_live/show.html.heex:83
+#: lib/sentinel_web/live/escalation_policy_live/new.html.heex:12
+#: lib/sentinel_web/live/monitor_live/edit.html.heex:13
+#: lib/sentinel_web/live/monitor_live/new.html.heex:3
 #, elixir-autogen, elixir-format
 msgid "Name"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/new.ex:33
-#: lib/sentinel_web/live/monitor_live/new.ex:34
+#: lib/sentinel_web/live/monitor_live/new.ex:36
 #, elixir-autogen, elixir-format
 msgid "New Monitor"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/index.html.heex:6
+#: lib/sentinel_web/live/monitor_live/index.html.heex:3
+#: lib/sentinel_web/live/monitor_live/index.html.heex:26
 #, elixir-autogen, elixir-format
 msgid "New monitor"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/components/overview.ex:103
+#: lib/sentinel_web/live/monitor_live/components/overview.ex:163
+#: lib/sentinel_web/live/monitor_live/show.html.heex:94
 #, elixir-autogen, elixir-format
 msgid "No Certificate"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/components/notifications.ex:20
-#, elixir-autogen, elixir-format
-msgid "Notification Rules"
-msgstr ""
-
-#: lib/sentinel_web/live/monitor_live/show.html.heex:40
+#: lib/sentinel_web/live/monitor_live/edit.html.heex:6
 #, elixir-autogen, elixir-format
 msgid "Notifications"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/show.html.heex:18
-#, elixir-autogen, elixir-format
-msgid "Overview"
-msgstr ""
-
-#: lib/sentinel_web/live/monitor_live/new.html.heex:24
-#: lib/sentinel_web/live/monitor_live/show.html.heex:105
+#: lib/sentinel_web/live/monitor_live/edit.html.heex:38
+#: lib/sentinel_web/live/monitor_live/new.html.heex:25
 #, elixir-autogen, elixir-format
 msgid "Request timeout"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/components/overview.ex:63
+#: lib/sentinel_web/live/monitor_live/components/overview.ex:123
+#: lib/sentinel_web/live/monitor_live/show.html.heex:54
 #, elixir-autogen, elixir-format
 msgid "SSL days remaining"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/show.html.heex:29
+#: lib/sentinel_web/live/monitor_live/edit.html.heex:3
 #, elixir-autogen, elixir-format
 msgid "Settings"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/new.html.heex:3
-#: lib/sentinel_web/live/monitor_live/show.html.heex:84
+#: lib/sentinel_web/live/monitor_live/edit.html.heex:14
+#: lib/sentinel_web/live/monitor_live/new.html.heex:4
 #, elixir-autogen, elixir-format
 msgid "URL"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/components/overview.ex:14
+#: lib/sentinel_web/live/monitor_live/components/overview.ex:15
 #, elixir-autogen, elixir-format
 msgid "Uptime"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/edit.ex:157
+#: lib/sentinel_web/live/monitor_live/show.ex:162
+#, elixir-autogen, elixir-format
+msgid "Activate monitor"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/edit.html.heex:39
+#, elixir-autogen, elixir-format
+msgid "After how many seconds is the request considered timeout?"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/notifications.ex:149
+#, elixir-autogen, elixir-format
+msgid "Bot name"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/notifications.ex:143
+#, elixir-autogen, elixir-format
+msgid "Chat id"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/notifications.ex:146
+#, elixir-autogen, elixir-format
+msgid "Chat title"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/edit.html.heex:17
+#, elixir-autogen, elixir-format
+msgid "Check interval"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/show.ex:149
+#, elixir-autogen, elixir-format
+msgid "Configure"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/notifications.ex:40
+#: lib/sentinel_web/live/monitor_live/components/notifications.ex:49
+#, elixir-autogen, elixir-format
+msgid "Create new escalation policy"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/new.ex:35
+#, elixir-autogen, elixir-format
+msgid "Create new monitor"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/overview.ex:101
+#: lib/sentinel_web/live/monitor_live/show.html.heex:127
+#, elixir-autogen, elixir-format
+msgid "Duration"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/overview.ex:95
+#: lib/sentinel_web/live/monitor_live/show.html.heex:126
+#, elixir-autogen, elixir-format
+msgid "End date"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/notifications.ex:24
+#, elixir-autogen, elixir-format
+msgid "Escalation policies"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/edit.html.heex:31
+#, elixir-autogen, elixir-format
+msgid "Expected Status Code"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/edit.html.heex:24
+#, elixir-autogen, elixir-format
+msgid "HTTP method"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/edit.html.heex:25
+#, elixir-autogen, elixir-format
+msgid "HTTP method used to make the request"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/edit.html.heex:18
+#, elixir-autogen, elixir-format
+msgid "How often should we run your check?"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/index.html.heex:4
+#: lib/sentinel_web/live/monitor_live/index.html.heex:14
+#, elixir-autogen, elixir-format
+msgid "Monitors"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/show.html.heex:19
+#, elixir-autogen, elixir-format
+msgid "Never"
+msgstr ""
+
+#: lib/sentinel_web/live/escalation_policy_live/new.ex:36
+#, elixir-autogen, elixir-format
+msgid "New Escalation Policy"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/notifications.ex:88
+#, elixir-autogen, elixir-format
+msgid "No escalation policy"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/overview.ex:77
+#, elixir-autogen, elixir-format
+msgid "No incidents this month."
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/notifications.ex:15
+#, elixir-autogen, elixir-format
+msgid "Notification rules"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/edit.ex:166
+#: lib/sentinel_web/live/monitor_live/show.ex:171
+#, elixir-autogen, elixir-format
+msgid "Pause monitor"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/notifications.ex:45
+#, elixir-autogen, elixir-format
+msgid "Please set up escalation policy to get incidents alert instantly"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/overview.ex:209
+#: lib/sentinel_web/live/monitor_live/show.ex:193
+#, elixir-autogen, elixir-format
+msgid "Resolved"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/notifications.ex:66
+#, elixir-autogen, elixir-format
+msgid "SSL Expiry alerts"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/notifications.ex:59
+#, elixir-autogen, elixir-format
+msgid "SSL monitoring"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/notifications.ex:27
+#, elixir-autogen, elixir-format
+msgid "Set rules on how alerts escalade during an incident. It defines the order of channels that will be triggered for alerts."
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/index.html.heex:16
+#, elixir-autogen, elixir-format
+msgid "Set up monitor to track any incidents happens with your application "
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/new.ex:63
+#, elixir-autogen, elixir-format
+msgid "Something went wrong"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/overview.ex:89
+#: lib/sentinel_web/live/monitor_live/show.html.heex:125
+#, elixir-autogen, elixir-format
+msgid "Start date"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/overview.ex:197
+#: lib/sentinel_web/live/monitor_live/show.ex:184
+#, elixir-autogen, elixir-format
+msgid "Started"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/overview.ex:194
+#: lib/sentinel_web/live/monitor_live/components/overview.ex:206
+#: lib/sentinel_web/live/monitor_live/show.html.heex:128
+#, elixir-autogen, elixir-format
+msgid "Status"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/overview.ex:109
+#: lib/sentinel_web/live/monitor_live/show.html.heex:129
+#, elixir-autogen, elixir-format
+msgid "Status code"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/edit.html.heex:32
+#, elixir-autogen, elixir-format
+msgid "What status code must your HTTP request return?"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/components/overview.ex:79
+#, elixir-autogen, elixir-format
+msgid "You made %{incidents_count} incidents this month."
 msgstr ""

@@ -1,0 +1,40 @@
+## This file is a PO Template file.
+##
+## "msgid"s here are often extracted from source code.
+## Add new messages manually only if they're dynamic
+## messages that can't be statically extracted.
+##
+## Run "mix gettext.extract" to bring this file up to
+## date. Leave "msgstr"s empty as changing them here has no
+## effect: edit them in PO (.po) files instead.
+#
+msgid ""
+msgstr ""
+
+#: lib/sentinel_web/live/escalation_policy_live/new.ex:22
+#, elixir-autogen, elixir-format
+msgid "All users"
+msgstr ""
+
+#: lib/sentinel_web/live/escalation_policy_live/index.ex:19
+#: lib/sentinel_web/live/escalation_policy_live/index.html.heex:4
+#: lib/sentinel_web/live/escalation_policy_live/index.html.heex:12
+#, elixir-autogen, elixir-format
+msgid "Escalation Policies"
+msgstr ""
+
+#: lib/sentinel_web/live/escalation_policy_live/new.ex:197
+#, elixir-autogen, elixir-format
+msgid "Escalation policy created successfully"
+msgstr ""
+
+#: lib/sentinel_web/live/escalation_policy_live/index.html.heex:3
+#: lib/sentinel_web/live/escalation_policy_live/index.html.heex:24
+#, elixir-autogen, elixir-format
+msgid "New escalation policy"
+msgstr ""
+
+#: lib/sentinel_web/live/escalation_policy_live/index.html.heex:14
+#, elixir-autogen, elixir-format
+msgid "Set rules on how alerts escalade during an incident. It defines the order of channels that will be triggered for alerts."
+msgstr ""

@@ -11,7 +11,7 @@ defmodule SentinelWeb.TeammateLive.Edit do
     changeset = Teammates.User.changeset(teammate, %{})
     socket =
       socket
-      |> assign(:page_title, dgettext("teammates", "New Teammate"))
+      |> assign(:page_title, dgettext("teammates", "Edit Teammate"))
       |> assign(:teammate, teammate)
       |> assign_form(changeset)
 
@@ -40,7 +40,7 @@ defmodule SentinelWeb.TeammateLive.Edit do
   end
 
   def handle_event("save", %{"user" => teammate_params}, socket) do
-    case Teammates.edit_teammate(Map.put(teammate_params, "account_id", socket.assigns.current_account.id)) do
+    case Teammates.update_teammate(socket.assigns.teammate, teammate_params) do
       {:ok, _teammate} ->
         socket =
           socket

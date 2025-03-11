@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/show.html.heex:148
+#: lib/sentinel_web/live/monitor_live/edit.html.heex:79
 #, elixir-autogen, elixir-format
 msgid "Are you sure?"
 msgstr ""

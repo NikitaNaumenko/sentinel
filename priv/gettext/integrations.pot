@@ -11,17 +11,21 @@
 msgid ""
 msgstr ""
 
+#: lib/sentinel_web/live/integration_live/edit_webhook.ex:48
+#: lib/sentinel_web/live/integration_live/new_webhook.ex:44
 #: lib/sentinel_web/live/integration_live/webhook_form_component.ex:26
 #, elixir-autogen, elixir-format
 msgid "Endpoint"
 msgstr ""
 
-#: lib/sentinel_web/live/integration_live/index.ex:29
+#: lib/sentinel_web/live/integration_live/index.ex:18
+#: lib/sentinel_web/live/integration_live/index.html.heex:4
+#: lib/sentinel_web/live/integration_live/index.html.heex:24
 #, elixir-autogen, elixir-format
 msgid "Integrations"
 msgstr ""
 
-#: lib/sentinel_web/live/integration_live/index.html.heex:8
+#: lib/sentinel_web/live/integration_live/index.html.heex:38
 #, elixir-autogen, elixir-format
 msgid "Receive alert notifications via Webhooks."
 msgstr ""
@@ -31,7 +35,10 @@ msgstr ""
 msgid "Use webhooks to notify external systems when something happens in hyperping.io. Read how to setup"
 msgstr ""
 
-#: lib/sentinel_web/live/integration_live/index.html.heex:5
+#: lib/sentinel_web/live/integration_live/edit_webhook.ex:33
+#: lib/sentinel_web/live/integration_live/index.ex:36
+#: lib/sentinel_web/live/integration_live/index.html.heex:35
+#: lib/sentinel_web/live/integration_live/new_webhook.ex:31
 #: lib/sentinel_web/live/integration_live/webhook_form_component.ex:14
 #, elixir-autogen, elixir-format
 msgid "Webhook"
@@ -40,4 +47,144 @@ msgstr ""
 #: lib/sentinel_web/live/integration_live/webhook_form_component.ex:79
 #, elixir-autogen, elixir-format
 msgid "Webhook updated successfully"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/new_slack_webhook.ex:50
+#: lib/sentinel_web/live/integration_live/new_telegram_bot.ex:51
+#: lib/sentinel_web/live/integration_live/new_webhook.ex:52
+#, elixir-autogen, elixir-format
+msgid "Create"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/index.html.heex:15
+#, elixir-autogen, elixir-format
+msgid "Enabled integrations"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/edit_slack_webhook.ex:40
+#: lib/sentinel_web/live/integration_live/edit_telegram_bot.ex:40
+#: lib/sentinel_web/live/integration_live/edit_webhook.ex:40
+#: lib/sentinel_web/live/integration_live/new_slack_webhook.ex:33
+#: lib/sentinel_web/live/integration_live/new_telegram_bot.ex:33
+#: lib/sentinel_web/live/integration_live/new_webhook.ex:37
+#, elixir-autogen, elixir-format
+msgid "Name"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/new_slack_webhook.ex:26
+#: lib/sentinel_web/live/integration_live/new_telegram_bot.ex:26
+#: lib/sentinel_web/live/integration_live/new_webhook.ex:30
+#, elixir-autogen, elixir-format
+msgid "New integration"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/index.html.heex:55
+#, elixir-autogen, elixir-format
+msgid "Receive alert notifications via Slack."
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/index.html.heex:72
+#, elixir-autogen, elixir-format
+msgid "Receive alert notifications via telegram."
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/edit_slack_webhook.ex:64
+#: lib/sentinel_web/live/integration_live/edit_telegram_bot.ex:65
+#: lib/sentinel_web/live/integration_live/edit_webhook.ex:65
+#, elixir-autogen, elixir-format
+msgid "Save"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/index.html.heex:6
+#, elixir-autogen, elixir-format
+msgid "Set up integrations, and be informed about incident as soon as posible"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/index.html.heex:52
+#, elixir-autogen, elixir-format
+msgid "Slack"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/edit_slack_webhook.ex:33
+#: lib/sentinel_web/live/integration_live/new_slack_webhook.ex:27
+#, elixir-autogen, elixir-format
+msgid "Slack Webhook"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/index.ex:76
+#, elixir-autogen, elixir-format
+msgid "Slack webhook"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/new_slack_webhook.ex:74
+#, elixir-autogen, elixir-format
+msgid "Slack webhook created successfully"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/edit_slack_webhook.ex:86
+#, elixir-autogen, elixir-format
+msgid "Slack webhook updated successfully"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/edit_telegram_bot.ex:33
+#: lib/sentinel_web/live/integration_live/new_telegram_bot.ex:27
+#, elixir-autogen, elixir-format
+msgid "Telegram Bot"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/new_telegram_bot.ex:73
+#, elixir-autogen, elixir-format
+msgid "Telegram Bot created successfully"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/edit_telegram_bot.ex:87
+#, elixir-autogen, elixir-format
+msgid "Telegram Bot updated successfully"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/new_telegram_bot.ex:38
+#, elixir-autogen, elixir-format
+msgid "Telegram Chat id"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/index.ex:56
+#, elixir-autogen, elixir-format
+msgid "Telegram bot"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/edit_telegram_bot.ex:48
+#, elixir-autogen, elixir-format
+msgid "Telegram bot Token"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/index.html.heex:69
+#, elixir-autogen, elixir-format
+msgid "Telegram bots"
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/edit_slack_webhook.ex:50
+#: lib/sentinel_web/live/integration_live/new_slack_webhook.ex:40
+#, elixir-autogen, elixir-format
+msgid "Use Slack webhook to notify your channels when something happens in sentinel."
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/edit_telegram_bot.ex:50
+#, elixir-autogen, elixir-format
+msgid "Use telegram bots to notify external systems when something happens in sentinel."
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/new_telegram_bot.ex:40
+#, elixir-autogen, elixir-format
+msgid "Use telegram chat to notify external systems when something happens in sentinel."
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/edit_webhook.ex:50
+#, elixir-autogen, elixir-format
+msgid "Use webhooks to notify external systems when something happens in sentinel."
+msgstr ""
+
+#: lib/sentinel_web/live/integration_live/edit_slack_webhook.ex:48
+#: lib/sentinel_web/live/integration_live/new_slack_webhook.ex:38
+#, elixir-autogen, elixir-format
+msgid "Webhook URL"
 msgstr ""

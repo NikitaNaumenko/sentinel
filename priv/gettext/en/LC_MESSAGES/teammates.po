@@ -1,0 +1,65 @@
+## "msgid"s in this file come from POT (.pot) files.
+###
+### Do not add, change, or remove "msgid"s manually here as
+### they're tied to the ones in the corresponding POT file
+### (with the same domain).
+###
+### Use "mix gettext.extract --merge" or "mix gettext.merge"
+### to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: lib/sentinel_web/live/teammate_live/new.html.heex:5
+#, elixir-autogen, elixir-format
+msgid "Email"
+msgstr ""
+
+#: lib/sentinel_web/live/teammate_live/new.html.heex:3
+#, elixir-autogen, elixir-format
+msgid "First Name"
+msgstr ""
+
+#: lib/sentinel_web/live/teammate_live/index.html.heex:13
+#, elixir-autogen, elixir-format
+msgid "Full Name"
+msgstr ""
+
+#: lib/sentinel_web/live/teammate_live/new.html.heex:4
+#, elixir-autogen, elixir-format
+msgid "Last Name"
+msgstr ""
+
+#: lib/sentinel_web/live/teammate_live/edit.ex:14
+#: lib/sentinel_web/live/teammate_live/new.ex:13
+#, elixir-autogen, elixir-format
+msgid "New Teammate"
+msgstr ""
+
+#: lib/sentinel_web/live/teammate_live/index.html.heex:3
+#, elixir-autogen, elixir-format
+msgid "New teammate"
+msgstr ""
+
+#: lib/sentinel_web/live/teammate_live/index.html.heex:16
+#: lib/sentinel_web/live/teammate_live/new.html.heex:9
+#, elixir-autogen, elixir-format
+msgid "Role"
+msgstr ""
+
+#: lib/sentinel_web/live/teammate_live/edit.ex:31
+#, elixir-autogen, elixir-format
+msgid "Teammate blocked successfully."
+msgstr ""
+
+#: lib/sentinel_web/live/teammate_live/edit.ex:47
+#: lib/sentinel_web/live/teammate_live/new.ex:30
+#, elixir-autogen, elixir-format
+msgid "Teammate created successfully. Invite was sent"
+msgstr ""
+
+#: lib/sentinel_web/live/teammate_live/index.html.heex:4
+#, elixir-autogen, elixir-format
+msgid "Teammates"
+msgstr ""

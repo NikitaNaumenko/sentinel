@@ -11,7 +11,8 @@
 msgid ""
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/edit.html.heex:81
+#: lib/sentinel_web/live/monitor_live/edit.ex:117
+#: lib/sentinel_web/live/monitor_live/show.ex:94
 #, elixir-autogen, elixir-format
-msgid "Delete"
+msgid "Webhook url updated!"
 msgstr ""

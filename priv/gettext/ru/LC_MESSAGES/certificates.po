@@ -11,22 +11,26 @@ msgstr ""
 "Language: ru\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100 != 11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10||n%100>=20) ? 1 : 2);\n"
 
-#: lib/sentinel_web/live/monitor_live/components/overview.ex:80
+#: lib/sentinel_web/live/monitor_live/components/overview.ex:140
+#: lib/sentinel_web/live/monitor_live/show.html.heex:71
 #, elixir-autogen, elixir-format
 msgid "Issuer"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/components/overview.ex:74
+#: lib/sentinel_web/live/monitor_live/components/overview.ex:134
+#: lib/sentinel_web/live/monitor_live/show.html.heex:65
 #, elixir-autogen, elixir-format
 msgid "Subject"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/components/overview.ex:86
+#: lib/sentinel_web/live/monitor_live/components/overview.ex:146
+#: lib/sentinel_web/live/monitor_live/show.html.heex:77
 #, elixir-autogen, elixir-format
 msgid "Valid from"
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/components/overview.ex:94
+#: lib/sentinel_web/live/monitor_live/components/overview.ex:154
+#: lib/sentinel_web/live/monitor_live/show.html.heex:85
 #, elixir-autogen, elixir-format
 msgid "Valid to"
 msgstr ""

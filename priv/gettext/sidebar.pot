@@ -11,22 +11,32 @@
 msgid ""
 msgstr ""
 
-#: lib/sentinel_web/components/sidebar.ex:54
+#: lib/sentinel_web/components/sidebar.ex:60
 #, elixir-autogen, elixir-format
 msgid "Integrations"
 msgstr ""
 
-#: lib/sentinel_web/components/sidebar.ex:73
+#: lib/sentinel_web/components/sidebar.ex:71
 #, elixir-autogen, elixir-format
 msgid "Log out"
 msgstr ""
 
-#: lib/sentinel_web/components/sidebar.ex:39
+#: lib/sentinel_web/components/sidebar.ex:41
 #, elixir-autogen, elixir-format
 msgid "Monitors"
 msgstr ""
 
-#: lib/sentinel_web/components/sidebar.ex:46
+#: lib/sentinel_web/components/sidebar.ex:45
 #, elixir-autogen, elixir-format
 msgid "Status pages"
+msgstr ""
+
+#: lib/sentinel_web/components/sidebar.ex:52
+#, elixir-autogen, elixir-format
+msgid "Escalation Policies"
+msgstr ""
+
+#: lib/sentinel_web/components/sidebar.ex:67
+#, elixir-autogen, elixir-format
+msgid "Teammates"
 msgstr ""

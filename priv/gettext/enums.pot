@@ -1,0 +1,6 @@
+# User roles
+msgid "Admin"
+msgstr ""
+
+msgid "User"
+msgstr ""

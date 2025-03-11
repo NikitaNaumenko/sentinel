@@ -11,6 +11,8 @@
 msgid ""
 msgstr ""
 
+#: lib/sentinel_web/live/integration_live/edit_webhook.ex:88
+#: lib/sentinel_web/live/integration_live/new_webhook.ex:76
 #: lib/sentinel_web/live/integration_live/webhook_form_component.ex:94
 #, elixir-autogen, elixir-format
 msgid "Webhook created successfully"

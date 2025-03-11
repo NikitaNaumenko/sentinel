@@ -11,8 +11,14 @@
 msgid ""
 msgstr ""
 
-#: lib/sentinel_web/live/monitor_live/new.html.heex:29
-#: lib/sentinel_web/live/monitor_live/show.html.heex:110
+#: lib/sentinel_web/live/escalation_policy_live/new.html.heex:6
+#: lib/sentinel_web/live/monitor_live/new.html.heex:33
+#: lib/sentinel_web/live/teammate_live/new.html.heex:16
 #, elixir-autogen, elixir-format
-msgid "Save"
+msgid "Create"
+msgstr ""
+
+#: lib/sentinel_web/live/monitor_live/edit.html.heex:45
+#, elixir-autogen, elixir-format
+msgid "Save changes"
 msgstr ""

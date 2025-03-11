@@ -11,6 +11,8 @@ msgstr ""
 "Language: ru\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100 != 11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10||n%100>=20) ? 1 : 2);\n"
 
+#: lib/sentinel_web/live/integration_live/edit_webhook.ex:88
+#: lib/sentinel_web/live/integration_live/new_webhook.ex:76
 #: lib/sentinel_web/live/integration_live/webhook_form_component.ex:94
 #, elixir-autogen, elixir-format
 msgid "Webhook created successfully"

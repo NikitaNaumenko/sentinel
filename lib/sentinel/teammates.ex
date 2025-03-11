@@ -31,4 +31,10 @@ defmodule Sentinel.Teammates do
       Events.create_event(:teammate_created, user, %{token: encoded_token})
     end)
   end
+
+  def update_teammate(user, params) do
+    user
+    |> User.changeset(params)
+    |> Repo.update!()
+  end
 end

@@ -11,7 +11,9 @@ msgstr ""
 "Language: ru\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100 != 11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10||n%100>=20) ? 1 : 2);\n"
 
-#: lib/sentinel_web/live/monitor_live/edit.html.heex:79
-#, elixir-autogen, elixir-format
-msgid "Are you sure?"
+# User roles
+msgid "Admin"
+msgstr ""
+
+msgid "User"
 msgstr ""

@@ -1,0 +1,40 @@
+## "msgid"s in this file come from POT (.pot) files.
+###
+### Do not add, change, or remove "msgid"s manually here as
+### they're tied to the ones in the corresponding POT file
+### (with the same domain).
+###
+### Use "mix gettext.extract --merge" or "mix gettext.merge"
+### to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100 != 11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10||n%100>=20) ? 1 : 2);\n"
+
+#: lib/sentinel_web/live/escalation_policy_live/new.ex:22
+#, elixir-autogen, elixir-format
+msgid "All users"
+msgstr ""
+
+#: lib/sentinel_web/live/escalation_policy_live/index.ex:19
+#: lib/sentinel_web/live/escalation_policy_live/index.html.heex:4
+#: lib/sentinel_web/live/escalation_policy_live/index.html.heex:12
+#, elixir-autogen, elixir-format
+msgid "Escalation Policies"
+msgstr ""
+
+#: lib/sentinel_web/live/escalation_policy_live/new.ex:197
+#, elixir-autogen, elixir-format
+msgid "Escalation policy created successfully"
+msgstr ""
+
+#: lib/sentinel_web/live/escalation_policy_live/index.html.heex:3
+#: lib/sentinel_web/live/escalation_policy_live/index.html.heex:24
+#, elixir-autogen, elixir-format
+msgid "New escalation policy"
+msgstr ""
+
+#: lib/sentinel_web/live/escalation_policy_live/index.html.heex:14
+#, elixir-autogen, elixir-format
+msgid "Set rules on how alerts escalade during an incident. It defines the order of channels that will be triggered for alerts."
+msgstr ""
