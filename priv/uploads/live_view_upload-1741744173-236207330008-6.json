@@ -1,0 +1,41 @@
+{
+  "monitors": [
+    {
+      "name": "Monitor 1",
+      "url": "http://example.com",
+      "interval": 60,
+      "http_method": "get",
+      "request_timeout": 10,
+      "expected_status_code": 203,
+      "state": "active"
+    },
+    {
+      "name": "Monitor 2",
+      "url": "http://example2.com",
+      "interval": 60,
+      "http_method": "post",
+      "request_timeout": 12,
+      "expected_status_code": 200,
+      "state": "inactive"
+    },
+    {
+      "name": "Monitor 3",
+      "url": "http://example3.com",
+      "interval": 60,
+      "http_method": "get",
+      "request_timeout": 8,
+      "expected_status_code": 500,
+      "state": "active"
+    },
+    {
+      "name": "Monitor 4",
+      "url": "http://example4.com",
+      "interval": 60,
+      "http_method": "put",
+      "request_timeout": 15,
+      "expected_status_code": 404,
+      "state": "inactive"
+    }
+  ]
+}
+

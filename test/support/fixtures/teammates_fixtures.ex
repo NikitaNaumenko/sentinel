@@ -1,7 +1,8 @@
 defmodule Sentinel.TeammatesFixtures do
-  alias Sentinel.Teammates
+  @moduledoc false
   alias Sentinel.Accounts.User
   alias Sentinel.Repo
+  alias Sentinel.Teammates
 
   def teammate_fixture(attrs \\ %{}) do
     {:ok, user} =
@@ -9,11 +10,10 @@ defmodule Sentinel.TeammatesFixtures do
       |> Enum.into(%{
         first_name: "John",
         last_name: "Doe",
-        email: "john.doe@example.com",
+        email: "john.doe@example.com"
       })
       |> Teammates.create_teammate()
 
     user
   end
 end
-

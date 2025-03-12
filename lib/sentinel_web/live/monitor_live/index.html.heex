@@ -1,10 +1,32 @@
-<.index_page_header
-  path={~p"/monitors/new"}
-  link_title={dgettext("monitors", "New monitor")}
-  page_title={dgettext("monitors", "Monitors")}
-  policy_func={fn -> permit?(Sentinel.Monitors.MonitorPolicy, :create, @current_user) end}
-  condition={@monitors_total_count > 0}
-/>
+<%!-- <.index_page_header --%>
+<%!--   path={~p"/monitors/new"} --%>
+<%!--   link_title={dgettext("monitors", "New monitor")} --%>
+<%!--   page_title={dgettext("monitors", "Monitors")} --%>
+<%!--   policy_func={fn -> permit?(Sentinel.Monitors.MonitorPolicy, :create, @current_user) end} --%>
+<%!--   condition={@monitors_total_count > 0} --%>
+<%!-- /> --%>
+<header class="d-flex py-2">
+  <div class="col">
+    <h2 class="page-title">
+      {dgettext("monitors", "Monitors")}
+    </h2>
+  </div>
+
+  <div class="ms-auto d-print-none col-auto">
+    <form id="upload-form" phx-submit="save" phx-change="validate">
+      <.live_file_input upload={@uploads.monitors} />
+      <button type="submit">Upload</button>
+    </form>
+    <.link
+      :if={permit?(Sentinel.Monitors.MonitorPolicy, :create, @current_user)}
+      navigate={~p"/monitors/new"}
+      class="btn btn-primary"
+    >
+      {dgettext("monitors", "New monitor")}
+    </.link>
+  </div>
+</header>
+
 <div id="monitors" phx-update="stream" class="mt-5 flex w-full flex-col gap-4">
   <%= if @monitors_total_count > 0 do %>
     <MonitorComponent.render :for={{id, monitor} <- @streams.monitors} id={id} monitor={monitor} />

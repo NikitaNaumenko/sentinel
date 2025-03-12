@@ -1,0 +1,85 @@
+{
+  "monitors": [
+    {
+      "id": 1,
+      "name": "Monitor 1",
+      "url": "http://example.com",
+      "interval": 10,
+      "http_method": "get",
+      "request_timeout": 10,
+      "expected_status_code": 203,
+      "state": "active",
+      "last_check_id": 2899,
+      "last_incident_id": 1,
+      "account_id": 1,
+      "escalation_policy_id": null,
+      "inserted_at": "2025-03-12T12:00:00Z",
+      "updated_at": "2025-03-12T12:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Monitor 2",
+      "url": "http://example2.com",
+      "interval": 15,
+      "http_method": "post",
+      "request_timeout": 12,
+      "expected_status_code": 200,
+      "state": "inactive",
+      "last_check_id": 2900,
+      "last_incident_id": 2,
+      "account_id": 1,
+      "escalation_policy_id": 5,
+      "inserted_at": "2025-03-12T12:00:00Z",
+      "updated_at": "2025-03-12T12:00:00Z"
+    },
+    {
+      "id": 3,
+      "name": "Monitor 3",
+      "url": "http://example3.com",
+      "interval": 30,
+      "http_method": "get",
+      "request_timeout": 8,
+      "expected_status_code": 500,
+      "state": "active",
+      "last_check_id": 2901,
+      "last_incident_id": 3,
+      "account_id": 2,
+      "escalation_policy_id": null,
+      "inserted_at": "2025-03-12T12:00:00Z",
+      "updated_at": "2025-03-12T12:00:00Z"
+    },
+    {
+      "id": 4,
+      "name": "Monitor 4",
+      "url": "http://example4.com",
+      "interval": 20,
+      "http_method": "put",
+      "request_timeout": 15,
+      "expected_status_code": 404,
+      "state": "inactive",
+      "last_check_id": 2902,
+      "last_incident_id": 4,
+      "account_id": 2,
+      "escalation_policy_id": 3,
+      "inserted_at": "2025-03-12T12:00:00Z",
+      "updated_at": "2025-03-12T12:00:00Z"
+    },
+    {
+      "id": 5,
+      "name": "Monitor 5",
+      "url": "http://example5.com",
+      "interval": 5,
+      "http_method": "get",
+      "request_timeout": 7,
+      "expected_status_code": 302,
+      "state": "active",
+      "last_check_id": 2903,
+      "last_incident_id": 5,
+      "account_id": 3,
+      "escalation_policy_id": null,
+      "inserted_at": "2025-03-12T12:00:00Z",
+      "updated_at": "2025-03-12T12:00:00Z"
+    }
+  ]
+}
+

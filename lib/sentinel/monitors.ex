@@ -140,6 +140,34 @@ defmodule Sentinel.Monitors do
     |> Decimal.round(2)
   end
 
+  def create_monitors_from_file(filepath, account_id) do
+    {:ok, process_monitors_file(Path.extname(filepath), filepath, account_id)}
+  end
+
+  defp process_monitors_file(".json", filepath, account_id) do
+    json = filepath |> File.read!() |> Jason.decode!() |> Map.get("monitors")
+
+    json
+    |> Enum.map(fn attrs ->
+      attrs =
+        Map.merge(attrs, %{
+          "account_id" => account_id,
+          "inserted_at" => DateTime.utc_now(),
+          "updated_at" => DateTime.utc_now()
+        })
+
+      case create_monitor(attrs) do
+        {:ok, monitor} ->
+          monitor
+
+        error ->
+          Logger.error(inspect(error))
+          nil
+      end
+    end)
+    |> Enum.filter(& &1)
+  end
+
   def avg_response_time(%Monitor{id: monitor_id}) do
     from(c in Check, where: [monitor_id: ^monitor_id])
     |> Repo.aggregate(:avg, :duration)

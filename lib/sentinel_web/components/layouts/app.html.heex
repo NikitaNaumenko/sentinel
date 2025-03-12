@@ -1,17 +1,17 @@
 <main class="page">
   <Sidebar.sidebar current_user={@current_user} />
 
-  <%!-- <div class="z-[100] fixed top-0 flex max-h-screen w-full flex-col-reverse p-4 sm:top-auto sm:right-0 sm:flex-col md:max-w-[420px]"> --%>
-  <%!--   <.toast --%>
-  <%!--     :for={{kind, content} <- @flash} --%>
-  <%!--     :if={kind in ["info", "success", "error", "warning"]} --%>
-  <%!--     kind={kind} --%>
-  <%!--     id={"#{kind}-flash"} --%>
-  <%!--   > --%>
-  <%!--     <%= content %> --%>
-  <%!--   </.toast> --%>
-  <%!-- </div> --%>
-  <%!----%>
+  <div class="position-fixed end-0 z-3 top-0 p-3">
+    <.toast
+      :for={{kind, content} <- @flash}
+      :if={kind in ["info", "success", "error", "warning"]}
+      kind={kind}
+      id={"#{kind}-flash"}
+    >
+      {content}
+    </.toast>
+  </div>
+
   <div class="page-wrapper">
     <%= if function_exported?(@socket.view, :header, 1) do %>
       {@socket.view.header(assigns)}

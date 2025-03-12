@@ -11,6 +11,7 @@ defmodule Sentinel.TeammatesTest do
     account = account_fixture()
     %{account: account}
   end
+
   describe "list_teammates/1" do
     test "returns all teammates for a given account", %{account: account} do
       user1 = teammate_fixture(%{account_id: account.id})
