@@ -64,6 +64,7 @@ defmodule SentinelWeb.MonitorLive.Index do
 
   @impl Phoenix.LiveView
   def handle_event("validate", _params, socket) do
+    dbg("JOAP")
     {:noreply, socket}
   end
 
@@ -87,13 +88,19 @@ defmodule SentinelWeb.MonitorLive.Index do
     {:noreply, put_flash(socket, :info, dgettext("monitors", "Creating monitors from file..."))}
   end
 
-  # defp error_to_string(:too_large), do: "Too large"
-  # defp error_to_string(:too_many_files), do: "You have selected too many files"
-  # defp error_to_string(:not_accepted), do: "You have selected an unacceptable file type"
-  #
   defp handle_progress(:monitors, entry, socket) do
     if entry.done? do
-      {:noreply, put_flash(socket, :info, dgettext("monitors", "File is uploaded"))}
+      consume_uploaded_entries(socket, :monitors, fn %{path: path} = meta, entry ->
+        extname = Path.extname(entry.client_name)
+
+        dest = Path.join([:code.priv_dir(:sentinel), "uploads", Path.basename(path) <> extname])
+        # You will need to create `priv/static/uploads` for `File.cp!/2` to work.
+        # IO.inspect(entry)
+        File.cp!(path, dest)
+        send(self(), {:process_monitors, dest})
+      end)
+
+      {:noreply, put_flash(socket, :info, dgettext("monitors", "Creating monitors from file..."))}
     else
       {:noreply, socket}
     end

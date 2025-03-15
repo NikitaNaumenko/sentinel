@@ -5,27 +5,54 @@
 <%!--   policy_func={fn -> permit?(Sentinel.Monitors.MonitorPolicy, :create, @current_user) end} --%>
 <%!--   condition={@monitors_total_count > 0} --%>
 <%!-- /> --%>
-<header class="d-flex py-2">
-  <div class="col">
-    <h2 class="page-title">
-      {dgettext("monitors", "Monitors")}
-    </h2>
+<div class="page-header d-print-none">
+  <div class="container-xl">
+    <div class="row g-2 align-items-center">
+      <div class="col">
+        <!-- Page pre-title -->
+        <%!-- <div class="page-pretitle">Overview</div> --%>
+        <h2 class="page-title">{dgettext("monitors", "Monitors")}</h2>
+      </div>
+      <!-- Page title actions -->
+      <div class="ms-auto d-print-none col-auto">
+        <div class="btn-list">
+          <span class="d-none d-sm-inline">
+            <%!-- <a href="#" class="btn btn-1"> New view </a> --%>
+          </span>
+          <.link
+            :if={permit?(Sentinel.Monitors.MonitorPolicy, :create, @current_user)}
+            navigate={~p"/monitors/new"}
+            class="btn btn-primary btn-5 d-none d-sm-inline-block"
+          >
+            {dgettext("monitors", "New monitor")}
+          </.link>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
-  <div class="ms-auto d-print-none col-auto">
-    <form id="upload-form" phx-submit="save" phx-change="validate">
-      <.live_file_input upload={@uploads.monitors} />
-      <button type="submit">Upload</button>
-    </form>
-    <.link
-      :if={permit?(Sentinel.Monitors.MonitorPolicy, :create, @current_user)}
-      navigate={~p"/monitors/new"}
-      class="btn btn-primary"
-    >
-      {dgettext("monitors", "New monitor")}
-    </.link>
-  </div>
-</header>
+<%!-- <header class="d-flex py-2"> --%>
+<%!--   <div class="col"> --%>
+<%!--     <h2 class="page-title"> --%>
+<%!--       {dgettext("monitors", "Monitors")} --%>
+<%!--     </h2> --%>
+<%!--   </div> --%>
+<%!----%>
+<%!--   <div class="ms-auto d-print-none col-auto justify-between"> --%>
+    <%!-- Тут надо придумать как нормально сделать форму загрузки файла --%>
+    <%!-- <form id="upload-form" phx-submit="save" phx-change="validate"> --%>
+    <%!-- <.live_file_input upload={@uploads.monitors} />  --%>
+    <%!-- </form>  --%>
+  <%!--   <.link --%>
+  <%!--     :if={permit?(Sentinel.Monitors.MonitorPolicy, :create, @current_user)} --%>
+  <%!--     navigate={~p"/monitors/new"} --%>
+  <%!--     class="btn btn-primary" --%>
+  <%!--   > --%>
+  <%!--     {dgettext("monitors", "New monitor")} --%>
+  <%!--   </.link> --%>
+  <%!-- </div> --%>
+<%!-- </header> --%>
 
 <div id="monitors" phx-update="stream" class="mt-5 flex w-full flex-col gap-4">
   <%= if @monitors_total_count > 0 do %>
