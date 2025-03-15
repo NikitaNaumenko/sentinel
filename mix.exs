@@ -75,7 +75,9 @@ defmodule Sentinel.MixProject do
       {:exvcr, "~> 0.11", only: :test},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
       {:repatch, "~> 1.0"},
-      {:dotenv, "~> 3.0.0", only: [:dev, :test]}
+      {:dotenv, "~> 3.0.0", only: [:dev, :test]},
+      {:faker, "~> 0.19.0-alpha.1", only: :test}
+
     ]
   end
 

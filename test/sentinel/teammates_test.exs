@@ -30,7 +30,22 @@ defmodule Sentinel.TeammatesTest do
     end
   end
 
-  # describe "get_teammate!/2" do
+  describe "block_teammate/1" do
+    test "blocks an active teammate", %{account: account} do
+      user = teammate_fixture(%{account_id: account.id})
+ 
+      assert {:ok, %User{state: :blocked}} = Teammates.block_teammate(user.id)
+    end
+
+    test "raises error when blocking an already blocked teammate", %{account: account} do
+      user = blocked_teammate_fixture(%{account_id: account.id})
+ 
+      assert_raise Ecto.NoResultsError, fn ->
+        dbg(Teammates.block_teammate(user.id))
+      end
+    end
+  end
+   # describe "get_teammate!/2" do
   #   test "returns the teammate with the given id and account_id" do
   #     account_id = 1
   #     user = %User{id: 1, account_id: account_id, first_name: "John", last_name: "Doe"}

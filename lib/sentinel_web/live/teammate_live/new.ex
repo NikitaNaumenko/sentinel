@@ -27,7 +27,7 @@ defmodule SentinelWeb.TeammateLive.New do
       {:ok, _teammate} ->
         socket =
           socket
-          |> put_flash(:info, dgettext("teammates", "Teammate created successfully. Invite was sent"))
+          |> put_flash(:success, dgettext("teammates", "Teammate created successfully. Invite was sent"))
           |> push_navigate(to: ~p"/teammates")
 
         {:noreply, socket}

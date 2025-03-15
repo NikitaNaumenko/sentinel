@@ -10,16 +10,33 @@
     <div class="card">
       <div class="card-table table-responsive">
         <.table id="teammates" rows={@streams.teammates}>
-          <:col :let={{_id, teammate}} label={dgettext("teammates", "Full Name")}>
-            {teammate.full_name}
+          <:col :let={{_id, user}} label={dgettext("teammates", "Full Name")}>
+            {user.full_name}
           </:col>
-          <:col :let={{_id, teammate}} label={dgettext("teammates", "Role")}>
-            {translate_enum(teammate.role)}
+          <:col :let={{_id, user}} label={dgettext("teammates", "Role")}>
+            {translate_enum(user.role)}
           </:col>
-          <:col :let={{_id, teammate}}>
-            <.link class="nav-link justify-content-end" navigate={~p"/teammates/#{teammate}/edit"}>
-              <.icon class="nav-link-icon" name="icon-square-pen" />
-            </.link>
+          <:col :let={{_id, user}} label={dgettext("teammates", "State")}>
+            <.badge variant={badge_variant(user.state)}>
+              {user.state}
+            </.badge>
+          </:col>
+          <:col :let={{_id, user}} label={dgettext("teammates", "Email")}>
+            {user.email}
+          </:col>
+          <:col :let={{_id, user}} label={dgettext("teammates", "Created At")}>
+            {user.inserted_at}
+          </:col>
+          <:col :let={{_id, user}}>
+            <%= if permit?(Sentinel.Teammates.UserPolicy, :block, @current_user, user) do %>
+              <.button
+                size="icon"
+                variant="danger"
+                phx-click={JS.push("block", value: %{id: user.id})}
+              >
+                <.icon name="icon-lock" />
+              </.button>
+            <% end %>
           </:col>
         </.table>
       </div>

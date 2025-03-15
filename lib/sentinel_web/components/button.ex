@@ -38,7 +38,12 @@ defmodule SentinelWeb.Components.Button do
     :variant,
     [
       primary: "btn-primary",
-      danger: "btn-danger"
+      danger: "btn-danger",
+      warning: "btn-warning",
+      info: "btn-info",
+      secondary: "btn-secondary",
+      success: "btn-success",
+      light: "btn-light",
     ],
     default: :primary
   )

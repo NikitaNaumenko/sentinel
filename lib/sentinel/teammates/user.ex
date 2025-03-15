@@ -13,7 +13,7 @@ defmodule Sentinel.Teammates.User do
     field :email, :string
 
     field :state, Ecto.Enum,
-      values: [:created, :waiting_confirmation, :confirmed, :blocked, :deleted],
+      values: [:created, :waiting_confirmation, :active, :blocked],
       default: :created
 
     field :first_name, :string

@@ -1,19 +1,22 @@
 defmodule Sentinel.TeammatesFixtures do
   @moduledoc false
-  alias Sentinel.Accounts.User
   alias Sentinel.Repo
   alias Sentinel.Teammates
+  alias Sentinel.Teammates.User
 
   def teammate_fixture(attrs \\ %{}) do
-    {:ok, user} =
-      attrs
-      |> Enum.into(%{
-        first_name: "John",
-        last_name: "Doe",
-        email: "john.doe@example.com"
-      })
-      |> Teammates.create_teammate()
+    attrs = Enum.into(attrs, %{first_name: "John", last_name: "Doe", email: Faker.Internet.email()})
 
-    user
+    %User{}
+    |> User.changeset(attrs)
+    |> Repo.insert!()
+  end
+
+  def blocked_teammate_fixture(attrs \\ %{}) do
+    attrs = Enum.into(attrs, %{first_name: "John", last_name: "Doe", email: Faker.Internet.email()})
+
+    %User{state: :blocked}
+    |> User.changeset(attrs)
+    |> Repo.insert!()
   end
 end
