@@ -9,12 +9,23 @@ defmodule SentinelWeb.TeammateLive.Index do
 
   @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :teammates, Teammates.list_teammates(socket.assigns.current_account.id))}
+    {:ok, stream(socket, :users, Teammates.list_users(socket.assigns.current_account.id), reset: true)}
   end
 
   @impl Phoenix.LiveView
   def handle_event("block", %{"id" => id}, socket) do
-    {:noreply, Teammates.block_teammate(id)}
+    case Teammates.block_user(id) do
+      {:ok, user} ->
+        socket =
+          socket
+          |> stream_insert(:users, user)
+          |> put_flash(:success, gettext("Teammate blocked successfully"))
+
+        {:noreply, socket}
+
+      {:error, _changeset} ->
+        {:noreply, put_flash(socket, :error, gettext("Failed to block teammate"))}
+    end
   end
 
   def badge_variant(state) do

@@ -1,4 +1,5 @@
 ExUnit.start()
 Faker.start()
 Repatch.setup()
+{:ok, _} = Application.ensure_all_started(:ex_machina)
 Ecto.Adapters.SQL.Sandbox.mode(Sentinel.Repo, :manual)

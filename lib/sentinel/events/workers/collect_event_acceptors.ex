@@ -42,8 +42,8 @@ defmodule Sentinel.Events.Workers.CollectEventAcceptors do
     :ok
   end
 
-  defp process_event("teammate_created", event) do
-    user = Teammates.get_teammate!(event.resource_id)
+  defp process_event("user_created", event) do
+    user = Teammates.get_user!(event.resource_id)
 
     %{
       recipient: %{id: user.id, type: to_string(Sentinel.Accounts.User)},

@@ -9,7 +9,7 @@
   <div class="col-12">
     <div class="card">
       <div class="card-table table-responsive">
-        <.table id="teammates" rows={@streams.teammates}>
+        <.table id="users" rows={@streams.users}>
           <:col :let={{_id, user}} label={dgettext("teammates", "Full Name")}>
             {user.full_name}
           </:col>

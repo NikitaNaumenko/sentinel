@@ -14,6 +14,8 @@ alias Sentinel.Accounts
 alias Sentinel.Monitors
 alias Sentinel.StatusPages
 
+Faker.start()
+
 Sentinel.Repo.transaction(fn ->
   account = Sentinel.Repo.insert!(%Accounts.Account{name: "Account 1"})
 
@@ -75,4 +77,19 @@ Sentinel.Repo.transaction(fn ->
   #   public: false,
   #   account_id: account.id
   # })
+end)
+
+[account] = Sentinel.Repo.all(Sentinel.Accounts.Account)
+
+[1]
+|> Stream.cycle()
+|> Enum.take(15)
+|> Enum.map(fn _ ->
+  Sentinel.Repo.insert!(%Sentinel.Teammates.User{
+    account_id: account.id,
+    email: Faker.Internet.email(),
+    hashed_password: Bcrypt.hash_pwd_salt("password"),
+    role: Enum.random(Ecto.Enum.values(Sentinel.Teammates.User, :role)),
+    state: Enum.random(Ecto.Enum.values(Sentinel.Teammates.User, :state))
+  })
 end)

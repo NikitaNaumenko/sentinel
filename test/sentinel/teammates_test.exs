@@ -1,7 +1,7 @@
 defmodule Sentinel.TeammatesTest do
   use Sentinel.DataCase
 
-  import Sentinel.AccountsFixtures
+  import Sentinel.AccountsFixtures, only: [account_fixture: 0]
   import Sentinel.TeammatesFixtures
 
   alias Sentinel.Teammates
@@ -12,40 +12,34 @@ defmodule Sentinel.TeammatesTest do
     %{account: account}
   end
 
-  describe "list_teammates/1" do
-    test "returns all teammates for a given account", %{account: account} do
+  describe "list_users/1" do
+    test "returns all users for a given account", %{account: account} do
       user1 = teammate_fixture(%{account_id: account.id})
       user2 = teammate_fixture(%{account_id: account.id})
-      # account_id = 1
-      # user1 = %User{id: 1, account_id: account_id, first_name: "John", last_name: "Doe"}
-      # user2 = %User{id: 2, account_id: account_id, first_name: "Jane", last_name: "Smith"}
-      # Repo.insert!(user1)
-      # Repo.insert!(user2)
-      #
-      result = Teammates.list_teammates(account.id)
+
+      result = Teammates.list_users(account.id)
 
       assert length(result) == 2
-      # assert Enum.any?(result, fn u -> u.full_name == "Doe John" end)
-      # assert Enum.any?(result, fn u -> u.full_name == "Smith Jane" end)
     end
   end
 
-  describe "block_teammate/1" do
-    test "blocks an active teammate", %{account: account} do
+  describe "block_user/1" do
+    test "blocks an active user", %{account: account} do
       user = teammate_fixture(%{account_id: account.id})
- 
-      assert {:ok, %User{state: :blocked}} = Teammates.block_teammate(user.id)
+
+      assert {:ok, %User{state: :blocked}} = Teammates.block_user(user.id)
     end
 
-    test "raises error when blocking an already blocked teammate", %{account: account} do
+    test "raises error when blocking an already blocked user", %{account: account} do
       user = blocked_teammate_fixture(%{account_id: account.id})
- 
+
       assert_raise Ecto.NoResultsError, fn ->
-        dbg(Teammates.block_teammate(user.id))
+        dbg(Teammates.block_user(user.id))
       end
     end
   end
-   # describe "get_teammate!/2" do
+
+  # describe "get_teammate!/2" do
   #   test "returns the teammate with the given id and account_id" do
   #     account_id = 1
   #     user = %User{id: 1, account_id: account_id, first_name: "John", last_name: "Doe"}

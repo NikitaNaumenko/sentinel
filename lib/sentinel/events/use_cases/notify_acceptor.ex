@@ -35,7 +35,7 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
   alias Sentinel.Events.Event
   alias Sentinel.Events.EventTypes.MonitorDown
   alias Sentinel.Events.EventTypes.MonitorUp
-  alias Sentinel.Events.EventTypes.TeammateCreated
+  alias Sentinel.Events.EventTypes.UserCreated
   alias Sentinel.Events.UseCases.SendEmail
   alias Sentinel.Events.UseCases.SendTelegram
   alias Sentinel.Events.UseCases.SendWebhook
@@ -139,14 +139,14 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
 
   defp process_acceptor(
          %Acceptor{recipient_type: "email"} = acceptor,
-         %Event{type: %TeammateCreated{}} = event
+         %Event{type: %UserCreated{}} = event
        ) do
-    user = Teammates.get_teammate!(event.resource_id)
+    user = Teammates.get_user!(event.resource_id)
 
     SendEmail.call(%{
       acceptor: acceptor,
       recipient: acceptor.recipient,
-      event_type: :teammate_created,
+      event_type: :user_created,
       resource: user
     })
   end
