@@ -5,7 +5,7 @@ defmodule Sentinel.AccountsFactory do
 
       def account_factory do
         %Sentinel.Accounts.Account{
-          name: "My awesome article!",
+          name: Faker.Name.name()
         }
       end
     end

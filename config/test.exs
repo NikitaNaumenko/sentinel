@@ -39,7 +39,7 @@ config :logger, level: :warning
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
 
-config :sentinel, Oban, testing: :nline
+config :sentinel, Oban, testing: :manual
 
 config :exvcr,
   vcr_cassette_library_dir: "test/support/fixtures/vcr"
