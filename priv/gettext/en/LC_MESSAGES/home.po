@@ -1,0 +1,79 @@
+msgid ""
+msgstr ""
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Sentinel"
+msgstr "Sentinel"
+
+msgid "Toggle Menu"
+msgstr "Toggle Menu"
+
+msgid "Log in"
+msgstr "Log in"
+
+msgid "Sign up"
+msgstr "Sign up"
+
+msgid "Goose on the Moon"
+msgstr "Goose on the Moon"
+
+msgid "Get instant alerts when things go wrong"
+msgstr "Get instant alerts when things go wrong"
+
+msgid "Stay on top of downtime together with your teammates by receiving instant alerts via email, Slack, SMS and more. Become proactive to keep your sites up and running."
+msgstr "Stay on top of downtime together with your teammates by receiving instant alerts via email, Slack, SMS and more. Become proactive to keep your sites up and running."
+
+msgid "GitHub"
+msgstr "GitHub"
+
+msgid "Monitoring features"
+msgstr "Monitoring features"
+
+msgid "Fast monitoring"
+msgstr "Fast monitoring"
+
+msgid "Your website and API checks can be scheduled every 30 seconds! We support protocols such as HTTP, ICMP and Port."
+msgstr "Your website and API checks can be scheduled every 30 seconds! We support protocols such as HTTP, ICMP and Port."
+
+msgid "Integrations"
+msgstr "Integrations"
+
+msgid "Receive alerts through your favorite channels, such as email, SMS, Slack, Telegram, Webhooks."
+msgstr "Receive alerts through your favorite channels, such as email, SMS, Slack, Telegram, Webhooks."
+
+msgid "Projects"
+msgstr "Projects"
+
+msgid "Use projects to separate monitors, status pages and teammates."
+msgstr "Use projects to separate monitors, status pages and teammates."
+
+msgid "SSL Monitoring"
+msgstr "SSL Monitoring"
+
+msgid "Monitoring with Hyperping comes with SSL monitoring which alerts you days before your certificates expire."
+msgstr "Monitoring with Hyperping comes with SSL monitoring which alerts you days before your certificates expire."
+
+msgid "Status pages"
+msgstr "Status pages"
+
+msgid "Build a status page in seconds and keep your customers informed during downtime."
+msgstr "Build a status page in seconds and keep your customers informed during downtime."
+
+msgid "Invite teammates"
+msgstr "Invite teammates"
+
+msgid "Invite colleagues to projects to share dashboards and alerts."
+msgstr "Invite colleagues to projects to share dashboards and alerts."
+
+msgid "Build with love and technology"
+msgstr "Build with love and technology"
+
+msgid "Copyright © 2024. Sentinel. All rights reserved."
+msgstr "Copyright © 2024. Sentinel. All rights reserved."
+
+msgid "Privacy"
+msgstr "Privacy"
+
+msgid "Terms of Service"
+msgstr "Terms of Service" 

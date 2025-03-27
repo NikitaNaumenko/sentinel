@@ -24,6 +24,15 @@ defmodule Sentinel.Escalations do
     |> Repo.insert()
   end
 
+  @doc """
+  Updates a escalation policy.
+  """
+  def update_escalation_policy(%Policy{} = policy, attrs) do
+    policy
+    |> escalation_policy_changeset(attrs)
+    |> Repo.update()
+  end
+
   def escalation_policy_changeset(policy \\ %Policy{}, attrs \\ %{}) do
     Policy.changeset(policy, attrs)
   end
@@ -40,7 +49,12 @@ defmodule Sentinel.Escalations do
     Ecto.Enum.values(Alert, :alert_type)
   end
 
-  def get_escalation_policy!(policy_id) do
-    Repo.one!(from(p in Policy, where: p.id == ^policy_id, preload: [escalation_steps: :escalation_alerts]))
+  def get_escalation_policy!(policy_id, account_id) do
+    Repo.one!(
+      from(p in Policy,
+        where: p.id == ^policy_id and p.account_id == ^account_id,
+        preload: [escalation_steps: :escalation_alerts]
+      )
+    )
   end
 end

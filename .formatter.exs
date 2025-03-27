@@ -3,6 +3,6 @@
   heex_line_length: 110,
   import_deps: [:ecto, :ecto_sql, :phoenix],
   subdirectories: ["priv/*/migrations"],
-  plugins: [Phoenix.LiveView.HTMLFormatter, Styler, TailwindFormatter],
+  plugins: [Phoenix.LiveView.HTMLFormatter, Styler],
   inputs: ["*.{heex,ex,exs}", "{config,lib,test}/**/*.{heex,ex,exs}", "priv/*/seeds.exs"]
 ]

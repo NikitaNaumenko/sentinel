@@ -8,5 +8,7 @@ defmodule Sentinel.Escalations.EscalationPolicy do
   def authorize(:index, %User{role: :admin}, _), do: true
   def authorize(:create, %User{role: :admin}, _), do: true
   def authorize(:new, %User{role: :admin}, _), do: true
+  def authorize(:edit, %User{role: :admin}, _), do: true
+  def authorize(:update, %User{role: :admin}, _), do: true
   def authorize(_, _, _), do: false
 end

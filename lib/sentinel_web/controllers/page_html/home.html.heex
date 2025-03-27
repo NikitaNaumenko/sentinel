@@ -1,207 +1,207 @@
-<div class="mx-auto max-w-screen-xl px-5">
-  <header class="my-5 flex flex-col items-center justify-between lg:flex-row">
-    <div class="flex w-full items-center justify-between lg:w-auto">
-      <.link navigate={~p"/"} class="text-lg">
-        <span class="text-primary font-bold">Sentinel</span>
-      </.link>
-      <div class="block lg:hidden">
-        <button id="menu" aria-label="Toggle Menu">
-          <.icon name="icon-menu" />
-        </button>
+<div class="container">
+  <header class="py-3">
+    <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between">
+      <div class="d-flex w-100 align-items-center justify-content-between">
+        <.link navigate={~p"/"} class="text-decoration-none">
+          <span class="text-primary fw-bold fs-5"><%= dgettext("home", "Sentinel") %></span>
+        </.link>
+        <div class="d-block d-lg-none">
+          <button id="menu" aria-label={dgettext("home", "Toggle Menu")} class="btn btn-light rounded">
+            <.icon name="icon-menu" />
+          </button>
+        </div>
       </div>
-    </div>
 
-    <nav class="mt-2 hidden w-full lg:mt-0 lg:flex lg:w-auto">
-      <%!-- <ul class="flex flex-col lg:flex-row lg:gap-3"> --%>
-      <%!--   <li> --%>
-      <%!--     <a href="/pricing" class="flex items-center py-2 text-gray-600 hover:text-gray-900 lg:px-3"> --%>
-      <%!--       <span> Pricing</span> --%>
-      <%!--     </a> --%>
-      <%!--   </li> --%>
-      <%!--   <li> --%>
-      <%!--     <a href="/about" class="flex items-center py-2 text-gray-600 hover:text-gray-900 lg:px-3"> --%>
-      <%!--       <span> About</span> --%>
-      <%!--     </a> --%>
-      <%!--   </li> --%>
-      <%!--   <li> --%>
-      <%!--     <a href="/blog" class="flex items-center py-2 text-gray-600 hover:text-gray-900 lg:px-3"> --%>
-      <%!--       <span> Blog</span> --%>
-      <%!--     </a> --%>
-      <%!--   </li> --%>
-      <%!--   <li> --%>
-      <%!--     <a href="/contact" class="flex items-center py-2 text-gray-600 hover:text-gray-900 lg:px-3"> --%>
-      <%!--       <span> Contact</span> --%>
-      <%!--     </a> --%>
-      <%!--   </li> --%>
-      <%!-- </ul> --%>
-      <%!----%>
-      <div class="mt-3 flex items-center gap-4 lg:hidden">
-        <.link
-          navigate={~p"/log_in"}
-          class="w-full rounded border-2 border-transparent bg-gray-100 px-4 py-2 text-center ring-gray-200 ring-offset-2 transition hover:bg-gray-200 focus-visible:ring-2"
-        >
-          Log in
-        </.link>
-        <.link
-          navigate={~p"/registration"}
-          class="w-full rounded border-2 border-transparent bg-black px-4 py-2 text-center text-white ring-gray-200 ring-offset-2 transition hover:bg-gray-800 focus-visible:ring-2"
-        >
-          Sign up
-        </.link>
-      </div>
-    </nav>
-    <div>
-      <div class="hidden items-center gap-4 lg:flex">
-        <.link navigate={~p"/log_in"}>Log in</.link>
-        <.link
-          navigate={~p"/registration"}
-          class="rounded border-2 border-transparent bg-black px-4 py-2 text-center text-white ring-gray-200 ring-offset-2 transition hover:bg-gray-800 focus-visible:ring-2"
-        >
-          Sign up
-        </.link>
+      <nav class="mt-2 d-none d-lg-flex">
+        <ul class="nav nav-pills">
+        </ul>
+      </nav>
+
+      <div class="d-none d-lg-flex align-items-center gap-3">
+        <.link navigate={~p"/log_in"} class="btn btn-link text-dark text-decoration-none"><%= dgettext("home", "Log in") %></.link>
+        <.link navigate={~p"/registration"} class="btn btn-dark"><%= dgettext("home", "Sign up") %></.link>
       </div>
     </div>
   </header>
 </div>
-<div class="mx-auto max-w-screen-xl px-5">
-  <main class="grid place-items-center pt-16 pb-8 md:pt-12 md:pb-24 lg:grid-cols-2">
-    <div class="hidden py-6 md:order-1 md:block">
-      <picture>
-        <source
-          srcset={~p"/images/landing-goose.webp"}
-          type="image/webp"
-          sizes="(max-width: 800px) 100vw, 620px"
-        />
-        <img
-          src="/images/landing-goose.png"
-          srcset="/images/landing-goose.png"
-          alt="Goose on the Moon"
-          sizes="(max-width: 800px) 100vw, 620px"
-          loading="eager"
-          width="520"
-          height="424"
-          decoding="async"
-        />
-      </picture>
-    </div>
 
-    <div>
-      <h1 class="text-5xl font-bold lg:text-6xl lg:tracking-tight xl:text-7xl xl:tracking-tighter">
-        Get instant alerts when things go wrong.
-      </h1>
+<div class="container">
+  <main class="min-vh-75 d-flex align-items-center py-5">
+    <div class="row align-items-center">
+      <div class="col-lg-6 d-none d-lg-block">
+        <picture>
+          <source
+            srcset={~p"/images/landing-goose.webp"}
+            type="image/webp"
+            sizes="(max-width: 800px) 100vw, 620px"
+          />
+          <img
+            src="/images/landing-goose.png"
+            srcset="/images/landing-goose.png"
+            alt={dgettext("home", "Goose on the Moon")}
+            sizes="(max-width: 800px) 100vw, 620px"
+            loading="eager"
+            width="520"
+            height="424"
+            decoding="async"
+            class="img-fluid"
+          />
+        </picture>
+      </div>
 
-      <p class="mt-4 max-w-xl text-lg text-slate-600">
-        Stay on top of downtime together with your teammates by receiving instant alerts via email, Slack, SMS and more. Become proactive to keep your sites up and running.
-        <a
-          href="https://github.com/NikitaNaumenko/sentinel"
-          rel="noopener"
-          target="_blank"
-          class="flex items-center justify-center gap-1 rounded border-2 border-black bg-white px-5 py-2.5 text-center text-black ring-gray-200 ring-offset-2 transition hover:bg-gray-100 focus-visible:ring-2"
-        >
-          <.icon name="icon-github" /> GitHub Repo
-        </a>
-      </p>
+      <div class="col-lg-6">
+        <h1 class="display-4 fw-bold">
+          <%= dgettext("home", "Get instant alerts when things go wrong") %>
+        </h1>
+
+        <p class="lead text-muted mt-4">
+          <%= dgettext("home", "Stay on top of downtime together with your teammates by receiving instant alerts via email, Slack, SMS and more. Become proactive to keep your sites up and running.") %>
+          <a
+            href="https://github.com/NikitaNaumenko/sentinel"
+            rel="noopener"
+            target="_blank"
+            class="btn btn-outline-dark mt-4"
+          >
+            <.icon name="icon-github" /> <%= dgettext("home", "GitHub") %>
+          </a>
+        </p>
+      </div>
     </div>
   </main>
 
-  <div class="mt-16 md:mt-0">
-    <h2 class="text-4xl font-bold lg:text-5xl lg:tracking-tight">
-      Monitoring features
+  <div class="mt-5">
+    <h2 class="display-5 fw-bold">
+      <%= dgettext("home", "Monitoring features") %>
     </h2>
   </div>
 
-  <div class="mt-16 grid gap-16 sm:grid-cols-2 md:grid-cols-3">
-    <div class="flex items-start gap-4">
-      <div class="pt-[4px] mt-1 h-8 w-8 shrink-0 rounded-full bg-black pl-2">
-        <.icon name="icon-shield-check" class="text-white" />
-      </div>
-
-      <div>
-        <h3 class="text-lg font-semibold">Fast monitoring</h3>
-
-        <p class="mt-2 leading-relaxed text-slate-500">
-          Your website and API checks can be scheduled every 30 seconds! We support protocols such as HTTP, ICMP and Port.
-        </p>
-      </div>
-    </div>
-    <div class="flex items-start gap-4">
-      <div class="pt-[4px] mt-1 h-8 w-8 shrink-0 rounded-full bg-black pl-2">
-        <.icon name="icon-boxes" class="text-white" />
-      </div>
-
-      <div>
-        <h3 class="text-lg font-semibold">Integrations</h3>
-
-        <p class="mt-2 leading-relaxed text-slate-500">
-          Receive alerts through your favorite channels, such as email, SMS, Slack, Telegram, Webhooks.
-        </p>
+  <div class="row g-4 mt-4">
+    <div class="col-md-4">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body">
+          <div class="d-flex align-items-start gap-3">
+            <div class="rounded-circle bg-dark text-white p-2">
+              <.icon name="icon-shield-check" />
+            </div>
+            <div>
+              <h3 class="h5 fw-bold"><%= dgettext("home", "Fast monitoring") %></h3>
+              <p class="text-muted mb-0">
+                <%= dgettext("home", "Your website and API checks can be scheduled every 30 seconds! We support protocols such as HTTP, ICMP and Port.") %>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="flex items-start gap-4">
-      <div class="pt-[4px] mt-1 h-8 w-8 shrink-0 rounded-full bg-black pl-2">
-        <.icon name="icon-folder" class="text-white" />
-      </div>
-
-      <div>
-        <h3 class="text-lg font-semibold">Projects</h3>
-
-        <p class="mt-2 leading-relaxed text-slate-500">
-          Use projects to separate monitors, status pages and teammates.
-        </p>
-      </div>
-    </div>
-    <div class="flex items-start gap-4">
-      <div class="pt-[4px] mt-1 h-8 w-8 shrink-0 rounded-full bg-black pl-2">
-        <.icon name="icon-lock" class="text-white" />
-      </div>
-
-      <div>
-        <h3 class="text-lg font-semibold">SSL Monitoring</h3>
-        <p class="mt-2 leading-relaxed text-slate-500">
-          Monitoring with Hyperping comes with SSL monitoring which alerts you days before your certificates expire.
-        </p>
+    <div class="col-md-4">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body">
+          <div class="d-flex align-items-start gap-3">
+            <div class="rounded-circle bg-dark text-white p-2">
+              <.icon name="icon-boxes" />
+            </div>
+            <div>
+              <h3 class="h5 fw-bold"><%= dgettext("home", "Integrations") %></h3>
+              <p class="text-muted mb-0">
+                <%= dgettext("home", "Receive alerts through your favorite channels, such as email, SMS, Slack, Telegram, Webhooks.") %>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="flex items-start gap-4">
-      <div class="pt-[4px] mt-1 h-8 w-8 shrink-0 rounded-full bg-black pl-2">
-        <.icon name="icon-sticky-note" class="text-white" />
-      </div>
-
-      <div>
-        <h3 class="text-lg font-semibold">Status pages</h3>
-
-        <p class="mt-2 leading-relaxed text-slate-500">
-          Build a status page in seconds and keep your customers informed during downtime.
-        </p>
+    <div class="col-md-4">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body">
+          <div class="d-flex align-items-start gap-3">
+            <div class="rounded-circle bg-dark text-white p-2">
+              <.icon name="icon-folder" />
+            </div>
+            <div>
+              <h3 class="h5 fw-bold"><%= dgettext("home", "Projects") %></h3>
+              <p class="text-muted mb-0">
+                <%= dgettext("home", "Use projects to separate monitors, status pages and teammates.") %>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="flex items-start gap-4">
-      <div class="pt-[4px] mt-1 h-8 w-8 shrink-0 rounded-full bg-black pl-2">
-        <.icon name="icon-users" class="text-white" />
+    <div class="col-md-4">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body">
+          <div class="d-flex align-items-start gap-3">
+            <div class="rounded-circle bg-dark text-white p-2">
+              <.icon name="icon-lock" />
+            </div>
+            <div>
+              <h3 class="h5 fw-bold"><%= dgettext("home", "SSL Monitoring") %></h3>
+              <p class="text-muted mb-0">
+                <%= dgettext("home", "Monitoring with Hyperping comes with SSL monitoring which alerts you days before your certificates expire.") %>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div>
-        <h3 class="text-lg font-semibold">Invite teammates</h3>
-
-        <p class="mt-2 leading-relaxed text-slate-500">
-          Invite colleagues to projects to share dashboards and alerts.
-        </p>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body">
+          <div class="d-flex align-items-start gap-3">
+            <div class="rounded-circle bg-dark text-white p-2">
+              <.icon name="icon-sticky-note" />
+            </div>
+            <div>
+              <h3 class="h5 fw-bold"><%= dgettext("home", "Status pages") %></h3>
+              <p class="text-muted mb-0">
+                <%= dgettext("home", "Build a status page in seconds and keep your customers informed during downtime.") %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body">
+          <div class="d-flex align-items-start gap-3">
+            <div class="rounded-circle bg-dark text-white p-2">
+              <.icon name="icon-users" />
+            </div>
+            <div>
+              <h3 class="h5 fw-bold"><%= dgettext("home", "Invite teammates") %></h3>
+              <p class="text-muted mb-0">
+                <%= dgettext("home", "Invite colleagues to projects to share dashboards and alerts.") %>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="mt-24">
-    <h2 class="text-center text-slate-500">Build with love and technology.</h2>
+  <div class="text-center mt-5">
+    <h2 class="text-muted"><%= dgettext("home", "Build with love and technology") %></h2>
 
-    <div class="mt-10 flex flex-wrap items-center justify-center gap-8 md:gap-20">
-      <img src={~p"/images/elixir.svg"} class="h-8 md:h-14" alt="Elixir " />
-      <img src={~p"/images/tailwind.svg"} class="h-8 md:h-14" alt="tailwind" />
-      <img src={~p"/images/alpine.svg"} class="h-8 md:h-14" alt="alpine" />
+    <div class="d-flex flex-wrap justify-content-center gap-4 mt-4">
+      <img src={~p"/images/elixir.svg"} class="img-fluid" style="height: 3rem;" alt="Elixir" />
+      <img src={~p"/images/phoenix.svg"} class="img-fluid" style="height: 3rem;" alt="Phoenix" />
+      <img src={~p"/images/bootstrap.svg"} class="img-fluid" style="height: 3rem;" alt="Bootstrap" />
+      <img src={~p"/images/alpine.svg"} class="img-fluid" style="height: 3rem;" alt="Alpine" />
     </div>
   </div>
 </div>
-<footer class="my-20">
-  <p class="text-center text-sm text-slate-500">
-    Copyright © 2024. Nikitos. All rights reserved.
-  </p>
+
+<footer class="py-5 mt-5 border-top">
+  <div class="container">
+    <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
+      <p class="text-muted small mb-0">
+        <%= dgettext("home", "Copyright © 2024. Sentinel. All rights reserved.") %>
+      </p>
+      <div class="d-flex gap-4">
+        <.link navigate={~p"/privacy"} class="text-muted text-decoration-none small"><%= dgettext("home", "Privacy") %></.link>
+        <.link navigate={~p"/terms"} class="text-muted text-decoration-none small"><%= dgettext("home", "Terms of Service") %></.link>
+      </div>
+    </div>
+  </div>
 </footer>

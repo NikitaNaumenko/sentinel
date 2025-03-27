@@ -1,0 +1,79 @@
+msgid ""
+msgstr ""
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgid "Sentinel"
+msgstr "Sentinel"
+
+msgid "Toggle Menu"
+msgstr "Переключить меню"
+
+msgid "Log in"
+msgstr "Войти"
+
+msgid "Sign up"
+msgstr "Регистрация"
+
+msgid "Goose on the Moon"
+msgstr "Гусь на Луне"
+
+msgid "Get instant alerts when things go wrong"
+msgstr "Мгновенные уведомления при проблемах"
+
+msgid "Stay on top of downtime together with your teammates by receiving instant alerts via email, Slack, SMS and more. Become proactive to keep your sites up and running."
+msgstr "Следите за работоспособностью вместе с командой, получая мгновенные уведомления по email, Slack, SMS и другим каналам. Будьте на шаг впереди, чтобы ваши сайты работали без перебоев."
+
+msgid "GitHub"
+msgstr "GitHub"
+
+msgid "Monitoring features"
+msgstr "Возможности мониторинга"
+
+msgid "Fast monitoring"
+msgstr "Быстрый мониторинг"
+
+msgid "Your website and API checks can be scheduled every 30 seconds! We support protocols such as HTTP, ICMP and Port."
+msgstr "Проверка вашего сайта и API каждые 30 секунд! Поддерживаются протоколы HTTP, ICMP и Port."
+
+msgid "Integrations"
+msgstr "Интеграции"
+
+msgid "Receive alerts through your favorite channels, such as email, SMS, Slack, Telegram, Webhooks."
+msgstr "Получайте уведомления через любимые каналы: email, SMS, Slack, Telegram, Webhooks."
+
+msgid "Projects"
+msgstr "Проекты"
+
+msgid "Use projects to separate monitors, status pages and teammates."
+msgstr "Используйте проекты для разделения мониторов, статусных страниц и команды."
+
+msgid "SSL Monitoring"
+msgstr "SSL Мониторинг"
+
+msgid "Monitoring with Hyperping comes with SSL monitoring which alerts you days before your certificates expire."
+msgstr "Мониторинг SSL-сертификатов с уведомлениями за несколько дней до истечения срока действия."
+
+msgid "Status pages"
+msgstr "Страницы статуса"
+
+msgid "Build a status page in seconds and keep your customers informed during downtime."
+msgstr "Создавайте статусные страницы за секунды и информируйте клиентов о проблемах."
+
+msgid "Invite teammates"
+msgstr "Приглашение коллег"
+
+msgid "Invite colleagues to projects to share dashboards and alerts."
+msgstr "Приглашайте коллег в проекты для совместного доступа к дашбордам и уведомлениям."
+
+msgid "Build with love and technology"
+msgstr "Создано с любовью и технологиями"
+
+msgid "Copyright © 2024. Sentinel. All rights reserved."
+msgstr "© 2024 Sentinel. Все права защищены."
+
+msgid "Privacy"
+msgstr "Конфиденциальность"
+
+msgid "Terms of Service"
+msgstr "Условия использования" 
