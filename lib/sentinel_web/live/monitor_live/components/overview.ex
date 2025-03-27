@@ -171,7 +171,12 @@ defmodule SentinelWeb.MonitorLive.Components.Overview do
             {dgettext("monitors", "Last five checks")}
           </h5>
           <div :for={check <- @last_five_checks} class="py-2">
-            <span class={["me-2 rounded px-2.5 py-0.5 text-xs font-medium", check.result == :success && "bg-success-100 text-success-800 dark:bg-success-900 dark:text-success-300", check.result == :failure && "bg-danger-100 text-danger-800 dark:bg-danger-900 dark:text-danger-300"]}>
+            <span class={[
+              "me-2 rounded px-2.5 py-0.5 text-xs font-medium",
+              check.result == :success &&
+                "bg-success-100 text-success-800 dark:bg-success-900 dark:text-success-300",
+              check.result == :failure && "bg-danger-100 text-danger-800 dark:bg-danger-900 dark:text-danger-300"
+            ]}>
               {check.status_code}
             </span>
             <span>

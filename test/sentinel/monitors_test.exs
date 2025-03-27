@@ -15,11 +15,10 @@ defmodule Sentinel.MonitorsTest do
     test "create from json", %{account: account} do
       Repatch.patch(Sentinel.Monitors.UseCases.CheckCertificate, :call, fn _ ->
         %{
-        "not_before" => DateTime.utc_now(),
-        "not_after" => DateTime.utc_now(),
-        "issuer" => "test",
-        "subject" => "jopa"
-
+          "not_before" => DateTime.utc_now(),
+          "not_after" => DateTime.utc_now(),
+          "issuer" => "test",
+          "subject" => "jopa"
         }
       end)
 

@@ -1,5 +1,5 @@
 defmodule Sentinel.FakeCheckCertificate do
-  @moduledoc  """
+  @moduledoc """
   Provides fake certificate check. Instead real certificate check it returns fake data.
   """
   def call(_) do

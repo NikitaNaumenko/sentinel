@@ -78,7 +78,6 @@ defmodule Sentinel.MixProject do
       {:dotenv, "~> 3.0.0", only: [:dev, :test]},
       {:faker, "~> 0.19.0-alpha.1", only: [:dev, :test]},
       {:ex_machina, "~> 2.8", only: [:dev, :test]}
-
     ]
   end
 

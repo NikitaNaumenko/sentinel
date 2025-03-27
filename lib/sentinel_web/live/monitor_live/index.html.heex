@@ -40,18 +40,18 @@
 <%!--   </div> --%>
 <%!----%>
 <%!--   <div class="ms-auto d-print-none col-auto justify-between"> --%>
-    <%!-- Тут надо придумать как нормально сделать форму загрузки файла --%>
-    <%!-- <form id="upload-form" phx-submit="save" phx-change="validate"> --%>
-    <%!-- <.live_file_input upload={@uploads.monitors} />  --%>
-    <%!-- </form>  --%>
-  <%!--   <.link --%>
-  <%!--     :if={permit?(Sentinel.Monitors.MonitorPolicy, :create, @current_user)} --%>
-  <%!--     navigate={~p"/monitors/new"} --%>
-  <%!--     class="btn btn-primary" --%>
-  <%!--   > --%>
-  <%!--     {dgettext("monitors", "New monitor")} --%>
-  <%!--   </.link> --%>
-  <%!-- </div> --%>
+<%!-- Тут надо придумать как нормально сделать форму загрузки файла --%>
+<%!-- <form id="upload-form" phx-submit="save" phx-change="validate"> --%>
+<%!-- <.live_file_input upload={@uploads.monitors} />  --%>
+<%!-- </form>  --%>
+<%!--   <.link --%>
+<%!--     :if={permit?(Sentinel.Monitors.MonitorPolicy, :create, @current_user)} --%>
+<%!--     navigate={~p"/monitors/new"} --%>
+<%!--     class="btn btn-primary" --%>
+<%!--   > --%>
+<%!--     {dgettext("monitors", "New monitor")} --%>
+<%!--   </.link> --%>
+<%!-- </div> --%>
 <%!-- </header> --%>
 
 <div id="monitors" phx-update="stream" class="mt-5 flex w-full flex-col gap-4">

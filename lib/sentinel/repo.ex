@@ -3,7 +3,6 @@ defmodule Sentinel.Repo do
     otp_app: :sentinel,
     adapter: Ecto.Adapters.Postgres
 
-
   defmacro tx(do: block) do
     quote location: :keep, generated: true do
       unquote(__MODULE__).transaction(fn ->

@@ -137,10 +137,7 @@ defmodule Sentinel.Events.UseCases.NotifyAcceptor do
     end)
   end
 
-  defp process_acceptor(
-         %Acceptor{recipient_type: "email"} = acceptor,
-         %Event{type: %UserCreated{}} = event
-       ) do
+  defp process_acceptor(%Acceptor{recipient_type: "email"} = acceptor, %Event{type: %UserCreated{}} = event) do
     user = Teammates.get_user!(event.resource_id)
 
     SendEmail.call(%{

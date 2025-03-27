@@ -29,11 +29,7 @@
           </:col>
           <:col :let={{_id, user}}>
             <%= if permit?(Sentinel.Teammates.UserPolicy, :block, @current_user, user) do %>
-              <.button
-                size="icon"
-                variant="danger"
-                phx-click={JS.push("block", value: %{id: user.id})}
-              >
+              <.button size="icon" variant="danger" phx-click={JS.push("block", value: %{id: user.id})}>
                 <.icon name="icon-lock" />
               </.button>
             <% end %>

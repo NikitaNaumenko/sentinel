@@ -43,6 +43,7 @@ defmodule SentinelWeb.Components.Badge do
     ],
     default: :default
   )
+
   slot :inner_block
 
   def badge(assigns) do

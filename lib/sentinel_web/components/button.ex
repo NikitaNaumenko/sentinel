@@ -43,7 +43,7 @@ defmodule SentinelWeb.Components.Button do
       info: "btn-info",
       secondary: "btn-secondary",
       success: "btn-success",
-      light: "btn-light",
+      light: "btn-light"
     ],
     default: :primary
   )
