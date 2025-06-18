@@ -37,7 +37,7 @@
 
               <.inputs_for :let={alert_f} field={step_f[:escalation_alerts]}>
                 <div class="mb-3">
-                  <div class="row g-2">
+                  <div class="row g-2 align-items-end">
                     <div class="col">
                       <.input
                         field={alert_f[:alert_type]}
@@ -47,11 +47,58 @@
                       />
                     </div>
                     <div class="col">
-                      <.input
-                        field={alert_f[:user_id]}
-                        type="select"
-                        options={Map.get(@step_alert_types, "#{step_f.index}-#{alert_f.index}", @users)}
-                      />
+                      <%= case alert_f.data.alert_type || Phoenix.HTML.Form.input_value(alert_f, :alert_type) do %>
+                        <% :email -> %>
+                          <.input
+                            field={alert_f[:user_id]}
+                            type="select"
+                            options={@users}
+                            label={dgettext("escalation_policies", "User")}
+                          />
+                        <% "email" -> %>
+                          <.input
+                            field={alert_f[:user_id]}
+                            type="select"
+                            options={@users}
+                            label={dgettext("escalation_policies", "User")}
+                          />
+                        <% :webhook -> %>
+                          <.input
+                            field={alert_f[:webhook_id]}
+                            type="select"
+                            options={@webhooks}
+                            label={dgettext("escalation_policies", "Webhook")}
+                          />
+                        <% "webhook" -> %>
+                          <.input
+                            field={alert_f[:webhook_id]}
+                            type="select"
+                            options={@webhooks}
+                            label={dgettext("escalation_policies", "Webhook")}
+                          />
+                        <% :telegram -> %>
+                          <.input
+                            field={alert_f[:telegram_id]}
+                            type="select"
+                            options={@telegrams}
+                            label={dgettext("escalation_policies", "Telegram")}
+                          />
+                        <% "telegram" -> %>
+                          <.input
+                            field={alert_f[:telegram_id]}
+                            type="select"
+                            options={@telegrams}
+                            label={dgettext("escalation_policies", "Telegram")}
+                          />
+                        <% _ -> %>
+                          <.input
+                            field={alert_f[:user_id]}
+                            type="select"
+                            options={[]}
+                            label={dgettext("escalation_policies", "Select alert type first")}
+                            disabled
+                          />
+                      <% end %>
                     </div>
                     <div class="col-auto">
                       <.button

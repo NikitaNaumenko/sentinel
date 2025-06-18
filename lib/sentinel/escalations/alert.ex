@@ -24,7 +24,17 @@ defmodule Sentinel.Escalations.Alert do
   @doc false
   def changeset(alert, attrs) do
     alert
-    |> cast(attrs, [:user_id, :alert_type, :telegram_id])
-    |> validate_required([])
+    |> cast(attrs, [:user_id, :alert_type, :telegram_id, :webhook_id])
+    |> validate_required([:alert_type])
+    |> validate_alert_type_association()
+  end
+
+  defp validate_alert_type_association(changeset) do
+    case get_field(changeset, :alert_type) do
+      :email -> validate_required(changeset, [:user_id])
+      :webhook -> validate_required(changeset, [:webhook_id])
+      :telegram -> validate_required(changeset, [:telegram_id])
+      _ -> changeset
+    end
   end
 end
