@@ -204,7 +204,7 @@ defmodule SentinelWeb.EscalationPolicyLive.New do
     end
   end
 
-  defp alert_infos("users", socket), do: socket.assigns.users
+  defp alert_infos("email", socket), do: socket.assigns.users
   defp alert_infos("webhook", socket), do: socket.assigns.webhooks
   defp alert_infos("telegram", socket), do: socket.assigns.telegrams
 end
